@@ -4,9 +4,23 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\Minimum;
 
+/**
+ * BT-23-00
+ */
 class BusinessProcessSpecifiedDocumentContextParameter
 {
-    public function __construct(public readonly string $id)
+    /**
+     * BT-23
+     */
+    private string $id;
+
+    public function __construct(string $id)
     {
+        $this->id = $id;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 }
