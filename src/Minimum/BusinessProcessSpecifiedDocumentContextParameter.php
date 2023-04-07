@@ -6,5 +6,7 @@ namespace Tiime\CrossIndustryInvoice\Minimum;
 
 class BusinessProcessSpecifiedDocumentContextParameter
 {
-
+    public function __construct(public readonly string $id)
+    {
+    }
 }
