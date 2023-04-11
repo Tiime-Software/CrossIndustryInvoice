@@ -5,27 +5,27 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\Minimum;
 
 /**
- * BT-10-00
+ * BT-10-00.
  */
 class ApplicableHeaderTradeAgreement
 {
     /**
-     * BT-10
+     * BT-10.
      */
     private ?string $buyerReference;
 
     /**
-     * BG-4
+     * BG-4.
      */
     private SellerTradeParty $sellerTradeParty;
 
     /**
-     * BG-7
+     * BG-7.
      */
     private BuyerTradeParty $buyerTradeParty;
 
     /**
-     * BT-13-00
+     * BT-13-00.
      */
     private BuyerOrderReferencedDocument $buyerOrderReferencedDocument;
 
@@ -34,10 +34,10 @@ class ApplicableHeaderTradeAgreement
         BuyerTradeParty $buyerTradeParty,
         BuyerOrderReferencedDocument $buyerOrderReferencedDocument
     ) {
-        $this->sellerTradeParty = $sellerTradeParty;
-        $this->buyerTradeParty = $buyerTradeParty;
+        $this->sellerTradeParty             = $sellerTradeParty;
+        $this->buyerTradeParty              = $buyerTradeParty;
         $this->buyerOrderReferencedDocument = $buyerOrderReferencedDocument;
-        $this->buyerReference = null;
+        $this->buyerReference               = null;
     }
 
     public function getBuyerReference(): ?string

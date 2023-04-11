@@ -5,31 +5,30 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\Minimum;
 
 /**
- * BG-25-00
+ * BG-25-00.
  */
 class SupplyChainTradeTransaction
 {
     /**
-     * BG-10-00
+     * BG-10-00.
      */
     private ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement;
 
     /**
-     * BG-13-00
+     * BG-13-00.
      */
     private ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery;
 
     /**
-     * BG-19
+     * BG-19.
      */
     private ?ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement;
 
     public function __construct(
         ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement
-    )
-    {
-        $this->applicableHeaderTradeDelivery = new ApplicableHeaderTradeDelivery();
-        $this->applicableHeaderTradeAgreement = $applicableHeaderTradeAgreement;
+    ) {
+        $this->applicableHeaderTradeDelivery   = new ApplicableHeaderTradeDelivery();
+        $this->applicableHeaderTradeAgreement  = $applicableHeaderTradeAgreement;
         $this->applicableHeaderTradeSettlement = null;
     }
 

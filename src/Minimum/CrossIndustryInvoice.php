@@ -7,17 +7,17 @@ namespace Tiime\CrossIndustryInvoice\Minimum;
 class CrossIndustryInvoice
 {
     /**
-     * BG-2
+     * BG-2.
      */
     private ExchangedDocumentContext $exchangedDocumentContext;
 
     /**
-     * BT-1-00
+     * BT-1-00.
      */
     private ExchangedDocument $exchangedDocument;
 
     /**
-     * BG-25-00
+     * BG-25-00.
      */
     private SupplyChainTradeTransaction $supplyChainTradeTransaction;
 
@@ -26,8 +26,8 @@ class CrossIndustryInvoice
         ExchangedDocument $exchangedDocument,
         SupplyChainTradeTransaction $supplyChainTradeTransaction
     ) {
-        $this->exchangedDocumentContext = $exchangedDocumentContext;
-        $this->exchangedDocument = $exchangedDocument;
+        $this->exchangedDocumentContext    = $exchangedDocumentContext;
+        $this->exchangedDocument           = $exchangedDocument;
         $this->supplyChainTradeTransaction = $supplyChainTradeTransaction;
     }
 

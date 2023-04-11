@@ -5,23 +5,23 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\Minimum;
 
 /**
- * BG-7
+ * BG-7.
  */
 class BuyerTradeParty
 {
     /**
-     * BT-44
+     * BT-44.
      */
     private string $name;
 
     /**
-     * BT-47-00
+     * BT-47-00.
      */
     private ?BuyerSpecifiedLegalOrganization $specifiedLegalOrganization;
 
     public function __construct(string $name)
     {
-        $this->name = $name;
+        $this->name                       = $name;
         $this->specifiedLegalOrganization = null;
     }
 

@@ -7,12 +7,12 @@ namespace Tiime\CrossIndustryInvoice\Minimum;
 use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
 
 /**
- * BT-24-00
+ * BT-24-00.
  */
 class GuidelineSpecifiedDocumentContextParameter
 {
     /**
-     * BT-24
+     * BT-24.
      */
     private SpecificationIdentifier $id;
 

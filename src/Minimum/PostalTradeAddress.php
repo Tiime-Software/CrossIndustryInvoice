@@ -7,12 +7,12 @@ namespace Tiime\CrossIndustryInvoice\Minimum;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 
 /**
- * BG-5
+ * BG-5.
  */
 class PostalTradeAddress
 {
     /**
-     * BT-40
+     * BT-40.
      */
     private CountryAlpha2Code $countryID;
 

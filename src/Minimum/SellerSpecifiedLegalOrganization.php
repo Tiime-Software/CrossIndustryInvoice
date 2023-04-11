@@ -4,27 +4,26 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\Minimum;
 
-use Tiime\EN16931\DataType\Identifier\LegalRegistrationIdentifier;
 use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
- * BT-30-00
+ * BT-30-00.
  */
 class SellerSpecifiedLegalOrganization
 {
     /**
-     * BT-30
+     * BT-30.
      */
     private string $id;
 
     /**
-     * BT-30-1
+     * BT-30-1.
      */
     private ?InternationalCodeDesignator $schemeID;
 
     public function __construct(string $id)
     {
-        $this->id = $id;
+        $this->id       = $id;
         $this->schemeID = null;
     }
 

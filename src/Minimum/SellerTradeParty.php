@@ -5,27 +5,27 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\Minimum;
 
 /**
- * BG-4
+ * BG-4.
  */
 class SellerTradeParty
 {
     /**
-     * BT-27
+     * BT-27.
      */
     private string $name;
 
     /**
-     * BT-30-00
+     * BT-30-00.
      */
     private ?SellerSpecifiedLegalOrganization $specifiedLegalOrganization;
 
     /**
-     * BG-5
+     * BG-5.
      */
     private PostalTradeAddress $postalTradeAddress;
 
     /**
-     * BT-31-00
+     * BT-31-00.
      *
      * @var array<int, SpecifiedTaxRegistration>
      */
@@ -33,10 +33,10 @@ class SellerTradeParty
 
     public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
     {
-        $this->name = $name;
-        $this->postalTradeAddress = $postalTradeAddress;
+        $this->name                       = $name;
+        $this->postalTradeAddress         = $postalTradeAddress;
         $this->specifiedLegalOrganization = null;
-        $this->specifiedTaxRegistrations = [];
+        $this->specifiedTaxRegistrations  = [];
     }
 
     public function getName(): string

@@ -8,27 +8,27 @@ use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
 use Tiime\EN16931\SemanticDataType\Amount;
 
 /**
- * BG-22
+ * BG-22.
  */
 class SpecifiedTradeSettlementHeaderMonetarySummation
 {
     /**
-     * BT-109
+     * BT-109.
      */
     private Amount $taxBasisTotalAmount;
 
     /**
-     * BT-110 & BT-110-0
+     * BT-110 & BT-110-0.
      */
     private ?TaxTotalAmount $taxTotalAmount;
 
     /**
-     * BT-112
+     * BT-112.
      */
     private Amount $grandTotalAmount;
 
     /**
-     * BT-115
+     * BT-115.
      */
     private Amount $amountDueForPayment;
 
@@ -39,9 +39,9 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         TaxTotalAmount $taxTotalAmount = null
     ) {
         $this->taxBasisTotalAmount = new Amount($taxBasisTotalAmount);
-        $this->grandTotalAmount = new Amount($grandTotalAmount);
+        $this->grandTotalAmount    = new Amount($grandTotalAmount);
         $this->amountDueForPayment = new Amount($amountDueForPayment);
-        $this->taxTotalAmount = $taxTotalAmount;
+        $this->taxTotalAmount      = $taxTotalAmount;
     }
 
     public function getTaxBasisTotalAmount(): float

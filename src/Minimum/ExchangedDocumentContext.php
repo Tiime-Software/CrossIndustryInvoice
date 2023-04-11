@@ -7,21 +7,22 @@ namespace Tiime\CrossIndustryInvoice\Minimum;
 use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
 
 /**
- * BG-2
+ * BG-2.
  */
 class ExchangedDocumentContext
 {
     /**
-     * BT-23-00
+     * BT-23-00.
      */
     private ?BusinessProcessSpecifiedDocumentContextParameter $businessProcessSpecifiedDocumentContextParameter;
 
     /**
-     * BT-24-00
+     * BT-24-00.
      */
     private GuidelineSpecifiedDocumentContextParameter $guidelineSpecifiedDocumentContextParameter;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->guidelineSpecifiedDocumentContextParameter = new GuidelineSpecifiedDocumentContextParameter(
             new SpecificationIdentifier(SpecificationIdentifier::MINIMUM)
         );
