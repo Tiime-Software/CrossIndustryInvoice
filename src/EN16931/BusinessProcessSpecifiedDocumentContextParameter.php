@@ -9,7 +9,18 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
  */
 class BusinessProcessSpecifiedDocumentContextParameter
 {
-    public function __construct()
+    /**
+     * BT-23.
+     */
+    private string $id;
+
+    public function __construct(string $id)
     {
+        $this->id = $id;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 }

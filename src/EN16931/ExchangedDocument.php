@@ -33,14 +33,14 @@ class ExchangedDocument
      *
      * @var array<int, IncludedNote>
      */
-    private ?array $includedNotes;
+    private array $includedNotes;
 
     public function __construct(InvoiceIdentifier $id, InvoiceTypeCode $typeCode, IssueDateTime $issueDateTime)
     {
         $this->id            = $id;
         $this->typeCode      = $typeCode;
         $this->issueDateTime = $issueDateTime;
-        $this->includedNotes = null;
+        $this->includedNotes = [];
     }
 
     public function getId(): InvoiceIdentifier
@@ -65,6 +65,14 @@ class ExchangedDocument
 
     public function setIncludedNotes(array $includedNotes): void
     {
-        $this->includedNotes = $includedNotes;
+        $tmpIncludedNotes = [];
+
+        foreach ($includedNotes as $includedNote) {
+            if (!$includedNote instanceof IncludedNote) {
+                throw new \TypeError();
+            }
+            $tmpIncludedNotes[] = $includedNote;
+        }
+        $this->includedNotes = $tmpIncludedNotes;
     }
 }

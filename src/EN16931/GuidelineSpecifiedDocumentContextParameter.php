@@ -4,12 +4,25 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
+
 /**
  * BT-24-00.
  */
 class GuidelineSpecifiedDocumentContextParameter
 {
-    public function __construct()
+    /**
+     * BT-24.
+     */
+    private SpecificationIdentifier $id;
+
+    public function __construct(SpecificationIdentifier $id)
     {
+        $this->id = $id;
+    }
+
+    public function getId(): SpecificationIdentifier
+    {
+        return $this->id;
     }
 }
