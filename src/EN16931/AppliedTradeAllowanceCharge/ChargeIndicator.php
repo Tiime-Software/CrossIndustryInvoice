@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\EN16931\AppliedTradeAllowanceCharge;
 
 /**
  * BT-147-01.

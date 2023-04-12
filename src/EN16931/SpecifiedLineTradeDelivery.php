@@ -10,7 +10,7 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 class SpecifiedLineTradeDelivery
 {
     /**
-     * BT-129 & BT-130
+     * BT-129 & BT-130.
      */
     private BilledQuantity $billedQuantity;
 
