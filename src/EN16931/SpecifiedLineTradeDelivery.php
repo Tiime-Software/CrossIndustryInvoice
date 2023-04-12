@@ -9,7 +9,18 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
  */
 class SpecifiedLineTradeDelivery
 {
-    public function __construct()
+    /**
+     * BT-129 & BT-130
+     */
+    private BilledQuantity $billedQuantity;
+
+    public function __construct(BilledQuantity $billedQuantity)
     {
+        $this->billedQuantity = $billedQuantity;
+    }
+
+    public function getBilledQuantity(): BilledQuantity
+    {
+        return $this->billedQuantity;
     }
 }
