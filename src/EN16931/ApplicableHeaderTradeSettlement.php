@@ -102,6 +102,16 @@ class ApplicableHeaderTradeSettlement
         $this->invoiceCurrencyCode                             = $invoiceCurrencyCode;
         $this->applicableTradeTaxes                            = $tmpApplicableTradeTaxes;
         $this->specifiedTradeSettlementHeaderMonetarySummation = $specifiedTradeSettlementHeaderMonetarySummation;
+        $this->creditorReferenceID                             = null;
+        $this->paymentReference                                = null;
+        $this->taxCurrencyCode                                 = null;
+        $this->payeeTradeParty                                 = null;
+        $this->specifiedTradeSettlementPaymentMeans            = null;
+        $this->billingSpecifiedPeriod                          = null;
+        $this->specifiedTradePaymentTerms                      = null;
+        $this->invoiceReferencedDocument                       = null;
+        $this->receivableSpecifiedTradeAccountingAccount       = null;
+        $this->specifiedTradeAllowanceCharges                  = [];
     }
 
     public function getCreditorReferenceID(): ?BankAssignedCreditorIdentifier

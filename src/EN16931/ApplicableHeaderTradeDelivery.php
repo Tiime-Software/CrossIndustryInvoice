@@ -31,6 +31,10 @@ class ApplicableHeaderTradeDelivery
 
     public function __construct()
     {
+        $this->shipToTradeParty                  = null;
+        $this->actualDeliverySupplyChainEvent    = null;
+        $this->despatchAdviceReferencedDocument  = null;
+        $this->receivingAdviceReferencedDocument = null;
     }
 
     public function getShipToTradeParty(): ?ShipToTradeParty

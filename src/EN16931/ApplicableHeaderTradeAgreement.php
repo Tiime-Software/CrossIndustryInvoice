@@ -67,6 +67,7 @@ class ApplicableHeaderTradeAgreement
         $this->sellerOrderReferencedDocument     = null;
         $this->buyerOrderReferencedDocument      = null;
         $this->contractReferencedDocument        = null;
+        $this->specifiedProcuringProject         = null;
         $this->additionalReferencedDocuments     = [];
     }
 
