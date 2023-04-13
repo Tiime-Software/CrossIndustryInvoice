@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement;
 
 use Tiime\EN16931\DataType\BinaryObject;
-use Tiime\EN16931\DataType\Reference\SupportingDocumentReference;
+use Tiime\EN16931\DataType\Reference\TenderOrLotReference;
 
 /**
- * BG-24.
+ * BT-17-00.
  */
-class AdditionalReferencedDocument
+class AdditionalReferencedDocumentTenderOrLotReference
 {
     /**
-     * BT-122.
+     * BT-17.
      */
-    private SupportingDocumentReference $issuerAssignedID;
+    private TenderOrLotReference $issuerAssignedID;
 
     /**
      * BT-124.
@@ -23,7 +23,7 @@ class AdditionalReferencedDocument
     private ?string $uriID;
 
     /**
-     * BT-122-0.
+     * BT-17-0.
      */
     private string $typeCode;
 
@@ -37,16 +37,16 @@ class AdditionalReferencedDocument
      */
     private ?BinaryObject $attachmentBinaryObject;
 
-    public function __construct(SupportingDocumentReference $issuerAssignedID)
+    public function __construct(TenderOrLotReference $issuerAssignedID)
     {
         $this->issuerAssignedID       = $issuerAssignedID;
-        $this->typeCode               = '916';
+        $this->typeCode               = '50';
         $this->uriID                  = null;
         $this->name                   = null;
         $this->attachmentBinaryObject = null;
     }
 
-    public function getIssuerAssignedID(): SupportingDocumentReference
+    public function getIssuerAssignedID(): TenderOrLotReference
     {
         return $this->issuerAssignedID;
     }

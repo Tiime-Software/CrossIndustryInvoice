@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement;
 
 use Tiime\EN16931\DataType\BinaryObject;
-use Tiime\EN16931\DataType\Reference\SupportingDocumentReference;
+use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
 
 /**
- * BG-24.
+ * BT-18-00.
  */
-class AdditionalReferencedDocument
+class AdditionalReferencedDocumentInvoicedObjectIdentifier
 {
     /**
-     * BT-122.
+     * BT-18.
      */
-    private SupportingDocumentReference $issuerAssignedID;
+    private ObjectIdentifier $issuerAssignedID;
 
     /**
      * BT-124.
@@ -23,9 +23,14 @@ class AdditionalReferencedDocument
     private ?string $uriID;
 
     /**
-     * BT-122-0.
+     * BT-18-0.
      */
     private string $typeCode;
+
+    /**
+     * BT-18-1.
+     */
+    private ?string $referenceTypeCode;
 
     /**
      * BT-123.
@@ -37,16 +42,17 @@ class AdditionalReferencedDocument
      */
     private ?BinaryObject $attachmentBinaryObject;
 
-    public function __construct(SupportingDocumentReference $issuerAssignedID)
+    public function __construct(ObjectIdentifier $issuerAssignedID)
     {
         $this->issuerAssignedID       = $issuerAssignedID;
-        $this->typeCode               = '916';
+        $this->typeCode               = '130';
+        $this->referenceTypeCode      = null;
         $this->uriID                  = null;
         $this->name                   = null;
         $this->attachmentBinaryObject = null;
     }
 
-    public function getIssuerAssignedID(): SupportingDocumentReference
+    public function getIssuerAssignedID(): ObjectIdentifier
     {
         return $this->issuerAssignedID;
     }
@@ -64,6 +70,16 @@ class AdditionalReferencedDocument
     public function getTypeCode(): string
     {
         return $this->typeCode;
+    }
+
+    public function getReferenceTypeCode(): ?string
+    {
+        return $this->referenceTypeCode;
+    }
+
+    public function setReferenceTypeCode(?string $referenceTypeCode): void
+    {
+        $this->referenceTypeCode = $referenceTypeCode;
     }
 
     public function getName(): ?string

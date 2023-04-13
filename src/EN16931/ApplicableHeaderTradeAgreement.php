@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\AdditionalReferencedDocument;
+use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\AdditionalReferencedDocumentInvoicedObjectIdentifier;
+use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\AdditionalReferencedDocumentTenderOrLotReference;
+use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\BuyerOrderReferencedDocument;
+use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\ContractReferencedDocument;
+use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\SellerOrderReferencedDocument;
 
 /**
  * BT-10-00.
@@ -50,10 +55,22 @@ class ApplicableHeaderTradeAgreement
      * BG-24.
      *
      * @var array<int, AdditionalReferencedDocument>
-     *
-     * TODO : BT-17-00 & BT-18-00 ? (l.188 / l.191)
      */
     private array $additionalReferencedDocuments;
+
+    /**
+     * BT-17-00.
+     *
+     * @var array<int, AdditionalReferencedDocumentTenderOrLotReference>
+     */
+    private array $additionalReferencedDocumentTenderOrLotReferences;
+
+    /**
+     * BT-18-00.
+     *
+     * @var array<int, AdditionalReferencedDocumentInvoicedObjectIdentifier>
+     */
+    private array $additionalReferencedDocumentInvoicedObjectIdentifiers;
 
     /**
      * BT-11-00.
@@ -62,15 +79,17 @@ class ApplicableHeaderTradeAgreement
 
     public function __construct(SellerTradeParty $sellerTradeParty, BuyerTradeParty $buyerTradeParty)
     {
-        $this->sellerTradeParty                  = $sellerTradeParty;
-        $this->buyerTradeParty                   = $buyerTradeParty;
-        $this->buyerReference                    = null;
-        $this->sellerTaxRepresentativeTradeParty = null;
-        $this->sellerOrderReferencedDocument     = null;
-        $this->buyerOrderReferencedDocument      = null;
-        $this->contractReferencedDocument        = null;
-        $this->specifiedProcuringProject         = null;
-        $this->additionalReferencedDocuments     = [];
+        $this->sellerTradeParty                                      = $sellerTradeParty;
+        $this->buyerTradeParty                                       = $buyerTradeParty;
+        $this->buyerReference                                        = null;
+        $this->sellerTaxRepresentativeTradeParty                     = null;
+        $this->sellerOrderReferencedDocument                         = null;
+        $this->buyerOrderReferencedDocument                          = null;
+        $this->contractReferencedDocument                            = null;
+        $this->specifiedProcuringProject                             = null;
+        $this->additionalReferencedDocuments                         = [];
+        $this->additionalReferencedDocumentTenderOrLotReferences     = [];
+        $this->additionalReferencedDocumentInvoicedObjectIdentifiers = [];
     }
 
     public function getBuyerReference(): ?string
