@@ -59,14 +59,14 @@ class ApplicableHeaderTradeSettlement
      *
      * @var array<int, SpecifiedTradeAllowance>
      */
-    private array $specifiedTradeAllowance;
+    private array $specifiedTradeAllowances;
 
     /**
      * BG-21.
      *
      * @var array<int, SpecifiedTradeCharge>
      */
-    private array $specifiedTradeCharge;
+    private array $specifiedTradeCharges;
 
     /**
      * BT-20-00.
@@ -80,10 +80,8 @@ class ApplicableHeaderTradeSettlement
 
     /**
      * BG-3.
-     *
-     * @var array<int, InvoiceReferencedDocument>
      */
-    private array $invoiceReferencedDocument;
+    private ?InvoiceReferencedDocument $invoiceReferencedDocument;
 
     /**
      * BT-19-00.

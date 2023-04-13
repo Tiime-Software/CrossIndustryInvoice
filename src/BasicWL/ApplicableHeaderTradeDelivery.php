@@ -12,7 +12,7 @@ class ApplicableHeaderTradeDelivery
     /**
      * BG-13.
      */
-    private ShipToTradeParty $shipToTradeParty;
+    private ?ShipToTradeParty $shipToTradeParty;
 
     /**
      * BT-72-00.

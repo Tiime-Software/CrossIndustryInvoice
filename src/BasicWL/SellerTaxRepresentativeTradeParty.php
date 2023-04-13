@@ -9,7 +9,7 @@ use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 /**
  * BG-11.
  */
-class SellerTaxRepresentativeParty
+class SellerTaxRepresentativeTradeParty
 {
     /**
      * BT-62.

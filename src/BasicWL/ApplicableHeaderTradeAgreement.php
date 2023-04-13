@@ -27,7 +27,7 @@ class ApplicableHeaderTradeAgreement
     /**
      * BG-11.
      */
-    private ?SellerTaxRepresentativeParty $sellerTaxRepresentativeParty;
+    private ?SellerTaxRepresentativeTradeParty $sellerTaxRepresentativeTradeParty;
 
     /**
      * BT-13-00.

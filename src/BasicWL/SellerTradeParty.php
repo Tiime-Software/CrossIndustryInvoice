@@ -18,14 +18,14 @@ class SellerTradeParty
      *
      * @var array<int, SellerIdentifier>
      */
-    private array $id;
+    private array $ids;
 
     /**
      * BT-29-0 & BT-29-1.
      *
      * @var array<int, SellerIdentifier>
      */
-    private array $globalId;
+    private array $globalIds;
 
     /**
      * BT-27.
