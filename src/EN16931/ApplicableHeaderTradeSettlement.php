@@ -6,6 +6,7 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\ApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\BillingSpecifiedPeriod;
+use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\ReceivableSpecifiedTradeAccountingAccount;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\SpecifiedTradeAllowanceCharge;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;

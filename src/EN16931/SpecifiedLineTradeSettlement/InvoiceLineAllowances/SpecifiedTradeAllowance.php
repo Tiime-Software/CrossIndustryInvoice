@@ -2,44 +2,44 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\InvoiceLineCharges;
+namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\InvoiceLineAllowances;
 
 use Tiime\EN16931\DataType\AllowanceReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
 /**
- * BG-28.
+ * BG-27.
  */
-class SpecifiedTradeAllowanceCharge
+class SpecifiedTradeAllowance
 {
     /**
-     * BG-28-0.
+     * BG-27-0.
      */
     private ChargeIndicator $chargeIndicator;
 
     /**
-     * BT-143.
+     * BT-138.
      */
     private ?Percentage $calculationPercent;
 
     /**
-     * BT-142.
+     * BT-137.
      */
     private ?Amount $basisAmount;
 
     /**
-     * BT-141.
+     * BT-136.
      */
     private Amount $actualAmount;
 
     /**
-     * BT-145.
+     * BT-140.
      */
     private ?AllowanceReasonCode $reasonCode;
 
     /**
-     * BT-144.
+     * BT-139.
      */
     private ?string $reason;
 
