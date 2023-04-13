@@ -2,16 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement;
+namespace Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty;
 
 /**
- * BT-133-00.
+ * BT-29.
  */
-class ReceivableSpecifiedTradeAccountingAccount
+class SellerIdentifier
 {
-    /**
-     * BT-133.
-     */
     private string $id;
 
     public function __construct(string $id)

@@ -8,29 +8,29 @@ use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
 use Tiime\EN16931\DataType\ObjectSchemeCode;
 
 /**
- * BT-128-00
+ * BT-128-00.
  */
 class AdditionalReferencedDocument
 {
     /**
-     * BT-128
+     * BT-128.
      */
     private ObjectIdentifier $issuerAssignedID;
 
     /**
-     * BT-128-0
+     * BT-128-0.
      */
     private string $typeCode;
 
     /**
-     * BT-128-1
+     * BT-128-1.
      */
     private ?ObjectSchemeCode $referenceTypeCode;
 
     public function __construct(ObjectIdentifier $issuerAssignedID)
     {
-        $this->issuerAssignedID = $issuerAssignedID;
-        $this->typeCode = "130";
+        $this->issuerAssignedID  = $issuerAssignedID;
+        $this->typeCode          = '130';
         $this->referenceTypeCode = null;
     }
 

@@ -46,12 +46,12 @@ class SpecifiedLineTradeSettlement
     private SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation;
 
     /**
-     * BT-128-00
+     * BT-128-00.
      */
     private ?AdditionalReferencedDocument $additionalReferencedDocument;
 
     /**
-     * BT-133-00
+     * BT-133-00.
      */
     private ?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount;
 
@@ -62,7 +62,7 @@ class SpecifiedLineTradeSettlement
         $this->specifiedTradeAllowances                      = [];
         $this->specifiedTradeCharges                         = [];
         $this->billingSpecifiedPeriod                        = null;
-        $this->receivableSpecifiedTradeAccountingAccount = null;
+        $this->receivableSpecifiedTradeAccountingAccount     = null;
     }
 
     public function getApplicableTradeTax(): ApplicableTradeTax
