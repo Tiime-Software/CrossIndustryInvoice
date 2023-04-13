@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty;
+namespace Tiime\CrossIndustryInvoice\EN16931\ShipToTradeParty;
 
 use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
- * BT-46-0 & BT-46-1.
+ * BT-71-0 & BT-71-1.
  */
-class BuyerIdentifierGlobalId
+class DeliveryIdentifierGlobalId
 {
     /**
-     * BT-46-0.
+     * BT-71-0.
      */
     private string $value;
 
     /**
-     * BT-46-1.
+     * BT-71-1.
      */
     private InternationalCodeDesignator $schemeID;
 
