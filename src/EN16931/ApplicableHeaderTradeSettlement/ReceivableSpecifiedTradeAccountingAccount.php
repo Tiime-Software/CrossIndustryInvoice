@@ -9,4 +9,17 @@ namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement;
  */
 class ReceivableSpecifiedTradeAccountingAccount
 {
+    /**
+     * BT-19.
+     */
+    private ?string $id;
+
+    public function __construct()
+    {
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 }
