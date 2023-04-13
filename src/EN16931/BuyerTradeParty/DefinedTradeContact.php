@@ -2,30 +2,33 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty;
+
+use Tiime\CrossIndustryInvoice\EN16931\EmailURIUniversalCommunication;
+use Tiime\CrossIndustryInvoice\EN16931\TelephoneUniversalCommunication;
 
 /**
- * BG-6.
+ * BG-9.
  */
 class DefinedTradeContact
 {
     /**
-     * BT-41.
+     * BT-56.
      */
     private ?string $personName;
 
     /**
-     * BT-41-0.
+     * BT-56-0.
      */
     private ?string $departmentName;
 
     /**
-     * BT-42-00.
+     * BT-57-00.
      */
     private ?TelephoneUniversalCommunication $telephoneUniversalCommunication;
 
     /**
-     * BT-43-00.
+     * BT-58-00.
      */
     private ?EmailURIUniversalCommunication $emailURIUniversalCommunication;
 

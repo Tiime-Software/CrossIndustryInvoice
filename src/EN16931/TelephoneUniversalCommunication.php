@@ -10,7 +10,7 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 class TelephoneUniversalCommunication
 {
     /**
-     * BT-42.
+     * BT-42 or BT-57.
      */
     private string $completeNumber;
 

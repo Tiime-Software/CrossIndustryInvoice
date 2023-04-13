@@ -10,7 +10,7 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 class EmailURIUniversalCommunication
 {
     /**
-     * BT-43.
+     * BT-43 or BT-58.
      */
     private string $uriID;
 
