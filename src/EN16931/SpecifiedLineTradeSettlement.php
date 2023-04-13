@@ -6,7 +6,7 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\ApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\BillingSpecifiedPeriod;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\SpecifiedTradeAllowanceCharge;
+use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\InvoiceLineAllowances\SpecifiedTradeAllowanceCharge;
 
 /**
  * BG-30-00.

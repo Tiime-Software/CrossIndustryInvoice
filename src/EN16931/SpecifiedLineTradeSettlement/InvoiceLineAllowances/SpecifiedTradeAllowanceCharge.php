@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement;
+namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\InvoiceLineAllowances;
 
 use Tiime\EN16931\DataType\AllowanceReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
@@ -34,12 +34,12 @@ class SpecifiedTradeAllowanceCharge
     private Amount $actualAmount;
 
     /**
-     * BT-140
+     * BT-140.
      */
     private ?AllowanceReasonCode $reasonCode;
 
     /**
-     * BT-139
+     * BT-139.
      */
     private ?string $reason;
 

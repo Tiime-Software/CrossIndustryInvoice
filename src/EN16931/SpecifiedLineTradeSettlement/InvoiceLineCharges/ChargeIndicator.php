@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement;
+namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\InvoiceLineCharges;
 
 /**
- * BG-27-0.
+ * BG-28-0.
  */
 class ChargeIndicator
 {
     /**
-     * BG-27-1.
+     * BG-28-1.
      */
     private bool $indicator;
 
     public function __construct()
     {
-        $this->indicator = false;
+        $this->indicator = true;
     }
 
     public function getIndicator(): bool
