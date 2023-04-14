@@ -7,7 +7,8 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\ApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\BillingSpecifiedPeriod;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\ReceivableSpecifiedTradeAccountingAccount;
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\SpecifiedTradeAllowanceCharge;
+use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\SpecifiedTradeAllowance;
+use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\SpecifiedTradeCharge;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 
@@ -61,11 +62,16 @@ class ApplicableHeaderTradeSettlement
     /**
      * BG-20.
      *
-     * @var array<int, SpecifiedTradeAllowanceCharge>
-     *
-     * TODO : line 266 and line 278 ???
+     * @var array<int, SpecifiedTradeAllowance>
      */
-    private array $specifiedTradeAllowanceCharges;
+    private array $specifiedTradeAllowances;
+
+    /**
+     * BG-21.
+     *
+     * @var array<int, SpecifiedTradeCharge>
+     */
+    private array $specifiedTradeCharges;
 
     /**
      * BT-20-00.
@@ -115,7 +121,8 @@ class ApplicableHeaderTradeSettlement
         $this->specifiedTradePaymentTerms                      = null;
         $this->invoiceReferencedDocument                       = null;
         $this->receivableSpecifiedTradeAccountingAccount       = null;
-        $this->specifiedTradeAllowanceCharges                  = [];
+        $this->specifiedTradeAllowances                        = [];
+        $this->specifiedTradeCharges                           = [];
     }
 
     public function getCreditorReferenceID(): ?BankAssignedCreditorIdentifier
@@ -188,23 +195,42 @@ class ApplicableHeaderTradeSettlement
         $this->billingSpecifiedPeriod = $billingSpecifiedPeriod;
     }
 
-    public function getSpecifiedTradeAllowanceCharges(): array
+    public function getSpecifiedTradeAllowances(): array
     {
-        return $this->specifiedTradeAllowanceCharges;
+        return $this->specifiedTradeAllowances;
     }
 
-    public function setSpecifiedTradeAllowanceCharges(array $specifiedTradeAllowanceCharges): void
+    public function setSpecifiedTradeAllowances(array $specifiedTradeAllowances): void
     {
-        $tmpSpecifiedTradeAllowanceCharges = [];
+        $tmpSpecifiedTradeAllowances = [];
 
-        foreach ($specifiedTradeAllowanceCharges as $specifiedTradeAllowanceCharge) {
-            if (!$specifiedTradeAllowanceCharge instanceof SpecifiedTradeAllowanceCharge) {
+        foreach ($specifiedTradeAllowances as $specifiedTradeAllowance) {
+            if (!$specifiedTradeAllowance instanceof SpecifiedTradeAllowance) {
                 throw new \TypeError();
             }
-            $tmpSpecifiedTradeAllowanceCharges[] = $specifiedTradeAllowanceCharge;
+            $tmpSpecifiedTradeAllowances[] = $specifiedTradeAllowance;
         }
 
-        $this->specifiedTradeAllowanceCharges = $tmpSpecifiedTradeAllowanceCharges;
+        $this->specifiedTradeAllowances = $tmpSpecifiedTradeAllowances;
+    }
+
+    public function getSpecifiedTradeCharges(): array
+    {
+        return $this->specifiedTradeCharges;
+    }
+
+    public function setSpecifiedTradeCharges(array $specifiedTradeCharges): void
+    {
+        $tmpSpecifiedTradeCharges = [];
+
+        foreach ($specifiedTradeCharges as $specifiedTradeCharge) {
+            if (!$specifiedTradeCharge instanceof SpecifiedTradeCharge) {
+                throw new \TypeError();
+            }
+            $tmpSpecifiedTradeCharges[] = $specifiedTradeCharge;
+        }
+
+        $this->specifiedTradeCharges = $tmpSpecifiedTradeCharges;
     }
 
     public function getSpecifiedTradePaymentTerms(): ?SpecifiedTradePaymentTerms
