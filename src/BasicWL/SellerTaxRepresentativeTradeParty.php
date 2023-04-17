@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
-use Tiime\EN16931\DataType\Identifier\VatIdentifier;
+use Tiime\CrossIndustryInvoice\DataType\SellerTaxRepresentativeTradeParty\SpecifiedTaxRegistration;
 
 /**
  * BG-11.
@@ -24,5 +24,5 @@ class SellerTaxRepresentativeTradeParty
     /**
      * BT-63-00.
      */
-    private VatIdentifier $specifiedTaxRegistration;
+    private SpecifiedTaxRegistration $specifiedTaxRegistration;
 }

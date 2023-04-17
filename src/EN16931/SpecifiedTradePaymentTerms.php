@@ -20,16 +20,16 @@ class SpecifiedTradePaymentTerms
     /**
      * BT-9-00.
      */
-    private DueDateDateTime $dueDateDateTime;
+    private ?DueDateDateTime $dueDateDateTime;
 
     /**
      * BT-89.
      */
     private ?MandateReferenceIdentifier $directDebitMandateID;
 
-    public function __construct(DueDateDateTime $dueDateDateTime)
+    public function __construct()
     {
-        $this->dueDateDateTime      = $dueDateDateTime;
+        $this->dueDateDateTime      = null;
         $this->description          = null;
         $this->directDebitMandateID = null;
     }
@@ -47,6 +47,11 @@ class SpecifiedTradePaymentTerms
     public function getDueDateDateTime(): DueDateDateTime
     {
         return $this->dueDateDateTime;
+    }
+
+    public function setDueDateDateTime(?DueDateDateTime $dueDateDateTime): void
+    {
+        $this->dueDateDateTime = $dueDateDateTime;
     }
 
     public function getDirectDebitMandateID(): ?MandateReferenceIdentifier

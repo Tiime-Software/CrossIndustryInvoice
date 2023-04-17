@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SellerTaxRepresentativeTradeParty;
+namespace Tiime\CrossIndustryInvoice\DataType\SellerTaxRepresentativeTradeParty;
 
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 

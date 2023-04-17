@@ -14,5 +14,5 @@ class ContractReferencedDocument
     /**
      * BT-12.
      */
-    private ?ContractReference $issuerAssignedID;
+    private ContractReference $issuerAssignedID;
 }
