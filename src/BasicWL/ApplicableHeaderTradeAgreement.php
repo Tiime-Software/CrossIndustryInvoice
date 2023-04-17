@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
 use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
+use Tiime\CrossIndustryInvoice\DataType\ContractReferencedDocument;
 
 /**
  * BT-10-00.

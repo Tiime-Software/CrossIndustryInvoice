@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\BasicWL;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\DataType\Reference\ContractReference;
 
@@ -14,5 +14,5 @@ class ContractReferencedDocument
     /**
      * BT-12.
      */
-    private ContractReference $issuerAssignedId;
+    private ContractReference $issuerAssignedID;
 }
