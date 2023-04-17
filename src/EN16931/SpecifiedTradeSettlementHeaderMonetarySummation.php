@@ -116,12 +116,12 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         $this->taxTotalAmount = $taxTotalAmount;
     }
 
-    public function getTaxTotalAmountCurrency(): ?TaxTotalAmountCurrency
+    public function getTaxTotalAmountCurrency(): ?TaxTotalAmount
     {
         return $this->taxTotalAmountCurrency;
     }
 
-    public function setTaxTotalAmountCurrency(?TaxTotalAmountCurrency $taxTotalAmountCurrency): void
+    public function setTaxTotalAmountCurrency(?TaxTotalAmount $taxTotalAmountCurrency): void
     {
         $this->taxTotalAmountCurrency = $taxTotalAmountCurrency;
     }
