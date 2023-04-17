@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedTradePaymentTerms;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 /**
  * BT-9-00.

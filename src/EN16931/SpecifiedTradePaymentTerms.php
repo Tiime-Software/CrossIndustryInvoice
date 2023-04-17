@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedTradePaymentTerms\DueDateDateTime;
+use Tiime\CrossIndustryInvoice\DataType\DueDateDateTime;
 use Tiime\EN16931\DataType\Identifier\MandateReferenceIdentifier;
 
 /**
