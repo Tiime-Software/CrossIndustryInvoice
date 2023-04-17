@@ -23,8 +23,6 @@ class SpecifiedTradeSettlementPaymentMeans
 
     /**
      * BG-17.
-     *
-     * @var array<int, PayeePartyCreditorFinancialAccount>
      */
-    private array $payeePartyCreditorFinancialAccounts;
+    private ?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount;
 }
