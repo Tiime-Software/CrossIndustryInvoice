@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\TaxTotalAmount;
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\TaxTotalAmountCurrency;
+use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
 use Tiime\EN16931\SemanticDataType\Amount;
 
 /**
@@ -41,7 +40,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
     /**
      * BT-111 & BT-111-0.
      */
-    private ?TaxTotalAmountCurrency $taxTotalAmountCurrency;
+    private ?TaxTotalAmount $taxTotalAmountCurrency;
 
     /**
      * BT-114.
