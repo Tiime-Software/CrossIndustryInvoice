@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
+use Tiime\CrossIndustryInvoice\DataType\AllowanceChargeIndicator;
 use Tiime\EN16931\DataType\AllowanceReasonCode;
 
 class SpecifiedTradeAllowance
@@ -11,7 +12,7 @@ class SpecifiedTradeAllowance
     /**
      * BG-20-0.
      */
-    private ChargeIndicator $chargeIndicator;
+    private AllowanceChargeIndicator $chargeIndicator;
 
     /**
      * BT-94.

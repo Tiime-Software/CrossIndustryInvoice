@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement;
 
+use Tiime\CrossIndustryInvoice\DataType\AllowanceChargeIndicator;
 use Tiime\EN16931\DataType\AllowanceReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;

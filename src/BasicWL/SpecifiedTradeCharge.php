@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
+use Tiime\CrossIndustryInvoice\DataType\ChargeChargeIndicator;
 use Tiime\EN16931\DataType\ChargeReasonCode;
 
 /**
@@ -14,7 +15,7 @@ class SpecifiedTradeCharge
     /**
      * BG-21-0.
      */
-    private ChargeIndicator $chargeIndicator;
+    private ChargeChargeIndicator $chargeIndicator;
 
     /**
      * BT-101.
