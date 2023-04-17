@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement;
+namespace Tiime\CrossIndustryInvoice\BasicWL;
 
 use Tiime\EN16931\DataType\Reference\ContractReference;
 
@@ -14,5 +14,5 @@ class ContractReferencedDocument
     /**
      * BT-12.
      */
-    private ContractReference $issuerAssignedID;
+    private ContractReference $issuerAssignedId;
 }

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\BusinessProcessSpecifiedDocumentContextParameter;
+use Tiime\CrossIndustryInvoice\DataType\GuidelineSpecifiedDocumentContextParameter;
+
 /**
  * BG-2.
  */

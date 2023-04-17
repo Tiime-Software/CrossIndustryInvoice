@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\OccurrenceDateTime;
+
 /**
  * BT-72-00.
  */
@@ -12,15 +14,15 @@ class ActualDeliverySupplyChainEvent
     /**
      * BT-72-01.
      */
-    private OccurenceDateTime $occurenceDateTime;
+    private OccurrenceDateTime $occurrenceDateTime;
 
-    public function __construct(OccurenceDateTime $occurenceDateTime)
+    public function __construct(OccurrenceDateTime $occurrenceDateTime)
     {
-        $this->occurenceDateTime = $occurenceDateTime;
+        $this->occurrenceDateTime = $occurrenceDateTime;
     }
 
-    public function getOccurenceDateTime(): OccurenceDateTime
+    public function getOccurrenceDateTime(): OccurrenceDateTime
     {
-        return $this->occurenceDateTime;
+        return $this->occurrenceDateTime;
     }
 }

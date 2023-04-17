@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
-use Tiime\CrossIndustryInvoice\EN16931\PayeeTradeParty\PayeeIdentifier;
-use Tiime\CrossIndustryInvoice\EN16931\PayeeTradeParty\PayeeIdentifierGlobalId;
-use Tiime\CrossIndustryInvoice\EN16931\PayeeTradeParty\SpecifiedLegalOrganization;
+use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\PayeeIdentifier;
+use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\PayeeIdentifierGlobalId;
+use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\SpecifiedLegalOrganization;
 
 /**
  * BG-10.

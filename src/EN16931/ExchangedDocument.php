@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\IncludedNote;
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
-use Tiime\CrossIndustryInvoice\EN16931\ExchangedDocument\IncludedNote;
 use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
 use Tiime\EN16931\DataType\InvoiceTypeCode;
 
