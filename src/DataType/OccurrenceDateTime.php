@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-class OccurenceDateTime
+class OccurrenceDateTime
 {
     /**
      * BT-72.
