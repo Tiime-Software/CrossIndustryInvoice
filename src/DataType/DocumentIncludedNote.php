@@ -9,7 +9,7 @@ use Tiime\EN16931\DataType\InvoiceNoteCode;
 /**
  * BG-1.
  */
-class IncludedNote
+class DocumentIncludedNote
 {
     /**
      * BT-22.

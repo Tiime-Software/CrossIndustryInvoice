@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\CrossIndustryInvoice\DataType\IncludedNote;
+use Tiime\CrossIndustryInvoice\DataType\DocumentIncludedNote;
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
 use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
 use Tiime\EN16931\DataType\InvoiceTypeCode;
@@ -17,7 +17,7 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
     /**
      * BG-1.
      *
-     * @var array<int, IncludedNote>
+     * @var array<int, DocumentIncludedNote>
      */
     private array $includedNotes;
 
@@ -37,7 +37,7 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
         $tmpIncludedNotes = [];
 
         foreach ($includedNotes as $includedNote) {
-            if (!$includedNote instanceof IncludedNote) {
+            if (!$includedNote instanceof DocumentIncludedNote) {
                 throw new \TypeError();
             }
             $tmpIncludedNotes[] = $includedNote;
