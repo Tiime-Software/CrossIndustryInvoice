@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\AdditionalReferencedDocument;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\AdditionalReferencedDocumentInvoicedObjectIdentifier;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\AdditionalReferencedDocumentTenderOrLotReference;
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\BuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\ContractReferencedDocument;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\SellerOrderReferencedDocument;
 
