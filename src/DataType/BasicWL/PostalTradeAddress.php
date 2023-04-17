@@ -2,53 +2,48 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SellerTaxRepresentativeTradeParty;
+namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 
 /**
- * BG-12.
+ * BG-5.
  */
-class PostalTradeAddress
+class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\PostalTradeAddress
 {
     /**
-     * BT-67.
+     * BT-38.
      */
     private ?string $postcodeCode;
 
     /**
-     * BT-64.
+     * BT-35.
      */
     private ?string $lineOne;
 
     /**
-     * BT-65.
+     * BT-36.
      */
     private ?string $lineTwo;
 
     /**
-     * BT-164.
+     * BT-162.
      */
     private ?string $lineThree;
 
     /**
-     * BT-66.
+     * BT-37.
      */
     private ?string $cityName;
 
     /**
-     * BT-69.
-     */
-    private CountryAlpha2Code $countryID;
-
-    /**
-     * BT-68.
+     * BT-39.
      */
     private ?string $countrySubDivisionName;
 
     public function __construct(CountryAlpha2Code $countryID)
     {
-        $this->countryID              = $countryID;
+        parent::__construct($countryID);
         $this->postcodeCode           = null;
         $this->lineOne                = null;
         $this->lineTwo                = null;
@@ -105,11 +100,6 @@ class PostalTradeAddress
     public function setCityName(?string $cityName): void
     {
         $this->cityName = $cityName;
-    }
-
-    public function getCountryID(): CountryAlpha2Code
-    {
-        return $this->countryID;
     }
 
     public function getCountrySubDivisionName(): ?string

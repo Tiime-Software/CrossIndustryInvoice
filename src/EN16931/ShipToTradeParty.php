@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
 use Tiime\CrossIndustryInvoice\EN16931\ShipToTradeParty\DeliveryIdentifier;
 use Tiime\CrossIndustryInvoice\EN16931\ShipToTradeParty\DeliveryIdentifierGlobalId;
-use Tiime\CrossIndustryInvoice\EN16931\ShipToTradeParty\PostalTradeAddress;
 
 /**
  * BG-13.
