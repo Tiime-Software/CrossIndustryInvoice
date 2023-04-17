@@ -6,6 +6,7 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifierGlobalId;
+use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\DefinedTradeContact;
 use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\PostalTradeAddress;
 use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\SpecifiedLegalOrganization;

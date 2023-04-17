@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
+use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\EN16931\DataType\Identifier\BuyerIdentifier;
-use Tiime\EN16931\DataType\Identifier\ElectronicAddressIdentifier;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 
 /**
@@ -41,7 +41,7 @@ class BuyerTradeParty
     /**
      * BT-49-00.
      */
-    private ?ElectronicAddressIdentifier $URIUniversalCommunication;
+    private ?URIUniversalCommunication $URIUniversalCommunication;
 
     /**
      * BT-48-00.

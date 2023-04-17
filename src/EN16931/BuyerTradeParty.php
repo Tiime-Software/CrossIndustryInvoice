@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\BuyerIdentifier;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\BuyerIdentifierGlobalId;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\DefinedTradeContact;

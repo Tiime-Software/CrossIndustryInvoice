@@ -6,7 +6,7 @@ namespace Tiime\CrossIndustryInvoice\BasicWL;
 
 use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifierGlobalId;
-use Tiime\EN16931\DataType\Identifier\ElectronicAddressIdentifier;
+use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 
 /**
@@ -46,7 +46,7 @@ class SellerTradeParty
     /**
      * BT-34-00.
      */
-    private ?ElectronicAddressIdentifier $URIUniversalCommunication;
+    private ?URIUniversalCommunication $URIUniversalCommunication;
 
     /**
      * BT-31-00.
