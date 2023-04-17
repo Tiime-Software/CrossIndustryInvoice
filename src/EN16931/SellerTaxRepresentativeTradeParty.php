@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
 use Tiime\CrossIndustryInvoice\DataType\SellerTaxRepresentativeTradeParty\SpecifiedTaxRegistration;
-use Tiime\CrossIndustryInvoice\EN16931\SellerTaxRepresentativeTradeParty\PostalTradeAddress;
 
 /**
  * BG-11.
