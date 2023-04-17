@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\BillingSpecifiedPeriod;
+namespace Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 
 /**
- * BT-73-00.
+ * BT-74-00.
  */
-class StartDateTime
+class EndDateTime
 {
     /**
-     * BT-73.
+     * BT-74.
      */
     private \DateTimeInterface $dateTimeString;
 
     /**
-     * BT-73-0.
+     * BT-74-0.
      */
     private string $format;
 

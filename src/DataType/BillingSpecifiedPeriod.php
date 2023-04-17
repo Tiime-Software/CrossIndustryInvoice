@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\CrossIndustryInvoice\EN16931\BillingSpecifiedPeriod\EndDateTime;
-use Tiime\CrossIndustryInvoice\EN16931\BillingSpecifiedPeriod\StartDateTime;
+use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod\EndDateTime;
+use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod\StartDateTime;
 
 /**
  * BG-14.
