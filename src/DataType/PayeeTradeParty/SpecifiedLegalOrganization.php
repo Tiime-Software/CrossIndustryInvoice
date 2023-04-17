@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\PayeeTradeParty;
+namespace Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty;
 
 use Tiime\EN16931\DataType\Identifier\LegalRegistrationIdentifier;
 

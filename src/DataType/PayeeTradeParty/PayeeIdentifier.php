@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\PayeeTradeParty;
+namespace Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty;
 
 /**
  * BT-60.
