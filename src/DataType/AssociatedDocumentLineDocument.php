@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\CrossIndustryInvoice\EN16931\AssociatedDocumentLineDocument\IncludedNote;
 use Tiime\EN16931\DataType\Identifier\InvoiceLineIdentifier;
 
 /**
@@ -20,7 +19,7 @@ class AssociatedDocumentLineDocument
     /**
      * BT-127-00.
      */
-    private ?IncludedNote $includedNote;
+    private ?LineIncludedNote $includedNote;
 
     public function __construct(InvoiceLineIdentifier $lineID)
     {
@@ -32,12 +31,12 @@ class AssociatedDocumentLineDocument
         return $this->lineID;
     }
 
-    public function getIncludedNote(): ?IncludedNote
+    public function getIncludedNote(): ?LineIncludedNote
     {
         return $this->includedNote;
     }
 
-    public function setIncludedNote(?IncludedNote $includedNote): void
+    public function setIncludedNote(?LineIncludedNote $includedNote): void
     {
         $this->includedNote = $includedNote;
     }

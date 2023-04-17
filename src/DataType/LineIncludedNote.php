@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\AssociatedDocumentLineDocument;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 /**
  * BT-127-00.
  */
-class IncludedNote
+class LineIncludedNote
 {
     /**
      * BT-127.
