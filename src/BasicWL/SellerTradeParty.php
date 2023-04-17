@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
+use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifier;
+use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifierGlobalId;
 use Tiime\EN16931\DataType\Identifier\ElectronicAddressIdentifier;
-use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 
 /**
@@ -23,7 +24,7 @@ class SellerTradeParty
     /**
      * BT-29-0 & BT-29-1.
      *
-     * @var array<int, SellerIdentifier>
+     * @var array<int, SellerIdentifierGlobalId>
      */
     private array $globalIds;
 

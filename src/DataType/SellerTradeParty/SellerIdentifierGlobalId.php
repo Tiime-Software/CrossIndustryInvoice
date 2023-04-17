@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty;
+namespace Tiime\CrossIndustryInvoice\DataType\SellerTradeParty;
 
 use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
