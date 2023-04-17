@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement;
 
 use Tiime\CrossIndustryInvoice\DataType\AllowanceChargeIndicator;
+use Tiime\CrossIndustryInvoice\DataType\CategoryTradeTax;
 use Tiime\EN16931\DataType\AllowanceReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
@@ -47,9 +48,9 @@ class SpecifiedTradeAllowance
     /**
      * BT-95-00.
      */
-    private AllowanceCategoryTradeTax $allowanceCategoryTradeTax;
+    private CategoryTradeTax $allowanceCategoryTradeTax;
 
-    public function __construct(Amount $actualAmount, AllowanceCategoryTradeTax $allowanceCategoryTradeTax)
+    public function __construct(Amount $actualAmount, CategoryTradeTax $allowanceCategoryTradeTax)
     {
         $this->allowanceChargeIndicator  = new AllowanceChargeIndicator();
         $this->actualAmount              = $actualAmount;
@@ -70,7 +71,7 @@ class SpecifiedTradeAllowance
         return $this->actualAmount;
     }
 
-    public function getAllowanceCategoryTradeTax(): AllowanceCategoryTradeTax
+    public function getAllowanceCategoryTradeTax(): CategoryTradeTax
     {
         return $this->allowanceCategoryTradeTax;
     }

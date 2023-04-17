@@ -34,11 +34,11 @@ class SellerSpecifiedLegalOrganization
 
     public function getSchemeId(): ?InternationalCodeDesignator
     {
-        return $this->schemeId;
+        return $this->schemeID;
     }
 
     public function setSchemeId(?InternationalCodeDesignator $schemeId): void
     {
-        $this->schemeId = $schemeId;
+        $this->schemeID = $schemeId;
     }
 }

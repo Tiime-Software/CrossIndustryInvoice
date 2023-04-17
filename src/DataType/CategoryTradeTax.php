@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\DataType\VatCategory;
 use Tiime\EN16931\SemanticDataType\Percentage;
@@ -10,12 +10,12 @@ use Tiime\EN16931\SemanticDataType\Percentage;
 /**
  * BT-95-00.
  */
-class AllowanceCategoryTradeTax
+class CategoryTradeTax
 {
     /**
      * BT-95-0.
      */
-    private string $typeCode;
+    private string $typeCode = 'VAT';
 
     /**
      * BT-95.

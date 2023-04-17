@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement;
 
+use Tiime\CrossIndustryInvoice\DataType\CategoryTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\ChargeChargeIndicator;
 use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
@@ -47,9 +48,9 @@ class SpecifiedTradeCharge
     /**
      * BT-102-00.
      */
-    private ChargeCategoryTradeTax $categoryTradeTax;
+    private CategoryTradeTax $categoryTradeTax;
 
-    public function __construct(Amount $actualAmount, ChargeCategoryTradeTax $categoryTradeTax)
+    public function __construct(Amount $actualAmount, CategoryTradeTax $categoryTradeTax)
     {
         $this->chargeChargeIndicator = new ChargeChargeIndicator();
         $this->actualAmount          = $actualAmount;
@@ -110,7 +111,7 @@ class SpecifiedTradeCharge
         $this->reason = $reason;
     }
 
-    public function getCategoryTradeTax(): ChargeCategoryTradeTax
+    public function getCategoryTradeTax(): CategoryTradeTax
     {
         return $this->categoryTradeTax;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
+use Tiime\CrossIndustryInvoice\DataType\CategoryTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\ChargeChargeIndicator;
 use Tiime\EN16931\DataType\ChargeReasonCode;
 
