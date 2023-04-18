@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
-use Tiime\CrossIndustryInvoice\EN16931\ShipToTradeParty\DeliveryIdentifier;
-use Tiime\CrossIndustryInvoice\EN16931\ShipToTradeParty\DeliveryIdentifierGlobalId;
+use Tiime\EN16931\DataType\Identifier\LocationIdentifier;
 
 /**
  * BG-13.
@@ -16,12 +15,12 @@ class ShipToTradeParty
     /**
      * BT-71.
      */
-    private ?DeliveryIdentifier $id;
+    private ?LocationIdentifier $identifier;
 
     /**
      * BT-71-0 & BT-71-1.
      */
-    private ?DeliveryIdentifierGlobalId $globalId;
+    private ?LocationGlobalIdentifier $globalId;
 
     /**
      * BT-70.
@@ -35,28 +34,28 @@ class ShipToTradeParty
 
     public function __construct()
     {
-        $this->id                 = null;
+        $this->identifier         = null;
         $this->globalId           = null;
         $this->name               = null;
         $this->postalTradeAddress = null;
     }
 
-    public function getId(): ?DeliveryIdentifier
+    public function getIdentifier(): ?LocationIdentifier
     {
-        return $this->id;
+        return $this->identifier;
     }
 
-    public function setId(?DeliveryIdentifier $id): void
+    public function setIdentifier(?LocationIdentifier $identifier): void
     {
-        $this->id = $id;
+        $this->identifier = $identifier;
     }
 
-    public function getGlobalId(): ?DeliveryIdentifierGlobalId
+    public function getGlobalId(): ?LocationGlobalIdentifier
     {
         return $this->globalId;
     }
 
-    public function setGlobalId(?DeliveryIdentifierGlobalId $globalId): void
+    public function setGlobalId(?LocationGlobalIdentifier $globalId): void
     {
         $this->globalId = $globalId;
     }
