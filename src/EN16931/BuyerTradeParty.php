@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
+use Tiime\CrossIndustryInvoice\DataType\BuyerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\BuyerSpecifiedLegalOrganization;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\BuyerIdentifier;
-use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\BuyerIdentifierGlobalId;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\DefinedTradeContact;
-use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\SpecifiedTaxRegistration;
 
 /**
  * BG-7.
@@ -25,7 +25,7 @@ class BuyerTradeParty
     /**
      * BT-46-0 & BT-46-1.
      */
-    private ?BuyerIdentifierGlobalId $globalId;
+    private ?BuyerGlobalIdentifier $globalId;
 
     /**
      * BT-44.
@@ -79,12 +79,12 @@ class BuyerTradeParty
         $this->id = $id;
     }
 
-    public function getGlobalId(): ?BuyerIdentifierGlobalId
+    public function getGlobalId(): ?BuyerGlobalIdentifier
     {
         return $this->globalId;
     }
 
-    public function setGlobalId(?BuyerIdentifierGlobalId $globalId): void
+    public function setGlobalId(?BuyerGlobalIdentifier $globalId): void
     {
         $this->globalId = $globalId;
     }
