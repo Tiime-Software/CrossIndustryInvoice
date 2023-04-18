@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 /**
  * BT-19-00.
@@ -12,13 +12,14 @@ class ReceivableSpecifiedTradeAccountingAccount
     /**
      * BT-19.
      */
-    private ?string $id;
+    private string $id;
 
-    public function __construct()
+    public function __construct(string $id)
     {
+        $this->id = $id;
     }
 
-    public function getId(): ?string
+    public function getId(): string
     {
         return $this->id;
     }
