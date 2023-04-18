@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\SellerSpecifiedLegalOrganization;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\SellerSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifierGlobalId;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;

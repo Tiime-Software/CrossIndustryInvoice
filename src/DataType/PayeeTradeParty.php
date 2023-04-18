@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\CrossIndustryInvoice\DataType\EN16931\PayeeSpecifiedLegalOrganization;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeeSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\PayeeIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\PayeeIdentifierGlobalId;
 
