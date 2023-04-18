@@ -8,6 +8,7 @@ use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 use Tiime\CrossIndustryInvoice\DataType\InvoiceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 
