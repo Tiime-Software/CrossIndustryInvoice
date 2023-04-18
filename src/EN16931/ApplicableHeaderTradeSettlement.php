@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
+use Tiime\CrossIndustryInvoice\DataType\InvoiceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\ApplicableTradeTax;
