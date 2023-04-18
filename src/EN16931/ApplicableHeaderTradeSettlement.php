@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\HeaderApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\InvoiceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement\ApplicableTradeTax;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 
@@ -53,7 +53,7 @@ class ApplicableHeaderTradeSettlement
     /**
      * BG-23.
      *
-     * @var array<int, ApplicableTradeTax>
+     * @var non-empty-array<int, HeaderApplicableTradeTax>
      */
     private array $applicableTradeTaxes;
 
@@ -101,7 +101,7 @@ class ApplicableHeaderTradeSettlement
         $tmpApplicableTradeTaxes = [];
 
         foreach ($applicableTradeTaxes as $applicableTradeTax) {
-            if (!$applicableTradeTax instanceof ApplicableTradeTax) {
+            if (!$applicableTradeTax instanceof HeaderApplicableTradeTax) {
                 throw new \TypeError();
             }
 
@@ -109,7 +109,7 @@ class ApplicableHeaderTradeSettlement
         }
 
         if (empty($tmpApplicableTradeTaxes)) {
-            throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one ApplicableTradeTax.');
+            throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one HeaderApplicableTradeTax.');
         }
 
         $this->invoiceCurrencyCode                             = $invoiceCurrencyCode;
