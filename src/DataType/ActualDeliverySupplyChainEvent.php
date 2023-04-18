@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
-
-use Tiime\CrossIndustryInvoice\DataType\OccurrenceDateTime;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 /**
  * BT-72-00.
