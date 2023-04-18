@@ -13,8 +13,11 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
      */
     private ?string $accountName;
 
-    public function __construct(?PaymentAccountIdentifier $ibanId = null, ?string $accountName = null, ?PaymentAccountIdentifier $proprietaryId = null)
-    {
+    public function __construct(
+        ?PaymentAccountIdentifier $ibanId = null,
+        ?string $accountName = null,
+        ?PaymentAccountIdentifier $proprietaryId = null
+    ) {
         parent::__construct($ibanId, $proprietaryId);
 
         $this->accountName = $accountName;
