@@ -54,7 +54,8 @@ class ApplicableHeaderTradeSettlement
      * BG-23.
      *
      * @var non-empty-array<int, HeaderApplicableTradeTax>
-     *     TODO : constructor 1..n checks
+     *
+     * TODO : constructor 1..n checks
      */
     private array $applicableTradeTaxes;
 
