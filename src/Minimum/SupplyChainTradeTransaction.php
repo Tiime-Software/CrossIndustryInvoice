@@ -22,14 +22,15 @@ class SupplyChainTradeTransaction
     /**
      * BG-19.
      */
-    private ?ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement;
+    private ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement;
 
     public function __construct(
-        ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement
+        ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement,
+        ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement
     ) {
         $this->applicableHeaderTradeDelivery   = new ApplicableHeaderTradeDelivery();
         $this->applicableHeaderTradeAgreement  = $applicableHeaderTradeAgreement;
-        $this->applicableHeaderTradeSettlement = null;
+        $this->applicableHeaderTradeSettlement = $applicableHeaderTradeSettlement;
     }
 
     public function getApplicableHeaderTradeAgreement(): ApplicableHeaderTradeAgreement
@@ -42,13 +43,8 @@ class SupplyChainTradeTransaction
         return $this->applicableHeaderTradeDelivery;
     }
 
-    public function getApplicableHeaderTradeSettlement(): ?ApplicableHeaderTradeSettlement
+    public function getApplicableHeaderTradeSettlement(): ApplicableHeaderTradeSettlement
     {
         return $this->applicableHeaderTradeSettlement;
-    }
-
-    public function setApplicableHeaderTradeSettlement(?ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement): void
-    {
-        $this->applicableHeaderTradeSettlement = $applicableHeaderTradeSettlement;
     }
 }
