@@ -6,6 +6,7 @@ namespace Tiime\CrossIndustryInvoice\BasicWL;
 
 use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ContractReferencedDocument;
+use Tiime\CrossIndustryInvoice\DataType\SellerTaxRepresentativeTradeParty;
 
 /**
  * BT-10-00.
