@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\SellerSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifierGlobalId;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\DefinedTradeContact;
-use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\SpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\SpecifiedTaxRegistration;
 use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\SpecifiedTaxRegistrationVAT;
 
@@ -45,7 +45,7 @@ class SellerTradeParty
     /**
      * BT-30-00.
      */
-    private ?SpecifiedLegalOrganization $specifiedLegalOrganization;
+    private ?SellerSpecifiedLegalOrganization $specifiedLegalOrganization;
 
     /**
      * BG-6.
@@ -125,12 +125,12 @@ class SellerTradeParty
         $this->description = $description;
     }
 
-    public function getSpecifiedLegalOrganization(): ?SpecifiedLegalOrganization
+    public function getSpecifiedLegalOrganization(): ?SellerSpecifiedLegalOrganization
     {
         return $this->specifiedLegalOrganization;
     }
 
-    public function setSpecifiedLegalOrganization(?SpecifiedLegalOrganization $specifiedLegalOrganization): void
+    public function setSpecifiedLegalOrganization(?SellerSpecifiedLegalOrganization $specifiedLegalOrganization): void
     {
         $this->specifiedLegalOrganization = $specifiedLegalOrganization;
     }

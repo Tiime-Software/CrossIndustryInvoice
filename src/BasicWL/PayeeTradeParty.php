@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeeSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\PayeeIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\PayeeIdentifierGlobalId;
-use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\SpecifiedLegalOrganization;
 
 /**
  * BG-10.
@@ -31,5 +31,5 @@ class PayeeTradeParty
     /**
      * BT-61-00.
      */
-    private ?SpecifiedLegalOrganization $specifiedLegalOrganization;
+    private ?PayeeSpecifiedLegalOrganization $specifiedLegalOrganization;
 }
