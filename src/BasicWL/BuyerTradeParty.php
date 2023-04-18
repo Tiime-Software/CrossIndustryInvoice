@@ -7,6 +7,7 @@ namespace Tiime\CrossIndustryInvoice\BasicWL;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
 use Tiime\CrossIndustryInvoice\DataType\BuyerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerSpecifiedLegalOrganization;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\EN16931\DataType\Identifier\BuyerIdentifier;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
@@ -49,5 +50,5 @@ class BuyerTradeParty
     /**
      * BT-48-00.
      */
-    private ?VatIdentifier $specifiedTaxRegistration;
+    private ?SpecifiedTaxRegistration $specifiedTaxRegistration;
 }

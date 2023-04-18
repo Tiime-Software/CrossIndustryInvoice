@@ -7,11 +7,11 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
 use Tiime\CrossIndustryInvoice\DataType\BuyerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\BuyerSpecifiedLegalOrganization;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\BuyerIdentifier;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\BuyerIdentifierGlobalId;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\DefinedTradeContact;
-use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\SpecifiedTaxRegistration;
 
 /**
  * BG-7.
