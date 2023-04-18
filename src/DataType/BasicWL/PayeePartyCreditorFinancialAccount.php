@@ -25,10 +25,6 @@ class PayeePartyCreditorFinancialAccount
         ?PaymentAccountIdentifier $ibanId = null,
         ?PaymentAccountIdentifier $proprietaryId = null
     ) {
-        if (!$ibanId instanceof PaymentAccountIdentifier && !$proprietaryId instanceof PaymentAccountIdentifier) {
-            throw new \TypeError();
-        }
-
         $this->ibanId        = $ibanId;
         $this->proprietaryId = $proprietaryId;
     }
