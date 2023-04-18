@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\Minimum;
 
 use Tiime\CrossIndustryInvoice\DataType\Minimum\PostalTradeAddress;
+use Tiime\CrossIndustryInvoice\DataType\Minimum\SellerSpecifiedLegalOrganization;
 
 /**
  * BG-4.

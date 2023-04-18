@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeeSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\PayeeIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\PayeeIdentifierGlobalId;
-use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\SpecifiedLegalOrganization;
 
 /**
  * BG-10.
@@ -31,7 +31,7 @@ class PayeeTradeParty
     /**
      * BT-61-00.
      */
-    private ?SpecifiedLegalOrganization $specifiedLegalOrganization;
+    private ?PayeeSpecifiedLegalOrganization $specifiedLegalOrganization;
 
     public function __construct(string $name)
     {
@@ -66,12 +66,12 @@ class PayeeTradeParty
         return $this->name;
     }
 
-    public function getSpecifiedLegalOrganization(): ?SpecifiedLegalOrganization
+    public function getSpecifiedLegalOrganization(): ?PayeeSpecifiedLegalOrganization
     {
         return $this->specifiedLegalOrganization;
     }
 
-    public function setSpecifiedLegalOrganization(?SpecifiedLegalOrganization $specifiedLegalOrganization): void
+    public function setSpecifiedLegalOrganization(?PayeeSpecifiedLegalOrganization $specifiedLegalOrganization): void
     {
         $this->specifiedLegalOrganization = $specifiedLegalOrganization;
     }

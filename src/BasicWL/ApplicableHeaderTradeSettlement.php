@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
+use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
