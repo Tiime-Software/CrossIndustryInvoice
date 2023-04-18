@@ -6,6 +6,7 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
 use Tiime\CrossIndustryInvoice\DataType\DespatchAdviceReferencedDocument;
+use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
 
 /**
  * BG-13-00.
