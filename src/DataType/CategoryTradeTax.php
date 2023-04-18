@@ -15,7 +15,7 @@ class CategoryTradeTax
     /**
      * BT-95-0.
      */
-    private string $typeCode = 'VAT';
+    private string $typeCode;
 
     /**
      * BT-95.
