@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\HeaderApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 use Tiime\CrossIndustryInvoice\DataType\InvoiceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty;
@@ -52,7 +53,8 @@ class ApplicableHeaderTradeSettlement
     /**
      * BG-23.
      *
-     * @var non-empty-array<int, ApplicableTradeTax>
+     * @var non-empty-array<int, HeaderApplicableTradeTax>
+     *     TODO : constructor 1..n checks
      */
     private array $applicableTradeTaxes;
 

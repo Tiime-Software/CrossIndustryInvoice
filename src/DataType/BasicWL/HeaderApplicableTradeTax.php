@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement;
+namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\CrossIndustryInvoice\EN16931\TaxPointDate;
 use Tiime\EN16931\DataType\DateCode2005;
 use Tiime\EN16931\DataType\VatCategory;
 use Tiime\EN16931\DataType\VatExoneration;
@@ -14,7 +13,7 @@ use Tiime\EN16931\SemanticDataType\Percentage;
 /**
  * BG-23.
  */
-class ApplicableTradeTax
+class HeaderApplicableTradeTax
 {
     /**
      * BT-117.
@@ -47,11 +46,6 @@ class ApplicableTradeTax
     private ?VatExoneration $exemptionReasonCode;
 
     /**
-     * BT-7-00.
-     */
-    private ?TaxPointDate $taxPointDate;
-
-    /**
      * BT-8.
      */
     private ?DateCode2005 $dueDateTypeCode;
@@ -69,7 +63,6 @@ class ApplicableTradeTax
         $this->typeCode              = 'VAT';
         $this->exemptionReason       = null;
         $this->exemptionReasonCode   = null;
-        $this->taxPointDate          = null;
         $this->dueDateTypeCode       = null;
         $this->rateApplicablePercent = null;
     }
@@ -112,16 +105,6 @@ class ApplicableTradeTax
     public function setExemptionReasonCode(?VatExoneration $exemptionReasonCode): void
     {
         $this->exemptionReasonCode = $exemptionReasonCode;
-    }
-
-    public function getTaxPointDate(): ?TaxPointDate
-    {
-        return $this->taxPointDate;
-    }
-
-    public function setTaxPointDate(?TaxPointDate $taxPointDate): void
-    {
-        $this->taxPointDate = $taxPointDate;
     }
 
     public function getDueDateTypeCode(): ?DateCode2005
