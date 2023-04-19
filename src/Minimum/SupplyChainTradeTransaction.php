@@ -50,6 +50,11 @@ class SupplyChainTradeTransaction
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        return new \DOMElement('@todo');
+        $currentNode = $document->createElement('rsm:SupplyChainTradeTransaction');
+        $currentNode->appendChild($this->applicableHeaderTradeAgreement->toXML($document));
+        $currentNode->appendChild($this->applicableHeaderTradeDelivery->toXML($document));
+        $currentNode->appendChild($this->applicableHeaderTradeSettlement->toXML($document));
+
+        return $currentNode;
     }
 }

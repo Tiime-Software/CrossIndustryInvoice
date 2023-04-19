@@ -71,4 +71,21 @@ class SellerTradeParty
     {
         $this->specifiedTaxRegistrations = $specifiedTaxRegistrations;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:SellerTradeParty');
+        $currentNode->appendChild($document->createElement('ram:Name', $this->name));
+
+        if (null !== $this->specifiedLegalOrganization) {
+            $currentNode->appendChild($this->specifiedLegalOrganization->toXML($document));
+        }
+        $currentNode->appendChild($this->postalTradeAddress->toXML($document));
+        /** @var SpecifiedTaxRegistration $specifiedTaxRegistration */
+        foreach ($this->specifiedTaxRegistrations as $specifiedTaxRegistration) {
+            $currentNode->appendChild($specifiedTaxRegistration->toXML($document));
+        }
+
+        return $currentNode;
+    }
 }

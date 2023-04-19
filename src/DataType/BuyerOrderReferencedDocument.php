@@ -25,4 +25,12 @@ class BuyerOrderReferencedDocument
     {
         return $this->issuerAssignedID;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:BuyerOrderReferencedDocument');
+        $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+
+        return $currentNode;
+    }
 }

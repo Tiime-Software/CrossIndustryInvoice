@@ -41,4 +41,16 @@ class BuyerTradeParty
     {
         $this->specifiedLegalOrganization = $specifiedLegalOrganization;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:BuyerTradeParty');
+        $currentNode->appendChild($document->createElement('ram:Name', $this->name));
+
+        if (null !== $this->specifiedLegalOrganization) {
+            $currentNode->appendChild($this->specifiedLegalOrganization->toXML($document));
+        }
+
+        return $currentNode;
+    }
 }
