@@ -47,4 +47,4 @@ $xml = (new CrossIndustryInvoice(
         )
     )
 ))->toXML();
-var_dump($xml->saveHTML());
+var_dump($xml->saveXML());
