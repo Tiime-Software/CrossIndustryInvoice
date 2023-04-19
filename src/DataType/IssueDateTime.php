@@ -31,4 +31,16 @@ class IssueDateTime
     {
         return $this->dateFormat;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:IssueDateTime');
+
+        $dateTimeElement = $document->createElement('udt:DateTimeString', $this->dateTimeString->format('Ymd'));
+        $dateTimeElement->setAttribute('format', $this->dateFormat);
+
+        $element->appendChild($dateTimeElement);
+
+        return $element;
+    }
 }

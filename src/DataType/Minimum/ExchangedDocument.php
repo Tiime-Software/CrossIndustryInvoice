@@ -52,6 +52,12 @@ class ExchangedDocument
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        return new \DOMElement('@todo');
+        $element = $document->createElement('rsm:ExchangedDocument');
+
+        $element->appendChild($document->createElement('ram:ID', $this->id->value));
+        $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode->value));
+        $element->appendChild($this->issueDateTime->toXML($document));
+
+        return $element;
     }
 }
