@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty;
 
-use Tiime\CrossIndustryInvoice\EN16931\EmailURIUniversalCommunication;
+use Tiime\CrossIndustryInvoice\DataType\EmailURIUniversalCommunication;
 use Tiime\CrossIndustryInvoice\EN16931\TelephoneUniversalCommunication;
 
 /**
