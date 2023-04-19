@@ -47,4 +47,9 @@ class SupplyChainTradeTransaction
     {
         return $this->applicableHeaderTradeSettlement;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        return new \DOMElement('@todo');
+    }
 }
