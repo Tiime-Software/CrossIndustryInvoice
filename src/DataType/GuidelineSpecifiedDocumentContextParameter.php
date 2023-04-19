@@ -25,4 +25,13 @@ class GuidelineSpecifiedDocumentContextParameter
     {
         return $this->id;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:GuidelineSpecifiedDocumentContextParameter');
+
+        $currentNode->appendChild($document->createElement('ram:ID', $this->id->value));
+
+        return $currentNode;
+    }
 }

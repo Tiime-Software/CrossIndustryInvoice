@@ -23,4 +23,16 @@ class BusinessProcessSpecifiedDocumentContextParameter
     {
         return $this->id;
     }
+
+    /**
+     * @throws \DOMException
+     */
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:BusinessProcessSpecifiedDocumentContextParameter');
+
+        $currentNode->appendChild($document->createElement('ram:ID', $this->id));
+
+        return $currentNode;
+    }
 }
