@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeeSpecifiedLegalOrganization;
-use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\PayeeIdentifier;
-use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty\PayeeIdentifierGlobalId;
+use Tiime\EN16931\DataType\Identifier\PayeeIdentifier;
 
 /**
  * BG-10.
@@ -16,12 +15,12 @@ class PayeeTradeParty
     /**
      * BT-60.
      */
-    private ?PayeeIdentifier $id;
+    private ?PayeeIdentifier $identifier;
 
     /**
      * BT-60-0 & BT-60-1.
      */
-    private ?PayeeIdentifierGlobalId $globalId;
+    private ?PayeeGlobalIdentifier $globalIdentifier;
 
     /**
      * BT-59.
@@ -36,29 +35,29 @@ class PayeeTradeParty
     public function __construct(string $name)
     {
         $this->name                       = $name;
-        $this->id                         = null;
-        $this->globalId                   = null;
+        $this->identifier                 = null;
+        $this->globalIdentifier           = null;
         $this->specifiedLegalOrganization = null;
     }
 
-    public function getId(): ?PayeeIdentifier
+    public function getIdentifier(): ?PayeeIdentifier
     {
-        return $this->id;
+        return $this->identifier;
     }
 
-    public function setId(?PayeeIdentifier $id): void
+    public function setIdentifier(?PayeeIdentifier $identifier): void
     {
-        $this->id = $id;
+        $this->identifier = $identifier;
     }
 
-    public function getGlobalId(): ?PayeeIdentifierGlobalId
+    public function getGlobalIdentifier(): ?PayeeGlobalIdentifier
     {
-        return $this->globalId;
+        return $this->globalIdentifier;
     }
 
-    public function setGlobalId(?PayeeIdentifierGlobalId $globalId): void
+    public function setGlobalIdentifier(?PayeeGlobalIdentifier $globalIdentifier): void
     {
-        $this->globalId = $globalId;
+        $this->globalIdentifier = $globalIdentifier;
     }
 
     public function getName(): string

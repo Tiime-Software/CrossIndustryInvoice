@@ -6,12 +6,12 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\SellerSpecifiedLegalOrganization;
-use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifier;
-use Tiime\CrossIndustryInvoice\DataType\SellerTradeParty\SellerIdentifierGlobalId;
+use Tiime\CrossIndustryInvoice\DataType\SellerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\DefinedTradeContact;
 use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\SpecifiedTaxRegistration;
 use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\SpecifiedTaxRegistrationVAT;
+use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
 
 /**
  * BG-4.
@@ -28,7 +28,7 @@ class SellerTradeParty
     /**
      * BT-29-0 & BT-29-1.
      *
-     * @var array<int, SellerIdentifierGlobalId>
+     * @var array<int, SellerGlobalIdentifier>
      */
     private array $globalIds;
 
