@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\ApplicableTradeSettlementFinancialCard;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\PayeePartyCreditorFinancialAccount;
+use Tiime\CrossIndustryInvoice\DataType\PayeeSpecifiedCreditorFinancialInstitution;
 use Tiime\CrossIndustryInvoice\DataType\PayerPartyDebtorFinancialAccount;
 use Tiime\EN16931\DataType\PaymentMeansCode;
 
