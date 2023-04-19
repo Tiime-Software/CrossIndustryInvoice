@@ -49,4 +49,9 @@ class ExchangedDocument
     {
         return $this->issueDateTime;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        return new \DOMElement('@todo');
+    }
 }

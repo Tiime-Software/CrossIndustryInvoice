@@ -39,4 +39,9 @@ class ExchangedDocumentContext
     {
         return $this->guidelineSpecifiedDocumentContextParameter;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        return new \DOMElement('@todo');
+    }
 }
