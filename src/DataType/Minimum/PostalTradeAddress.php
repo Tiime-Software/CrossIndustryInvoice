@@ -25,4 +25,12 @@ class PostalTradeAddress
     {
         return $this->countryID;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:PostalTradeAddress');
+        $currentNode->appendChild($document->createElement('ram:CountryID', $this->countryID->value));
+
+        return $currentNode;
+    }
 }

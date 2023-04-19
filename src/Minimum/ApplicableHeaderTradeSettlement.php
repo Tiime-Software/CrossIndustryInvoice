@@ -39,4 +39,8 @@ class ApplicableHeaderTradeSettlement
     {
         return $this->specifiedTradeSettlementHeaderMonetarySummation;
     }
+
+    public function toXML(): \DOMElement
+    {
+    }
 }

@@ -25,4 +25,17 @@ class BuyerSpecifiedLegalOrganization
     {
         return $this->identifier;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode    = $document->createElement('ram:SpecifiedLegalOrganization');
+        $identifierNode = $document->createElement('ram:ID', $this->identifier->value);
+
+        if (null !== $this->identifier->scheme) {
+            $identifierNode->setAttribute('schemeID', $this->identifier->scheme->value);
+        }
+        $currentNode->appendChild($identifierNode);
+
+        return $currentNode;
+    }
 }

@@ -14,26 +14,37 @@ class SpecifiedTaxRegistration
     /**
      * BT-31.
      */
-    private VatIdentifier $id;
+    private VatIdentifier $identifier;
 
     /**
      * BT-31-0.
      */
     private string $schemeID;
 
-    public function __construct(VatIdentifier $id)
+    public function __construct(VatIdentifier $identifier)
     {
-        $this->id       = $id;
-        $this->schemeID = 'VA';
+        $this->identifier = $identifier;
+        $this->schemeID   = 'VA';
     }
 
-    public function getId(): VatIdentifier
+    public function getIdentifier(): VatIdentifier
     {
-        return $this->id;
+        return $this->identifier;
     }
 
     public function getSchemeID(): string
     {
         return $this->schemeID;
+    }
+
+    public function toXML(): \DOMElement
+    {
+        $element = new \DOMElement('ram:SpecifiedLegalOrganization');
+        $element->appendChild(
+            (new \DOMElement('ram:ID', $this->identifier->getValue()))
+                ->setAttribute('schemeID', $this->schemeID)
+        );
+
+        return $element;
     }
 }

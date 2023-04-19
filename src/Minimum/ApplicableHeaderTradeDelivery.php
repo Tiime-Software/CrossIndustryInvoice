@@ -9,4 +9,7 @@ namespace Tiime\CrossIndustryInvoice\Minimum;
  */
 class ApplicableHeaderTradeDelivery
 {
+    public function toXML(): \DOMElement
+    {
+    }
 }
