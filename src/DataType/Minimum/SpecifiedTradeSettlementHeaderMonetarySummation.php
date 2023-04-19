@@ -75,7 +75,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         }
 
         $element->appendChild($document->createElement('ram:GrandTotalAmount', (string) $this->grandTotalAmount->getValueRounded()));
-        $element->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->amountDueForPayment->getValueRounded());
+        $element->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->amountDueForPayment->getValueRounded()));
 
         return $element;
     }
