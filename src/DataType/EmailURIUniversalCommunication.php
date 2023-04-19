@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 /**
- * BT-43-00.
+ * BT-43-00 or BT-58-00.
  */
 class EmailURIUniversalCommunication
 {
