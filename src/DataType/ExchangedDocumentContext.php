@@ -42,6 +42,14 @@ class ExchangedDocumentContext
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        return new \DOMElement('@todo');
+        $element = $document->createElement('rsm:ExchangedDocumentContext');
+
+        if ($this->businessProcessSpecifiedDocumentContextParameter instanceof BusinessProcessSpecifiedDocumentContextParameter) {
+            $element->appendChild($this->businessProcessSpecifiedDocumentContextParameter->toXML($document));
+        }
+
+        $element->appendChild($this->guidelineSpecifiedDocumentContextParameter->toXML($document));
+
+        return $element;
     }
 }
