@@ -72,7 +72,7 @@ class ApplicableHeaderTradeAgreement
         $currentNode = $document->createElement('ram:ApplicableHeaderTradeAgreement');
 
         if (null !== $this->buyerReference) {
-            $currentNode->appendChild(new \DOMElement('ram:BuyerReference', $this->buyerReference));
+            $currentNode->appendChild($document->createElement('ram:BuyerReference', $this->buyerReference));
         }
         $currentNode->appendChild($this->sellerTradeParty->toXML($document));
         $currentNode->appendChild($this->buyerTradeParty->toXML($document));

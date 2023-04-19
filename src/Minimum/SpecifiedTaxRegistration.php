@@ -37,11 +37,11 @@ class SpecifiedTaxRegistration
         return $this->schemeID;
     }
 
-    public function toXML(): \DOMElement
+    public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = new \DOMElement('ram:SpecifiedLegalOrganization');
+        $element = $document->createElement('ram:SpecifiedLegalOrganization');
         $element->appendChild(
-            (new \DOMElement('ram:ID', $this->identifier->getValue()))
+            $document->createElement('ram:ID', $this->identifier->getValue())
                 ->setAttribute('schemeID', $this->schemeID)
         );
 
