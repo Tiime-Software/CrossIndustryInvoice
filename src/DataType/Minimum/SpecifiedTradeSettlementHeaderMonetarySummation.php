@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\Minimum;
+namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
 use Tiime\EN16931\SemanticDataType\Amount;
