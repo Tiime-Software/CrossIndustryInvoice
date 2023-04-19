@@ -40,7 +40,13 @@ class ApplicableHeaderTradeSettlement
         return $this->specifiedTradeSettlementHeaderMonetarySummation;
     }
 
-    public function toXML(): \DOMElement
+    public function toXML(\DOMDocument $document): \DOMElement
     {
+        $element = $document->createElement('ram:ApplicableHeaderTradeSettlement');
+
+        $element->appendChild($document->createElement('ram:InvoiceCurrencyCode', $this->invoiceCurrencyCode->value));
+        $element->appendChild($this->specifiedTradeSettlementHeaderMonetarySummation->toXML($document));
+
+        return $element;
     }
 }

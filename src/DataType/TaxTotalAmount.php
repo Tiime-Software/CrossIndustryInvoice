@@ -34,4 +34,12 @@ class TaxTotalAmount
     {
         return $this->currencyID;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:TaxTotalAmount', (string) $this->value->getValueRounded());
+        $element->setAttribute('currencyID', $this->currencyID->value);
+
+        return $element;
+    }
 }

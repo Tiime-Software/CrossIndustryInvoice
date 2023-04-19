@@ -63,4 +63,20 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
     {
         return $this->amountDueForPayment->getValueRounded();
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedTradeSettlementHeaderMonetarySummation');
+
+        $element->appendChild($document->createElement('ram:TaxBasisTotalAmount', (string) $this->taxBasisTotalAmount->getValueRounded()));
+
+        if ($this->taxTotalAmount instanceof TaxTotalAmount) {
+            $element->appendChild($this->taxTotalAmount->toXML($document));
+        }
+
+        $element->appendChild($document->createElement('ram:GrandTotalAmount', (string) $this->grandTotalAmount->getValueRounded()));
+        $element->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->amountDueForPayment->getValueRounded());
+
+        return $element;
+    }
 }
