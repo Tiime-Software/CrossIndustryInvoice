@@ -23,4 +23,15 @@ class SupplyChainTradeTransaction
      * BG-19.
      */
     private ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement;
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('rsm:SupplyChainTradeTransaction');
+
+        $element->appendChild($this->applicableHeaderTradeAgreement->toXML($document));
+        $element->appendChild($this->applicableHeaderTradeDelivery->toXML($document));
+        $element->appendChild($this->applicableHeaderTradeSettlement->toXML($document));
+
+        return $element;
+    }
 }

@@ -42,4 +42,13 @@ class ApplicableHeaderTradeAgreement
      * BT-12-00.
      */
     private ?ContractReferencedDocument $contractReferencedDocument;
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ApplicableHeaderTradeAgreement');
+
+        // @todo
+
+        return $element;
+    }
 }

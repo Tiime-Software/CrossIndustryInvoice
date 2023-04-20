@@ -98,4 +98,13 @@ class ApplicableHeaderTradeSettlement
      * BT-19-00.
      */
     private ?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount;
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ApplicableHeaderTradeSettlement');
+
+        // @todo
+
+        return $element;
+    }
 }

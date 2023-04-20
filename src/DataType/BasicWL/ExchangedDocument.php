@@ -44,4 +44,13 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
         }
         $this->includedNotes = $tmpIncludedNotes;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = parent::toXML($document);
+
+        foreach ($this->includedNotes as $includedNote) {
+            $element->appendChild($includedNote->toXML());
+        }
+    }
 }
