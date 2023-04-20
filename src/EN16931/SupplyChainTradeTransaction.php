@@ -76,4 +76,19 @@ class SupplyChainTradeTransaction
     {
         return $this->applicableHeaderTradeSettlement;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SupplyChainTradeTransaction');
+
+        foreach ($this->includedSupplyChainTradeLineItems as $includedSupplyChainTradeLineItem) {
+            $element->appendChild($includedSupplyChainTradeLineItem->toXML($document));
+        }
+
+        $element->appendChild($this->applicableHeaderTradeAgreement->toXML($document));
+        $element->appendChild($this->applicableHeaderTradeDelivery->toXML($document));
+        $element->appendChild($this->applicableHeaderTradeSettlement->toXML($document));
+
+        return $element;
+    }
 }
