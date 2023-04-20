@@ -15,4 +15,12 @@ class ContractReferencedDocument
      * BT-12.
      */
     private ContractReference $issuerAssignedID;
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:ContractReferencedDocument');
+        $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+
+        return $currentNode;
+    }
 }

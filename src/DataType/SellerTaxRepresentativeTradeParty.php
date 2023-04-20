@@ -47,4 +47,16 @@ class SellerTaxRepresentativeTradeParty
     {
         return $this->specifiedTaxRegistration;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:SellerTaxRepresentativeTradeParty');
+
+        $currentNode->appendChild($document->createElement('ram:Name', $this->name));
+
+        $currentNode->appendChild($this->postalTradeAddress->toXML($document));
+        $currentNode->appendChild($this->specifiedTaxRegistration->toXML($document));
+
+        return $currentNode;
+    }
 }

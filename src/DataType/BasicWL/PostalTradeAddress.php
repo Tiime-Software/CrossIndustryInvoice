@@ -111,4 +111,37 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
     {
         $this->countrySubDivisionName = $countrySubDivisionName;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:PostalTradeAddress');
+
+        if (null !== $this->postcodeCode) {
+            $currentNode->appendChild($document->createElement('ram:PostcodeCode', $this->postcodeCode));
+        }
+
+        if (null !== $this->lineOne) {
+            $currentNode->appendChild($document->createElement('ram:LineOne', $this->lineOne));
+        }
+
+        if (null !== $this->lineTwo) {
+            $currentNode->appendChild($document->createElement('ram:LineTwo', $this->lineTwo));
+        }
+
+        if (null !== $this->lineThree) {
+            $currentNode->appendChild($document->createElement('ram:LineThree', $this->lineThree));
+        }
+
+        if (null !== $this->cityName) {
+            $currentNode->appendChild($document->createElement('ram:CityName', $this->cityName));
+        }
+
+        $currentNode->appendChild($document->createElement('ram:CountryID', $this->getCountryID()->value));
+
+        if (null !== $this->countrySubDivisionName) {
+            $currentNode->appendChild($document->createElement('ram:CountrySubDivisionName', $this->countrySubDivisionName));
+        }
+
+        return $currentNode;
+    }
 }
