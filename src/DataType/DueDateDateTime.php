@@ -40,7 +40,7 @@ class DueDateDateTime
         $element = $document->createElement('ram:DueDateDateTime');
 
         $dateTimeElement = $document->createElement('ram:DateTimeString', $this->dateTimeString->format('Ymd'));
-        $dateTimeElement->setAttribute('format', '102');
+        $dateTimeElement->setAttribute('format', $this->format);
 
         $element->appendChild($dateTimeElement);
 

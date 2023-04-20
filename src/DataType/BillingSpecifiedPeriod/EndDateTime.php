@@ -40,7 +40,7 @@ class EndDateTime
         $element = $document->createElement('ram:EndDateTime');
 
         $dateTimeElement = $document->createElement('ram:DateTimeString', $this->dateTimeString->format('Ymd'));
-        $dateTimeElement->setAttribute('format', '102');
+        $dateTimeElement->setAttribute('format', $this->format);
 
         $element->appendChild($dateTimeElement);
 

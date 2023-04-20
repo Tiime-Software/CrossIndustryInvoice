@@ -25,4 +25,13 @@ class DespatchAdviceReferencedDocument
     {
         return $this->issuerAssignedID;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:DespatchAdviceReferencedDocument');
+
+        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+
+        return $element;
+    }
 }

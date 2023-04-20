@@ -23,4 +23,13 @@ class ActualDeliverySupplyChainEvent
     {
         return $this->occurrenceDateTime;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ActualDeliverySupplyChainEvent');
+
+        $element->appendChild($this->occurrenceDateTime->toXML($document));
+
+        return $element;
+    }
 }
