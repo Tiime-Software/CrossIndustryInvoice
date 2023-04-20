@@ -14,15 +14,24 @@ class ReceivingAdviceReferencedDocument
     /**
      * BT-15.
      */
-    private ReceivingAdviceReference $issuerAssignedID;
+    private ReceivingAdviceReference $issuerAssignedIdentifier;
 
-    public function __construct(ReceivingAdviceReference $issuerAssignedID)
+    public function __construct(ReceivingAdviceReference $issuerAssignedIdentifier)
     {
-        $this->issuerAssignedID = $issuerAssignedID;
+        $this->$issuerAssignedIdentifier = $issuerAssignedIdentifier;
     }
 
-    public function getIssuerAssignedID(): ReceivingAdviceReference
+    public function getIssuerAssignedIdentifier(): ReceivingAdviceReference
     {
-        return $this->issuerAssignedID;
+        return $this->issuerAssignedIdentifier;
+    }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:ReceivingAdviceReferencedDocument');
+
+        $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
+
+        return $currentNode;
     }
 }
