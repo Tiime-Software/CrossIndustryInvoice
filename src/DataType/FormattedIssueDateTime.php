@@ -40,7 +40,7 @@ class FormattedIssueDateTime
         $element = $document->createElement('ram:FormattedIssueDateTime');
 
         $dateTimeElement = $document->createElement('ram:DateTimeString', $this->dateTimeString->format('Ymd'));
-        $dateTimeElement->setAttribute('format', '102');
+        $dateTimeElement->setAttribute('format', $this->format);
 
         $element->appendChild($dateTimeElement);
 

@@ -37,7 +37,7 @@ class OccurrenceDateTime
         $element = $document->createElement('ram:OccurrenceDateTime');
 
         $dateTimeElement = $document->createElement('ram:DateTimeString', $this->dateTimeString->format('Ymd'));
-        $dateTimeElement->setAttribute('format', '102');
+        $dateTimeElement->setAttribute('format', $this->format);
 
         $element->appendChild($dateTimeElement);
 
