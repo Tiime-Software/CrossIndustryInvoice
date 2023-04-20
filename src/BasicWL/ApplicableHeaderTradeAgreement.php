@@ -43,6 +43,66 @@ class ApplicableHeaderTradeAgreement
      */
     private ?ContractReferencedDocument $contractReferencedDocument;
 
+    public function __construct(SellerTradeParty $sellerTradeParty, BuyerTradeParty $buyerTradeParty)
+    {
+        $this->sellerTradeParty                  = $sellerTradeParty;
+        $this->buyerTradeParty                   = $buyerTradeParty;
+        $this->buyerReference                    = null;
+        $this->sellerTaxRepresentativeTradeParty = null;
+        $this->buyerOrderReferencedDocument      = null;
+        $this->contractReferencedDocument        = null;
+    }
+
+    public function getBuyerReference(): ?string
+    {
+        return $this->buyerReference;
+    }
+
+    public function setBuyerReference(?string $buyerReference): void
+    {
+        $this->buyerReference = $buyerReference;
+    }
+
+    public function getSellerTradeParty(): SellerTradeParty
+    {
+        return $this->sellerTradeParty;
+    }
+
+    public function getBuyerTradeParty(): BuyerTradeParty
+    {
+        return $this->buyerTradeParty;
+    }
+
+    public function getSellerTaxRepresentativeTradeParty(): ?SellerTaxRepresentativeTradeParty
+    {
+        return $this->sellerTaxRepresentativeTradeParty;
+    }
+
+    public function setSellerTaxRepresentativeTradeParty(?SellerTaxRepresentativeTradeParty $sellerTaxRepresentativeTradeParty): void
+    {
+        $this->sellerTaxRepresentativeTradeParty = $sellerTaxRepresentativeTradeParty;
+    }
+
+    public function getBuyerOrderReferencedDocument(): ?BuyerOrderReferencedDocument
+    {
+        return $this->buyerOrderReferencedDocument;
+    }
+
+    public function setBuyerOrderReferencedDocument(?BuyerOrderReferencedDocument $buyerOrderReferencedDocument): void
+    {
+        $this->buyerOrderReferencedDocument = $buyerOrderReferencedDocument;
+    }
+
+    public function getContractReferencedDocument(): ?ContractReferencedDocument
+    {
+        return $this->contractReferencedDocument;
+    }
+
+    public function setContractReferencedDocument(?ContractReferencedDocument $contractReferencedDocument): void
+    {
+        $this->contractReferencedDocument = $contractReferencedDocument;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement('ram:ApplicableHeaderTradeAgreement');

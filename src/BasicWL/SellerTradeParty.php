@@ -57,6 +57,102 @@ class SellerTradeParty
      */
     private array $specifiedTaxRegistrations;
 
+    public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
+    {
+        $this->name                       = $name;
+        $this->postalTradeAddress         = $postalTradeAddress;
+        $this->identifiers                = [];
+        $this->globalIdentifiers          = [];
+        $this->specifiedTaxRegistrations  = [];
+        $this->specifiedLegalOrganization = null;
+        $this->URIUniversalCommunication  = null;
+    }
+
+    public function getIdentifiers(): array
+    {
+        return $this->identifiers;
+    }
+
+    public function setIdentifiers(array $identifiers): void
+    {
+        $tmpIdentifiers = [];
+
+        foreach ($identifiers as $identifier) {
+            if (!$identifier instanceof SellerGlobalIdentifier) {
+                throw new \TypeError();
+            }
+
+            $tmpIdentifiers[] = $identifier;
+        }
+
+        $this->identifiers = $tmpIdentifiers;
+    }
+
+    public function getGlobalIdentifiers(): array
+    {
+        return $this->globalIdentifiers;
+    }
+
+    public function setGlobalIdentifiers(array $globalIdentifiers): void
+    {
+        $tmpGlobalIdentifiers = [];
+
+        foreach ($globalIdentifiers as $globalIdentifier) {
+            if (!$globalIdentifier instanceof SellerIdentifier) {
+                throw new \TypeError();
+            }
+
+            $tmpGlobalIdentifiers[] = $globalIdentifier;
+        }
+
+        $this->globalIdentifiers = $tmpGlobalIdentifiers;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getSpecifiedLegalOrganization(): ?SellerSpecifiedLegalOrganization
+    {
+        return $this->specifiedLegalOrganization;
+    }
+
+    public function setSpecifiedLegalOrganization(?SellerSpecifiedLegalOrganization $specifiedLegalOrganization): void
+    {
+        $this->specifiedLegalOrganization = $specifiedLegalOrganization;
+    }
+
+    public function getPostalTradeAddress(): PostalTradeAddress
+    {
+        return $this->postalTradeAddress;
+    }
+
+    public function setURIUniversalCommunication(?URIUniversalCommunication $URIUniversalCommunication): void
+    {
+        $this->URIUniversalCommunication = $URIUniversalCommunication;
+    }
+
+    public function getSpecifiedTaxRegistrations(): array
+    {
+        return $this->specifiedTaxRegistrations;
+    }
+
+    public function setSpecifiedTaxRegistrations(array $specifiedTaxRegistrations): void
+    {
+        $tmpSpecifiedTaxRegistrations = [];
+
+        foreach ($specifiedTaxRegistrations as $specifiedTaxRegistration) {
+            if (!$specifiedTaxRegistration instanceof SpecifiedTaxRegistration) {
+                throw new \TypeError();
+            }
+
+            $tmpSpecifiedTaxRegistrations[] = $specifiedTaxRegistration;
+        }
+
+        $this->specifiedTaxRegistrations = $tmpSpecifiedTaxRegistrations;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement('ram:SellerTradeParty');

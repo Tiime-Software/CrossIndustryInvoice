@@ -16,6 +16,16 @@ class ContractReferencedDocument
      */
     private ContractReference $issuerAssignedID;
 
+    public function __construct(ContractReference $issuerAssignedID)
+    {
+        $this->issuerAssignedID = $issuerAssignedID;
+    }
+
+    public function getIssuerAssignedID(): ContractReference
+    {
+        return $this->issuerAssignedID;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement('ram:ContractReferencedDocument');

@@ -51,6 +51,72 @@ class BuyerTradeParty
      */
     private ?SpecifiedTaxRegistration $specifiedTaxRegistration;
 
+    public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
+    {
+        $this->name                       = $name;
+        $this->postalTradeAddress         = $postalTradeAddress;
+        $this->identifier                 = null;
+        $this->globalIdentifier           = null;
+        $this->specifiedLegalOrganization = null;
+        $this->URIUniversalCommunication  = null;
+        $this->specifiedTaxRegistration   = null;
+    }
+
+    public function getIdentifier(): ?BuyerIdentifier
+    {
+        return $this->identifier;
+    }
+
+    public function setIdentifier(?BuyerIdentifier $identifier): void
+    {
+        $this->identifier = $identifier;
+    }
+
+    public function getGlobalIdentifier(): ?BuyerGlobalIdentifier
+    {
+        return $this->globalIdentifier;
+    }
+
+    public function setGlobalIdentifier(?BuyerGlobalIdentifier $globalIdentifier): void
+    {
+        $this->globalIdentifier = $globalIdentifier;
+    }
+
+    public function getSpecifiedLegalOrganization(): ?BuyerSpecifiedLegalOrganization
+    {
+        return $this->specifiedLegalOrganization;
+    }
+
+    public function setSpecifiedLegalOrganization(?BuyerSpecifiedLegalOrganization $specifiedLegalOrganization): void
+    {
+        $this->specifiedLegalOrganization = $specifiedLegalOrganization;
+    }
+
+    public function getPostalTradeAddress(): PostalTradeAddress
+    {
+        return $this->postalTradeAddress;
+    }
+
+    public function getURIUniversalCommunication(): ?URIUniversalCommunication
+    {
+        return $this->URIUniversalCommunication;
+    }
+
+    public function setURIUniversalCommunication(?URIUniversalCommunication $URIUniversalCommunication): void
+    {
+        $this->URIUniversalCommunication = $URIUniversalCommunication;
+    }
+
+    public function getSpecifiedTaxRegistration(): ?SpecifiedTaxRegistration
+    {
+        return $this->specifiedTaxRegistration;
+    }
+
+    public function setSpecifiedTaxRegistration(?SpecifiedTaxRegistration $specifiedTaxRegistration): void
+    {
+        $this->specifiedTaxRegistration = $specifiedTaxRegistration;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement('ram:BuyerTradeParty');
