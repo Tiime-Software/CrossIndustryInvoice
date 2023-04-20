@@ -27,4 +27,21 @@ class SpecifiedTradeSettlementPaymentMeans
      * BG-17.
      */
     private ?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount;
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedTradeSettlementPaymentMeans');
+
+        $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode->value));
+
+        if ($this->payerPartyDebtorFinancialAccount instanceof PayerPartyDebtorFinancialAccount) {
+            $element->appendChild($this->payerPartyDebtorFinancialAccount->toXML($document));
+        }
+
+        if ($this->payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
+            $element->appendChild($this->payeePartyCreditorFinancialAccount->toXML($document));
+        }
+
+        return $element;
+    }
 }

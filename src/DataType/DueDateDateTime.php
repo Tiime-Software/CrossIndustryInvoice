@@ -34,4 +34,16 @@ class DueDateDateTime
     {
         return $this->format;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:DueDateDateTime');
+
+        $dateTimeElement = $document->createElement('ram:DateTimeString', $this->dateTimeString->format('Ymd'));
+        $dateTimeElement->setAttribute('format', '102');
+
+        $element->appendChild($dateTimeElement);
+
+        return $element;
+    }
 }

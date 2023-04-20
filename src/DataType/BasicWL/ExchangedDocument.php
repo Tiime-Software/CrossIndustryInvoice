@@ -50,7 +50,9 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
         $element = parent::toXML($document);
 
         foreach ($this->includedNotes as $includedNote) {
-            $element->appendChild($includedNote->toXML());
+            $element->appendChild($includedNote->toXML($document));
         }
+
+        return $element;
     }
 }

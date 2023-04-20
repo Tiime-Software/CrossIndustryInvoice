@@ -113,4 +113,33 @@ class SpecifiedTradeCharge
     {
         return $this->categoryTradeTax;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedTradeAllowanceCharge');
+
+        $element->appendChild($this->chargeChargeIndicator->toXML($document));
+
+        if ($this->calculationPercentage instanceof Percentage) {
+            $element->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercentage->getValueRounded()));
+        }
+
+        if ($this->basisAmount instanceof Amount) {
+            $element->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
+        }
+
+        $element->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
+
+        if ($this->reasonCode instanceof ChargeReasonCode) {
+            $element->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
+        }
+
+        if (\is_string($this->reason)) {
+            $element->appendChild($document->createElement('ram:Reason', $this->reason));
+        }
+
+        $element->appendChild($this->categoryTradeTax->toXML($document));
+
+        return $element;
+    }
 }

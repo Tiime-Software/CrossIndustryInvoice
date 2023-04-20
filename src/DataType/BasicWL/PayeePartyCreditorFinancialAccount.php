@@ -38,4 +38,19 @@ class PayeePartyCreditorFinancialAccount
     {
         return $this->proprietaryId;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:PayeePartyCreditorFinancialAccount');
+
+        if ($this->ibanId instanceof PaymentAccountIdentifier) {
+            $element->appendChild($document->createElement('ram:IBANID', $this->ibanId->value));
+        }
+
+        if ($this->proprietaryId instanceof PaymentAccountIdentifier) {
+            $element->appendChild($document->createElement('ram:ProprietaryID', $this->proprietaryId->value));
+        }
+
+        return $element;
+    }
 }

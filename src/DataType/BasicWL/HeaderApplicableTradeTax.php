@@ -126,4 +126,33 @@ class HeaderApplicableTradeTax
     {
         $this->rateApplicablePercent = $rateApplicablePercent;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ApplicableTradeTax');
+
+        $element->appendChild($document->createElement('ram:CalculatedAmount', (string) $this->calculatedAmount->getValueRounded()));
+        $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
+
+        if (\is_string($this->exemptionReason)) {
+            $element->appendChild($document->createElement('ram:ExemptionReason', $this->exemptionReason));
+        }
+
+        $element->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
+        $element->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
+
+        if ($this->exemptionReasonCode instanceof VatExoneration) {
+            $element->appendChild($document->createElement('ram:ExemptionReasonCode', $this->exemptionReasonCode->value));
+        }
+
+        if ($this->dueDateTypeCode instanceof DateCode2005) {
+            $element->appendChild($document->createElement('ram:DueDateTypeCode', $this->dueDateTypeCode->value));
+        }
+
+        if ($this->rateApplicablePercent instanceof Percentage) {
+            $element->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->rateApplicablePercent->getValueRounded()));
+        }
+
+        return $element;
+    }
 }

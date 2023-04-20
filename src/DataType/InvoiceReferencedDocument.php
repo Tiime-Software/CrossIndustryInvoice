@@ -41,4 +41,17 @@ class InvoiceReferencedDocument
     {
         $this->formattedIssueDateTime = $formattedIssueDateTime;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:InvoiceReferencedDocument');
+
+        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+
+        if ($this->formattedIssueDateTime instanceof FormattedIssueDateTime) {
+            $element->appendChild($this->formattedIssueDateTime->toXML($document));
+        }
+
+        return $element;
+    }
 }
