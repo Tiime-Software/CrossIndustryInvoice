@@ -1,7 +1,8 @@
 <?php
 
 namespace Tiime\CrossIndustryInvoice;
-require_once('./vendor/autoload.php');
+
+require_once './vendor/autoload.php';
 
 use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
@@ -22,7 +23,6 @@ use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
 use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
 use Tiime\EN16931\DataType\InvoiceTypeCode;
 use Tiime\EN16931\DataType\Reference\PurchaseOrderReference;
-
 
 $xml = (new CrossIndustryInvoice(
     new ExchangedDocumentContext(
