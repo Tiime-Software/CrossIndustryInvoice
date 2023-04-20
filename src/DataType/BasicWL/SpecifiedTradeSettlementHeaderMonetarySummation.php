@@ -99,7 +99,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $this->totalPrepaidAmount instanceof Amount ? $this->totalPrepaidAmount->getValueRounded() : null;
     }
 
-    public function setTotalPrepaidAmount(?float $totalPrepaidAmount): self
+    public function setTotalPrepaidAmount(?float $totalPrepaidAmount): void
     {
         $this->totalPrepaidAmount = \is_float($totalPrepaidAmount) ? new Amount($totalPrepaidAmount) : null;
     }

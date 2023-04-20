@@ -25,4 +25,13 @@ class PayerPartyDebtorFinancialAccount
     {
         return $this->ibanID;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:PayerPartyDebtorFinancialAccount');
+
+        $element->appendChild($document->createElement('ram:IBANID', $this->ibanID->value));
+
+        return $element;
+    }
 }

@@ -62,4 +62,23 @@ class SpecifiedTradePaymentTerms
     {
         $this->directDebitMandateID = $directDebitMandateID;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedTradePaymentTerms');
+
+        if (\is_string($this->description)) {
+            $element->appendChild($document->createElement('ram:Description', $this->description));
+        }
+
+        if ($this->dueDateDateTime instanceof DueDateDateTime) {
+            $element->appendChild($this->dueDateDateTime->toXML($document));
+        }
+
+        if ($this->directDebitMandateID instanceof MandateReferenceIdentifier) {
+            $element->appendChild($document->createElement('ram:DirectDebitMandateID', $this->directDebitMandateID->value));
+        }
+
+        return $element;
+    }
 }
