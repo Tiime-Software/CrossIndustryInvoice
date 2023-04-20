@@ -80,4 +80,29 @@ class ApplicableHeaderTradeDelivery
     {
         $this->receivingAdviceReferencedDocument = $receivingAdviceReferencedDocument;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ApplicableHeaderTradeDelivery');
+
+        /*
+        if ($this->shipToTradeParty instanceof ShipToTradeParty) {
+            $element->appendChild($this->shipToTradeParty->toXML($document));
+        }
+
+        if ($this->actualDeliverySupplyChainEvent instanceof ActualDeliverySupplyChainEvent) {
+            $element->appendChild($this->actualDeliverySupplyChainEvent->toXML($document));
+        }
+
+        if ($this->despatchAdviceReferencedDocument instanceof DespatchAdviceReferencedDocument) {
+            $element->appendChild($this->despatchAdviceReferencedDocument->toXML($document));
+        }
+
+        if ($this->receivingAdviceReferencedDocument instanceof ReceivingAdviceReferencedDocument) {
+            $element->appendChild($this->receivingAdviceReferencedDocument->toXML($document));
+        }
+        */
+
+        return $element;
+    }
 }

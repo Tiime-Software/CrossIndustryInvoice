@@ -180,4 +180,52 @@ class ApplicableHeaderTradeAgreement
     {
         $this->specifiedProcuringProject = $specifiedProcuringProject;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ApplicableHeaderTradeAgreement');
+
+        /*
+        if (is_string($this->buyerReference)) {
+            $element->appendChild($document->createElement('ram:BuyerReference', $this->buyerReference));
+        }
+
+        $element->appendChild($this->sellerTradeParty->toXML($document));
+        $element->appendChild($this->buyerTradeParty->toXML($document));
+
+        if ($this->sellerTaxRepresentativeTradeParty instanceof SellerTaxRepresentativeTradeParty) {
+            $element->appendChild($this->sellerTaxRepresentativeTradeParty->toXML($document));
+        }
+
+        if ($this->sellerOrderReferencedDocument instanceof SellerOrderReferencedDocument) {
+            $element->appendChild($this->sellerOrderReferencedDocument->toXML($document));
+        }
+
+        if ($this->buyerOrderReferencedDocument instanceof BuyerOrderReferencedDocument) {
+            $element->appendChild($this->buyerOrderReferencedDocument->toXML($document));
+        }
+
+        if ($this->contractReferencedDocument instanceof ContractReferencedDocument) {
+            $element->appendChild($this->contractReferencedDocument->toXML($document));
+        }
+
+        foreach ($this->additionalReferencedDocuments as $additionalReferencedDocument) {
+            $element->appendChild($additionalReferencedDocument->toXML($document));
+        }
+
+        foreach ($this->additionalReferencedDocumentTenderOrLotReferences as $additionalReferencedDocumentTenderOrLotReference) {
+            $element->appendChild($additionalReferencedDocumentTenderOrLotReference->toXML($document));
+        }
+
+        foreach ($this->additionalReferencedDocumentInvoicedObjectIdentifiers as $additionalReferencedDocumentInvoicedObjectIdentifier) {
+            $element->appendChild($additionalReferencedDocumentInvoicedObjectIdentifier->toXML($document));
+        }
+
+        if ($this->specifiedProcuringProject instanceof SpecifiedProcuringProject) {
+            $element->appendChild($this->specifiedProcuringProject->toXML($document));
+        }
+
+        */
+        return $element;
+    }
 }
