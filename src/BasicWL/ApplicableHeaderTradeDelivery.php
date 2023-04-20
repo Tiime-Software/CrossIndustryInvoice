@@ -28,6 +28,43 @@ class ApplicableHeaderTradeDelivery
      */
     private ?DespatchAdviceReferencedDocument $despatchAdviceReferencedDocument;
 
+    public function __construct()
+    {
+        $this->shipToTradeParty                 = null;
+        $this->actualDeliverySupplyChainEvent   = null;
+        $this->despatchAdviceReferencedDocument = null;
+    }
+
+    public function getShipToTradeParty(): ?ShipToTradeParty
+    {
+        return $this->shipToTradeParty;
+    }
+
+    public function setShipToTradeParty(?ShipToTradeParty $shipToTradeParty): void
+    {
+        $this->shipToTradeParty = $shipToTradeParty;
+    }
+
+    public function getActualDeliverySupplyChainEvent(): ?ActualDeliverySupplyChainEvent
+    {
+        return $this->actualDeliverySupplyChainEvent;
+    }
+
+    public function setActualDeliverySupplyChainEvent(?ActualDeliverySupplyChainEvent $actualDeliverySupplyChainEvent): void
+    {
+        $this->actualDeliverySupplyChainEvent = $actualDeliverySupplyChainEvent;
+    }
+
+    public function getDespatchAdviceReferencedDocument(): ?DespatchAdviceReferencedDocument
+    {
+        return $this->despatchAdviceReferencedDocument;
+    }
+
+    public function setDespatchAdviceReferencedDocument(?DespatchAdviceReferencedDocument $despatchAdviceReferencedDocument): void
+    {
+        $this->despatchAdviceReferencedDocument = $despatchAdviceReferencedDocument;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:ApplicableHeaderTradeDelivery');

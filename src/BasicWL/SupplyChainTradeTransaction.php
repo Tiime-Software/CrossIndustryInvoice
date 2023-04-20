@@ -24,6 +24,28 @@ class SupplyChainTradeTransaction
      */
     private ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement;
 
+    public function __construct(ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement, ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery, ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement)
+    {
+        $this->applicableHeaderTradeAgreement  = $applicableHeaderTradeAgreement;
+        $this->applicableHeaderTradeDelivery   = $applicableHeaderTradeDelivery;
+        $this->applicableHeaderTradeSettlement = $applicableHeaderTradeSettlement;
+    }
+
+    public function getApplicableHeaderTradeAgreement(): ApplicableHeaderTradeAgreement
+    {
+        return $this->applicableHeaderTradeAgreement;
+    }
+
+    public function getApplicableHeaderTradeDelivery(): ApplicableHeaderTradeDelivery
+    {
+        return $this->applicableHeaderTradeDelivery;
+    }
+
+    public function getApplicableHeaderTradeSettlement(): ApplicableHeaderTradeSettlement
+    {
+        return $this->applicableHeaderTradeSettlement;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('rsm:SupplyChainTradeTransaction');

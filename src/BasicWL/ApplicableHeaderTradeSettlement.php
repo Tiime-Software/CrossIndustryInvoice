@@ -55,8 +55,6 @@ class ApplicableHeaderTradeSettlement
      * BG-23.
      *
      * @var non-empty-array<int, HeaderApplicableTradeTax>
-     *
-     * TODO : constructor 1..n checks
      */
     private array $applicableTradeTaxes;
 
@@ -98,6 +96,76 @@ class ApplicableHeaderTradeSettlement
      * BT-19-00.
      */
     private ?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount;
+
+    public function __construct(CurrencyCode $invoiceCurrencyCode, array $applicableTradeTaxes, SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation)
+    {
+        $tmpApplicableTradeTaxes = [];
+
+        foreach ($applicableTradeTaxes as $applicableTradeTax) {
+            if (!$applicableTradeTax instanceof HeaderApplicableTradeTax) {
+                throw new \TypeError();
+            }
+
+            $tmpApplicableTradeTaxes[] = $applicableTradeTax;
+        }
+
+        if (empty($tmpApplicableTradeTaxes)) {
+            throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one HeaderApplicableTradeTax.');
+        }
+
+        $this->invoiceCurrencyCode                             = $invoiceCurrencyCode;
+        $this->applicableTradeTaxes                            = $tmpApplicableTradeTaxes;
+        $this->specifiedTradeSettlementHeaderMonetarySummation = $specifiedTradeSettlementHeaderMonetarySummation;
+        $this->creditorReferenceId                             = null;
+        $this->paymentReference                                = null;
+        $this->taxCurrencyCode                                 = null;
+        $this->payeeTradeParty                                 = null;
+    }
+
+    public function getCreditorReferenceId(): ?BankAssignedCreditorIdentifier
+    {
+        return $this->creditorReferenceId;
+    }
+
+    public function setCreditorReferenceId(?BankAssignedCreditorIdentifier $creditorReferenceId): void
+    {
+        $this->creditorReferenceId = $creditorReferenceId;
+    }
+
+    public function getPaymentReference(): ?string
+    {
+        return $this->paymentReference;
+    }
+
+    public function setPaymentReference(?string $paymentReference): void
+    {
+        $this->paymentReference = $paymentReference;
+    }
+
+    public function getTaxCurrencyCode(): ?CurrencyCode
+    {
+        return $this->taxCurrencyCode;
+    }
+
+    public function setTaxCurrencyCode(?CurrencyCode $taxCurrencyCode): void
+    {
+        $this->taxCurrencyCode = $taxCurrencyCode;
+    }
+
+    public function getInvoiceCurrencyCode(): CurrencyCode
+    {
+        return $this->invoiceCurrencyCode;
+    }
+
+    public function getPayeeTradeParty(): ?PayeeTradeParty
+    {
+        return $this->payeeTradeParty;
+    }
+
+    public function setPayeeTradeParty(?PayeeTradeParty $payeeTradeParty): void
+    {
+        $this->payeeTradeParty = $payeeTradeParty;
+    }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {

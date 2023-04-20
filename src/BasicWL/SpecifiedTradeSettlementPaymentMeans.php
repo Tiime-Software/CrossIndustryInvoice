@@ -28,6 +28,38 @@ class SpecifiedTradeSettlementPaymentMeans
      */
     private ?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount;
 
+    public function __construct(PaymentMeansCode $typeCode)
+    {
+        $this->typeCode                           = $typeCode;
+        $this->payerPartyDebtorFinancialAccount   = null;
+        $this->payeePartyCreditorFinancialAccount = null;
+    }
+
+    public function getTypeCode(): PaymentMeansCode
+    {
+        return $this->typeCode;
+    }
+
+    public function getPayerPartyDebtorFinancialAccount(): ?PayerPartyDebtorFinancialAccount
+    {
+        return $this->payerPartyDebtorFinancialAccount;
+    }
+
+    public function setPayerPartyDebtorFinancialAccount(?PayerPartyDebtorFinancialAccount $payerPartyDebtorFinancialAccount): void
+    {
+        $this->payerPartyDebtorFinancialAccount = $payerPartyDebtorFinancialAccount;
+    }
+
+    public function getPayeePartyCreditorFinancialAccount(): ?PayeePartyCreditorFinancialAccount
+    {
+        return $this->payeePartyCreditorFinancialAccount;
+    }
+
+    public function setPayeePartyCreditorFinancialAccount(?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount): void
+    {
+        $this->payeePartyCreditorFinancialAccount = $payeePartyCreditorFinancialAccount;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:SpecifiedTradeSettlementPaymentMeans');

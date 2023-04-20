@@ -24,6 +24,28 @@ class CrossIndustryInvoice
      */
     private SupplyChainTradeTransaction $supplyChainTradeTransaction;
 
+    public function __construct(ExchangedDocumentContext $exchangedDocumentContext, ExchangedDocument $exchangedDocument, SupplyChainTradeTransaction $supplyChainTradeTransaction)
+    {
+        $this->exchangedDocumentContext    = $exchangedDocumentContext;
+        $this->exchangedDocument           = $exchangedDocument;
+        $this->supplyChainTradeTransaction = $supplyChainTradeTransaction;
+    }
+
+    public function getExchangedDocumentContext(): ExchangedDocumentContext
+    {
+        return $this->exchangedDocumentContext;
+    }
+
+    public function getExchangedDocument(): ExchangedDocument
+    {
+        return $this->exchangedDocument;
+    }
+
+    public function getSupplyChainTradeTransaction(): SupplyChainTradeTransaction
+    {
+        return $this->supplyChainTradeTransaction;
+    }
+
     public function toXML(): \DOMDocument
     {
         $document = new \DOMDocument('1.0', 'UTF-8');
