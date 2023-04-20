@@ -32,7 +32,17 @@ class ApplicableHeaderTradeDelivery
     {
         $element = $document->createElement('ram:ApplicableHeaderTradeDelivery');
 
-        // @todo
+        if ($this->shipToTradeParty instanceof ShipToTradeParty) {
+            $element->appendChild($this->shipToTradeParty->toXML($document));
+        }
+
+        if ($this->actualDeliverySupplyChainEvent instanceof ActualDeliverySupplyChainEvent) {
+            $element->appendChild($this->actualDeliverySupplyChainEvent->toXML($document));
+        }
+
+        if ($this->despatchAdviceReferencedDocument instanceof DespatchAdviceReferencedDocument) {
+            $element->appendChild($this->despatchAdviceReferencedDocument->toXML($document));
+        }
 
         return $element;
     }

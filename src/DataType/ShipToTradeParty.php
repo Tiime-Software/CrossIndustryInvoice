@@ -79,4 +79,31 @@ class ShipToTradeParty
     {
         $this->postalTradeAddress = $postalTradeAddress;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ShipToTradeParty');
+
+        if ($this->identifier instanceof LocationIdentifier) {
+            $element->appendChild($document->createElement('ram:ID', $this->identifier->value));
+        }
+
+        if ($this->globalId instanceof LocationGlobalIdentifier) {
+            $globalIdentifierElement = $document->createElement('ram:GlobalID', $this->globalId->value);
+
+            $globalIdentifierElement->setAttribute('schemeID', $this->globalId->scheme->value);
+
+            $element->appendChild($globalIdentifierElement);
+        }
+
+        if (\is_string($this->name)) {
+            $element->appendChild($document->createElement('ram:Name', $this->name));
+        }
+
+        if ($this->postalTradeAddress instanceof PostalTradeAddress) {
+            $element->appendChild($this->postalTradeAddress->toXML($document));
+        }
+
+        return $element;
+    }
 }
