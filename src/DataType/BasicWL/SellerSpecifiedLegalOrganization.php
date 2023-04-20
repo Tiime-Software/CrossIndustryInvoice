@@ -29,4 +29,25 @@ class SellerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataT
     {
         $this->tradingBusinessName = $tradingBusinessName;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:SpecifiedLegalOrganization');
+
+        if (null !== $this->getIdentifier()) {
+            $identifierElement = $document->createElement('ram:ID', $this->getIdentifier()->value);
+
+            if (null !== $this->getIdentifier()->scheme) {
+                $identifierElement->setAttribute('schemeID', $this->getIdentifier()->scheme->value);
+            }
+
+            $currentNode->appendChild($identifierElement);
+        }
+
+        if (null !== $this->tradingBusinessName) {
+            $currentNode->appendChild($document->createElement('ram:TradingBusinessName', $this->tradingBusinessName));
+        }
+
+        return $currentNode;
+    }
 }

@@ -25,4 +25,15 @@ class URIUniversalCommunication
     {
         return $this->electronicAddress;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:URIUniversalCommunication');
+
+        $uriIdElement = $document->createElement('ram:URIID', $this->electronicAddress->value);
+        $uriIdElement->setAttribute('schemeID', $this->electronicAddress->scheme->value);
+        $currentNode->appendChild($uriIdElement);
+
+        return $currentNode;
+    }
 }

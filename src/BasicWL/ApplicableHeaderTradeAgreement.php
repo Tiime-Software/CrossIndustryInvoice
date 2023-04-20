@@ -45,10 +45,27 @@ class ApplicableHeaderTradeAgreement
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ApplicableHeaderTradeAgreement');
+        $currentNode = $document->createElement('ram:ApplicableHeaderTradeAgreement');
 
-        // @todo
+        if (null !== $this->buyerReference) {
+            $currentNode->appendChild($document->createElement('ram:BuyerReference', $this->buyerReference));
+        }
 
-        return $element;
+        $currentNode->appendChild($this->sellerTradeParty->toXML($document));
+        $currentNode->appendChild($this->buyerTradeParty->toXML($document));
+
+        if (null !== $this->sellerTaxRepresentativeTradeParty) {
+            $currentNode->appendChild($this->sellerTaxRepresentativeTradeParty->toXML($document));
+        }
+
+        if (null !== $this->buyerOrderReferencedDocument) {
+            $currentNode->appendChild($this->buyerOrderReferencedDocument->toXML($document));
+        }
+
+        if (null !== $this->contractReferencedDocument) {
+            $currentNode->appendChild($this->contractReferencedDocument->toXML($document));
+        }
+
+        return $currentNode;
     }
 }

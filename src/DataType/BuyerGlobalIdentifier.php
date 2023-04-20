@@ -16,4 +16,12 @@ class BuyerGlobalIdentifier extends BuyerIdentifier
     {
         parent::__construct($value, $scheme);
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:GlobalID', $this->value);
+        $currentNode->setAttribute('schemeID', $this->scheme->value);
+
+        return $currentNode;
+    }
 }

@@ -7,33 +7,41 @@ namespace Tiime\CrossIndustryInvoice\DataType;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 
 /**
- * BT-48-00 or BT-63-00.
+ * BT-48-00 or BT-63-00 or BT-31-00.
  */
 class SpecifiedTaxRegistration
 {
     /**
-     * BT-48 or BT-63.
+     * BT-48 or BT-63 or BT-31.
      */
-    private VatIdentifier $id;
+    private VatIdentifier $identifier;
 
     /**
-     * BT-48-0 or BT-63-0.
+     * BT-48-0 or BT-63-0 or BT-31-0.
      */
     private string $schemeID;
 
-    public function __construct(VatIdentifier $id)
+    public function __construct(VatIdentifier $identifier)
     {
-        $this->id       = $id;
-        $this->schemeID = 'VA';
+        $this->identifier = $identifier;
+        $this->schemeID   = 'VA';
     }
 
-    public function getId(): VatIdentifier
+    public function getIdentifier(): VatIdentifier
     {
-        return $this->id;
+        return $this->identifier;
     }
 
     public function getSchemeID(): string
     {
         return $this->schemeID;
+    }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:SpecifiedTaxRegistration', $this->identifier->getValue());
+        $currentNode->setAttribute('schemeID', $this->schemeID);
+
+        return $currentNode;
     }
 }
