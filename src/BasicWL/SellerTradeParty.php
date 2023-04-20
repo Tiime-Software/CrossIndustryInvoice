@@ -75,7 +75,17 @@ class SellerTradeParty
 
     public function setIdentifiers(array $identifiers): void
     {
-        $this->identifiers = $identifiers;
+        $tmpIdentifiers = [];
+
+        foreach ($identifiers as $identifier) {
+            if (!$identifier instanceof SellerGlobalIdentifier) {
+                throw new \TypeError();
+            }
+
+            $tmpIdentifiers[] = $identifier;
+        }
+
+        $this->identifiers = $tmpIdentifiers;
     }
 
     public function getGlobalIdentifiers(): array
@@ -85,7 +95,17 @@ class SellerTradeParty
 
     public function setGlobalIdentifiers(array $globalIdentifiers): void
     {
-        $this->globalIdentifiers = $globalIdentifiers;
+        $tmpGlobalIdentifiers = [];
+
+        foreach ($globalIdentifiers as $globalIdentifier) {
+            if (!$globalIdentifier instanceof SellerIdentifier) {
+                throw new \TypeError();
+            }
+
+            $tmpGlobalIdentifiers[] = $globalIdentifier;
+        }
+
+        $this->globalIdentifiers = $tmpGlobalIdentifiers;
     }
 
     public function getName(): string
@@ -120,7 +140,17 @@ class SellerTradeParty
 
     public function setSpecifiedTaxRegistrations(array $specifiedTaxRegistrations): void
     {
-        $this->specifiedTaxRegistrations = $specifiedTaxRegistrations;
+        $tmpSpecifiedTaxRegistrations = [];
+
+        foreach ($specifiedTaxRegistrations as $specifiedTaxRegistration) {
+            if (!$specifiedTaxRegistration instanceof SpecifiedTaxRegistration) {
+                throw new \TypeError();
+            }
+
+            $tmpSpecifiedTaxRegistrations[] = $specifiedTaxRegistration;
+        }
+
+        $this->specifiedTaxRegistrations = $tmpSpecifiedTaxRegistrations;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
