@@ -41,4 +41,17 @@ class DocumentIncludedNote
     {
         $this->subjectCode = $subjectCode;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:IncludedNote');
+
+        $element->appendChild($document->createElement('ram:Content', $this->content));
+
+        if ($this->subjectCode instanceof InvoiceNoteCode) {
+            $element->appendChild($document->createElement('ram:SubjectCode', $this->subjectCode->value));
+        }
+
+        return $element;
+    }
 }

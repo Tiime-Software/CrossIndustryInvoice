@@ -27,4 +27,13 @@ class ApplicableHeaderTradeDelivery
      * BT-16-00.
      */
     private ?DespatchAdviceReferencedDocument $despatchAdviceReferencedDocument;
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ApplicableHeaderTradeDelivery');
+
+        // @todo
+
+        return $element;
+    }
 }
