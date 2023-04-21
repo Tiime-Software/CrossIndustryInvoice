@@ -108,17 +108,17 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
 
         $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
 
-        if (is_string($this->uriID)) {
+        if (\is_string($this->uriID)) {
             $element->appendChild($document->createElement('ram:URIID', $this->uriID));
         }
 
         $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
-        if (is_string($this->referenceTypeCode)) {
+        if (\is_string($this->referenceTypeCode)) {
             $element->appendChild($document->createElement('ram:ReferenceTypeCode', $this->referenceTypeCode));
         }
 
-        if (is_string($this->name)) {
+        if (\is_string($this->name)) {
             $element->appendChild($document->createElement('ram:Name', $this->name));
         }
 

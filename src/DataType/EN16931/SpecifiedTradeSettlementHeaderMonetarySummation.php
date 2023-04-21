@@ -21,10 +21,10 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         float $taxBasisTotalAmount,
         float $lineTotalAmount,
         float $grandTotalAmount,
-        float $amountDueForPayment,
+        float $duePayableAmount,
         TaxTotalAmount $taxTotalAmount = null,
     ) {
-        parent::__construct($taxBasisTotalAmount, $lineTotalAmount, $grandTotalAmount, $amountDueForPayment, $taxTotalAmount);
+        parent::__construct($taxBasisTotalAmount, $lineTotalAmount, $grandTotalAmount, $duePayableAmount, $taxTotalAmount);
 
         $this->roundingAmount = null;
     }
@@ -37,5 +37,44 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
     public function setRoundingAmount(?float $roundingAmount): void
     {
         $this->roundingAmount = \is_float($roundingAmount) ? new Amount($roundingAmount) : null;
+    }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:SpecifiedTradeSettlementHeaderMonetarySummation');
+
+        $currentNode->appendChild($document->createElement('ram:LineTotalAmount', (string) $this->getLineTotalAmount()));
+
+        if (null !== $this->getChargeTotalAmount()) {
+            $currentNode->appendChild($document->createElement('ram:ChargeTotalAmount', (string) $this->getChargeTotalAmount()));
+        }
+
+        if (null !== $this->getAllowanceTotalAmount()) {
+            $currentNode->appendChild($document->createElement('ram:AllowanceTotalAmount', (string) $this->getAllowanceTotalAmount()));
+        }
+
+        $currentNode->appendChild($document->createElement('ram:TaxBasisTotalAmount', (string) $this->getTaxBasisTotalAmount()));
+
+        if (null !== $this->getTaxTotalAmount()) {
+            $currentNode->appendChild($this->getTaxTotalAmount()->toXML($document));
+        }
+
+        if (null !== $this->getTaxTotalAmountCurrency()) {
+            $currentNode->appendChild($this->getTaxTotalAmountCurrency()->toXML($document));
+        }
+
+        if (null !== $this->roundingAmount) {
+            $currentNode->appendChild($document->createElement('ram:RoundingAmount', (string) $this->roundingAmount->getValueRounded()));
+        }
+
+        $currentNode->appendChild($document->createElement('ram:GrandTotalAmount', (string) $this->getGrandTotalAmount()));
+
+        if (null !== $this->getTotalPrepaidAmount()) {
+            $currentNode->appendChild($document->createElement('ram:TotalPrepaidAmount', (string) $this->getTotalPrepaidAmount()));
+        }
+
+        $currentNode->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->getDuePayableAmount()));
+
+        return $currentNode;
     }
 }

@@ -33,4 +33,39 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
     {
         $this->taxPointDate = $taxPointDate;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:ApplicableTradeTax');
+
+        $currentNode->appendChild($document->createElement('ram:CalculatedAmount', (string) $this->getCalculatedAmount()->getValueRounded()));
+
+        $currentNode->appendChild($document->createElement('ram:TypeCode', $this->getTypeCode()));
+
+        if (null !== $this->getExemptionReason()) {
+            $currentNode->appendChild($document->createElement('ram:ExemptionReason', $this->getExemptionReason()));
+        }
+
+        $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->getBasisAmount()->getValueRounded()));
+
+        $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->getCategoryCode()->value));
+
+        if (null !== $this->getExemptionReasonCode()) {
+            $currentNode->appendChild($document->createElement('ram:ExemptionReasonCode', $this->getExemptionReasonCode()->value));
+        }
+
+        if (null !== $this->taxPointDate) {
+            $currentNode->appendChild($this->taxPointDate->toXML($document));
+        }
+
+        if (null !== $this->getDueDateTypeCode()) {
+            $currentNode->appendChild($document->createElement('ram:DueDateTypeCode', $this->getDueDateTypeCode()->value));
+        }
+
+        if (null !== $this->getRateApplicablePercent()) {
+            $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->getRateApplicablePercent()->getValueRounded()));
+        }
+
+        return $currentNode;
+    }
 }

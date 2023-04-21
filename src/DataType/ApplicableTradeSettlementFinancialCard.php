@@ -12,22 +12,22 @@ class ApplicableTradeSettlementFinancialCard
     /**
      * BT-87.
      */
-    private string $id;
+    private string $identifier;
 
     /**
      * BT-88.
      */
     private ?string $cardholderName;
 
-    public function __construct(string $id)
+    public function __construct(string $identifier)
     {
-        $this->id             = $id;
+        $this->identifier     = $identifier;
         $this->cardholderName = null;
     }
 
-    public function getId(): string
+    public function getIdentifier(): string
     {
-        return $this->id;
+        return $this->identifier;
     }
 
     public function getCardholderName(): ?string
@@ -38,5 +38,18 @@ class ApplicableTradeSettlementFinancialCard
     public function setCardholderName(?string $cardholderName): void
     {
         $this->cardholderName = $cardholderName;
+    }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:ApplicableTradeSettlementFinancialCard');
+
+        $currentNode->appendChild($document->createElement('ram:ID', $this->identifier));
+
+        if (null !== $this->cardholderName) {
+            $currentNode->appendChild($document->createElement('ram:CardholderName', $this->cardholderName));
+        }
+
+        return $currentNode;
     }
 }

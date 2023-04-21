@@ -274,62 +274,60 @@ class ApplicableHeaderTradeSettlement
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ApplicableHeaderTradeSettlement');
+        $currentNode = $document->createElement('ram:ApplicableHeaderTradeSettlement');
 
-        /*
-        if ($this->creditorReferenceID instanceof BankAssignedCreditorIdentifier) {
-            $element->appendChild($document->createElement('ram:CreditorReferenceID', $this->creditorReferenceID->value));
+        if (null !== $this->creditorReferenceID) {
+            $currentNode->appendChild($document->createElement('ram:CreditorReferenceID', $this->creditorReferenceID->value));
         }
 
-        if (is_string($this->paymentReference)) {
-            $element->appendChild($document->createElement('ram:PaymentReference', $this->paymentReference));
+        if (null !== $this->paymentReference) {
+            $currentNode->appendChild($document->createElement('ram:PaymentReference', $this->paymentReference));
         }
 
-        if ($this->taxCurrencyCode instanceof CurrencyCode) {
-            $element->appendChild($document->createElement('ram:TaxCurrencyCode', $this->taxCurrencyCode->value));
+        if (null !== $this->taxCurrencyCode) {
+            $currentNode->appendChild($document->createElement('ram:TaxCurrencyCode', $this->taxCurrencyCode->value));
         }
 
-        $element->appendChild($document->createElement('ram:InvoiceCurrencyCode', $this->invoiceCurrencyCode->value));
+        $currentNode->appendChild($document->createElement('ram:InvoiceCurrencyCode', $this->invoiceCurrencyCode->value));
 
-        if ($this->payeeTradeParty instanceof PayeeTradeParty) {
-            $element->appendChild($this->payeeTradeParty->toXML($document));
+        if (null !== $this->payeeTradeParty) {
+            $currentNode->appendChild($this->payeeTradeParty->toXML($document));
         }
 
-        if ($this->specifiedTradeSettlementPaymentMeans instanceof SpecifiedTradeSettlementPaymentMeans) {
-            $element->appendChild($this->specifiedTradeSettlementPaymentMeans->toXML($document));
+        if (null !== $this->specifiedTradeSettlementPaymentMeans) {
+            $currentNode->appendChild($this->specifiedTradeSettlementPaymentMeans->toXML($document));
         }
 
         foreach ($this->applicableTradeTaxes as $applicableTradeTax) {
-            $element->appendChild($applicableTradeTax->toXML($document));
+            $currentNode->appendChild($applicableTradeTax->toXML($document));
         }
 
-        if ($this->billingSpecifiedPeriod instanceof BillingSpecifiedPeriod) {
-            $element->appendChild($this->billingSpecifiedPeriod->toXML($document));
+        if (null !== $this->billingSpecifiedPeriod) {
+            $currentNode->appendChild($this->billingSpecifiedPeriod->toXML($document));
         }
 
         foreach ($this->specifiedTradeAllowances as $specifiedTradeAllowance) {
-            $element->appendChild($specifiedTradeAllowance->toXML($document));
+            $currentNode->appendChild($specifiedTradeAllowance->toXML($document));
         }
 
         foreach ($this->specifiedTradeCharges as $specifiedTradeCharge) {
-            $element->appendChild($specifiedTradeCharge->toXML($document));
+            $currentNode->appendChild($specifiedTradeCharge->toXML($document));
         }
 
-        if ($this->specifiedTradePaymentTerms instanceof SpecifiedTradePaymentTerms) {
-            $element->appendChild($this->specifiedTradePaymentTerms->toXML($document));
+        if (null !== $this->specifiedTradePaymentTerms) {
+            $currentNode->appendChild($this->specifiedTradePaymentTerms->toXML($document));
         }
 
-        $element->appendChild($this->specifiedTradeSettlementHeaderMonetarySummation->toXML($document));
+        $currentNode->appendChild($this->specifiedTradeSettlementHeaderMonetarySummation->toXML($document));
 
-        if ($this->invoiceReferencedDocument instanceof InvoiceReferencedDocument) {
-            $element->appendChild($this->invoiceReferencedDocument->toXML($document));
+        if (null !== $this->invoiceReferencedDocument) {
+            $currentNode->appendChild($this->invoiceReferencedDocument->toXML($document));
         }
 
-        if ($this->receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
-            $element->appendChild($this->receivableSpecifiedTradeAccountingAccount->toXML($document));
+        if (null !== $this->receivableSpecifiedTradeAccountingAccount) {
+            $currentNode->appendChild($this->receivableSpecifiedTradeAccountingAccount->toXML($document));
         }
-        */
 
-        return $element;
+        return $currentNode;
     }
 }

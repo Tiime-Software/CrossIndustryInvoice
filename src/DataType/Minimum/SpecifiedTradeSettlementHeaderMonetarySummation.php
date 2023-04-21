@@ -30,17 +30,17 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
     /**
      * BT-115.
      */
-    private Amount $amountDueForPayment;
+    private Amount $duePayableAmount;
 
     public function __construct(
         float $taxBasisTotalAmount,
         float $grandTotalAmount,
-        float $amountDueForPayment,
+        float $duePayableAmount,
         TaxTotalAmount $taxTotalAmount = null
     ) {
         $this->taxBasisTotalAmount = new Amount($taxBasisTotalAmount);
         $this->grandTotalAmount    = new Amount($grandTotalAmount);
-        $this->amountDueForPayment = new Amount($amountDueForPayment);
+        $this->duePayableAmount    = new Amount($duePayableAmount);
         $this->taxTotalAmount      = $taxTotalAmount;
     }
 
@@ -59,9 +59,9 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         return $this->grandTotalAmount->getValueRounded();
     }
 
-    public function getAmountDueForPayment(): float
+    public function getDuePayableAmount(): float
     {
-        return $this->amountDueForPayment->getValueRounded();
+        return $this->duePayableAmount->getValueRounded();
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
@@ -75,7 +75,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         }
 
         $element->appendChild($document->createElement('ram:GrandTotalAmount', (string) $this->grandTotalAmount->getValueRounded()));
-        $element->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->amountDueForPayment->getValueRounded()));
+        $element->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->duePayableAmount->getValueRounded()));
 
         return $element;
     }
