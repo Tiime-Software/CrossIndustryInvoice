@@ -34,4 +34,14 @@ class TaxPointDate
     {
         return $this->format;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:TaxPointDate');
+
+        $dateStringElement = $document->createElement('udt:DateString', $this->dateString->format('Ymd'));
+        $dateStringElement->setAttribute('format', $this->format);
+
+        return $currentNode;
+    }
 }

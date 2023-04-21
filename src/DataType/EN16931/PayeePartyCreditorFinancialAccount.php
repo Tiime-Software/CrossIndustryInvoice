@@ -32,4 +32,23 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
     {
         $this->accountName = $accountName;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:PayeePartyCreditorFinancialAccount');
+
+        if (null !== $this->getIbanId()) {
+            $currentNode->appendChild($document->createElement('ram:IBANID', $this->getIbanId()->value));
+        }
+
+        if (null !== $this->accountName) {
+            $currentNode->appendChild($document->createElement('ram:AccountName', $this->accountName));
+        }
+
+        if (null !== $this->getProprietaryId()) {
+            $currentNode->appendChild($document->createElement('ram:ProprietaryID', $this->getProprietaryId()->value));
+        }
+
+        return $currentNode;
+    }
 }

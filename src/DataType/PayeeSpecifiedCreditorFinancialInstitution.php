@@ -11,15 +11,24 @@ class PayeeSpecifiedCreditorFinancialInstitution
     /**
      * BT-86.
      */
-    private PaymentServiceProviderIdentifier $bicID;
+    private PaymentServiceProviderIdentifier $bicIdentifier;
 
-    public function __construct(PaymentServiceProviderIdentifier $bicID)
+    public function __construct(PaymentServiceProviderIdentifier $bicIdentifier)
     {
-        $this->bicID = $bicID;
+        $this->bicIdentifier = $bicIdentifier;
     }
 
-    public function getBicID(): PaymentServiceProviderIdentifier
+    public function getBicIdentifier(): PaymentServiceProviderIdentifier
     {
-        return $this->bicID;
+        return $this->bicIdentifier;
+    }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:PayeeSpecifiedCreditorFinancialInstitution');
+
+        $currentNode->appendChild($document->createElement('ram:BICID', $this->bicIdentifier->value));
+
+        return $currentNode;
     }
 }

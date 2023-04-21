@@ -74,16 +74,16 @@ class SellerTradeParty
 
     public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
     {
-        $this->name                         = $name;
-        $this->postalTradeAddress           = $postalTradeAddress;
-        $this->ids                          = [];
-        $this->globalIds                    = [];
-        $this->description                  = null;
-        $this->specifiedLegalOrganization   = null;
-        $this->definedTradeContact          = null;
-        $this->uriUniversalCommunication    = null;
-        $this->specifiedTaxRegistrationVAT  = null;
-        $this->specifiedTaxRegistration     = null;
+        $this->name                        = $name;
+        $this->postalTradeAddress          = $postalTradeAddress;
+        $this->ids                         = [];
+        $this->globalIds                   = [];
+        $this->description                 = null;
+        $this->specifiedLegalOrganization  = null;
+        $this->definedTradeContact         = null;
+        $this->uriUniversalCommunication   = null;
+        $this->specifiedTaxRegistrationVAT = null;
+        $this->specifiedTaxRegistration    = null;
     }
 
     public function getIds(): array
@@ -193,7 +193,7 @@ class SellerTradeParty
 
         $element->appendChild($document->createElement('ram:Name', $this->name));
 
-        if (is_string($this->description)) {
+        if (\is_string($this->description)) {
             $element->appendChild($document->createElement('ram:Description', $this->description));
         }
 

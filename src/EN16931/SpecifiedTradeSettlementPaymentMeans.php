@@ -109,4 +109,33 @@ class SpecifiedTradeSettlementPaymentMeans
     {
         $this->payeeSpecifiedCreditorFinancialInstitution = $payeeSpecifiedCreditorFinancialInstitution;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $currentNode = $document->createElement('ram:SpecifiedTradeSettlementPaymentMeans');
+
+        $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode->value));
+
+        if (null !== $this->information) {
+            $currentNode->appendChild($document->createElement('ram:Information', $this->information));
+        }
+
+        if (null !== $this->applicableTradeSettlementFinancialCard) {
+            $currentNode->appendChild($this->applicableTradeSettlementFinancialCard->toXML($document));
+        }
+
+        if (null !== $this->payerPartyDebtorFinancialAccount) {
+            $currentNode->appendChild($this->payerPartyDebtorFinancialAccount->toXML($document));
+        }
+
+        if (null !== $this->payeePartyCreditorFinancialAccount) {
+            $currentNode->appendChild($this->payeePartyCreditorFinancialAccount->toXML($document));
+        }
+
+        if (null !== $this->payeeSpecifiedCreditorFinancialInstitution) {
+            $currentNode->appendChild($this->payeeSpecifiedCreditorFinancialInstitution->toXML($document));
+        }
+
+        return $currentNode;
+    }
 }
