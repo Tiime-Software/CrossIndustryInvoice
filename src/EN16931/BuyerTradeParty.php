@@ -138,4 +138,39 @@ class BuyerTradeParty
     {
         $this->specifiedTaxRegistration = $specifiedTaxRegistration;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:BuyerTradeParty');
+
+        if ($this->id instanceof BuyerIdentifier) {
+            $element->appendChild($this->id->toXML($document));
+        }
+
+        if ($this->globalId instanceof BuyerGlobalIdentifier) {
+            $element->appendChild($this->globalId->toXML($document));
+        }
+
+        $element->appendChild($document->createElement('ram:Name', $this->name));
+
+        if ($this->specifiedLegalOrganization instanceof BuyerSpecifiedLegalOrganization) {
+            $element->appendChild($this->specifiedLegalOrganization->toXML($document));
+        }
+
+        if ($this->definedTradeContact instanceof DefinedTradeContact) {
+            $element->appendChild($this->definedTradeContact->toXML($document));
+        }
+
+        $element->appendChild($this->postalTradeAddress->toXML($document));
+
+        if ($this->URIUniversalCommunication instanceof URIUniversalCommunication) {
+            $element->appendChild($this->URIUniversalCommunication->toXML($document));
+        }
+
+        if ($this->specifiedTaxRegistration instanceof SpecifiedTaxRegistration) {
+            $element->appendChild($this->specifiedTaxRegistration->toXML($document));
+        }
+
+        return $element;
+    }
 }

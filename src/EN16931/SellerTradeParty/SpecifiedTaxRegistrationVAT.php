@@ -41,4 +41,18 @@ class SpecifiedTaxRegistrationVAT
     {
         return $this->schemeID;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedTaxRegistration');
+
+        if ($this->id instanceof VatIdentifier) {
+            $identifierElement = $document->createElement('ram:ID', $this->id->getValue());
+            $identifierElement->setAttribute('schemeId', $this->getSchemeID());
+
+            $element->appendChild($identifierElement);
+        }
+
+        return $element;
+    }
 }

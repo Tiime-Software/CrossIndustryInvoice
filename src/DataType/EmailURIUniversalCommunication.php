@@ -23,4 +23,13 @@ class EmailURIUniversalCommunication
     {
         return $this->uriID;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:EmailURIUniversalCommunication');
+
+        $element->appendChild($document->createElement('ram:URIID', $this->uriID));
+
+        return $element;
+    }
 }

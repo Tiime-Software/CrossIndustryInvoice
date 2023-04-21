@@ -101,4 +101,36 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
     {
         $this->attachmentBinaryObject = $attachmentBinaryObject;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:AdditionalReferencedDocument');
+
+        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+
+        if (is_string($this->uriID)) {
+            $element->appendChild($document->createElement('ram:URIID', $this->uriID));
+        }
+
+        $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
+
+        if (is_string($this->referenceTypeCode)) {
+            $element->appendChild($document->createElement('ram:ReferenceTypeCode', $this->referenceTypeCode));
+        }
+
+        if (is_string($this->name)) {
+            $element->appendChild($document->createElement('ram:Name', $this->name));
+        }
+
+        if ($this->attachmentBinaryObject instanceof BinaryObject) {
+            $binaryObjectElement = $document->createElement('ram:AttachmentBinaryObject', $this->attachmentBinaryObject->content);
+
+            $binaryObjectElement->setAttribute('mimeCode', $this->attachmentBinaryObject->mimeCode->value);
+            $binaryObjectElement->setAttribute('filename', $this->attachmentBinaryObject->filename);
+
+            $element->appendChild($binaryObjectElement);
+        }
+
+        return $element;
+    }
 }

@@ -79,4 +79,27 @@ class DefinedTradeContact
     {
         $this->emailURIUniversalCommunication = $emailURIUniversalCommunication;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:DefinedTradeContact');
+
+        if (is_string($this->personName)) {
+            $element->appendChild($document->createElement('ram:PersonName', $this->personName));
+        }
+
+        if (is_string($this->departmentName)) {
+            $element->appendChild($document->createElement('ram:DepartmentName', $this->departmentName));
+        }
+
+        if ($this->telephoneUniversalCommunication instanceof TelephoneUniversalCommunication) {
+            $element->appendChild($this->telephoneUniversalCommunication->toXML($document));
+        }
+
+        if ($this->emailURIUniversalCommunication instanceof EmailURIUniversalCommunication) {
+            $element->appendChild($this->emailURIUniversalCommunication->toXML($document));
+        }
+
+        return $element;
+    }
 }
