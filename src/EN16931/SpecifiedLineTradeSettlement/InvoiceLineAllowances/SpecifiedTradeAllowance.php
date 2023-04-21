@@ -98,4 +98,31 @@ class SpecifiedTradeAllowance
     {
         $this->reason = $reason;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedTradeAllowanceCharge');
+
+        $element->appendChild($this->chargeIndicator->toXML($document));
+
+        if ($this->calculationPercent instanceof Percentage) {
+            $element->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercent->getValueRounded()));
+        }
+
+        if ($this->basisAmount instanceof Amount) {
+            $element->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
+        }
+
+        $element->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
+
+        if ($this->reasonCode instanceof AllowanceReasonCode) {
+            $element->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
+        }
+
+        if (\is_string($this->reason)) {
+            $element->appendChild($document->createElement('ram:Reason', $this->reason));
+        }
+
+        return $element;
+    }
 }

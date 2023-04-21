@@ -79,13 +79,11 @@ class IncludedSupplyChainTradeLineItem
     {
         $element = $document->createElement('ram:IncludedSupplyChainTradeLineItem');
 
-        /*
         $element->appendChild($this->associatedDocumentLineDocument->toXML($document));
         $element->appendChild($this->specifiedTradeProduct->toXML($document));
         $element->appendChild($this->specifiedLineTradeAgreement->toXML($document));
         $element->appendChild($this->specifiedLineTradeDelivery->toXML($document));
         $element->appendChild($this->specifiedLineTradeSettlement->toXML($document));
-        */
 
         return $element;
     }

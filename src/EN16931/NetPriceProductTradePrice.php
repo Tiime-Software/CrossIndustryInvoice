@@ -42,4 +42,17 @@ class NetPriceProductTradePrice
     {
         $this->basisQuantity = $basisQuantity;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:NetPriceProductTradePrice');
+
+        $element->appendChild($document->createElement('ram:ChargeAmount', (string) $this->chargeAmount->getValueRounded()));
+
+        if ($this->basisQuantity instanceof BasisQuantity) {
+            $element->appendChild($this->basisQuantity->toXML($document));
+        }
+
+        return $element;
+    }
 }

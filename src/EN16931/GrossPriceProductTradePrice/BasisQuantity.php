@@ -42,4 +42,15 @@ class BasisQuantity
     {
         $this->unitCode = $unitCode;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:BasisQuantity', (string) $this->value->getValueRounded());
+
+        if ($this->unitCode instanceof UnitOfMeasurement) {
+            $element->setAttribute('unitCode', $this->unitCode->value);
+        }
+
+        return $element;
+    }
 }

@@ -142,4 +142,32 @@ class SpecifiedLineTradeSettlement
     {
         $this->receivableSpecifiedTradeAccountingAccount = $receivableSpecifiedTradeAccountingAccount;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedLineTradeSettlement');
+
+        $element->appendChild($this->applicableTradeTax->toXML($document));
+        $element->appendChild($this->billingSpecifiedPeriod->toXML($document));
+
+        foreach ($this->specifiedTradeAllowances as $specifiedTradeAllowance) {
+            $element->appendChild($specifiedTradeAllowance->toXML($document));
+        }
+
+        foreach ($this->specifiedTradeCharges as $specifiedTradeCharge) {
+            $element->appendChild($specifiedTradeCharge->toXML($document));
+        }
+
+        $element->appendChild($this->specifiedTradeSettlementLineMonetarySummation->toXML($document));
+
+        if ($this->additionalReferencedDocument instanceof AdditionalReferencedDocument) {
+            $element->appendChild($this->additionalReferencedDocument->toXML($document));
+        }
+
+        if ($this->receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
+            $element->appendChild($this->receivableSpecifiedTradeAccountingAccount->toXML($document));
+        }
+
+        return $element;
+    }
 }

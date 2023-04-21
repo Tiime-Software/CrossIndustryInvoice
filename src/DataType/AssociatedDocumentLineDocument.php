@@ -40,4 +40,17 @@ class AssociatedDocumentLineDocument
     {
         $this->includedNote = $includedNote;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:AssociatedDocumentLineDocument');
+
+        $element->appendChild($document->createElement('ram:LineID', $this->lineID->value));
+
+        if ($this->includedNote instanceof LineIncludedNote) {
+            $element->appendChild($this->includedNote->toXML($document));
+        }
+
+        return $element;
+    }
 }

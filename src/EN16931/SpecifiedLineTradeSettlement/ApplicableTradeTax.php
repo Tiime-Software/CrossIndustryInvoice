@@ -53,4 +53,18 @@ class ApplicableTradeTax
     {
         $this->rateApplicablePercent = $rateApplicablePercent;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ApplicableTradeTax');
+
+        $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
+        $element->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
+
+        if ($this->rateApplicablePercent instanceof Percentage) {
+            $element->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->rateApplicablePercent->getValueRounded()));
+        }
+
+        return $element;
+    }
 }

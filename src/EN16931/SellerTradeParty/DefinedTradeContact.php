@@ -84,11 +84,11 @@ class DefinedTradeContact
     {
         $element = $document->createElement('ram:DefinedTradeContact');
 
-        if (is_string($this->personName)) {
+        if (\is_string($this->personName)) {
             $element->appendChild($document->createElement('ram:PersonName', $this->personName));
         }
 
-        if (is_string($this->departmentName)) {
+        if (\is_string($this->departmentName)) {
             $element->appendChild($document->createElement('ram:DepartmentName', $this->departmentName));
         }
 

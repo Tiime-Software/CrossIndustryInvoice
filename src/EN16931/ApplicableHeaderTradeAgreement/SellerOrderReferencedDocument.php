@@ -16,7 +16,8 @@ class SellerOrderReferencedDocument
      */
     private SalesOrderReference $issuerAssignedID;
 
-    public function __construct(SalesOrderReference $issuerAssignedID) {
+    public function __construct(SalesOrderReference $issuerAssignedID)
+    {
         $this->issuerAssignedID = $issuerAssignedID;
     }
 

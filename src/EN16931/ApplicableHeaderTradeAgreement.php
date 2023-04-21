@@ -181,7 +181,7 @@ class ApplicableHeaderTradeAgreement
     {
         $element = $document->createElement('ram:ApplicableHeaderTradeAgreement');
 
-        if (is_string($this->buyerReference)) {
+        if (\is_string($this->buyerReference)) {
             $element->appendChild($document->createElement('ram:BuyerReference', $this->buyerReference));
         }
 

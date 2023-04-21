@@ -23,4 +23,13 @@ class SpecifiedLineTradeDelivery
     {
         return $this->billedQuantity;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedLineTradeDelivery');
+
+        $element->appendChild($this->billedQuantity->toXML($document));
+
+        return $element;
+    }
 }

@@ -37,4 +37,14 @@ class AppliedTradeAllowanceCharge
     {
         return $this->actualAmount->getValueRounded();
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:AppliedTradeAllowanceCharge');
+
+        $element->appendChild($this->chargeIndicator->toXML($document));
+        $element->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
+
+        return $element;
+    }
 }

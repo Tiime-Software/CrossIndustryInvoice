@@ -47,4 +47,17 @@ class ClassCode
     {
         $this->listVersionID = $listVersionID;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ClassCode', $this->value);
+
+        $element->setAttribute('listID', $this->listID->value);
+
+        if (\is_string($this->listVersionID)) {
+            $element->setAttribute('listVersionID', $this->listVersionID);
+        }
+
+        return $element;
+    }
 }

@@ -58,4 +58,21 @@ class GrossPriceProductTradePrice
     {
         $this->appliedTradeAllowanceCharge = $appliedTradeAllowanceCharge;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:GrossPriceProductTradePrice');
+
+        $element->appendChild($document->createElement('ram:ChargeAmount', (string) $this->chargeAmount->getValueRounded()));
+
+        if ($this->basisQuantity instanceof BasisQuantity) {
+            $element->appendChild($this->basisQuantity->toXML($document));
+        }
+
+        if ($this->appliedTradeAllowanceCharge instanceof AppliedTradeAllowanceCharge) {
+            $element->appendChild($this->appliedTradeAllowanceCharge->toXML($document));
+        }
+
+        return $element;
+    }
 }

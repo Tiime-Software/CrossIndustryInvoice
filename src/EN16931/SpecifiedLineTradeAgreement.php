@@ -55,4 +55,21 @@ class SpecifiedLineTradeAgreement
     {
         return $this->netPriceProductTradePrice;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedLineTradeAgreement');
+
+        if ($this->buyerOrderReferencedDocument instanceof BuyerOrderReferencedDocument) {
+            $element->appendChild($this->buyerOrderReferencedDocument->toXML($document));
+        }
+
+        if ($this->grossPriceProductTradePrice instanceof GrossPriceProductTradePrice) {
+            $element->appendChild($this->grossPriceProductTradePrice->toXML($document));
+        }
+
+        $element->appendChild($this->netPriceProductTradePrice->toXML($document));
+
+        return $element;
+    }
 }

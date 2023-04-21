@@ -37,4 +37,13 @@ class BilledQuantity
     {
         return $this->unitCode;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:BilledQuantity', (string) $this->value->getValueRounded());
+
+        $element->setAttribute('unitCode', $this->unitCode->value);
+
+        return $element;
+    }
 }

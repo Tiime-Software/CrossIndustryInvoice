@@ -34,4 +34,14 @@ class ApplicableProductCharacteristic
     {
         return $this->value;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ApplicableProductCharacteristic');
+
+        $element->appendChild($document->createElement('ram:Description', $this->description));
+        $element->appendChild($document->createElement('ram:Value', $this->value));
+
+        return $element;
+    }
 }

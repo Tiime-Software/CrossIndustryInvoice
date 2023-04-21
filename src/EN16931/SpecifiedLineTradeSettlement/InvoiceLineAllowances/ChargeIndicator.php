@@ -23,4 +23,13 @@ class ChargeIndicator
     {
         return $this->indicator;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ChargeIndicator');
+
+        $element->appendChild($document->createElement('udt:Indicator', 'false'));
+
+        return $element;
+    }
 }

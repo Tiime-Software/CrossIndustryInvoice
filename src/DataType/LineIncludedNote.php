@@ -23,4 +23,13 @@ class LineIncludedNote
     {
         return $this->content;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:IncludedNote');
+
+        $element->appendChild($document->createElement('ram:Content', $this->content));
+
+        return $element;
+    }
 }
