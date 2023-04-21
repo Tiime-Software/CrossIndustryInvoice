@@ -78,7 +78,7 @@ class SellerTradeParty
         $tmpIdentifiers = [];
 
         foreach ($identifiers as $identifier) {
-            if (!$identifier instanceof SellerGlobalIdentifier) {
+            if (!$identifier instanceof SellerIdentifier) {
                 throw new \TypeError();
             }
 
@@ -98,7 +98,7 @@ class SellerTradeParty
         $tmpGlobalIdentifiers = [];
 
         foreach ($globalIdentifiers as $globalIdentifier) {
-            if (!$globalIdentifier instanceof SellerIdentifier) {
+            if (!$globalIdentifier instanceof SellerGlobalIdentifier) {
                 throw new \TypeError();
             }
 

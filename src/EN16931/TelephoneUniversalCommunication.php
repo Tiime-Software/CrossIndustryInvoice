@@ -23,4 +23,13 @@ class TelephoneUniversalCommunication
     {
         return $this->completeNumber;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:TelephoneUniversalCommunication');
+
+        $element->appendChild($document->createElement('ram:CompleteNumber', $this->completeNumber));
+
+        return $element;
+    }
 }

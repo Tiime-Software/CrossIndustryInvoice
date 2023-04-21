@@ -64,17 +64,13 @@ class SellerTradeParty
 
     /**
      * BT-31-00.
-     *
-     * @var array<int, SpecifiedTaxRegistrationVAT>
      */
-    private array $specifiedTaxRegistrationVATs;
+    private ?SpecifiedTaxRegistrationVAT $specifiedTaxRegistrationVAT;
 
     /**
      * BT-32-00.
-     *
-     * @var array<int, SpecifiedTaxRegistration>
      */
-    private array $specifiedTaxRegistrations;
+    private ?SpecifiedTaxRegistration $specifiedTaxRegistration;
 
     public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
     {
@@ -82,12 +78,12 @@ class SellerTradeParty
         $this->postalTradeAddress           = $postalTradeAddress;
         $this->ids                          = [];
         $this->globalIds                    = [];
-        $this->specifiedTaxRegistrationVATs = [];
-        $this->specifiedTaxRegistrations    = [];
         $this->description                  = null;
         $this->specifiedLegalOrganization   = null;
         $this->definedTradeContact          = null;
         $this->uriUniversalCommunication    = null;
+        $this->specifiedTaxRegistrationVAT  = null;
+        $this->specifiedTaxRegistration     = null;
     }
 
     public function getIds(): array
@@ -160,23 +156,69 @@ class SellerTradeParty
         $this->uriUniversalCommunication = $uriUniversalCommunication;
     }
 
-    public function getSpecifiedTaxRegistrationVATs(): array
+    public function getSpecifiedTaxRegistrationVAT(): ?SpecifiedTaxRegistrationVAT
     {
-        return $this->specifiedTaxRegistrationVATs;
+        return $this->specifiedTaxRegistrationVAT;
     }
 
-    public function setSpecifiedTaxRegistrationVATs(array $specifiedTaxRegistrationVATs): void
+    public function setSpecifiedTaxRegistrationVATs(?SpecifiedTaxRegistrationVAT $specifiedTaxRegistrationVAT): void
     {
-        $this->specifiedTaxRegistrationVATs = $specifiedTaxRegistrationVATs;
+        $this->specifiedTaxRegistrationVAT = $specifiedTaxRegistrationVAT;
     }
 
-    public function getSpecifiedTaxRegistrations(): array
+    public function getSpecifiedTaxRegistrations(): ?SpecifiedTaxRegistration
     {
-        return $this->specifiedTaxRegistrations;
+        return $this->specifiedTaxRegistration;
     }
 
-    public function setSpecifiedTaxRegistrations(array $specifiedTaxRegistrations): void
+    public function setSpecifiedTaxRegistrations(?SpecifiedTaxRegistration $specifiedTaxRegistration): void
     {
-        $this->specifiedTaxRegistrations = $specifiedTaxRegistrations;
+        $this->specifiedTaxRegistration = $specifiedTaxRegistration;
+    }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SellerTradeParty');
+
+        foreach ($this->ids as $id) {
+            $element->appendChild($document->createElement('ram:ID', $id->value));
+        }
+
+        foreach ($this->globalIds as $globalId) {
+            $globalIdentifierElement = $document->createElement('ram:GlobalID', $globalId->value);
+            $globalIdentifierElement->setAttribute('schemeID', $globalId->scheme->value);
+
+            $element->appendChild($globalIdentifierElement);
+        }
+
+        $element->appendChild($document->createElement('ram:Name', $this->name));
+
+        if (is_string($this->description)) {
+            $element->appendChild($document->createElement('ram:Description', $this->description));
+        }
+
+        if ($this->specifiedLegalOrganization instanceof SellerSpecifiedLegalOrganization) {
+            $element->appendChild($this->specifiedLegalOrganization->toXML($document));
+        }
+
+        if ($this->definedTradeContact instanceof DefinedTradeContact) {
+            $element->appendChild($this->definedTradeContact->toXML($document));
+        }
+
+        $element->appendChild($this->postalTradeAddress->toXML($document));
+
+        if ($this->uriUniversalCommunication instanceof URIUniversalCommunication) {
+            $element->appendChild($this->uriUniversalCommunication->toXML($document));
+        }
+
+        if ($this->specifiedTaxRegistrationVAT instanceof SpecifiedTaxRegistrationVAT) {
+            $element->appendChild($this->specifiedTaxRegistrationVAT->toXML($document));
+        }
+
+        if ($this->specifiedTaxRegistration instanceof SpecifiedTaxRegistration) {
+            $element->appendChild($this->specifiedTaxRegistration->toXML($document));
+        }
+
+        return $element;
     }
 }

@@ -61,17 +61,13 @@ class ApplicableHeaderTradeAgreement
 
     /**
      * BT-17-00.
-     *
-     * @var array<int, AdditionalReferencedDocumentTenderOrLotReference>
      */
-    private array $additionalReferencedDocumentTenderOrLotReferences;
+    private ?AdditionalReferencedDocumentTenderOrLotReference $additionalReferencedDocumentTenderOrLotReference;
 
     /**
      * BT-18-00.
-     *
-     * @var array<int, AdditionalReferencedDocumentInvoicedObjectIdentifier>
      */
-    private array $additionalReferencedDocumentInvoicedObjectIdentifiers;
+    private ?AdditionalReferencedDocumentInvoicedObjectIdentifier $additionalReferencedDocumentInvoicedObjectIdentifier;
 
     /**
      * BT-11-00.
@@ -80,17 +76,17 @@ class ApplicableHeaderTradeAgreement
 
     public function __construct(SellerTradeParty $sellerTradeParty, BuyerTradeParty $buyerTradeParty)
     {
-        $this->sellerTradeParty                                      = $sellerTradeParty;
-        $this->buyerTradeParty                                       = $buyerTradeParty;
-        $this->buyerReference                                        = null;
-        $this->sellerTaxRepresentativeTradeParty                     = null;
-        $this->sellerOrderReferencedDocument                         = null;
-        $this->buyerOrderReferencedDocument                          = null;
-        $this->contractReferencedDocument                            = null;
-        $this->specifiedProcuringProject                             = null;
-        $this->additionalReferencedDocuments                         = [];
-        $this->additionalReferencedDocumentTenderOrLotReferences     = [];
-        $this->additionalReferencedDocumentInvoicedObjectIdentifiers = [];
+        $this->sellerTradeParty                                     = $sellerTradeParty;
+        $this->buyerTradeParty                                      = $buyerTradeParty;
+        $this->buyerReference                                       = null;
+        $this->sellerTaxRepresentativeTradeParty                    = null;
+        $this->sellerOrderReferencedDocument                        = null;
+        $this->buyerOrderReferencedDocument                         = null;
+        $this->contractReferencedDocument                           = null;
+        $this->specifiedProcuringProject                            = null;
+        $this->additionalReferencedDocuments                        = [];
+        $this->additionalReferencedDocumentTenderOrLotReference     = null;
+        $this->additionalReferencedDocumentInvoicedObjectIdentifier = null;
     }
 
     public function getBuyerReference(): ?string
@@ -185,7 +181,6 @@ class ApplicableHeaderTradeAgreement
     {
         $element = $document->createElement('ram:ApplicableHeaderTradeAgreement');
 
-        /*
         if (is_string($this->buyerReference)) {
             $element->appendChild($document->createElement('ram:BuyerReference', $this->buyerReference));
         }
@@ -213,19 +208,18 @@ class ApplicableHeaderTradeAgreement
             $element->appendChild($additionalReferencedDocument->toXML($document));
         }
 
-        foreach ($this->additionalReferencedDocumentTenderOrLotReferences as $additionalReferencedDocumentTenderOrLotReference) {
-            $element->appendChild($additionalReferencedDocumentTenderOrLotReference->toXML($document));
+        if ($this->additionalReferencedDocumentTenderOrLotReference instanceof AdditionalReferencedDocumentTenderOrLotReference) {
+            $element->appendChild($this->additionalReferencedDocumentTenderOrLotReference->toXML($document));
         }
 
-        foreach ($this->additionalReferencedDocumentInvoicedObjectIdentifiers as $additionalReferencedDocumentInvoicedObjectIdentifier) {
-            $element->appendChild($additionalReferencedDocumentInvoicedObjectIdentifier->toXML($document));
+        if ($this->additionalReferencedDocumentInvoicedObjectIdentifier instanceof AdditionalReferencedDocumentInvoicedObjectIdentifier) {
+            $element->appendChild($this->additionalReferencedDocumentInvoicedObjectIdentifier->toXML($document));
         }
 
         if ($this->specifiedProcuringProject instanceof SpecifiedProcuringProject) {
             $element->appendChild($this->specifiedProcuringProject->toXML($document));
         }
 
-        */
         return $element;
     }
 }

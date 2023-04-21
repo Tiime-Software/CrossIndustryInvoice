@@ -20,4 +20,9 @@ class BuyerIdentifier
     {
         return $this->value;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        return $document->createElement('ram:ID', $this->value);
+    }
 }

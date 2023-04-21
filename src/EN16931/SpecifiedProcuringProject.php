@@ -36,4 +36,14 @@ class SpecifiedProcuringProject
     {
         return $this->name;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedProcuringProject');
+
+        $element->appendChild($document->createElement('ram:ID', $this->id->value));
+        $element->appendChild($document->createElement('ram:Name', $this->name));
+
+        return $element;
+    }
 }
