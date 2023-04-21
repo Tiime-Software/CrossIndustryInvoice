@@ -53,4 +53,18 @@ class AdditionalReferencedDocument
     {
         $this->referenceTypeCode = $referenceTypeCode;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:AdditionalReferencedDocument');
+
+        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+        $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
+
+        if ($this->referenceTypeCode instanceof ObjectSchemeCode) {
+            $element->appendChild($document->createElement('ram:ReferenceTypeCode', $this->referenceTypeCode->value));
+        }
+
+        return $element;
+    }
 }

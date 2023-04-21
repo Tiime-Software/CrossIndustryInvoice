@@ -163,4 +163,44 @@ class SpecifiedTradeProduct
     {
         $this->originTradeCountry = $originTradeCountry;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedTradeProduct');
+
+        if ($this->globalID instanceof StandardItemIdentifier) {
+            $identifierElement = $document->createElement('ram:GlobalID', $this->globalID->value);
+            $identifierElement->setAttribute('schemeID', $this->globalID->scheme);
+
+            $element->appendChild($identifierElement);
+        }
+
+        if ($this->sellerAssignedID instanceof SellerItemIdentifier) {
+            $element->appendChild($document->createElement('ram:SellerAssignedID', $this->sellerAssignedID->value));
+        }
+
+        if ($this->buyerAssignedID instanceof BuyerItemIdentifier) {
+            $element->appendChild($document->createElement('ram:BuyerAssignedID', $this->buyerAssignedID->value));
+        }
+
+        $element->appendChild($document->createElement('ram:Name', $this->name));
+
+        if (\is_string($this->description)) {
+            $element->appendChild($document->createElement('ram:Description', $this->description));
+        }
+
+        foreach ($this->applicableProductCharacteristics as $applicableProductCharacteristic) {
+            $element->appendChild($applicableProductCharacteristic->toXML($document));
+        }
+
+        foreach ($this->designatedProductClassifications as $designatedProductClassification) {
+            $element->appendChild($designatedProductClassification->toXML($document));
+        }
+
+        if ($this->originTradeCountry instanceof OriginTradeCountry) {
+            $element->appendChild($this->originTradeCountry->toXML($document));
+        }
+
+        return $element;
+    }
 }

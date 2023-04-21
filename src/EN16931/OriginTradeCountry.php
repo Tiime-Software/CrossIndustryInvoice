@@ -29,4 +29,13 @@ class OriginTradeCountry
     {
         $this->id = $id;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:OriginTradeCountry');
+
+        $element->appendChild($document->createElement('ram:ID', $this->id->value));
+
+        return $element;
+    }
 }

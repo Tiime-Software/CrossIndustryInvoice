@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\InvoiceLineCharges;
 
-use Tiime\EN16931\DataType\AllowanceReasonCode;
+use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
@@ -36,7 +36,7 @@ class SpecifiedTradeCharge
     /**
      * BT-145.
      */
-    private ?AllowanceReasonCode $reasonCode;
+    private ?ChargeReasonCode $reasonCode;
 
     /**
      * BT-144.
@@ -79,12 +79,12 @@ class SpecifiedTradeCharge
         return $this->actualAmount->getValueRounded();
     }
 
-    public function getReasonCode(): ?AllowanceReasonCode
+    public function getReasonCode(): ?ChargeReasonCode
     {
         return $this->reasonCode;
     }
 
-    public function setReasonCode(?AllowanceReasonCode $reasonCode): void
+    public function setReasonCode(?ChargeReasonCode $reasonCode): void
     {
         $this->reasonCode = $reasonCode;
     }
@@ -97,5 +97,32 @@ class SpecifiedTradeCharge
     public function setReason(?string $reason): void
     {
         $this->reason = $reason;
+    }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:SpecifiedTradeAllowanceCharge');
+
+        $element->appendChild($this->chargeIndicator->toXML($document));
+
+        if ($this->calculationPercent instanceof Percentage) {
+            $element->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercent->getValueRounded()));
+        }
+
+        if ($this->basisAmount instanceof Amount) {
+            $element->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
+        }
+
+        $element->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
+
+        if ($this->reasonCode instanceof ChargeReasonCode) {
+            $element->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
+        }
+
+        if (\is_string($this->reason)) {
+            $element->appendChild($document->createElement('ram:Reason', $this->reason));
+        }
+
+        return $element;
     }
 }

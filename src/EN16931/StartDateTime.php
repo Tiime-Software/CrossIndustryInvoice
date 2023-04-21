@@ -34,4 +34,16 @@ class StartDateTime
     {
         return $this->format;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:StartDateTime');
+
+        $dateTimeElement = $document->createElement('ram:DateTimeString', $this->dateTimeString->format('Ymd'));
+        $dateTimeElement->setAttribute('format', $this->format);
+
+        $element->appendChild($dateTimeElement);
+
+        return $element;
+    }
 }

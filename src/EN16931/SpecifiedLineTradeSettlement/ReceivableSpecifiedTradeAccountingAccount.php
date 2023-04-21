@@ -23,4 +23,13 @@ class ReceivableSpecifiedTradeAccountingAccount
     {
         return $this->id;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:ReceivableSpecifiedTradeAccountingAccount');
+
+        $element->appendChild($document->createElement('ram:ID', $this->id));
+
+        return $element;
+    }
 }

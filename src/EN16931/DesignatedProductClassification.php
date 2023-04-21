@@ -27,4 +27,15 @@ class DesignatedProductClassification
     {
         $this->classCode = $classCode;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:DesignatedProductClassification');
+
+        if ($this->classCode instanceof ClassCode) {
+            $element->appendChild($this->classCode->toXML($document));
+        }
+
+        return $element;
+    }
 }

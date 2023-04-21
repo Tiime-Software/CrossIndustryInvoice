@@ -29,4 +29,15 @@ class BuyerOrderReferencedDocument
     {
         $this->lineID = $lineID;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:BuyerOrderReferencedDocument');
+
+        if ($this->lineID instanceof PurchaseOrderLineReference) {
+            $element->appendChild($document->createElement('ram:LineID', $this->lineID->value));
+        }
+
+        return $element;
+    }
 }

@@ -45,4 +45,19 @@ class BillingSpecifiedPeriod
     {
         $this->endDateTime = $endDateTime;
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('ram:BillingSpecifiedPeriod');
+
+        if ($this->startDateTime instanceof StartDateTime) {
+            $element->appendChild($this->startDateTime->toXML($document));
+        }
+
+        if ($this->endDateTime instanceof EndDateTime) {
+            $element->appendChild($this->endDateTime->toXML($document));
+        }
+
+        return $element;
+    }
 }
