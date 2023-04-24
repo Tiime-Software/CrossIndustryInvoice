@@ -38,9 +38,11 @@ class NetPriceProductTradePrice
         return $this->basisQuantity;
     }
 
-    public function setBasisQuantity(?BasisQuantity $basisQuantity): void
+    public function setBasisQuantity(?BasisQuantity $basisQuantity): static
     {
         $this->basisQuantity = $basisQuantity;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

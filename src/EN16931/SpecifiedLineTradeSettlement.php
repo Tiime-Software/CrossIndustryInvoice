@@ -75,9 +75,11 @@ class SpecifiedLineTradeSettlement
         return $this->billingSpecifiedPeriod;
     }
 
-    public function setBillingSpecifiedPeriod(?BillingSpecifiedPeriod $billingSpecifiedPeriod): void
+    public function setBillingSpecifiedPeriod(?BillingSpecifiedPeriod $billingSpecifiedPeriod): static
     {
         $this->billingSpecifiedPeriod = $billingSpecifiedPeriod;
+
+        return $this;
     }
 
     public function getSpecifiedTradeAllowances(): array
@@ -85,7 +87,7 @@ class SpecifiedLineTradeSettlement
         return $this->specifiedTradeAllowances;
     }
 
-    public function setSpecifiedTradeAllowances(array $specifiedTradeAllowances): void
+    public function setSpecifiedTradeAllowances(array $specifiedTradeAllowances): static
     {
         $tmpSpecifiedTradeAllowances = [];
 
@@ -97,6 +99,8 @@ class SpecifiedLineTradeSettlement
         }
 
         $this->specifiedTradeAllowances = $tmpSpecifiedTradeAllowances;
+
+        return $this;
     }
 
     public function getSpecifiedTradeCharges(): array
@@ -104,7 +108,7 @@ class SpecifiedLineTradeSettlement
         return $this->specifiedTradeCharges;
     }
 
-    public function setSpecifiedTradeCharges(array $specifiedTradeCharges): void
+    public function setSpecifiedTradeCharges(array $specifiedTradeCharges): static
     {
         $tmpSpecifiedTradeCharges = [];
 
@@ -116,6 +120,8 @@ class SpecifiedLineTradeSettlement
         }
 
         $this->specifiedTradeCharges = $tmpSpecifiedTradeCharges;
+
+        return $this;
     }
 
     public function getSpecifiedTradeSettlementLineMonetarySummation(): SpecifiedTradeSettlementLineMonetarySummation
@@ -128,9 +134,11 @@ class SpecifiedLineTradeSettlement
         return $this->additionalReferencedDocument;
     }
 
-    public function setAdditionalReferencedDocument(?AdditionalReferencedDocument $additionalReferencedDocument): void
+    public function setAdditionalReferencedDocument(?AdditionalReferencedDocument $additionalReferencedDocument): static
     {
         $this->additionalReferencedDocument = $additionalReferencedDocument;
+
+        return $this;
     }
 
     public function getReceivableSpecifiedTradeAccountingAccount(): ?ReceivableSpecifiedTradeAccountingAccount
@@ -138,9 +146,11 @@ class SpecifiedLineTradeSettlement
         return $this->receivableSpecifiedTradeAccountingAccount;
     }
 
-    public function setReceivableSpecifiedTradeAccountingAccount(?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount): void
+    public function setReceivableSpecifiedTradeAccountingAccount(?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount): static
     {
         $this->receivableSpecifiedTradeAccountingAccount = $receivableSpecifiedTradeAccountingAccount;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

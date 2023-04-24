@@ -55,10 +55,10 @@ class HeaderApplicableTradeTax
      */
     private ?Percentage $rateApplicablePercent;
 
-    public function __construct(Amount $calculatedAmount, Amount $basisAmount, VatCategory $categoryCode)
+    public function __construct(float $calculatedAmount, float $basisAmount, VatCategory $categoryCode)
     {
-        $this->calculatedAmount      = $calculatedAmount;
-        $this->basisAmount           = $basisAmount;
+        $this->calculatedAmount      = new Amount($calculatedAmount);
+        $this->basisAmount           = new Amount($basisAmount);
         $this->categoryCode          = $categoryCode;
         $this->typeCode              = 'VAT';
         $this->exemptionReason       = null;
@@ -82,9 +82,11 @@ class HeaderApplicableTradeTax
         return $this->exemptionReason;
     }
 
-    public function setExemptionReason(?string $exemptionReason): void
+    public function setExemptionReason(?string $exemptionReason): static
     {
         $this->exemptionReason = $exemptionReason;
+
+        return $this;
     }
 
     public function getBasisAmount(): Amount
@@ -102,9 +104,11 @@ class HeaderApplicableTradeTax
         return $this->exemptionReasonCode;
     }
 
-    public function setExemptionReasonCode(?VatExoneration $exemptionReasonCode): void
+    public function setExemptionReasonCode(?VatExoneration $exemptionReasonCode): static
     {
         $this->exemptionReasonCode = $exemptionReasonCode;
+
+        return $this;
     }
 
     public function getDueDateTypeCode(): ?DateCode2005
@@ -112,9 +116,11 @@ class HeaderApplicableTradeTax
         return $this->dueDateTypeCode;
     }
 
-    public function setDueDateTypeCode(?DateCode2005 $dueDateTypeCode): void
+    public function setDueDateTypeCode(?DateCode2005 $dueDateTypeCode): static
     {
         $this->dueDateTypeCode = $dueDateTypeCode;
+
+        return $this;
     }
 
     public function getRateApplicablePercent(): ?Percentage
@@ -122,9 +128,11 @@ class HeaderApplicableTradeTax
         return $this->rateApplicablePercent;
     }
 
-    public function setRateApplicablePercent(?Percentage $rateApplicablePercent): void
+    public function setRateApplicablePercent(?Percentage $rateApplicablePercent): static
     {
         $this->rateApplicablePercent = $rateApplicablePercent;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

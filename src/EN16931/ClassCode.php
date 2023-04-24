@@ -14,18 +14,18 @@ class ClassCode
     /**
      * BT-158-1.
      */
-    private ItemTypeCode $listID;
+    private ItemTypeCode $listIdentifier;
 
     /**
      * BT-158-2.
      */
-    private ?string $listVersionID;
+    private ?string $listVersionIdentifier;
 
-    public function __construct(string $value, ItemTypeCode $listID)
+    public function __construct(string $value, ItemTypeCode $listIdentifier)
     {
         $this->value         = $value;
-        $this->listID        = $listID;
-        $this->listVersionID = null;
+        $this->listIdentifier        = $listIdentifier;
+        $this->listVersionIdentifier = null;
     }
 
     public function getValue(): string
@@ -33,29 +33,40 @@ class ClassCode
         return $this->value;
     }
 
-    public function getListID(): ItemTypeCode
+    /**
+     * @return ItemTypeCode
+     */
+    public function getListIdentifier(): ItemTypeCode
     {
-        return $this->listID;
+        return $this->listIdentifier;
     }
 
-    public function getListVersionID(): ?string
+    /**
+     * @return string|null
+     */
+    public function getListVersionIdentifier(): ?string
     {
-        return $this->listVersionID;
+        return $this->listVersionIdentifier;
     }
 
-    public function setListVersionID(?string $listVersionID): void
+    /**
+     * @param string|null $listVersionIdentifier
+     */
+    public function setListVersionIdentifier(?string $listVersionIdentifier): static
     {
-        $this->listVersionID = $listVersionID;
+        $this->listVersionIdentifier = $listVersionIdentifier;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:ClassCode', $this->value);
 
-        $element->setAttribute('listID', $this->listID->value);
+        $element->setAttribute('listID', $this->listIdentifier->value);
 
-        if (\is_string($this->listVersionID)) {
-            $element->setAttribute('listVersionID', $this->listVersionID);
+        if (\is_string($this->listVersionIdentifier)) {
+            $element->setAttribute('listVersionID', $this->listVersionIdentifier);
         }
 
         return $element;

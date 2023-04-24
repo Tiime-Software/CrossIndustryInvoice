@@ -36,9 +36,11 @@ class AssociatedDocumentLineDocument
         return $this->includedNote;
     }
 
-    public function setIncludedNote(?LineIncludedNote $includedNote): void
+    public function setIncludedNote(?LineIncludedNote $includedNote): static
     {
         $this->includedNote = $includedNote;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

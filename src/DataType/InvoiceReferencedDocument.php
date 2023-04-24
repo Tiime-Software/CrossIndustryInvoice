@@ -37,9 +37,11 @@ class InvoiceReferencedDocument
         return $this->formattedIssueDateTime;
     }
 
-    public function setFormattedIssueDateTime(?FormattedIssueDateTime $formattedIssueDateTime): void
+    public function setFormattedIssueDateTime(?FormattedIssueDateTime $formattedIssueDateTime): static
     {
         $this->formattedIssueDateTime = $formattedIssueDateTime;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

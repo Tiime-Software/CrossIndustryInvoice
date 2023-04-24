@@ -32,9 +32,11 @@ class SpecifiedTaxRegistration
         return $this->identifier;
     }
 
-    public function setIdentifier(?VatIdentifier $identifier): void
+    public function setIdentifier(?VatIdentifier $identifier): static
     {
         $this->identifier = $identifier;
+
+        return $this;
     }
 
     public function getSchemeID(): string

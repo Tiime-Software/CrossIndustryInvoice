@@ -35,9 +35,11 @@ class ApplicableTradeSettlementFinancialCard
         return $this->cardholderName;
     }
 
-    public function setCardholderName(?string $cardholderName): void
+    public function setCardholderName(?string $cardholderName): static
     {
         $this->cardholderName = $cardholderName;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

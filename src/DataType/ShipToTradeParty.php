@@ -20,7 +20,7 @@ class ShipToTradeParty
     /**
      * BT-71-0 & BT-71-1.
      */
-    private ?LocationGlobalIdentifier $globalId;
+    private ?LocationGlobalIdentifier $globalIdentifier;
 
     /**
      * BT-70.
@@ -35,7 +35,7 @@ class ShipToTradeParty
     public function __construct()
     {
         $this->identifier         = null;
-        $this->globalId           = null;
+        $this->globalIdentifier   = null;
         $this->name               = null;
         $this->postalTradeAddress = null;
     }
@@ -45,19 +45,23 @@ class ShipToTradeParty
         return $this->identifier;
     }
 
-    public function setIdentifier(?LocationIdentifier $identifier): void
+    public function setIdentifier(?LocationIdentifier $identifier): static
     {
         $this->identifier = $identifier;
+
+        return $this;
     }
 
-    public function getGlobalId(): ?LocationGlobalIdentifier
+    public function getGlobalIdentifier(): ?LocationGlobalIdentifier
     {
-        return $this->globalId;
+        return $this->globalIdentifier;
     }
 
-    public function setGlobalId(?LocationGlobalIdentifier $globalId): void
+    public function setGlobalIdentifier(?LocationGlobalIdentifier $globalIdentifier): static
     {
-        $this->globalId = $globalId;
+        $this->globalIdentifier = $globalIdentifier;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -65,9 +69,11 @@ class ShipToTradeParty
         return $this->name;
     }
 
-    public function setName(?string $name): void
+    public function setName(?string $name): static
     {
         $this->name = $name;
+
+        return $this;
     }
 
     public function getPostalTradeAddress(): ?PostalTradeAddress
@@ -75,9 +81,11 @@ class ShipToTradeParty
         return $this->postalTradeAddress;
     }
 
-    public function setPostalTradeAddress(?PostalTradeAddress $postalTradeAddress): void
+    public function setPostalTradeAddress(?PostalTradeAddress $postalTradeAddress): static
     {
         $this->postalTradeAddress = $postalTradeAddress;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
@@ -88,10 +96,10 @@ class ShipToTradeParty
             $element->appendChild($document->createElement('ram:ID', $this->identifier->value));
         }
 
-        if ($this->globalId instanceof LocationGlobalIdentifier) {
-            $globalIdentifierElement = $document->createElement('ram:GlobalID', $this->globalId->value);
+        if ($this->globalIdentifier instanceof LocationGlobalIdentifier) {
+            $globalIdentifierElement = $document->createElement('ram:GlobalID', $this->globalIdentifier->value);
 
-            $globalIdentifierElement->setAttribute('schemeID', $this->globalId->scheme->value);
+            $globalIdentifierElement->setAttribute('schemeID', $this->globalIdentifier->scheme->value);
 
             $element->appendChild($globalIdentifierElement);
         }

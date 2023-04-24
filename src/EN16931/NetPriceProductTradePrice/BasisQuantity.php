@@ -38,9 +38,11 @@ class BasisQuantity
         return $this->unitCode;
     }
 
-    public function setUnitCode(?UnitOfMeasurement $unitCode): void
+    public function setUnitCode(?UnitOfMeasurement $unitCode): static
     {
         $this->unitCode = $unitCode;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

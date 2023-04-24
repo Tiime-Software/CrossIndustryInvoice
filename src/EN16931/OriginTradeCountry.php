@@ -25,9 +25,11 @@ class OriginTradeCountry
         return $this->identifier;
     }
 
-    public function setIdentifier(?CountryAlpha2Code $identifier): void
+    public function setIdentifier(?CountryAlpha2Code $identifier): static
     {
         $this->identifier = $identifier;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

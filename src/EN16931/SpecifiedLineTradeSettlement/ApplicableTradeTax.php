@@ -49,9 +49,11 @@ class ApplicableTradeTax
         return $this->rateApplicablePercent;
     }
 
-    public function setRateApplicablePercent(?Percentage $rateApplicablePercent): void
+    public function setRateApplicablePercent(?Percentage $rateApplicablePercent): static
     {
         $this->rateApplicablePercent = $rateApplicablePercent;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

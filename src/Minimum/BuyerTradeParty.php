@@ -37,9 +37,11 @@ class BuyerTradeParty
         return $this->specifiedLegalOrganization;
     }
 
-    public function setSpecifiedLegalOrganization(?BuyerSpecifiedLegalOrganization $specifiedLegalOrganization): void
+    public function setSpecifiedLegalOrganization(?BuyerSpecifiedLegalOrganization $specifiedLegalOrganization): static
     {
         $this->specifiedLegalOrganization = $specifiedLegalOrganization;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

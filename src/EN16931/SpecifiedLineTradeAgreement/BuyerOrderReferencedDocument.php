@@ -14,28 +14,36 @@ class BuyerOrderReferencedDocument
     /**
      * BT-132.
      */
-    private ?PurchaseOrderLineReference $lineID;
+    private ?PurchaseOrderLineReference $lineIdentifier;
 
     public function __construct()
     {
     }
 
-    public function getLineID(): ?PurchaseOrderLineReference
+    /**
+     * @return PurchaseOrderLineReference|null
+     */
+    public function getLineIdentifier(): ?PurchaseOrderLineReference
     {
-        return $this->lineID;
+        return $this->lineIdentifier;
     }
 
-    public function setLineID(?PurchaseOrderLineReference $lineID): void
+    /**
+     * @param PurchaseOrderLineReference|null $lineIdentifier
+     */
+    public function setLineIdentifier(?PurchaseOrderLineReference $lineIdentifier): static
     {
-        $this->lineID = $lineID;
+        $this->lineIdentifier = $lineIdentifier;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:BuyerOrderReferencedDocument');
 
-        if ($this->lineID instanceof PurchaseOrderLineReference) {
-            $element->appendChild($document->createElement('ram:LineID', $this->lineID->value));
+        if ($this->lineIdentifier instanceof PurchaseOrderLineReference) {
+            $element->appendChild($document->createElement('ram:LineID', $this->lineIdentifier->value));
         }
 
         return $element;

@@ -47,9 +47,11 @@ class ApplicableHeaderTradeAgreement
         return $this->buyerReference;
     }
 
-    public function setBuyerReference(?string $buyerReference): void
+    public function setBuyerReference(?string $buyerReference): static
     {
         $this->buyerReference = $buyerReference;
+
+        return $this;
     }
 
     public function getSellerTradeParty(): SellerTradeParty

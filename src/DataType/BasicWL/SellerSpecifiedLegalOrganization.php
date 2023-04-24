@@ -25,9 +25,11 @@ class SellerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataT
         return $this->tradingBusinessName;
     }
 
-    public function setTradingBusinessName(?string $tradingBusinessName): void
+    public function setTradingBusinessName(?string $tradingBusinessName): static
     {
         $this->tradingBusinessName = $tradingBusinessName;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

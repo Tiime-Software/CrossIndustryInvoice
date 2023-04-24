@@ -49,9 +49,11 @@ class AdditionalReferencedDocument
         return $this->referenceTypeCode;
     }
 
-    public function setReferenceTypeCode(?ObjectSchemeCode $referenceTypeCode): void
+    public function setReferenceTypeCode(?ObjectSchemeCode $referenceTypeCode): static
     {
         $this->referenceTypeCode = $referenceTypeCode;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

@@ -45,9 +45,11 @@ class DefinedTradeContact
         return $this->personName;
     }
 
-    public function setPersonName(?string $personName): void
+    public function setPersonName(?string $personName): static
     {
         $this->personName = $personName;
+
+        return $this;
     }
 
     public function getDepartmentName(): ?string
@@ -55,9 +57,11 @@ class DefinedTradeContact
         return $this->departmentName;
     }
 
-    public function setDepartmentName(?string $departmentName): void
+    public function setDepartmentName(?string $departmentName): static
     {
         $this->departmentName = $departmentName;
+
+        return $this;
     }
 
     public function getTelephoneUniversalCommunication(): ?TelephoneUniversalCommunication
@@ -65,9 +69,11 @@ class DefinedTradeContact
         return $this->telephoneUniversalCommunication;
     }
 
-    public function setTelephoneUniversalCommunication(?TelephoneUniversalCommunication $telephoneUniversalCommunication): void
+    public function setTelephoneUniversalCommunication(?TelephoneUniversalCommunication $telephoneUniversalCommunication): static
     {
         $this->telephoneUniversalCommunication = $telephoneUniversalCommunication;
+
+        return $this;
     }
 
     public function getEmailURIUniversalCommunication(): ?EmailURIUniversalCommunication
@@ -75,9 +81,11 @@ class DefinedTradeContact
         return $this->emailURIUniversalCommunication;
     }
 
-    public function setEmailURIUniversalCommunication(?EmailURIUniversalCommunication $emailURIUniversalCommunication): void
+    public function setEmailURIUniversalCommunication(?EmailURIUniversalCommunication $emailURIUniversalCommunication): static
     {
         $this->emailURIUniversalCommunication = $emailURIUniversalCommunication;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

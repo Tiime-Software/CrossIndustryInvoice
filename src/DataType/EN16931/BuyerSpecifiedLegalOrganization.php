@@ -22,9 +22,11 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
         $this->tradingBusinessName = null;
     }
 
-    public function setTradingBusinessName(?string $tradingBusinessName): void
+    public function setTradingBusinessName(?string $tradingBusinessName): static
     {
         $this->tradingBusinessName = $tradingBusinessName;
+
+        return $this;
     }
 
     public function getTradingBusinessName(): ?string

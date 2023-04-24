@@ -73,7 +73,7 @@ class SellerTradeParty
         return $this->identifiers;
     }
 
-    public function setIdentifiers(array $identifiers): void
+    public function setIdentifiers(array $identifiers): static
     {
         $tmpIdentifiers = [];
 
@@ -86,6 +86,8 @@ class SellerTradeParty
         }
 
         $this->identifiers = $tmpIdentifiers;
+
+        return $this;
     }
 
     public function getGlobalIdentifiers(): array
@@ -93,7 +95,7 @@ class SellerTradeParty
         return $this->globalIdentifiers;
     }
 
-    public function setGlobalIdentifiers(array $globalIdentifiers): void
+    public function setGlobalIdentifiers(array $globalIdentifiers): static
     {
         $tmpGlobalIdentifiers = [];
 
@@ -106,6 +108,8 @@ class SellerTradeParty
         }
 
         $this->globalIdentifiers = $tmpGlobalIdentifiers;
+
+        return $this;
     }
 
     public function getName(): string
@@ -118,9 +122,11 @@ class SellerTradeParty
         return $this->specifiedLegalOrganization;
     }
 
-    public function setSpecifiedLegalOrganization(?SellerSpecifiedLegalOrganization $specifiedLegalOrganization): void
+    public function setSpecifiedLegalOrganization(?SellerSpecifiedLegalOrganization $specifiedLegalOrganization): static
     {
         $this->specifiedLegalOrganization = $specifiedLegalOrganization;
+
+        return $this;
     }
 
     public function getPostalTradeAddress(): PostalTradeAddress
@@ -128,9 +134,11 @@ class SellerTradeParty
         return $this->postalTradeAddress;
     }
 
-    public function setURIUniversalCommunication(?URIUniversalCommunication $URIUniversalCommunication): void
+    public function setURIUniversalCommunication(?URIUniversalCommunication $URIUniversalCommunication): static
     {
         $this->URIUniversalCommunication = $URIUniversalCommunication;
+
+        return $this;
     }
 
     public function getSpecifiedTaxRegistrations(): array
@@ -138,7 +146,7 @@ class SellerTradeParty
         return $this->specifiedTaxRegistrations;
     }
 
-    public function setSpecifiedTaxRegistrations(array $specifiedTaxRegistrations): void
+    public function setSpecifiedTaxRegistrations(array $specifiedTaxRegistrations): static
     {
         $tmpSpecifiedTaxRegistrations = [];
 
@@ -151,6 +159,8 @@ class SellerTradeParty
         }
 
         $this->specifiedTaxRegistrations = $tmpSpecifiedTaxRegistrations;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

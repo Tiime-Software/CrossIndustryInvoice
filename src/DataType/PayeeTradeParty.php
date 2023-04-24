@@ -45,9 +45,11 @@ class PayeeTradeParty
         return $this->identifier;
     }
 
-    public function setIdentifier(?PayeeIdentifier $identifier): void
+    public function setIdentifier(?PayeeIdentifier $identifier): static
     {
         $this->identifier = $identifier;
+
+        return $this;
     }
 
     public function getGlobalIdentifier(): ?PayeeGlobalIdentifier
@@ -55,9 +57,11 @@ class PayeeTradeParty
         return $this->globalIdentifier;
     }
 
-    public function setGlobalIdentifier(?PayeeGlobalIdentifier $globalIdentifier): void
+    public function setGlobalIdentifier(?PayeeGlobalIdentifier $globalIdentifier): static
     {
         $this->globalIdentifier = $globalIdentifier;
+
+        return $this;
     }
 
     public function getName(): string
@@ -70,9 +74,11 @@ class PayeeTradeParty
         return $this->specifiedLegalOrganization;
     }
 
-    public function setSpecifiedLegalOrganization(?PayeeSpecifiedLegalOrganization $specifiedLegalOrganization): void
+    public function setSpecifiedLegalOrganization(?PayeeSpecifiedLegalOrganization $specifiedLegalOrganization): static
     {
         $this->specifiedLegalOrganization = $specifiedLegalOrganization;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

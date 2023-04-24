@@ -37,9 +37,11 @@ class DocumentIncludedNote
         return $this->subjectCode;
     }
 
-    public function setSubjectCode(?InvoiceNoteCode $subjectCode): void
+    public function setSubjectCode(?InvoiceNoteCode $subjectCode): static
     {
         $this->subjectCode = $subjectCode;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

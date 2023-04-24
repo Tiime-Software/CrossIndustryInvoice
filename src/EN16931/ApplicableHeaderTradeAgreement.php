@@ -94,9 +94,11 @@ class ApplicableHeaderTradeAgreement
         return $this->buyerReference;
     }
 
-    public function setBuyerReference(?string $buyerReference): void
+    public function setBuyerReference(?string $buyerReference): static
     {
         $this->buyerReference = $buyerReference;
+
+        return $this;
     }
 
     public function getSellerTradeParty(): SellerTradeParty
@@ -114,9 +116,11 @@ class ApplicableHeaderTradeAgreement
         return $this->sellerTaxRepresentativeTradeParty;
     }
 
-    public function setSellerTaxRepresentativeTradeParty(?SellerTaxRepresentativeTradeParty $sellerTaxRepresentativeTradeParty): void
+    public function setSellerTaxRepresentativeTradeParty(?SellerTaxRepresentativeTradeParty $sellerTaxRepresentativeTradeParty): static
     {
         $this->sellerTaxRepresentativeTradeParty = $sellerTaxRepresentativeTradeParty;
+
+        return $this;
     }
 
     public function getSellerOrderReferencedDocument(): ?SellerOrderReferencedDocument
@@ -124,9 +128,11 @@ class ApplicableHeaderTradeAgreement
         return $this->sellerOrderReferencedDocument;
     }
 
-    public function setSellerOrderReferencedDocument(?SellerOrderReferencedDocument $sellerOrderReferencedDocument): void
+    public function setSellerOrderReferencedDocument(?SellerOrderReferencedDocument $sellerOrderReferencedDocument): static
     {
         $this->sellerOrderReferencedDocument = $sellerOrderReferencedDocument;
+
+        return $this;
     }
 
     public function getBuyerOrderReferencedDocument(): ?BuyerOrderReferencedDocument
@@ -134,9 +140,11 @@ class ApplicableHeaderTradeAgreement
         return $this->buyerOrderReferencedDocument;
     }
 
-    public function setBuyerOrderReferencedDocument(?BuyerOrderReferencedDocument $buyerOrderReferencedDocument): void
+    public function setBuyerOrderReferencedDocument(?BuyerOrderReferencedDocument $buyerOrderReferencedDocument): static
     {
         $this->buyerOrderReferencedDocument = $buyerOrderReferencedDocument;
+
+        return $this;
     }
 
     public function getContractReferencedDocument(): ?ContractReferencedDocument
@@ -144,9 +152,11 @@ class ApplicableHeaderTradeAgreement
         return $this->contractReferencedDocument;
     }
 
-    public function setContractReferencedDocument(?ContractReferencedDocument $contractReferencedDocument): void
+    public function setContractReferencedDocument(?ContractReferencedDocument $contractReferencedDocument): static
     {
         $this->contractReferencedDocument = $contractReferencedDocument;
+
+        return $this;
     }
 
     public function getAdditionalReferencedDocuments(): array
@@ -154,7 +164,7 @@ class ApplicableHeaderTradeAgreement
         return $this->additionalReferencedDocuments;
     }
 
-    public function setAdditionalReferencedDocuments(array $additionalReferencedDocuments): void
+    public function setAdditionalReferencedDocuments(array $additionalReferencedDocuments): static
     {
         $tmpAdditionalReferencedDocuments = [];
 
@@ -164,7 +174,10 @@ class ApplicableHeaderTradeAgreement
             }
             $tmpAdditionalReferencedDocuments[] = $additionalReferencedDocument;
         }
+
         $this->additionalReferencedDocuments = $tmpAdditionalReferencedDocuments;
+
+        return $this;
     }
 
     public function getSpecifiedProcuringProject(): ?SpecifiedProcuringProject
@@ -172,9 +185,11 @@ class ApplicableHeaderTradeAgreement
         return $this->specifiedProcuringProject;
     }
 
-    public function setSpecifiedProcuringProject(?SpecifiedProcuringProject $specifiedProcuringProject): void
+    public function setSpecifiedProcuringProject(?SpecifiedProcuringProject $specifiedProcuringProject): static
     {
         $this->specifiedProcuringProject = $specifiedProcuringProject;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

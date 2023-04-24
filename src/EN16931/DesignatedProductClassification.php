@@ -23,9 +23,11 @@ class DesignatedProductClassification
         return $this->classCode;
     }
 
-    public function setClassCode(?ClassCode $classCode): void
+    public function setClassCode(?ClassCode $classCode): static
     {
         $this->classCode = $classCode;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
