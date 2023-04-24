@@ -69,9 +69,11 @@ class SpecifiedTradeCharge
         return $this->calculationPercentage;
     }
 
-    public function setCalculationPercentage(?Percentage $calculationPercentage): void
+    public function setCalculationPercentage(?Percentage $calculationPercentage): static
     {
         $this->calculationPercentage = $calculationPercentage;
+
+        return $this;
     }
 
     public function getBasisAmount(): ?Amount
@@ -79,9 +81,11 @@ class SpecifiedTradeCharge
         return $this->basisAmount;
     }
 
-    public function setBasisAmount(?Amount $basisAmount): void
+    public function setBasisAmount(?Amount $basisAmount): static
     {
         $this->basisAmount = $basisAmount;
+
+        return $this;
     }
 
     public function getActualAmount(): Amount
@@ -94,9 +98,11 @@ class SpecifiedTradeCharge
         return $this->reasonCode;
     }
 
-    public function setReasonCode(?ChargeReasonCode $reasonCode): void
+    public function setReasonCode(?ChargeReasonCode $reasonCode): static
     {
         $this->reasonCode = $reasonCode;
+
+        return $this;
     }
 
     public function getReason(): ?string
@@ -104,9 +110,11 @@ class SpecifiedTradeCharge
         return $this->reason;
     }
 
-    public function setReason(?string $reason): void
+    public function setReason(?string $reason): static
     {
         $this->reason = $reason;
+
+        return $this;
     }
 
     public function getCategoryTradeTax(): CategoryTradeTax

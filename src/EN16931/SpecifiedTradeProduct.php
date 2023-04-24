@@ -16,17 +16,17 @@ class SpecifiedTradeProduct
     /**
      * BT-157.
      */
-    private ?StandardItemIdentifier $globalID;
+    private ?StandardItemIdentifier $globalIdentifier;
 
     /**
      * BT-155.
      */
-    private ?SellerItemIdentifier $sellerAssignedID;
+    private ?SellerItemIdentifier $sellerAssignedIdentifier;
 
     /**
      * BT-156.
      */
-    private ?BuyerItemIdentifier $buyerAssignedID;
+    private ?BuyerItemIdentifier $buyerAssignedIdentifier;
 
     /**
      * BT-153.
@@ -60,43 +60,49 @@ class SpecifiedTradeProduct
     public function __construct(string $name)
     {
         $this->name                             = $name;
-        $this->globalID                         = null;
-        $this->sellerAssignedID                 = null;
-        $this->buyerAssignedID                  = null;
+        $this->globalIdentifier                 = null;
+        $this->sellerAssignedIdentifier         = null;
+        $this->buyerAssignedIdentifier          = null;
         $this->description                      = null;
         $this->originTradeCountry               = null;
         $this->applicableProductCharacteristics = [];
         $this->designatedProductClassifications = [];
     }
 
-    public function getGlobalID(): ?StandardItemIdentifier
+    public function getGlobalIdentifier(): ?StandardItemIdentifier
     {
-        return $this->globalID;
+        return $this->globalIdentifier;
     }
 
-    public function setGlobalID(?StandardItemIdentifier $globalID): void
+    public function setGlobalIdentifier(?StandardItemIdentifier $globalIdentifier): static
     {
-        $this->globalID = $globalID;
+        $this->globalIdentifier = $globalIdentifier;
+
+        return $this;
     }
 
-    public function getSellerAssignedID(): ?SellerItemIdentifier
+    public function getSellerAssignedIdentifier(): ?SellerItemIdentifier
     {
-        return $this->sellerAssignedID;
+        return $this->sellerAssignedIdentifier;
     }
 
-    public function setSellerAssignedID(?SellerItemIdentifier $sellerAssignedID): void
+    public function setSellerAssignedIdentifier(?SellerItemIdentifier $sellerAssignedIdentifier): static
     {
-        $this->sellerAssignedID = $sellerAssignedID;
+        $this->sellerAssignedIdentifier = $sellerAssignedIdentifier;
+
+        return $this;
     }
 
-    public function getBuyerAssignedID(): ?BuyerItemIdentifier
+    public function getBuyerAssignedIdentifier(): ?BuyerItemIdentifier
     {
-        return $this->buyerAssignedID;
+        return $this->buyerAssignedIdentifier;
     }
 
-    public function setBuyerAssignedID(?BuyerItemIdentifier $buyerAssignedID): void
+    public function setBuyerAssignedIdentifier(?BuyerItemIdentifier $buyerAssignedIdentifier): static
     {
-        $this->buyerAssignedID = $buyerAssignedID;
+        $this->buyerAssignedIdentifier = $buyerAssignedIdentifier;
+
+        return $this;
     }
 
     public function getName(): string
@@ -109,9 +115,11 @@ class SpecifiedTradeProduct
         return $this->description;
     }
 
-    public function setDescription(?string $description): void
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
     }
 
     public function getApplicableProductCharacteristics(): array
@@ -119,7 +127,7 @@ class SpecifiedTradeProduct
         return $this->applicableProductCharacteristics;
     }
 
-    public function setApplicableProductCharacteristics(array $applicableProductCharacteristics): void
+    public function setApplicableProductCharacteristics(array $applicableProductCharacteristics): static
     {
         $tmpApplicableProductCharacteristics = [];
 
@@ -132,6 +140,8 @@ class SpecifiedTradeProduct
         }
 
         $this->applicableProductCharacteristics = $tmpApplicableProductCharacteristics;
+
+        return $this;
     }
 
     public function getDesignatedProductClassifications(): array
@@ -139,7 +149,7 @@ class SpecifiedTradeProduct
         return $this->designatedProductClassifications;
     }
 
-    public function setDesignatedProductClassifications(array $designatedProductClassifications): void
+    public function setDesignatedProductClassifications(array $designatedProductClassifications): static
     {
         $tmpDesignatedProductClassifications = [];
 
@@ -152,6 +162,8 @@ class SpecifiedTradeProduct
         }
 
         $this->designatedProductClassifications = $tmpDesignatedProductClassifications;
+
+        return $this;
     }
 
     public function getOriginTradeCountry(): ?OriginTradeCountry
@@ -159,28 +171,30 @@ class SpecifiedTradeProduct
         return $this->originTradeCountry;
     }
 
-    public function setOriginTradeCountry(?OriginTradeCountry $originTradeCountry): void
+    public function setOriginTradeCountry(?OriginTradeCountry $originTradeCountry): static
     {
         $this->originTradeCountry = $originTradeCountry;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:SpecifiedTradeProduct');
 
-        if ($this->globalID instanceof StandardItemIdentifier) {
-            $identifierElement = $document->createElement('ram:GlobalID', $this->globalID->value);
-            $identifierElement->setAttribute('schemeID', $this->globalID->scheme);
+        if ($this->globalIdentifier instanceof StandardItemIdentifier) {
+            $identifierElement = $document->createElement('ram:GlobalID', $this->globalIdentifier->value);
+            $identifierElement->setAttribute('schemeID', $this->globalIdentifier->scheme->value);
 
             $element->appendChild($identifierElement);
         }
 
-        if ($this->sellerAssignedID instanceof SellerItemIdentifier) {
-            $element->appendChild($document->createElement('ram:SellerAssignedID', $this->sellerAssignedID->value));
+        if ($this->sellerAssignedIdentifier instanceof SellerItemIdentifier) {
+            $element->appendChild($document->createElement('ram:SellerAssignedID', $this->sellerAssignedIdentifier->value));
         }
 
-        if ($this->buyerAssignedID instanceof BuyerItemIdentifier) {
-            $element->appendChild($document->createElement('ram:BuyerAssignedID', $this->buyerAssignedID->value));
+        if ($this->buyerAssignedIdentifier instanceof BuyerItemIdentifier) {
+            $element->appendChild($document->createElement('ram:BuyerAssignedID', $this->buyerAssignedIdentifier->value));
         }
 
         $element->appendChild($document->createElement('ram:Name', $this->name));

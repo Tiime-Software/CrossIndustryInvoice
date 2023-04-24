@@ -52,9 +52,11 @@ class SellerTradeParty
         return $this->specifiedLegalOrganization;
     }
 
-    public function setSpecifiedLegalOrganization(?SellerSpecifiedLegalOrganization $specifiedLegalOrganization): void
+    public function setSpecifiedLegalOrganization(?SellerSpecifiedLegalOrganization $specifiedLegalOrganization): static
     {
         $this->specifiedLegalOrganization = $specifiedLegalOrganization;
+
+        return $this;
     }
 
     public function getPostalTradeAddress(): PostalTradeAddress
@@ -67,9 +69,11 @@ class SellerTradeParty
         return $this->specifiedTaxRegistrations;
     }
 
-    public function setSpecifiedTaxRegistrations(array $specifiedTaxRegistrations): void
+    public function setSpecifiedTaxRegistrations(array $specifiedTaxRegistrations): static
     {
         $this->specifiedTaxRegistrations = $specifiedTaxRegistrations;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

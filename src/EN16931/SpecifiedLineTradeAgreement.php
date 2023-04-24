@@ -36,9 +36,11 @@ class SpecifiedLineTradeAgreement
         return $this->buyerOrderReferencedDocument;
     }
 
-    public function setBuyerOrderReferencedDocument(?BuyerOrderReferencedDocument $buyerOrderReferencedDocument): void
+    public function setBuyerOrderReferencedDocument(?BuyerOrderReferencedDocument $buyerOrderReferencedDocument): static
     {
         $this->buyerOrderReferencedDocument = $buyerOrderReferencedDocument;
+
+        return $this;
     }
 
     public function getGrossPriceProductTradePrice(): ?GrossPriceProductTradePrice
@@ -46,9 +48,11 @@ class SpecifiedLineTradeAgreement
         return $this->grossPriceProductTradePrice;
     }
 
-    public function setGrossPriceProductTradePrice(?GrossPriceProductTradePrice $grossPriceProductTradePrice): void
+    public function setGrossPriceProductTradePrice(?GrossPriceProductTradePrice $grossPriceProductTradePrice): static
     {
         $this->grossPriceProductTradePrice = $grossPriceProductTradePrice;
+
+        return $this;
     }
 
     public function getNetPriceProductTradePrice(): NetPriceProductTradePrice

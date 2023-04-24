@@ -91,9 +91,11 @@ class SellerTradeParty
         return $this->identifiers;
     }
 
-    public function setIdentifiers(array $identifiers): void
+    public function setIdentifiers(array $identifiers): static
     {
         $this->identifiers = $identifiers;
+
+        return $this;
     }
 
     public function getGlobalIdentifiers(): array
@@ -101,9 +103,11 @@ class SellerTradeParty
         return $this->globalIdentifiers;
     }
 
-    public function setGlobalIdentifiers(array $globalIdentifiers): void
+    public function setGlobalIdentifiers(array $globalIdentifiers): static
     {
         $this->globalIdentifiers = $globalIdentifiers;
+
+        return $this;
     }
 
     public function getName(): string
@@ -116,9 +120,11 @@ class SellerTradeParty
         return $this->description;
     }
 
-    public function setDescription(?string $description): void
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
     }
 
     public function getSpecifiedLegalOrganization(): ?SellerSpecifiedLegalOrganization
@@ -126,9 +132,11 @@ class SellerTradeParty
         return $this->specifiedLegalOrganization;
     }
 
-    public function setSpecifiedLegalOrganization(?SellerSpecifiedLegalOrganization $specifiedLegalOrganization): void
+    public function setSpecifiedLegalOrganization(?SellerSpecifiedLegalOrganization $specifiedLegalOrganization): static
     {
         $this->specifiedLegalOrganization = $specifiedLegalOrganization;
+
+        return $this;
     }
 
     public function getDefinedTradeContact(): ?DefinedTradeContact
@@ -136,9 +144,11 @@ class SellerTradeParty
         return $this->definedTradeContact;
     }
 
-    public function setDefinedTradeContact(?DefinedTradeContact $definedTradeContact): void
+    public function setDefinedTradeContact(?DefinedTradeContact $definedTradeContact): static
     {
         $this->definedTradeContact = $definedTradeContact;
+
+        return $this;
     }
 
     public function getPostalTradeAddress(): PostalTradeAddress
@@ -151,9 +161,11 @@ class SellerTradeParty
         return $this->uriUniversalCommunication;
     }
 
-    public function setUriUniversalCommunication(?URIUniversalCommunication $uriUniversalCommunication): void
+    public function setUriUniversalCommunication(?URIUniversalCommunication $uriUniversalCommunication): static
     {
         $this->uriUniversalCommunication = $uriUniversalCommunication;
+
+        return $this;
     }
 
     public function getSpecifiedTaxRegistrationVAT(): ?SpecifiedTaxRegistrationVAT
@@ -161,9 +173,11 @@ class SellerTradeParty
         return $this->specifiedTaxRegistrationVAT;
     }
 
-    public function setSpecifiedTaxRegistrationVATs(?SpecifiedTaxRegistrationVAT $specifiedTaxRegistrationVAT): void
+    public function setSpecifiedTaxRegistrationVATs(?SpecifiedTaxRegistrationVAT $specifiedTaxRegistrationVAT): static
     {
         $this->specifiedTaxRegistrationVAT = $specifiedTaxRegistrationVAT;
+
+        return $this;
     }
 
     public function getSpecifiedTaxRegistrations(): ?SpecifiedTaxRegistration
@@ -171,9 +185,11 @@ class SellerTradeParty
         return $this->specifiedTaxRegistration;
     }
 
-    public function setSpecifiedTaxRegistrations(?SpecifiedTaxRegistration $specifiedTaxRegistration): void
+    public function setSpecifiedTaxRegistrations(?SpecifiedTaxRegistration $specifiedTaxRegistration): static
     {
         $this->specifiedTaxRegistration = $specifiedTaxRegistration;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

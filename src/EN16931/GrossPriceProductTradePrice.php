@@ -44,9 +44,11 @@ class GrossPriceProductTradePrice
         return $this->basisQuantity;
     }
 
-    public function setBasisQuantity(?BasisQuantity $basisQuantity): void
+    public function setBasisQuantity(?BasisQuantity $basisQuantity): static
     {
         $this->basisQuantity = $basisQuantity;
+
+        return $this;
     }
 
     public function getAppliedTradeAllowanceCharge(): ?AppliedTradeAllowanceCharge
@@ -54,9 +56,11 @@ class GrossPriceProductTradePrice
         return $this->appliedTradeAllowanceCharge;
     }
 
-    public function setAppliedTradeAllowanceCharge(?AppliedTradeAllowanceCharge $appliedTradeAllowanceCharge): void
+    public function setAppliedTradeAllowanceCharge(?AppliedTradeAllowanceCharge $appliedTradeAllowanceCharge): static
     {
         $this->appliedTradeAllowanceCharge = $appliedTradeAllowanceCharge;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

@@ -58,9 +58,11 @@ class ApplicableHeaderTradeAgreement
         return $this->buyerReference;
     }
 
-    public function setBuyerReference(?string $buyerReference): void
+    public function setBuyerReference(?string $buyerReference): static
     {
         $this->buyerReference = $buyerReference;
+
+        return $this;
     }
 
     public function getSellerTradeParty(): SellerTradeParty
@@ -78,9 +80,11 @@ class ApplicableHeaderTradeAgreement
         return $this->sellerTaxRepresentativeTradeParty;
     }
 
-    public function setSellerTaxRepresentativeTradeParty(?SellerTaxRepresentativeTradeParty $sellerTaxRepresentativeTradeParty): void
+    public function setSellerTaxRepresentativeTradeParty(?SellerTaxRepresentativeTradeParty $sellerTaxRepresentativeTradeParty): static
     {
         $this->sellerTaxRepresentativeTradeParty = $sellerTaxRepresentativeTradeParty;
+
+        return $this;
     }
 
     public function getBuyerOrderReferencedDocument(): ?BuyerOrderReferencedDocument
@@ -88,9 +92,11 @@ class ApplicableHeaderTradeAgreement
         return $this->buyerOrderReferencedDocument;
     }
 
-    public function setBuyerOrderReferencedDocument(?BuyerOrderReferencedDocument $buyerOrderReferencedDocument): void
+    public function setBuyerOrderReferencedDocument(?BuyerOrderReferencedDocument $buyerOrderReferencedDocument): static
     {
         $this->buyerOrderReferencedDocument = $buyerOrderReferencedDocument;
+
+        return $this;
     }
 
     public function getContractReferencedDocument(): ?ContractReferencedDocument
@@ -98,9 +104,11 @@ class ApplicableHeaderTradeAgreement
         return $this->contractReferencedDocument;
     }
 
-    public function setContractReferencedDocument(?ContractReferencedDocument $contractReferencedDocument): void
+    public function setContractReferencedDocument(?ContractReferencedDocument $contractReferencedDocument): static
     {
         $this->contractReferencedDocument = $contractReferencedDocument;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

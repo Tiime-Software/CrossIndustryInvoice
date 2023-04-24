@@ -33,9 +33,11 @@ class BillingSpecifiedPeriod
         return $this->startDateTime;
     }
 
-    public function setStartDateTime(?StartDateTime $startDateTime): void
+    public function setStartDateTime(?StartDateTime $startDateTime): static
     {
         $this->startDateTime = $startDateTime;
+
+        return $this;
     }
 
     public function getEndDateTime(): ?EndDateTime
@@ -43,9 +45,11 @@ class BillingSpecifiedPeriod
         return $this->endDateTime;
     }
 
-    public function setEndDateTime(?EndDateTime $endDateTime): void
+    public function setEndDateTime(?EndDateTime $endDateTime): static
     {
         $this->endDateTime = $endDateTime;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

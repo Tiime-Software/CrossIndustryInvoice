@@ -34,9 +34,11 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $this->roundingAmount instanceof Amount ? $this->roundingAmount->getValueRounded() : null;
     }
 
-    public function setRoundingAmount(?float $roundingAmount): void
+    public function setRoundingAmount(?float $roundingAmount): static
     {
         $this->roundingAmount = \is_float($roundingAmount) ? new Amount($roundingAmount) : null;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

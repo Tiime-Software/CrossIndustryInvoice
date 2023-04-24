@@ -40,9 +40,11 @@ class ApplicableHeaderTradeDelivery
         return $this->shipToTradeParty;
     }
 
-    public function setShipToTradeParty(?ShipToTradeParty $shipToTradeParty): void
+    public function setShipToTradeParty(?ShipToTradeParty $shipToTradeParty): static
     {
         $this->shipToTradeParty = $shipToTradeParty;
+
+        return $this;
     }
 
     public function getActualDeliverySupplyChainEvent(): ?ActualDeliverySupplyChainEvent
@@ -50,9 +52,11 @@ class ApplicableHeaderTradeDelivery
         return $this->actualDeliverySupplyChainEvent;
     }
 
-    public function setActualDeliverySupplyChainEvent(?ActualDeliverySupplyChainEvent $actualDeliverySupplyChainEvent): void
+    public function setActualDeliverySupplyChainEvent(?ActualDeliverySupplyChainEvent $actualDeliverySupplyChainEvent): static
     {
         $this->actualDeliverySupplyChainEvent = $actualDeliverySupplyChainEvent;
+
+        return $this;
     }
 
     public function getDespatchAdviceReferencedDocument(): ?DespatchAdviceReferencedDocument
@@ -60,9 +64,11 @@ class ApplicableHeaderTradeDelivery
         return $this->despatchAdviceReferencedDocument;
     }
 
-    public function setDespatchAdviceReferencedDocument(?DespatchAdviceReferencedDocument $despatchAdviceReferencedDocument): void
+    public function setDespatchAdviceReferencedDocument(?DespatchAdviceReferencedDocument $despatchAdviceReferencedDocument): static
     {
         $this->despatchAdviceReferencedDocument = $despatchAdviceReferencedDocument;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

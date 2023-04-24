@@ -28,9 +28,11 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
         return $this->accountName;
     }
 
-    public function setAccountName(?string $accountName): void
+    public function setAccountName(?string $accountName): static
     {
         $this->accountName = $accountName;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

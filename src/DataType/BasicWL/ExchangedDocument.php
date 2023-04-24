@@ -32,7 +32,7 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
         return $this->includedNotes;
     }
 
-    public function setIncludedNotes(array $includedNotes): void
+    public function setIncludedNotes(array $includedNotes): static
     {
         $tmpIncludedNotes = [];
 
@@ -43,6 +43,8 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
             $tmpIncludedNotes[] = $includedNote;
         }
         $this->includedNotes = $tmpIncludedNotes;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

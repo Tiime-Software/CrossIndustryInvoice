@@ -65,9 +65,11 @@ class SpecifiedTradeSettlementPaymentMeans
         return $this->information;
     }
 
-    public function setInformation(?string $information): void
+    public function setInformation(?string $information): static
     {
         $this->information = $information;
+
+        return $this;
     }
 
     public function getApplicableTradeSettlementFinancialCard(): ?ApplicableTradeSettlementFinancialCard
@@ -75,9 +77,11 @@ class SpecifiedTradeSettlementPaymentMeans
         return $this->applicableTradeSettlementFinancialCard;
     }
 
-    public function setApplicableTradeSettlementFinancialCard(?ApplicableTradeSettlementFinancialCard $applicableTradeSettlementFinancialCard): void
+    public function setApplicableTradeSettlementFinancialCard(?ApplicableTradeSettlementFinancialCard $applicableTradeSettlementFinancialCard): static
     {
         $this->applicableTradeSettlementFinancialCard = $applicableTradeSettlementFinancialCard;
+
+        return $this;
     }
 
     public function getPayerPartyDebtorFinancialAccount(): ?PayerPartyDebtorFinancialAccount
@@ -85,9 +89,11 @@ class SpecifiedTradeSettlementPaymentMeans
         return $this->payerPartyDebtorFinancialAccount;
     }
 
-    public function setPayerPartyDebtorFinancialAccount(?PayerPartyDebtorFinancialAccount $payerPartyDebtorFinancialAccount): void
+    public function setPayerPartyDebtorFinancialAccount(?PayerPartyDebtorFinancialAccount $payerPartyDebtorFinancialAccount): static
     {
         $this->payerPartyDebtorFinancialAccount = $payerPartyDebtorFinancialAccount;
+
+        return $this;
     }
 
     public function getPayeePartyCreditorFinancialAccount(): ?PayeePartyCreditorFinancialAccount
@@ -95,9 +101,11 @@ class SpecifiedTradeSettlementPaymentMeans
         return $this->payeePartyCreditorFinancialAccount;
     }
 
-    public function setPayeePartyCreditorFinancialAccount(?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount): void
+    public function setPayeePartyCreditorFinancialAccount(?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount): static
     {
         $this->payeePartyCreditorFinancialAccount = $payeePartyCreditorFinancialAccount;
+
+        return $this;
     }
 
     public function getPayeeSpecifiedCreditorFinancialInstitution(): ?PayeeSpecifiedCreditorFinancialInstitution
@@ -105,9 +113,11 @@ class SpecifiedTradeSettlementPaymentMeans
         return $this->payeeSpecifiedCreditorFinancialInstitution;
     }
 
-    public function setPayeeSpecifiedCreditorFinancialInstitution(?PayeeSpecifiedCreditorFinancialInstitution $payeeSpecifiedCreditorFinancialInstitution): void
+    public function setPayeeSpecifiedCreditorFinancialInstitution(?PayeeSpecifiedCreditorFinancialInstitution $payeeSpecifiedCreditorFinancialInstitution): static
     {
         $this->payeeSpecifiedCreditorFinancialInstitution = $payeeSpecifiedCreditorFinancialInstitution;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

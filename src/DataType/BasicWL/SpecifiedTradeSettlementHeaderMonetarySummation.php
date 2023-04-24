@@ -59,9 +59,11 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $this->lineTotalAmount->getValueRounded();
     }
 
-    public function setLineTotalAmount(float $lineTotalAmount): void
+    public function setLineTotalAmount(float $lineTotalAmount): static
     {
         $this->lineTotalAmount = new Amount($lineTotalAmount);
+
+        return $this;
     }
 
     public function getChargeTotalAmount(): ?float
@@ -69,9 +71,11 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $this->chargeTotalAmount instanceof Amount ? $this->chargeTotalAmount->getValueRounded() : null;
     }
 
-    public function setChargeTotalAmount(?float $chargeTotalAmount = null): void
+    public function setChargeTotalAmount(?float $chargeTotalAmount = null): static
     {
         $this->chargeTotalAmount = \is_float($chargeTotalAmount) ? new Amount($chargeTotalAmount) : null;
+
+        return $this;
     }
 
     public function getAllowanceTotalAmount(): ?float
@@ -79,9 +83,11 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $this->allowanceTotalAmount instanceof Amount ? $this->allowanceTotalAmount->getValueRounded() : null;
     }
 
-    public function setAllowanceTotalAmount(?float $allowanceTotalAmount): void
+    public function setAllowanceTotalAmount(?float $allowanceTotalAmount): static
     {
         $this->allowanceTotalAmount = \is_float($allowanceTotalAmount) ? new Amount($allowanceTotalAmount) : null;
+
+        return $this;
     }
 
     public function getTaxTotalAmountCurrency(): ?TaxTotalAmount
@@ -89,9 +95,11 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $this->taxTotalAmountCurrency;
     }
 
-    public function setTaxTotalAmountCurrency(?TaxTotalAmount $taxTotalAmountCurrency): void
+    public function setTaxTotalAmountCurrency(?TaxTotalAmount $taxTotalAmountCurrency): static
     {
         $this->taxTotalAmountCurrency = $taxTotalAmountCurrency;
+
+        return $this;
     }
 
     public function getTotalPrepaidAmount(): ?float
@@ -99,9 +107,11 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $this->totalPrepaidAmount instanceof Amount ? $this->totalPrepaidAmount->getValueRounded() : null;
     }
 
-    public function setTotalPrepaidAmount(?float $totalPrepaidAmount): void
+    public function setTotalPrepaidAmount(?float $totalPrepaidAmount): static
     {
         $this->totalPrepaidAmount = \is_float($totalPrepaidAmount) ? new Amount($totalPrepaidAmount) : null;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

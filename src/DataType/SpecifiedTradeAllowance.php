@@ -79,9 +79,11 @@ class SpecifiedTradeAllowance
         return $this->calculationPercent;
     }
 
-    public function setCalculationPercent(?Percentage $calculationPercent): void
+    public function setCalculationPercent(?Percentage $calculationPercent): static
     {
         $this->calculationPercent = $calculationPercent;
+
+        return $this;
     }
 
     public function getBasisAmount(): ?Amount
@@ -89,9 +91,11 @@ class SpecifiedTradeAllowance
         return $this->basisAmount;
     }
 
-    public function setBasisAmount(?Amount $basisAmount): void
+    public function setBasisAmount(?Amount $basisAmount): static
     {
         $this->basisAmount = $basisAmount;
+
+        return $this;
     }
 
     public function getReasonCode(): ?AllowanceReasonCode
@@ -99,9 +103,11 @@ class SpecifiedTradeAllowance
         return $this->reasonCode;
     }
 
-    public function setReasonCode(?AllowanceReasonCode $reasonCode): void
+    public function setReasonCode(?AllowanceReasonCode $reasonCode): static
     {
         $this->reasonCode = $reasonCode;
+
+        return $this;
     }
 
     public function getReason(): ?string
@@ -109,9 +115,11 @@ class SpecifiedTradeAllowance
         return $this->reason;
     }
 
-    public function setReason(?string $reason): void
+    public function setReason(?string $reason): static
     {
         $this->reason = $reason;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

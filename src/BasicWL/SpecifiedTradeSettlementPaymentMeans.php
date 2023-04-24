@@ -45,9 +45,11 @@ class SpecifiedTradeSettlementPaymentMeans
         return $this->payerPartyDebtorFinancialAccount;
     }
 
-    public function setPayerPartyDebtorFinancialAccount(?PayerPartyDebtorFinancialAccount $payerPartyDebtorFinancialAccount): void
+    public function setPayerPartyDebtorFinancialAccount(?PayerPartyDebtorFinancialAccount $payerPartyDebtorFinancialAccount): static
     {
         $this->payerPartyDebtorFinancialAccount = $payerPartyDebtorFinancialAccount;
+
+        return $this;
     }
 
     public function getPayeePartyCreditorFinancialAccount(): ?PayeePartyCreditorFinancialAccount
@@ -55,9 +57,11 @@ class SpecifiedTradeSettlementPaymentMeans
         return $this->payeePartyCreditorFinancialAccount;
     }
 
-    public function setPayeePartyCreditorFinancialAccount(?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount): void
+    public function setPayeePartyCreditorFinancialAccount(?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount): static
     {
         $this->payeePartyCreditorFinancialAccount = $payeePartyCreditorFinancialAccount;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

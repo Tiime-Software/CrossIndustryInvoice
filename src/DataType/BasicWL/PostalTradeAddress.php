@@ -57,9 +57,11 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
         return $this->postcodeCode;
     }
 
-    public function setPostcodeCode(?string $postcodeCode): void
+    public function setPostcodeCode(?string $postcodeCode): static
     {
         $this->postcodeCode = $postcodeCode;
+
+        return $this;
     }
 
     public function getLineOne(): ?string
@@ -67,9 +69,11 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
         return $this->lineOne;
     }
 
-    public function setLineOne(?string $lineOne): void
+    public function setLineOne(?string $lineOne): static
     {
         $this->lineOne = $lineOne;
+
+        return $this;
     }
 
     public function getLineTwo(): ?string
@@ -77,9 +81,11 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
         return $this->lineTwo;
     }
 
-    public function setLineTwo(?string $lineTwo): void
+    public function setLineTwo(?string $lineTwo): static
     {
         $this->lineTwo = $lineTwo;
+
+        return $this;
     }
 
     public function getLineThree(): ?string
@@ -87,9 +93,11 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
         return $this->lineThree;
     }
 
-    public function setLineThree(?string $lineThree): void
+    public function setLineThree(?string $lineThree): static
     {
         $this->lineThree = $lineThree;
+
+        return $this;
     }
 
     public function getCityName(): ?string
@@ -97,9 +105,11 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
         return $this->cityName;
     }
 
-    public function setCityName(?string $cityName): void
+    public function setCityName(?string $cityName): static
     {
         $this->cityName = $cityName;
+
+        return $this;
     }
 
     public function getCountrySubDivisionName(): ?string
@@ -107,9 +117,11 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
         return $this->countrySubDivisionName;
     }
 
-    public function setCountrySubDivisionName(?string $countrySubDivisionName): void
+    public function setCountrySubDivisionName(?string $countrySubDivisionName): static
     {
         $this->countrySubDivisionName = $countrySubDivisionName;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

@@ -59,9 +59,11 @@ class SpecifiedTradeCharge
         return $this->calculationPercent?->getValueRounded();
     }
 
-    public function setCalculationPercent(?float $calculationPercent): void
+    public function setCalculationPercent(?float $calculationPercent): static
     {
         $this->calculationPercent = \is_float($calculationPercent) ? new Percentage($calculationPercent) : null;
+
+        return $this;
     }
 
     public function getBasisAmount(): ?float
@@ -69,9 +71,11 @@ class SpecifiedTradeCharge
         return $this->basisAmount?->getValueRounded();
     }
 
-    public function setBasisAmount(?float $basisAmount): void
+    public function setBasisAmount(?float $basisAmount): static
     {
         $this->basisAmount = \is_float($basisAmount) ? new Amount($basisAmount) : null;
+
+        return $this;
     }
 
     public function getActualAmount(): float
@@ -84,9 +88,11 @@ class SpecifiedTradeCharge
         return $this->reasonCode;
     }
 
-    public function setReasonCode(?ChargeReasonCode $reasonCode): void
+    public function setReasonCode(?ChargeReasonCode $reasonCode): static
     {
         $this->reasonCode = $reasonCode;
+
+        return $this;
     }
 
     public function getReason(): ?string
@@ -94,9 +100,11 @@ class SpecifiedTradeCharge
         return $this->reason;
     }
 
-    public function setReason(?string $reason): void
+    public function setReason(?string $reason): static
     {
         $this->reason = $reason;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

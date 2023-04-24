@@ -29,9 +29,11 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
         return $this->taxPointDate;
     }
 
-    public function setTaxPointDate(?TaxPointDate $taxPointDate): void
+    public function setTaxPointDate(?TaxPointDate $taxPointDate): static
     {
         $this->taxPointDate = $taxPointDate;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

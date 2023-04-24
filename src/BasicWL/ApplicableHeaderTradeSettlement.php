@@ -24,7 +24,7 @@ class ApplicableHeaderTradeSettlement
     /**
      * BT-90.
      */
-    private ?BankAssignedCreditorIdentifier $creditorReferenceId;
+    private ?BankAssignedCreditorIdentifier $creditorReferenceIdentifier;
 
     /**
      * BT-83.
@@ -116,7 +116,7 @@ class ApplicableHeaderTradeSettlement
         $this->invoiceCurrencyCode                             = $invoiceCurrencyCode;
         $this->applicableTradeTaxes                            = $tmpApplicableTradeTaxes;
         $this->specifiedTradeSettlementHeaderMonetarySummation = $specifiedTradeSettlementHeaderMonetarySummation;
-        $this->creditorReferenceId                             = null;
+        $this->creditorReferenceIdentifier                     = null;
         $this->paymentReference                                = null;
         $this->taxCurrencyCode                                 = null;
         $this->payeeTradeParty                                 = null;
@@ -129,14 +129,16 @@ class ApplicableHeaderTradeSettlement
         $this->receivableSpecifiedTradeAccountingAccount       = null;
     }
 
-    public function getCreditorReferenceId(): ?BankAssignedCreditorIdentifier
+    public function getCreditorReferenceIdentifier(): ?BankAssignedCreditorIdentifier
     {
-        return $this->creditorReferenceId;
+        return $this->creditorReferenceIdentifier;
     }
 
-    public function setCreditorReferenceId(?BankAssignedCreditorIdentifier $creditorReferenceId): void
+    public function setCreditorReferenceIdentifier(?BankAssignedCreditorIdentifier $creditorReferenceIdentifier): static
     {
-        $this->creditorReferenceId = $creditorReferenceId;
+        $this->creditorReferenceIdentifier = $creditorReferenceIdentifier;
+
+        return $this;
     }
 
     public function getPaymentReference(): ?string
@@ -144,9 +146,11 @@ class ApplicableHeaderTradeSettlement
         return $this->paymentReference;
     }
 
-    public function setPaymentReference(?string $paymentReference): void
+    public function setPaymentReference(?string $paymentReference): static
     {
         $this->paymentReference = $paymentReference;
+
+        return $this;
     }
 
     public function getTaxCurrencyCode(): ?CurrencyCode
@@ -154,9 +158,11 @@ class ApplicableHeaderTradeSettlement
         return $this->taxCurrencyCode;
     }
 
-    public function setTaxCurrencyCode(?CurrencyCode $taxCurrencyCode): void
+    public function setTaxCurrencyCode(?CurrencyCode $taxCurrencyCode): static
     {
         $this->taxCurrencyCode = $taxCurrencyCode;
+
+        return $this;
     }
 
     public function getInvoiceCurrencyCode(): CurrencyCode
@@ -169,9 +175,11 @@ class ApplicableHeaderTradeSettlement
         return $this->payeeTradeParty;
     }
 
-    public function setPayeeTradeParty(?PayeeTradeParty $payeeTradeParty): void
+    public function setPayeeTradeParty(?PayeeTradeParty $payeeTradeParty): static
     {
         $this->payeeTradeParty = $payeeTradeParty;
+
+        return $this;
     }
 
     public function getSpecifiedTradeSettlementPaymentMeans(): ?SpecifiedTradeSettlementPaymentMeans
@@ -179,9 +187,11 @@ class ApplicableHeaderTradeSettlement
         return $this->specifiedTradeSettlementPaymentMeans;
     }
 
-    public function setSpecifiedTradeSettlementPaymentMeans(?SpecifiedTradeSettlementPaymentMeans $specifiedTradeSettlementPaymentMeans): void
+    public function setSpecifiedTradeSettlementPaymentMeans(?SpecifiedTradeSettlementPaymentMeans $specifiedTradeSettlementPaymentMeans): static
     {
         $this->specifiedTradeSettlementPaymentMeans = $specifiedTradeSettlementPaymentMeans;
+
+        return $this;
     }
 
     public function getApplicableTradeTaxes(): array
@@ -194,9 +204,11 @@ class ApplicableHeaderTradeSettlement
         return $this->billingSpecifiedPeriod;
     }
 
-    public function setBillingSpecifiedPeriod(?BillingSpecifiedPeriod $billingSpecifiedPeriod): void
+    public function setBillingSpecifiedPeriod(?BillingSpecifiedPeriod $billingSpecifiedPeriod): static
     {
         $this->billingSpecifiedPeriod = $billingSpecifiedPeriod;
+
+        return $this;
     }
 
     public function getSpecifiedTradeAllowances(): array
@@ -204,7 +216,7 @@ class ApplicableHeaderTradeSettlement
         return $this->specifiedTradeAllowances;
     }
 
-    public function setSpecifiedTradeAllowances(array $specifiedTradeAllowances): void
+    public function setSpecifiedTradeAllowances(array $specifiedTradeAllowances): static
     {
         $tmpSpecifiedTradeAllowances = [];
 
@@ -217,6 +229,8 @@ class ApplicableHeaderTradeSettlement
         }
 
         $this->specifiedTradeAllowances = $tmpSpecifiedTradeAllowances;
+
+        return $this;
     }
 
     public function getSpecifiedTradeCharges(): array
@@ -224,7 +238,7 @@ class ApplicableHeaderTradeSettlement
         return $this->specifiedTradeCharges;
     }
 
-    public function setSpecifiedTradeCharges(array $specifiedTradeCharges): void
+    public function setSpecifiedTradeCharges(array $specifiedTradeCharges): static
     {
         $tmpSpecifiedTradeCharges = [];
 
@@ -237,6 +251,8 @@ class ApplicableHeaderTradeSettlement
         }
 
         $this->specifiedTradeCharges = $tmpSpecifiedTradeCharges;
+
+        return $this;
     }
 
     public function getSpecifiedTradePaymentTerms(): ?SpecifiedTradePaymentTerms
@@ -244,9 +260,11 @@ class ApplicableHeaderTradeSettlement
         return $this->specifiedTradePaymentTerms;
     }
 
-    public function setSpecifiedTradePaymentTerms(?SpecifiedTradePaymentTerms $specifiedTradePaymentTerms): void
+    public function setSpecifiedTradePaymentTerms(?SpecifiedTradePaymentTerms $specifiedTradePaymentTerms): static
     {
         $this->specifiedTradePaymentTerms = $specifiedTradePaymentTerms;
+
+        return $this;
     }
 
     public function getSpecifiedTradeSettlementHeaderMonetarySummation(): SpecifiedTradeSettlementHeaderMonetarySummation
@@ -254,9 +272,11 @@ class ApplicableHeaderTradeSettlement
         return $this->specifiedTradeSettlementHeaderMonetarySummation;
     }
 
-    public function setSpecifiedTradeSettlementHeaderMonetarySummation(SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation): void
+    public function setSpecifiedTradeSettlementHeaderMonetarySummation(SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation): static
     {
         $this->specifiedTradeSettlementHeaderMonetarySummation = $specifiedTradeSettlementHeaderMonetarySummation;
+
+        return $this;
     }
 
     public function getInvoiceReferencedDocument(): ?InvoiceReferencedDocument
@@ -264,9 +284,11 @@ class ApplicableHeaderTradeSettlement
         return $this->invoiceReferencedDocument;
     }
 
-    public function setInvoiceReferencedDocument(?InvoiceReferencedDocument $invoiceReferencedDocument): void
+    public function setInvoiceReferencedDocument(?InvoiceReferencedDocument $invoiceReferencedDocument): static
     {
         $this->invoiceReferencedDocument = $invoiceReferencedDocument;
+
+        return $this;
     }
 
     public function getReceivableSpecifiedTradeAccountingAccount(): ?ReceivableSpecifiedTradeAccountingAccount
@@ -274,16 +296,20 @@ class ApplicableHeaderTradeSettlement
         return $this->receivableSpecifiedTradeAccountingAccount;
     }
 
-    public function setReceivableSpecifiedTradeAccountingAccount(?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount): void
+    public function setReceivableSpecifiedTradeAccountingAccount(?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount): static
     {
         $this->receivableSpecifiedTradeAccountingAccount = $receivableSpecifiedTradeAccountingAccount;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:ApplicableHeaderTradeSettlement');
 
-        $element->appendChild($document->createElement('ram:CreditorReferenceID', $this->creditorReferenceId->value));
+        if (null !== $this->creditorReferenceIdentifier) {
+            $element->appendChild($document->createElement('ram:CreditorReferenceID', $this->creditorReferenceIdentifier->value));
+        }
 
         if (\is_string($this->paymentReference)) {
             $element->appendChild($document->createElement('ram:PaymentReference', $this->paymentReference));

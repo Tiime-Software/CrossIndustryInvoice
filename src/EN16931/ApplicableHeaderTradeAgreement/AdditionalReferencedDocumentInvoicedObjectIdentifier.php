@@ -15,12 +15,12 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
     /**
      * BT-18.
      */
-    private ObjectIdentifier $issuerAssignedID;
+    private ObjectIdentifier $issuerAssignedIdentifier;
 
     /**
      * BT-124.
      */
-    private ?string $uriID;
+    private ?string $uriIdentifier;
 
     /**
      * BT-18-0.
@@ -42,29 +42,31 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
      */
     private ?BinaryObject $attachmentBinaryObject;
 
-    public function __construct(ObjectIdentifier $issuerAssignedID)
+    public function __construct(ObjectIdentifier $issuerAssignedIdentifier)
     {
-        $this->issuerAssignedID       = $issuerAssignedID;
-        $this->typeCode               = '130';
-        $this->referenceTypeCode      = null;
-        $this->uriID                  = null;
-        $this->name                   = null;
-        $this->attachmentBinaryObject = null;
+        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
+        $this->typeCode                 = '130';
+        $this->referenceTypeCode        = null;
+        $this->uriIdentifier            = null;
+        $this->name                     = null;
+        $this->attachmentBinaryObject   = null;
     }
 
-    public function getIssuerAssignedID(): ObjectIdentifier
+    public function getIssuerAssignedIdentifier(): ObjectIdentifier
     {
-        return $this->issuerAssignedID;
+        return $this->issuerAssignedIdentifier;
     }
 
-    public function getUriID(): ?string
+    public function getUriIdentifier(): ?string
     {
-        return $this->uriID;
+        return $this->uriIdentifier;
     }
 
-    public function setUriID(?string $uriID): void
+    public function setUriIdentifier(?string $uriIdentifier): static
     {
-        $this->uriID = $uriID;
+        $this->uriIdentifier = $uriIdentifier;
+
+        return $this;
     }
 
     public function getTypeCode(): string
@@ -77,9 +79,11 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
         return $this->referenceTypeCode;
     }
 
-    public function setReferenceTypeCode(?string $referenceTypeCode): void
+    public function setReferenceTypeCode(?string $referenceTypeCode): static
     {
         $this->referenceTypeCode = $referenceTypeCode;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -87,9 +91,11 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
         return $this->name;
     }
 
-    public function setName(?string $name): void
+    public function setName(?string $name): static
     {
         $this->name = $name;
+
+        return $this;
     }
 
     public function getAttachmentBinaryObject(): ?BinaryObject
@@ -97,19 +103,21 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
         return $this->attachmentBinaryObject;
     }
 
-    public function setAttachmentBinaryObject(?BinaryObject $attachmentBinaryObject): void
+    public function setAttachmentBinaryObject(?BinaryObject $attachmentBinaryObject): static
     {
         $this->attachmentBinaryObject = $attachmentBinaryObject;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:AdditionalReferencedDocument');
 
-        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
-        if (\is_string($this->uriID)) {
-            $element->appendChild($document->createElement('ram:URIID', $this->uriID));
+        if (\is_string($this->uriIdentifier)) {
+            $element->appendChild($document->createElement('ram:URIID', $this->uriIdentifier));
         }
 
         $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));

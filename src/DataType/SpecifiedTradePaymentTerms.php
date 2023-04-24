@@ -38,9 +38,11 @@ class SpecifiedTradePaymentTerms
         return $this->description;
     }
 
-    public function setDescription(?string $description): void
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
     }
 
     public function getDueDateDateTime(): DueDateDateTime
@@ -48,9 +50,11 @@ class SpecifiedTradePaymentTerms
         return $this->dueDateDateTime;
     }
 
-    public function setDueDateDateTime(?DueDateDateTime $dueDateDateTime): void
+    public function setDueDateDateTime(?DueDateDateTime $dueDateDateTime): static
     {
         $this->dueDateDateTime = $dueDateDateTime;
+
+        return $this;
     }
 
     public function getDirectDebitMandateID(): ?MandateReferenceIdentifier
@@ -58,9 +62,11 @@ class SpecifiedTradePaymentTerms
         return $this->directDebitMandateID;
     }
 
-    public function setDirectDebitMandateID(?MandateReferenceIdentifier $directDebitMandateID): void
+    public function setDirectDebitMandateID(?MandateReferenceIdentifier $directDebitMandateID): static
     {
         $this->directDebitMandateID = $directDebitMandateID;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
