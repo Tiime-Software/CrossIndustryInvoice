@@ -16,7 +16,7 @@ class ExchangedDocument
     /**
      * BT-1.
      */
-    private InvoiceIdentifier $id;
+    private InvoiceIdentifier $identifier;
 
     /**
      * BT-3.
@@ -28,16 +28,16 @@ class ExchangedDocument
      */
     private IssueDateTime $issueDateTime;
 
-    public function __construct(InvoiceIdentifier $id, InvoiceTypeCode $typeCode, IssueDateTime $issueDateTime)
+    public function __construct(InvoiceIdentifier $identifier, InvoiceTypeCode $typeCode, IssueDateTime $issueDateTime)
     {
-        $this->id            = $id;
+        $this->identifier    = $identifier;
         $this->typeCode      = $typeCode;
         $this->issueDateTime = $issueDateTime;
     }
 
-    public function getId(): InvoiceIdentifier
+    public function getIdentifier(): InvoiceIdentifier
     {
-        return $this->id;
+        return $this->identifier;
     }
 
     public function getTypeCode(): InvoiceTypeCode
@@ -54,7 +54,7 @@ class ExchangedDocument
     {
         $element = $document->createElement('rsm:ExchangedDocument');
 
-        $element->appendChild($document->createElement('ram:ID', $this->id->value));
+        $element->appendChild($document->createElement('ram:ID', $this->identifier->value));
         $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode->value));
         $element->appendChild($this->issueDateTime->toXML($document));
 

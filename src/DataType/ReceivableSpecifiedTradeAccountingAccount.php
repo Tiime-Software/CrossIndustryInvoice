@@ -12,23 +12,23 @@ class ReceivableSpecifiedTradeAccountingAccount
     /**
      * BT-19.
      */
-    private string $id;
+    private string $identifier;
 
-    public function __construct(string $id)
+    public function __construct(string $identifier)
     {
-        $this->id = $id;
+        $this->identifier = $identifier;
     }
 
-    public function getId(): string
+    public function getIdentifier(): string
     {
-        return $this->id;
+        return $this->identifier;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:ReceivableSpecifiedTradeAccountingAccount');
 
-        $element->appendChild($document->createElement('ram:ID', $this->id));
+        $element->appendChild($document->createElement('ram:ID', $this->identifier));
 
         return $element;
     }

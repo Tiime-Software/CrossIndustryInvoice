@@ -20,12 +20,12 @@ class BuyerTradeParty
     /**
      * BT-46.
      */
-    private ?BuyerIdentifier $id;
+    private ?BuyerIdentifier $identifier;
 
     /**
      * BT-46-0 & BT-46-1.
      */
-    private ?BuyerGlobalIdentifier $globalId;
+    private ?BuyerGlobalIdentifier $globalIdentifier;
 
     /**
      * BT-44.
@@ -61,32 +61,32 @@ class BuyerTradeParty
     {
         $this->name                       = $name;
         $this->postalTradeAddress         = $postalTradeAddress;
-        $this->id                         = null;
-        $this->globalId                   = null;
+        $this->identifier                 = null;
+        $this->globalIdentifier           = null;
         $this->specifiedLegalOrganization = null;
         $this->definedTradeContact        = null;
         $this->URIUniversalCommunication  = null;
         $this->specifiedTaxRegistration   = null;
     }
 
-    public function getId(): ?BuyerIdentifier
+    public function getIdentifier(): ?BuyerIdentifier
     {
-        return $this->id;
+        return $this->identifier;
     }
 
-    public function setId(?BuyerIdentifier $id): void
+    public function setIdentifier(?BuyerIdentifier $identifier): void
     {
-        $this->id = $id;
+        $this->identifier = $identifier;
     }
 
-    public function getGlobalId(): ?BuyerGlobalIdentifier
+    public function getGlobalIdentifier(): ?BuyerGlobalIdentifier
     {
-        return $this->globalId;
+        return $this->globalIdentifier;
     }
 
-    public function setGlobalId(?BuyerGlobalIdentifier $globalId): void
+    public function setGlobalIdentifier(?BuyerGlobalIdentifier $globalIdentifier): void
     {
-        $this->globalId = $globalId;
+        $this->globalIdentifier = $globalIdentifier;
     }
 
     public function getName(): string
@@ -143,12 +143,12 @@ class BuyerTradeParty
     {
         $element = $document->createElement('ram:BuyerTradeParty');
 
-        if ($this->id instanceof BuyerIdentifier) {
-            $element->appendChild($this->id->toXML($document));
+        if ($this->identifier instanceof BuyerIdentifier) {
+            $element->appendChild($this->identifier->toXML($document));
         }
 
-        if ($this->globalId instanceof BuyerGlobalIdentifier) {
-            $element->appendChild($this->globalId->toXML($document));
+        if ($this->globalIdentifier instanceof BuyerGlobalIdentifier) {
+            $element->appendChild($this->globalIdentifier->toXML($document));
         }
 
         $element->appendChild($document->createElement('ram:Name', $this->name));

@@ -14,7 +14,7 @@ class SpecifiedTaxRegistration
     /**
      * BT-32.
      */
-    private ?VatIdentifier $id;
+    private ?VatIdentifier $identifier;
 
     /**
      * BT-32-0.
@@ -23,18 +23,18 @@ class SpecifiedTaxRegistration
 
     public function __construct()
     {
-        $this->schemeID = 'FC';
-        $this->id       = null;
+        $this->schemeID   = 'FC';
+        $this->identifier = null;
     }
 
-    public function getId(): ?VatIdentifier
+    public function getIdentifier(): ?VatIdentifier
     {
-        return $this->id;
+        return $this->identifier;
     }
 
-    public function setId(?VatIdentifier $id): void
+    public function setIdentifier(?VatIdentifier $identifier): void
     {
-        $this->id = $id;
+        $this->identifier = $identifier;
     }
 
     public function getSchemeID(): string
@@ -46,8 +46,8 @@ class SpecifiedTaxRegistration
     {
         $element = $document->createElement('ram:SpecifiedTaxRegistration');
 
-        if ($this->id instanceof VatIdentifier) {
-            $identifierElement = $document->createElement('ram:ID', $this->id->getValue());
+        if ($this->identifier instanceof VatIdentifier) {
+            $identifierElement = $document->createElement('ram:ID', $this->identifier->getValue());
             $identifierElement->setAttribute('schemeId', $this->getSchemeID());
 
             $element->appendChild($identifierElement);

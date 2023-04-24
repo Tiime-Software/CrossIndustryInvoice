@@ -14,27 +14,27 @@ class OriginTradeCountry
     /**
      * BT-159.
      */
-    private ?CountryAlpha2Code $id;
+    private ?CountryAlpha2Code $identifier;
 
     public function __construct()
     {
     }
 
-    public function getId(): ?CountryAlpha2Code
+    public function getIdentifier(): ?CountryAlpha2Code
     {
-        return $this->id;
+        return $this->identifier;
     }
 
-    public function setId(?CountryAlpha2Code $id): void
+    public function setIdentifier(?CountryAlpha2Code $identifier): void
     {
-        $this->id = $id;
+        $this->identifier = $identifier;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:OriginTradeCountry');
 
-        $element->appendChild($document->createElement('ram:ID', $this->id->value));
+        $element->appendChild($document->createElement('ram:ID', $this->identifier->value));
 
         return $element;
     }

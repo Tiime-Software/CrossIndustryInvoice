@@ -21,9 +21,9 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
      */
     private array $includedNotes;
 
-    public function __construct(InvoiceIdentifier $id, InvoiceTypeCode $typeCode, IssueDateTime $issueDateTime)
+    public function __construct(InvoiceIdentifier $identifier, InvoiceTypeCode $typeCode, IssueDateTime $issueDateTime)
     {
-        parent::__construct($id, $typeCode, $issueDateTime);
+        parent::__construct($identifier, $typeCode, $issueDateTime);
         $this->includedNotes = [];
     }
 
