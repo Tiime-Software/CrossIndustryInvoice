@@ -8,7 +8,8 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",
-        "friendsofphp/php-cs-fixer": "^3.16"
+        "friendsofphp/php-cs-fixer": "^3.16",
+        "phpunit/phpunit": "^10.1"
     },
     "license": "MIT",
     "autoload": {
