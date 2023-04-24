@@ -66,7 +66,6 @@ class ApplicableHeaderTradeDelivery
 
     public function setDespatchAdviceReferencedDocument(?DespatchAdviceReferencedDocument $despatchAdviceReferencedDocument): static
     {
-        // TODO: rename
         $this->despatchAdviceReferencedDocument = $despatchAdviceReferencedDocument;
 
         return $this;
