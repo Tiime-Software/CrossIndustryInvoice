@@ -14,22 +14,22 @@ class SpecifiedProcuringProject
     /**
      * BT-11.
      */
-    private ProjectReference $id;
+    private ProjectReference $identifier;
 
     /**
      * BT-11-0.
      */
     private string $name;
 
-    public function __construct(ProjectReference $id)
+    public function __construct(ProjectReference $identifier)
     {
-        $this->id   = $id;
-        $this->name = 'Project Reference';
+        $this->identifier = $identifier;
+        $this->name       = 'Project Reference';
     }
 
-    public function getId(): ProjectReference
+    public function getIdentifier(): ProjectReference
     {
-        return $this->id;
+        return $this->identifier;
     }
 
     public function getName(): string
@@ -41,7 +41,7 @@ class SpecifiedProcuringProject
     {
         $element = $document->createElement('ram:SpecifiedProcuringProject');
 
-        $element->appendChild($document->createElement('ram:ID', $this->id->value));
+        $element->appendChild($document->createElement('ram:ID', $this->identifier->value));
         $element->appendChild($document->createElement('ram:Name', $this->name));
 
         return $element;

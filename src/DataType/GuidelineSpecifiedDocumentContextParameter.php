@@ -14,23 +14,23 @@ class GuidelineSpecifiedDocumentContextParameter
     /**
      * BT-24.
      */
-    private SpecificationIdentifier $id;
+    private SpecificationIdentifier $identifier;
 
-    public function __construct(SpecificationIdentifier $id)
+    public function __construct(SpecificationIdentifier $identifier)
     {
-        $this->id = $id;
+        $this->identifier = $identifier;
     }
 
-    public function getId(): SpecificationIdentifier
+    public function getIdentifier(): SpecificationIdentifier
     {
-        return $this->id;
+        return $this->identifier;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement('ram:GuidelineSpecifiedDocumentContextParameter');
 
-        $currentNode->appendChild($document->createElement('ram:ID', $this->id->value));
+        $currentNode->appendChild($document->createElement('ram:ID', $this->identifier->value));
 
         return $currentNode;
     }

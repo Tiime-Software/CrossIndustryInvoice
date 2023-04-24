@@ -12,16 +12,16 @@ class BusinessProcessSpecifiedDocumentContextParameter
     /**
      * BT-23.
      */
-    private string $id;
+    private string $identifier;
 
-    public function __construct(string $id)
+    public function __construct(string $identifier)
     {
-        $this->id = $id;
+        $this->identifier = $identifier;
     }
 
-    public function getId(): string
+    public function getIdentifier(): string
     {
-        return $this->id;
+        return $this->identifier;
     }
 
     /**
@@ -31,7 +31,7 @@ class BusinessProcessSpecifiedDocumentContextParameter
     {
         $currentNode = $document->createElement('ram:BusinessProcessSpecifiedDocumentContextParameter');
 
-        $currentNode->appendChild($document->createElement('ram:ID', $this->id));
+        $currentNode->appendChild($document->createElement('ram:ID', $this->identifier));
 
         return $currentNode;
     }

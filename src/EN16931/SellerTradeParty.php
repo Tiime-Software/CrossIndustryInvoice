@@ -23,14 +23,14 @@ class SellerTradeParty
      *
      * @var array<int, SellerIdentifier>
      */
-    private array $ids;
+    private array $identifiers;
 
     /**
      * BT-29-0 & BT-29-1.
      *
      * @var array<int, SellerGlobalIdentifier>
      */
-    private array $globalIds;
+    private array $globalIdentifiers;
 
     /**
      * BT-27.
@@ -76,8 +76,8 @@ class SellerTradeParty
     {
         $this->name                        = $name;
         $this->postalTradeAddress          = $postalTradeAddress;
-        $this->ids                         = [];
-        $this->globalIds                   = [];
+        $this->identifiers                 = [];
+        $this->globalIdentifiers           = [];
         $this->description                 = null;
         $this->specifiedLegalOrganization  = null;
         $this->definedTradeContact         = null;
@@ -86,24 +86,24 @@ class SellerTradeParty
         $this->specifiedTaxRegistration    = null;
     }
 
-    public function getIds(): array
+    public function getIdentifiers(): array
     {
-        return $this->ids;
+        return $this->identifiers;
     }
 
-    public function setIds(array $ids): void
+    public function setIdentifiers(array $identifiers): void
     {
-        $this->ids = $ids;
+        $this->identifiers = $identifiers;
     }
 
-    public function getGlobalIds(): array
+    public function getGlobalIdentifiers(): array
     {
-        return $this->globalIds;
+        return $this->globalIdentifiers;
     }
 
-    public function setGlobalIds(array $globalIds): void
+    public function setGlobalIdentifiers(array $globalIdentifiers): void
     {
-        $this->globalIds = $globalIds;
+        $this->globalIdentifiers = $globalIdentifiers;
     }
 
     public function getName(): string
@@ -180,13 +180,13 @@ class SellerTradeParty
     {
         $element = $document->createElement('ram:SellerTradeParty');
 
-        foreach ($this->ids as $id) {
-            $element->appendChild($document->createElement('ram:ID', $id->value));
+        foreach ($this->identifiers as $identifier) {
+            $element->appendChild($document->createElement('ram:ID', $identifier->value));
         }
 
-        foreach ($this->globalIds as $globalId) {
-            $globalIdentifierElement = $document->createElement('ram:GlobalID', $globalId->value);
-            $globalIdentifierElement->setAttribute('schemeID', $globalId->scheme->value);
+        foreach ($this->globalIdentifiers as $globalIdentifier) {
+            $globalIdentifierElement = $document->createElement('ram:GlobalID', $globalIdentifier->value);
+            $globalIdentifierElement->setAttribute('schemeID', $globalIdentifier->scheme->value);
 
             $element->appendChild($globalIdentifierElement);
         }
