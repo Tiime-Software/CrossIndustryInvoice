@@ -23,7 +23,7 @@ class ClassCode
 
     public function __construct(string $value, ItemTypeCode $listIdentifier)
     {
-        $this->value         = $value;
+        $this->value                 = $value;
         $this->listIdentifier        = $listIdentifier;
         $this->listVersionIdentifier = null;
     }
@@ -33,25 +33,16 @@ class ClassCode
         return $this->value;
     }
 
-    /**
-     * @return ItemTypeCode
-     */
     public function getListIdentifier(): ItemTypeCode
     {
         return $this->listIdentifier;
     }
 
-    /**
-     * @return string|null
-     */
     public function getListVersionIdentifier(): ?string
     {
         return $this->listVersionIdentifier;
     }
 
-    /**
-     * @param string|null $listVersionIdentifier
-     */
     public function setListVersionIdentifier(?string $listVersionIdentifier): static
     {
         $this->listVersionIdentifier = $listVersionIdentifier;
