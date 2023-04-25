@@ -19,12 +19,12 @@ class SpecifiedTaxRegistrationVAT
     /**
      * BT-31-0.
      */
-    private string $schemeID;
+    private string $schemeIdentifier;
 
     public function __construct()
     {
-        $this->schemeID   = 'VA';
-        $this->identifier = null;
+        $this->schemeIdentifier = 'VA';
+        $this->identifier       = null;
     }
 
     public function getIdentifier(): ?VatIdentifier
@@ -39,18 +39,18 @@ class SpecifiedTaxRegistrationVAT
         return $this;
     }
 
-    public function getSchemeID(): string
+    public function getSchemeIdentifier(): string
     {
-        return $this->schemeID;
+        return $this->schemeIdentifier;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:SpecifiedTaxRegistration');
 
-        if ($this->id instanceof VatIdentifier) {
+        if ($this->identifier instanceof VatIdentifier) {
             $identifierElement = $document->createElement('ram:ID', $this->identifier->getValue());
-            $identifierElement->setAttribute('schemeId', $this->getSchemeID());
+            $identifierElement->setAttribute('schemeID', $this->schemeIdentifier);
 
             $element->appendChild($identifierElement);
         }

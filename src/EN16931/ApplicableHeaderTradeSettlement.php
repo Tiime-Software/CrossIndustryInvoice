@@ -116,7 +116,7 @@ class ApplicableHeaderTradeSettlement
         $this->invoiceCurrencyCode                             = $invoiceCurrencyCode;
         $this->applicableTradeTaxes                            = $tmpApplicableTradeTaxes;
         $this->specifiedTradeSettlementHeaderMonetarySummation = $specifiedTradeSettlementHeaderMonetarySummation;
-        $this->creditorReferenceIdentifier                             = null;
+        $this->creditorReferenceIdentifier                     = null;
         $this->paymentReference                                = null;
         $this->taxCurrencyCode                                 = null;
         $this->payeeTradeParty                                 = null;
@@ -129,17 +129,11 @@ class ApplicableHeaderTradeSettlement
         $this->specifiedTradeCharges                           = [];
     }
 
-    /**
-     * @return BankAssignedCreditorIdentifier|null
-     */
     public function getCreditorReferenceIdentifier(): ?BankAssignedCreditorIdentifier
     {
         return $this->creditorReferenceIdentifier;
     }
 
-    /**
-     * @param BankAssignedCreditorIdentifier|null $creditorReferenceIdentifier
-     */
     public function setCreditorReferenceIdentifier(?BankAssignedCreditorIdentifier $creditorReferenceIdentifier): static
     {
         $this->creditorReferenceIdentifier = $creditorReferenceIdentifier;

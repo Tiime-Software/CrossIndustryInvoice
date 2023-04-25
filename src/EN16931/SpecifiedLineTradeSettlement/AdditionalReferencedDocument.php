@@ -15,7 +15,7 @@ class AdditionalReferencedDocument
     /**
      * BT-128.
      */
-    private ObjectIdentifier $issuerAssignedID;
+    private ObjectIdentifier $issuerAssignedIdentifier;
 
     /**
      * BT-128-0.
@@ -27,16 +27,16 @@ class AdditionalReferencedDocument
      */
     private ?ObjectSchemeCode $referenceTypeCode;
 
-    public function __construct(ObjectIdentifier $issuerAssignedID)
+    public function __construct(ObjectIdentifier $issuerAssignedIdentifier)
     {
-        $this->issuerAssignedID  = $issuerAssignedID;
-        $this->typeCode          = '130';
-        $this->referenceTypeCode = null;
+        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
+        $this->typeCode                 = '130';
+        $this->referenceTypeCode        = null;
     }
 
-    public function getIssuerAssignedID(): ObjectIdentifier
+    public function getIssuerAssignedIdentifier(): ObjectIdentifier
     {
-        return $this->issuerAssignedID;
+        return $this->issuerAssignedIdentifier;
     }
 
     public function getTypeCode(): string
@@ -60,7 +60,7 @@ class AdditionalReferencedDocument
     {
         $element = $document->createElement('ram:AdditionalReferencedDocument');
 
-        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
         $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
         if ($this->referenceTypeCode instanceof ObjectSchemeCode) {

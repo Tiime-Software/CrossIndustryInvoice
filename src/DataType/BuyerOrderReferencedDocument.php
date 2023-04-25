@@ -14,22 +14,22 @@ class BuyerOrderReferencedDocument
     /**
      * BT-13.
      */
-    private PurchaseOrderReference $issuerAssignedID;
+    private PurchaseOrderReference $issuerAssignedIdentifier;
 
-    public function __construct(PurchaseOrderReference $issuerAssignedID)
+    public function __construct(PurchaseOrderReference $issuerAssignedIdentifier)
     {
-        $this->issuerAssignedID = $issuerAssignedID;
+        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
     }
 
-    public function getIssuerAssignedID(): PurchaseOrderReference
+    public function getIssuerAssignedIdentifier(): PurchaseOrderReference
     {
-        return $this->issuerAssignedID;
+        return $this->issuerAssignedIdentifier;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement('ram:BuyerOrderReferencedDocument');
-        $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+        $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
         return $currentNode;
     }

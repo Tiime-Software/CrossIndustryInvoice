@@ -14,21 +14,22 @@ class AssociatedDocumentLineDocument
     /**
      * BT-126.
      */
-    private InvoiceLineIdentifier $lineID;
+    private InvoiceLineIdentifier $lineIdentifier;
 
     /**
      * BT-127-00.
      */
     private ?LineIncludedNote $includedNote;
 
-    public function __construct(InvoiceLineIdentifier $lineID)
+    public function __construct(InvoiceLineIdentifier $lineIdentifier)
     {
-        $this->lineID = $lineID;
+        $this->lineIdentifier = $lineIdentifier;
+        $this->includedNote   = null;
     }
 
-    public function getLineID(): InvoiceLineIdentifier
+    public function getLineIdentifier(): InvoiceLineIdentifier
     {
-        return $this->lineID;
+        return $this->lineIdentifier;
     }
 
     public function getIncludedNote(): ?LineIncludedNote
@@ -47,7 +48,7 @@ class AssociatedDocumentLineDocument
     {
         $element = $document->createElement('ram:AssociatedDocumentLineDocument');
 
-        $element->appendChild($document->createElement('ram:LineID', $this->lineID->value));
+        $element->appendChild($document->createElement('ram:LineID', $this->lineIdentifier->value));
 
         if ($this->includedNote instanceof LineIncludedNote) {
             $element->appendChild($this->includedNote->toXML($document));

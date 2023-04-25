@@ -6,7 +6,6 @@ namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxPointDate;
 use Tiime\EN16931\DataType\VatCategory;
-use Tiime\EN16931\SemanticDataType\Amount;
 
 /**
  * BG-23.
@@ -18,7 +17,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
      */
     private ?TaxPointDate $taxPointDate;
 
-    public function __construct(Amount $calculatedAmount, Amount $basisAmount, VatCategory $categoryCode)
+    public function __construct(float $calculatedAmount, float $basisAmount, VatCategory $categoryCode)
     {
         parent::__construct($calculatedAmount, $basisAmount, $categoryCode);
         $this->taxPointDate = null;

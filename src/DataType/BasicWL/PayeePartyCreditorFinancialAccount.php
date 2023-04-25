@@ -14,41 +14,41 @@ class PayeePartyCreditorFinancialAccount
     /**
      * BT-84.
      */
-    private ?PaymentAccountIdentifier $ibanId;
+    private ?PaymentAccountIdentifier $ibanIdentifier;
 
     /**
      * BT-84-0.
      */
-    private ?PaymentAccountIdentifier $proprietaryId;
+    private ?PaymentAccountIdentifier $proprietaryIdentifier;
 
     public function __construct(
-        ?PaymentAccountIdentifier $ibanId = null,
-        ?PaymentAccountIdentifier $proprietaryId = null
+        ?PaymentAccountIdentifier $ibanIdentifier = null,
+        ?PaymentAccountIdentifier $proprietaryIdentifier = null
     ) {
-        $this->ibanId        = $ibanId;
-        $this->proprietaryId = $proprietaryId;
+        $this->ibanIdentifier        = $ibanIdentifier;
+        $this->proprietaryIdentifier = $proprietaryIdentifier;
     }
 
-    public function getIbanId(): ?PaymentAccountIdentifier
+    public function getIbanIdentifier(): ?PaymentAccountIdentifier
     {
-        return $this->ibanId;
+        return $this->ibanIdentifier;
     }
 
-    public function getProprietaryId(): ?PaymentAccountIdentifier
+    public function getProprietaryIdentifier(): ?PaymentAccountIdentifier
     {
-        return $this->proprietaryId;
+        return $this->proprietaryIdentifier;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:PayeePartyCreditorFinancialAccount');
 
-        if ($this->ibanId instanceof PaymentAccountIdentifier) {
-            $element->appendChild($document->createElement('ram:IBANID', $this->ibanId->value));
+        if ($this->ibanIdentifier instanceof PaymentAccountIdentifier) {
+            $element->appendChild($document->createElement('ram:IBANID', $this->ibanIdentifier->value));
         }
 
-        if ($this->proprietaryId instanceof PaymentAccountIdentifier) {
-            $element->appendChild($document->createElement('ram:ProprietaryID', $this->proprietaryId->value));
+        if ($this->proprietaryIdentifier instanceof PaymentAccountIdentifier) {
+            $element->appendChild($document->createElement('ram:ProprietaryID', $this->proprietaryIdentifier->value));
         }
 
         return $element;

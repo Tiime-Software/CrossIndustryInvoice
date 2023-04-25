@@ -20,17 +20,11 @@ class BuyerOrderReferencedDocument
     {
     }
 
-    /**
-     * @return PurchaseOrderLineReference|null
-     */
     public function getLineIdentifier(): ?PurchaseOrderLineReference
     {
         return $this->lineIdentifier;
     }
 
-    /**
-     * @param PurchaseOrderLineReference|null $lineIdentifier
-     */
     public function setLineIdentifier(?PurchaseOrderLineReference $lineIdentifier): static
     {
         $this->lineIdentifier = $lineIdentifier;

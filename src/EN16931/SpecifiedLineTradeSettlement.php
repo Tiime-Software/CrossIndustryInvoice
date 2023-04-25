@@ -62,6 +62,7 @@ class SpecifiedLineTradeSettlement
         $this->specifiedTradeAllowances                      = [];
         $this->specifiedTradeCharges                         = [];
         $this->billingSpecifiedPeriod                        = null;
+        $this->additionalReferencedDocument                  = null;
         $this->receivableSpecifiedTradeAccountingAccount     = null;
     }
 
@@ -158,7 +159,10 @@ class SpecifiedLineTradeSettlement
         $element = $document->createElement('ram:SpecifiedLineTradeSettlement');
 
         $element->appendChild($this->applicableTradeTax->toXML($document));
-        $element->appendChild($this->billingSpecifiedPeriod->toXML($document));
+
+        if (null !== $this->billingSpecifiedPeriod) {
+            $element->appendChild($this->billingSpecifiedPeriod->toXML($document));
+        }
 
         foreach ($this->specifiedTradeAllowances as $specifiedTradeAllowance) {
             $element->appendChild($specifiedTradeAllowance->toXML($document));

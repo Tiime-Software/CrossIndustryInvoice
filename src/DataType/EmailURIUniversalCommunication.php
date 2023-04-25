@@ -12,23 +12,23 @@ class EmailURIUniversalCommunication
     /**
      * BT-43 or BT-58.
      */
-    private string $uriID;
+    private string $uriIdentifier;
 
-    public function __construct(string $uriID)
+    public function __construct(string $uriIdentifier)
     {
-        $this->uriID = $uriID;
+        $this->uriIdentifier = $uriIdentifier;
     }
 
-    public function getUriID(): string
+    public function getUriIdentifier(): string
     {
-        return $this->uriID;
+        return $this->uriIdentifier;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:EmailURIUniversalCommunication');
 
-        $element->appendChild($document->createElement('ram:URIID', $this->uriID));
+        $element->appendChild($document->createElement('ram:URIID', $this->uriIdentifier));
 
         return $element;
     }
