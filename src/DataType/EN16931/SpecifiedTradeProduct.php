@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\CrossIndustryInvoice\EN16931\ApplicableProductCharacteristic;
+use Tiime\CrossIndustryInvoice\EN16931\DesignatedProductClassification;
+use Tiime\CrossIndustryInvoice\EN16931\OriginTradeCountry;
 use Tiime\EN16931\DataType\Identifier\BuyerItemIdentifier;
 use Tiime\EN16931\DataType\Identifier\SellerItemIdentifier;
 use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
@@ -11,7 +14,7 @@ use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
 /**
  * BG-31.
  */
-class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\Basic\SpecifiedTradeProduct
+class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeProduct
 {
     /**
      * BT-155.

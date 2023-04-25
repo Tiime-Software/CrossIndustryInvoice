@@ -19,6 +19,7 @@ use Tiime\CrossIndustryInvoice\DataType\DocumentIncludedNote;
 use Tiime\CrossIndustryInvoice\DataType\DueDateDateTime;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\HeaderApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\PayeePartyCreditorFinancialAccount;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeProduct;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeSettlementHeaderMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 use Tiime\CrossIndustryInvoice\DataType\FormattedIssueDateTime;
@@ -56,7 +57,6 @@ use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\BillingSpeci
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\InvoiceLineAllowances\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\InvoiceLineCharges\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\ReceivableSpecifiedTradeAccountingAccount;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedTradeProduct;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedTradeSettlementLineMonetarySummation;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedTradeSettlementPaymentMeans;
 use Tiime\CrossIndustryInvoice\EN16931\StartDateTime;
