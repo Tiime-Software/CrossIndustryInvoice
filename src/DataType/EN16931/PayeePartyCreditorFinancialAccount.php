@@ -14,11 +14,11 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
     private ?string $accountName;
 
     public function __construct(
-        ?PaymentAccountIdentifier $ibanId = null,
+        ?PaymentAccountIdentifier $ibanIdentifier = null,
         ?string $accountName = null,
-        ?PaymentAccountIdentifier $proprietaryId = null
+        ?PaymentAccountIdentifier $proprietaryIdentifier = null
     ) {
-        parent::__construct($ibanId, $proprietaryId);
+        parent::__construct($ibanIdentifier, $proprietaryIdentifier);
 
         $this->accountName = $accountName;
     }
@@ -39,16 +39,16 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
     {
         $currentNode = $document->createElement('ram:PayeePartyCreditorFinancialAccount');
 
-        if (null !== $this->getIbanId()) {
-            $currentNode->appendChild($document->createElement('ram:IBANID', $this->getIbanId()->value));
+        if (null !== $this->getIbanIdentifier()) {
+            $currentNode->appendChild($document->createElement('ram:IBANID', $this->getIbanIdentifier()->value));
         }
 
         if (null !== $this->accountName) {
             $currentNode->appendChild($document->createElement('ram:AccountName', $this->accountName));
         }
 
-        if (null !== $this->getProprietaryId()) {
-            $currentNode->appendChild($document->createElement('ram:ProprietaryID', $this->getProprietaryId()->value));
+        if (null !== $this->getProprietaryIdentifier()) {
+            $currentNode->appendChild($document->createElement('ram:ProprietaryID', $this->getProprietaryIdentifier()->value));
         }
 
         return $currentNode;

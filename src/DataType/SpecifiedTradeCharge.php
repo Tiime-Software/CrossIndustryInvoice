@@ -48,10 +48,10 @@ class SpecifiedTradeCharge
      */
     private CategoryTradeTax $categoryTradeTax;
 
-    public function __construct(Amount $actualAmount, CategoryTradeTax $categoryTradeTax)
+    public function __construct(float $actualAmount, CategoryTradeTax $categoryTradeTax)
     {
         $this->chargeChargeIndicator = new ChargeChargeIndicator();
-        $this->actualAmount          = $actualAmount;
+        $this->actualAmount          = new Amount($actualAmount);
         $this->categoryTradeTax      = $categoryTradeTax;
         $this->calculationPercentage = null;
         $this->basisAmount           = null;

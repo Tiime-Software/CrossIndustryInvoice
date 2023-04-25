@@ -14,23 +14,23 @@ class PayerPartyDebtorFinancialAccount
     /**
      * BT-91.
      */
-    private DebitedAccountIdentifier $ibanID;
+    private DebitedAccountIdentifier $ibanIdentifier;
 
-    public function __construct(DebitedAccountIdentifier $ibanID)
+    public function __construct(DebitedAccountIdentifier $ibanIdentifier)
     {
-        $this->ibanID = $ibanID;
+        $this->ibanIdentifier = $ibanIdentifier;
     }
 
-    public function getIbanID(): DebitedAccountIdentifier
+    public function getIbanIdentifier(): DebitedAccountIdentifier
     {
-        return $this->ibanID;
+        return $this->ibanIdentifier;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:PayerPartyDebtorFinancialAccount');
 
-        $element->appendChild($document->createElement('ram:IBANID', $this->ibanID->value));
+        $element->appendChild($document->createElement('ram:IBANID', $this->ibanIdentifier->value));
 
         return $element;
     }

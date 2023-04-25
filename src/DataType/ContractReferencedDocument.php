@@ -14,22 +14,22 @@ class ContractReferencedDocument
     /**
      * BT-12.
      */
-    private ContractReference $issuerAssignedID;
+    private ContractReference $issuerAssignedIdentifier;
 
-    public function __construct(ContractReference $issuerAssignedID)
+    public function __construct(ContractReference $issuerAssignedIdentifier)
     {
-        $this->issuerAssignedID = $issuerAssignedID;
+        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
     }
 
-    public function getIssuerAssignedID(): ContractReference
+    public function getIssuerAssignedIdentifier(): ContractReference
     {
-        return $this->issuerAssignedID;
+        return $this->issuerAssignedIdentifier;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement('ram:ContractReferencedDocument');
-        $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+        $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
         return $currentNode;
     }

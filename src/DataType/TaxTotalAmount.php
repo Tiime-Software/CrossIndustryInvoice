@@ -17,12 +17,12 @@ class TaxTotalAmount
     /**
      * BT-110-0.
      */
-    private CurrencyCode $currencyID;
+    private CurrencyCode $currencyIdentifier;
 
-    public function __construct(float $value, CurrencyCode $currencyID)
+    public function __construct(float $value, CurrencyCode $currencyIdentifier)
     {
-        $this->value      = new Amount($value);
-        $this->currencyID = $currencyID;
+        $this->value              = new Amount($value);
+        $this->currencyIdentifier = $currencyIdentifier;
     }
 
     public function getValue(): float
@@ -30,15 +30,15 @@ class TaxTotalAmount
         return $this->value->getValueRounded();
     }
 
-    public function getCurrencyID(): CurrencyCode
+    public function getCurrencyIdentifier(): CurrencyCode
     {
-        return $this->currencyID;
+        return $this->currencyIdentifier;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:TaxTotalAmount', (string) $this->value->getValueRounded());
-        $element->setAttribute('currencyID', $this->currencyID->value);
+        $element->setAttribute('currencyID', $this->currencyIdentifier->value);
 
         return $element;
     }

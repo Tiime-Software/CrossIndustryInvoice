@@ -14,23 +14,23 @@ class SellerOrderReferencedDocument
     /**
      * BT-14.
      */
-    private SalesOrderReference $issuerAssignedID;
+    private SalesOrderReference $issuerAssignedIdentifier;
 
-    public function __construct(SalesOrderReference $issuerAssignedID)
+    public function __construct(SalesOrderReference $issuerAssignedIdentifier)
     {
-        $this->issuerAssignedID = $issuerAssignedID;
+        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
     }
 
-    public function getIssuerAssignedID(): SalesOrderReference
+    public function getIssuerAssignedIdentifier(): SalesOrderReference
     {
-        return $this->issuerAssignedID;
+        return $this->issuerAssignedIdentifier;
     }
 
     public function toXML(\DOMDocument $document)
     {
         $element = $document->createElement('ram:SellerOrderReferencedDocument');
 
-        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
         return $element;
     }

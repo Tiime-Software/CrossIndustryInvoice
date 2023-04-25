@@ -18,7 +18,7 @@ class ReceivingAdviceReferencedDocument
 
     public function __construct(ReceivingAdviceReference $issuerAssignedIdentifier)
     {
-        $this->$issuerAssignedIdentifier = $issuerAssignedIdentifier;
+        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
     }
 
     public function getIssuerAssignedIdentifier(): ReceivingAdviceReference
