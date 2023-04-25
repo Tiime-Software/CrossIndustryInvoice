@@ -48,7 +48,7 @@ class SpecifiedTaxRegistrationVAT
     {
         $element = $document->createElement('ram:SpecifiedTaxRegistration');
 
-        if ($this->id instanceof VatIdentifier) {
+        if ($this->identifier instanceof VatIdentifier) {
             $identifierElement = $document->createElement('ram:ID', $this->identifier->getValue());
             $identifierElement->setAttribute('schemeId', $this->getSchemeID());
 
