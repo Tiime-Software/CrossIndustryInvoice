@@ -17,7 +17,6 @@ class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\Basic\Spec
      */
     private ?BuyerOrderReferencedDocument $buyerOrderReferencedDocument;
 
-
     public function __construct(NetPriceProductTradePrice $netPriceProductTradePrice)
     {
         parent::__construct($netPriceProductTradePrice);

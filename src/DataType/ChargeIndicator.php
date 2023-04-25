@@ -7,7 +7,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
 /**
  * BG-21-0.
  */
-class ChargeChargeIndicator
+class ChargeIndicator
 {
     /**
      * BG-21-1.

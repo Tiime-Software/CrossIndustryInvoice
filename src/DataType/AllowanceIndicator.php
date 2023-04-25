@@ -7,7 +7,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
 /**
  * BG-20-0.
  */
-class AllowanceChargeIndicator
+class AllowanceIndicator
 {
     /**
      * BG-20-1.

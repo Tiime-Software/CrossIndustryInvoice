@@ -7,10 +7,10 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeAllowance;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\AdditionalReferencedDocument;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\ReceivableSpecifiedTradeAccountingAccount;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\SpecifiedTradeAllowance;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\SpecifiedTradeCharge;
 
 /**
  * BG-30-00.
