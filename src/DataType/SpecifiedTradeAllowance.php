@@ -86,9 +86,9 @@ class SpecifiedTradeAllowance
         return $this;
     }
 
-    public function getBasisAmount(): ?Amount
+    public function getBasisAmount(): ?float
     {
-        return $this->basisAmount;
+        return $this->basisAmount?->getValueRounded();
     }
 
     public function setBasisAmount(?float $basisAmount): static
