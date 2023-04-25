@@ -3,6 +3,8 @@
 namespace Tiime\CrossIndustryInvoice\Basic;
 
 use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
+use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeAllowance;
+use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 

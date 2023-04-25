@@ -7,12 +7,10 @@ use Tiime\CrossIndustryInvoice\EN16931\NetPriceProductTradePrice;
 
 class SpecifiedLineTradeAgreement
 {
-
     /**
      * BT-148-00.
      */
     private ?GrossPriceProductTradePrice $grossPriceProductTradePrice;
-
 
     /**
      * BT-146-00.
@@ -22,7 +20,7 @@ class SpecifiedLineTradeAgreement
     public function __construct(NetPriceProductTradePrice $netPriceProductTradePrice)
     {
         $this->grossPriceProductTradePrice = null;
-        $this->netPriceProductTradePrice = $netPriceProductTradePrice;
+        $this->netPriceProductTradePrice   = $netPriceProductTradePrice;
     }
 
     public function getGrossPriceProductTradePrice(): ?GrossPriceProductTradePrice

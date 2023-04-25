@@ -16,7 +16,7 @@ class SpecifiedTradeCharge
     /**
      * BG-21-0.
      */
-    private ChargeChargeIndicator $chargeChargeIndicator;
+    private ChargeIndicator $chargeChargeIndicator;
 
     /**
      * BT-101.
@@ -50,7 +50,7 @@ class SpecifiedTradeCharge
 
     public function __construct(float $actualAmount, CategoryTradeTax $categoryTradeTax)
     {
-        $this->chargeChargeIndicator = new ChargeChargeIndicator();
+        $this->chargeChargeIndicator = new ChargeIndicator();
         $this->actualAmount          = new Amount($actualAmount);
         $this->categoryTradeTax      = $categoryTradeTax;
         $this->calculationPercentage = null;
@@ -59,7 +59,7 @@ class SpecifiedTradeCharge
         $this->reason                = null;
     }
 
-    public function getChargeChargeIndicator(): ChargeChargeIndicator
+    public function getChargeChargeIndicator(): ChargeIndicator
     {
         return $this->chargeChargeIndicator;
     }

@@ -16,7 +16,7 @@ class SpecifiedTradeAllowance
     /**
      * BG-20-0.
      */
-    private AllowanceChargeIndicator $allowanceChargeIndicator;
+    private AllowanceIndicator $allowanceChargeIndicator;
 
     /**
      * BT-94.
@@ -50,7 +50,7 @@ class SpecifiedTradeAllowance
 
     public function __construct(float $actualAmount, CategoryTradeTax $allowanceCategoryTradeTax)
     {
-        $this->allowanceChargeIndicator  = new AllowanceChargeIndicator();
+        $this->allowanceChargeIndicator  = new AllowanceIndicator();
         $this->actualAmount              = new Amount($actualAmount);
         $this->allowanceCategoryTradeTax = $allowanceCategoryTradeTax;
         $this->calculationPercent        = null;
@@ -59,7 +59,7 @@ class SpecifiedTradeAllowance
         $this->reason                    = null;
     }
 
-    public function getAllowanceChargeIndicator(): AllowanceChargeIndicator
+    public function getAllowanceChargeIndicator(): AllowanceIndicator
     {
         return $this->allowanceChargeIndicator;
     }
