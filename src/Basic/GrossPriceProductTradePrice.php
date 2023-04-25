@@ -2,7 +2,7 @@
 
 namespace Tiime\CrossIndustryInvoice\Basic;
 
-use Tiime\CrossIndustryInvoice\EN16931\AppliedTradeAllowanceCharge;
+use Tiime\CrossIndustryInvoice\DataType\Basic\AppliedTradeAllowanceCharge;
 use Tiime\CrossIndustryInvoice\EN16931\GrossPriceProductTradePrice\BasisQuantity;
 use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
 

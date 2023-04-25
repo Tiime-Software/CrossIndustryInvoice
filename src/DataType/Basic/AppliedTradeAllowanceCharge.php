@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\CrossIndustryInvoice\EN16931\AppliedTradeAllowanceCharge\ChargeIndicator;
 use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
