@@ -6,6 +6,7 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\AssociatedDocumentLineDocument;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedLineTradeDelivery;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeProduct;
 
 /**
  * BG-25.

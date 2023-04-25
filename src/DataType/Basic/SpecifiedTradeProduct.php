@@ -1,6 +1,6 @@
 <?php
 
-namespace Tiime\CrossIndustryInvoice\Basic;
+namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
 
