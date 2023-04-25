@@ -9,7 +9,7 @@ use Tiime\EN16931\SemanticDataType\Amount;
 /**
  * BG-27.
  */
-class SpecifiedTradeAllowance
+class LineSpecifiedTradeAllowance
 {
     /**
      * BG-27-0 & BG-27-1.

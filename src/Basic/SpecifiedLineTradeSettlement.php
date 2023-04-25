@@ -3,8 +3,8 @@
 namespace Tiime\CrossIndustryInvoice\Basic;
 
 use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
-use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeAllowance;
-use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeCharge;
+use Tiime\CrossIndustryInvoice\DataType\Basic\LineSpecifiedTradeAllowance;
+use Tiime\CrossIndustryInvoice\DataType\Basic\LineSpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 
@@ -13,10 +13,10 @@ class SpecifiedLineTradeSettlement
     private ApplicableTradeTax $applicableTradeTax;
     private ?BillingSpecifiedPeriod $billingSpecifiedPeriod;
 
-    /** @var array<int, SpecifiedTradeAllowance> */
+    /** @var array<int, LineSpecifiedTradeAllowance> */
     private array $specifiedTradeAllowance;
 
-    /** @var array<int, SpecifiedTradeCharge> */
+    /** @var array<int, LineSpecifiedTradeCharge> */
     private array $specifiedTradeCharge;
 
     private SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementMonetarySummation;

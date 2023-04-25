@@ -7,8 +7,8 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeAllowance;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeCharge;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\LineSpecifiedTradeAllowance;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\LineSpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\AdditionalReferencedDocument;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\ReceivableSpecifiedTradeAccountingAccount;
 
@@ -30,14 +30,14 @@ class SpecifiedLineTradeSettlement
     /**
      * BG-27.
      *
-     * @var array<int, SpecifiedTradeAllowance>
+     * @var array<int, LineSpecifiedTradeAllowance>
      */
     private array $specifiedTradeAllowances;
 
     /**
      * BG-28.
      *
-     * @var array<int, SpecifiedTradeCharge>
+     * @var array<int, LineSpecifiedTradeCharge>
      */
     private array $specifiedTradeCharges;
 
@@ -94,7 +94,7 @@ class SpecifiedLineTradeSettlement
         $tmpSpecifiedTradeAllowances = [];
 
         foreach ($specifiedTradeAllowances as $specifiedTradeAllowance) {
-            if (!$specifiedTradeAllowance instanceof SpecifiedTradeAllowance) {
+            if (!$specifiedTradeAllowance instanceof LineSpecifiedTradeAllowance) {
                 throw new \TypeError();
             }
             $tmpSpecifiedTradeAllowances[] = $specifiedTradeAllowance;
@@ -115,7 +115,7 @@ class SpecifiedLineTradeSettlement
         $tmpSpecifiedTradeCharges = [];
 
         foreach ($specifiedTradeCharges as $specifiedTradeCharge) {
-            if (!$specifiedTradeCharge instanceof SpecifiedTradeCharge) {
+            if (!$specifiedTradeCharge instanceof LineSpecifiedTradeCharge) {
                 throw new \TypeError();
             }
             $tmpSpecifiedTradeCharges[] = $specifiedTradeCharge;
