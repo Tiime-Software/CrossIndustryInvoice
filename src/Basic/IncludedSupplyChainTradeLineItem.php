@@ -13,4 +13,11 @@ class IncludedSupplyChainTradeLineItem
     private SpecifiedLineTradeAgreement $specifiedLineTradeAgreement;
     private SpecifiedLineTradeDelivery $specifiedLineTradeDelivery;
     private SpecifiedLineTradeSettlement $specifiedLineTradeSettlement;
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        $element = $document->createElement('@todo');
+
+        return $element;
+    }
 }
