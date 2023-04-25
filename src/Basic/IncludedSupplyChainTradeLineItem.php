@@ -3,6 +3,7 @@
 namespace Tiime\CrossIndustryInvoice\Basic;
 
 use Tiime\CrossIndustryInvoice\DataType\AssociatedDocumentLineDocument;
+use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedLineTradeDelivery;
 
 class IncludedSupplyChainTradeLineItem
 {

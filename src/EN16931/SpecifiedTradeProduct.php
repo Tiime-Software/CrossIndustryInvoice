@@ -11,13 +11,8 @@ use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
 /**
  * BG-31.
  */
-class SpecifiedTradeProduct
+class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\Basic\SpecifiedTradeProduct
 {
-    /**
-     * BT-157.
-     */
-    private ?StandardItemIdentifier $globalIdentifier;
-
     /**
      * BT-155.
      */
@@ -27,11 +22,6 @@ class SpecifiedTradeProduct
      * BT-156.
      */
     private ?BuyerItemIdentifier $buyerAssignedIdentifier;
-
-    /**
-     * BT-153.
-     */
-    private string $name;
 
     /**
      * BT-154.
@@ -59,26 +49,14 @@ class SpecifiedTradeProduct
 
     public function __construct(string $name)
     {
-        $this->name                             = $name;
-        $this->globalIdentifier                 = null;
+        parent::__construct($name);
+
         $this->sellerAssignedIdentifier         = null;
         $this->buyerAssignedIdentifier          = null;
         $this->description                      = null;
         $this->originTradeCountry               = null;
         $this->applicableProductCharacteristics = [];
         $this->designatedProductClassifications = [];
-    }
-
-    public function getGlobalIdentifier(): ?StandardItemIdentifier
-    {
-        return $this->globalIdentifier;
-    }
-
-    public function setGlobalIdentifier(?StandardItemIdentifier $globalIdentifier): static
-    {
-        $this->globalIdentifier = $globalIdentifier;
-
-        return $this;
     }
 
     public function getSellerAssignedIdentifier(): ?SellerItemIdentifier
@@ -103,11 +81,6 @@ class SpecifiedTradeProduct
         $this->buyerAssignedIdentifier = $buyerAssignedIdentifier;
 
         return $this;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     public function getDescription(): ?string
@@ -182,9 +155,9 @@ class SpecifiedTradeProduct
     {
         $element = $document->createElement('ram:SpecifiedTradeProduct');
 
-        if ($this->globalIdentifier instanceof StandardItemIdentifier) {
-            $identifierElement = $document->createElement('ram:GlobalID', $this->globalIdentifier->value);
-            $identifierElement->setAttribute('schemeID', $this->globalIdentifier->scheme->value);
+        if ($this->getGlobalIdentifier() instanceof StandardItemIdentifier) {
+            $identifierElement = $document->createElement('ram:GlobalID', $this->getGlobalIdentifier()->value);
+            $identifierElement->setAttribute('schemeID', $this->getGlobalIdentifier()->scheme->value);
 
             $element->appendChild($identifierElement);
         }
@@ -197,7 +170,7 @@ class SpecifiedTradeProduct
             $element->appendChild($document->createElement('ram:BuyerAssignedID', $this->buyerAssignedIdentifier->value));
         }
 
-        $element->appendChild($document->createElement('ram:Name', $this->name));
+        $element->appendChild($document->createElement('ram:Name', $this->getName()));
 
         if (\is_string($this->description)) {
             $element->appendChild($document->createElement('ram:Description', $this->description));

@@ -4,33 +4,25 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\Basic\GrossPriceProductTradePrice;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement\BuyerOrderReferencedDocument;
 
 /**
  * BG-29.
  */
-class SpecifiedLineTradeAgreement
+class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\Basic\SpecifiedLineTradeAgreement
 {
     /**
      * BT-13-00.
      */
     private ?BuyerOrderReferencedDocument $buyerOrderReferencedDocument;
 
-    /**
-     * BT-148-00.
-     */
-    private ?GrossPriceProductTradePrice $grossPriceProductTradePrice;
-
-    /**
-     * BT-146-00.
-     */
-    private NetPriceProductTradePrice $netPriceProductTradePrice;
 
     public function __construct(NetPriceProductTradePrice $netPriceProductTradePrice)
     {
-        $this->netPriceProductTradePrice    = $netPriceProductTradePrice;
+        parent::__construct($netPriceProductTradePrice);
+
         $this->buyerOrderReferencedDocument = null;
-        $this->grossPriceProductTradePrice  = null;
     }
 
     public function getBuyerOrderReferencedDocument(): ?BuyerOrderReferencedDocument
@@ -45,23 +37,6 @@ class SpecifiedLineTradeAgreement
         return $this;
     }
 
-    public function getGrossPriceProductTradePrice(): ?GrossPriceProductTradePrice
-    {
-        return $this->grossPriceProductTradePrice;
-    }
-
-    public function setGrossPriceProductTradePrice(?GrossPriceProductTradePrice $grossPriceProductTradePrice): static
-    {
-        $this->grossPriceProductTradePrice = $grossPriceProductTradePrice;
-
-        return $this;
-    }
-
-    public function getNetPriceProductTradePrice(): NetPriceProductTradePrice
-    {
-        return $this->netPriceProductTradePrice;
-    }
-
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:SpecifiedLineTradeAgreement');
@@ -70,11 +45,11 @@ class SpecifiedLineTradeAgreement
             $element->appendChild($this->buyerOrderReferencedDocument->toXML($document));
         }
 
-        if ($this->grossPriceProductTradePrice instanceof GrossPriceProductTradePrice) {
-            $element->appendChild($this->grossPriceProductTradePrice->toXML($document));
+        if ($this->getGrossPriceProductTradePrice() instanceof GrossPriceProductTradePrice) {
+            $element->appendChild($this->getGrossPriceProductTradePrice()->toXML($document));
         }
 
-        $element->appendChild($this->netPriceProductTradePrice->toXML($document));
+        $element->appendChild($this->getNetPriceProductTradePrice()->toXML($document));
 
         return $element;
     }
