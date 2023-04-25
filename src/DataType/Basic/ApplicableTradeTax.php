@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement;
+namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\EN16931\DataType\VatCategory;
 use Tiime\EN16931\SemanticDataType\Percentage;

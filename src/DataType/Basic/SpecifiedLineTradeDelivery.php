@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
-
-use Tiime\CrossIndustryInvoice\DataType\Basic\BilledQuantity;
+namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 /**
  * BT-129-00.
