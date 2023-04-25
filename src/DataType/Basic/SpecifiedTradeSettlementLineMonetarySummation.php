@@ -21,9 +21,9 @@ class SpecifiedTradeSettlementLineMonetarySummation
         $this->lineTotalAmount = new Amount($lineTotalAmount);
     }
 
-    public function getLineTotalAmount(): Amount
+    public function getLineTotalAmount(): float
     {
-        return $this->lineTotalAmount;
+        return $this->lineTotalAmount->getValueRounded();
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

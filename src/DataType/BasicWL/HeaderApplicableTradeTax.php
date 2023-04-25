@@ -67,9 +67,9 @@ class HeaderApplicableTradeTax
         $this->rateApplicablePercent = null;
     }
 
-    public function getCalculatedAmount(): Amount
+    public function getCalculatedAmount(): float
     {
-        return $this->calculatedAmount;
+        return $this->calculatedAmount->getValueRounded();
     }
 
     public function getTypeCode(): string
@@ -89,9 +89,9 @@ class HeaderApplicableTradeTax
         return $this;
     }
 
-    public function getBasisAmount(): Amount
+    public function getBasisAmount(): float
     {
-        return $this->basisAmount;
+        return $this->basisAmount->getValueRounded();
     }
 
     public function getCategoryCode(): VatCategory
@@ -123,9 +123,9 @@ class HeaderApplicableTradeTax
         return $this;
     }
 
-    public function getRateApplicablePercent(): ?Percentage
+    public function getRateApplicablePercent(): ?float
     {
-        return $this->rateApplicablePercent;
+        return $this->rateApplicablePercent?->getValueRounded();
     }
 
     public function setRateApplicablePercent(?Percentage $rateApplicablePercent): static

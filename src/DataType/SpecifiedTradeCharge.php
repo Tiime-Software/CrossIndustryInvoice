@@ -64,9 +64,9 @@ class SpecifiedTradeCharge
         return $this->chargeChargeIndicator;
     }
 
-    public function getCalculationPercentage(): ?Percentage
+    public function getCalculationPercentage(): ?float
     {
-        return $this->calculationPercentage;
+        return $this->calculationPercentage?->getValueRounded();
     }
 
     public function setCalculationPercentage(?Percentage $calculationPercentage): static
@@ -76,9 +76,9 @@ class SpecifiedTradeCharge
         return $this;
     }
 
-    public function getBasisAmount(): ?Amount
+    public function getBasisAmount(): ?float
     {
-        return $this->basisAmount;
+        return $this->basisAmount?->getValueRounded();
     }
 
     public function setBasisAmount(?Amount $basisAmount): static
@@ -88,9 +88,9 @@ class SpecifiedTradeCharge
         return $this;
     }
 
-    public function getActualAmount(): Amount
+    public function getActualAmount(): float
     {
-        return $this->actualAmount;
+        return $this->actualAmount->getValueRounded();
     }
 
     public function getReasonCode(): ?ChargeReasonCode

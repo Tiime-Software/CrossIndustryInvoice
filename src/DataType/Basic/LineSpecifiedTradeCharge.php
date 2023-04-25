@@ -54,9 +54,11 @@ class LineSpecifiedTradeCharge
         return $this->reasonCode;
     }
 
-    public function setReasonCode(?ChargeReasonCode $reasonCode): void
+    public function setReasonCode(?ChargeReasonCode $reasonCode): static
     {
         $this->reasonCode = $reasonCode;
+
+        return $this;
     }
 
     public function getReason(): ?string
@@ -64,9 +66,11 @@ class LineSpecifiedTradeCharge
         return $this->reason;
     }
 
-    public function setReason(?string $reason): void
+    public function setReason(?string $reason): static
     {
         $this->reason = $reason;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

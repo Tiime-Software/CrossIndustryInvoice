@@ -39,7 +39,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
     {
         $currentNode = $document->createElement('ram:ApplicableTradeTax');
 
-        $currentNode->appendChild($document->createElement('ram:CalculatedAmount', (string) $this->getCalculatedAmount()->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:CalculatedAmount', (string) $this->getCalculatedAmount()));
 
         $currentNode->appendChild($document->createElement('ram:TypeCode', $this->getTypeCode()));
 
@@ -47,7 +47,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
             $currentNode->appendChild($document->createElement('ram:ExemptionReason', $this->getExemptionReason()));
         }
 
-        $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->getBasisAmount()->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->getBasisAmount()));
 
         $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->getCategoryCode()->value));
 
@@ -64,7 +64,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
         }
 
         if (null !== $this->getRateApplicablePercent()) {
-            $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->getRateApplicablePercent()->getValueRounded()));
+            $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->getRateApplicablePercent()));
         }
 
         return $currentNode;
