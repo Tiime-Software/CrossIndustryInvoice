@@ -8,9 +8,9 @@ use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMoneta
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\AdditionalReferencedDocument;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\ApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\BillingSpecifiedPeriod;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\InvoiceLineAllowances\SpecifiedTradeAllowance;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\InvoiceLineCharges\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\ReceivableSpecifiedTradeAccountingAccount;
+use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\SpecifiedTradeAllowance;
+use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\SpecifiedTradeCharge;
 
 /**
  * BG-30-00.

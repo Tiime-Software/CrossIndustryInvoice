@@ -2,54 +2,55 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\InvoiceLineAllowances;
+namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement;
 
-use Tiime\EN16931\DataType\AllowanceReasonCode;
+use Tiime\CrossIndustryInvoice\DataType\ChargeChargeIndicator;
+use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
 /**
- * BG-27.
+ * BG-28.
  */
-class SpecifiedTradeAllowance
+class SpecifiedTradeCharge
 {
     /**
-     * BG-27-0.
+     * BG-28-0.
      */
-    private ChargeIndicator $chargeIndicator;
+    private ChargeChargeIndicator $chargeIndicator;
 
     /**
-     * BT-138.
+     * BT-143.
      */
     private ?Percentage $calculationPercent;
 
     /**
-     * BT-137.
+     * BT-142.
      */
     private ?Amount $basisAmount;
 
     /**
-     * BT-136.
+     * BT-141.
      */
     private Amount $actualAmount;
 
     /**
-     * BT-140.
+     * BT-145.
      */
-    private ?AllowanceReasonCode $reasonCode;
+    private ?ChargeReasonCode $reasonCode;
 
     /**
-     * BT-139.
+     * BT-144.
      */
     private ?string $reason;
 
     public function __construct(float $actualAmount)
     {
         $this->actualAmount    = new Amount($actualAmount);
-        $this->chargeIndicator = new ChargeIndicator();
+        $this->chargeIndicator = new ChargeChargeIndicator();
     }
 
-    public function getChargeIndicator(): ChargeIndicator
+    public function getChargeIndicator(): ChargeChargeIndicator
     {
         return $this->chargeIndicator;
     }
@@ -83,12 +84,12 @@ class SpecifiedTradeAllowance
         return $this->actualAmount->getValueRounded();
     }
 
-    public function getReasonCode(): ?AllowanceReasonCode
+    public function getReasonCode(): ?ChargeReasonCode
     {
         return $this->reasonCode;
     }
 
-    public function setReasonCode(?AllowanceReasonCode $reasonCode): static
+    public function setReasonCode(?ChargeReasonCode $reasonCode): static
     {
         $this->reasonCode = $reasonCode;
 
@@ -123,7 +124,7 @@ class SpecifiedTradeAllowance
 
         $element->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
 
-        if ($this->reasonCode instanceof AllowanceReasonCode) {
+        if ($this->reasonCode instanceof ChargeReasonCode) {
             $element->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
         }
 
