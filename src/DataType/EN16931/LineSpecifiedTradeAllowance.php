@@ -10,7 +10,7 @@ use Tiime\EN16931\SemanticDataType\Percentage;
 /**
  * BG-27.
  */
-class SpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeAllowance
+class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\Basic\LineSpecifiedTradeAllowance
 {
     /**
      * BT-138.

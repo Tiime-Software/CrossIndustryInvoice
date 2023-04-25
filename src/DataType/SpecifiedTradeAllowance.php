@@ -64,9 +64,9 @@ class SpecifiedTradeAllowance
         return $this->allowanceChargeIndicator;
     }
 
-    public function getActualAmount(): Amount
+    public function getActualAmount(): float
     {
-        return $this->actualAmount;
+        return $this->actualAmount->getValueRounded();
     }
 
     public function getAllowanceCategoryTradeTax(): CategoryTradeTax
@@ -74,14 +74,14 @@ class SpecifiedTradeAllowance
         return $this->allowanceCategoryTradeTax;
     }
 
-    public function getCalculationPercent(): ?Percentage
+    public function getCalculationPercent(): ?float
     {
-        return $this->calculationPercent;
+        return $this->calculationPercent?->getValueRounded();
     }
 
-    public function setCalculationPercent(?Percentage $calculationPercent): static
+    public function setCalculationPercent(?float $calculationPercent): static
     {
-        $this->calculationPercent = $calculationPercent;
+        $this->calculationPercent = \is_float($calculationPercent) ? new Percentage($calculationPercent) : null;
 
         return $this;
     }
@@ -91,9 +91,9 @@ class SpecifiedTradeAllowance
         return $this->basisAmount;
     }
 
-    public function setBasisAmount(?Amount $basisAmount): static
+    public function setBasisAmount(?float $basisAmount): static
     {
-        $this->basisAmount = $basisAmount;
+        $this->basisAmount = \is_float($basisAmount) ? new Amount($basisAmount) : null;
 
         return $this;
     }
