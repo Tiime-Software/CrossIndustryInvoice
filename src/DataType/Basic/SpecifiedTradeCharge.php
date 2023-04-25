@@ -5,7 +5,6 @@ namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 use Tiime\CrossIndustryInvoice\DataType\ChargeIndicator;
 use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
-use Tiime\EN16931\SemanticDataType\Percentage;
 
 /**
  * BG-28.

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
-use Tiime\CrossIndustryInvoice\DataType\ChargeIndicator;
-use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
@@ -14,7 +12,6 @@ use Tiime\EN16931\SemanticDataType\Percentage;
  */
 class SpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeCharge
 {
-
     /**
      * BT-143.
      */
@@ -29,7 +26,7 @@ class SpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basic\Sp
     {
         parent::__construct($actualAmount);
         $this->calculationPercent = null;
-        $this->basisAmount = null;
+        $this->basisAmount        = null;
     }
 
     public function getCalculationPercent(): ?float
