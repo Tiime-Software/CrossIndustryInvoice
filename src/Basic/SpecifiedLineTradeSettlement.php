@@ -2,8 +2,8 @@
 
 namespace Tiime\CrossIndustryInvoice\Basic;
 
+use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedTradeSettlementLineMonetarySummation;
 
 class SpecifiedLineTradeSettlement
 {
