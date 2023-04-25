@@ -2,7 +2,7 @@
 
 namespace Tiime\CrossIndustryInvoice\Basic;
 
-use Tiime\CrossIndustryInvoice\EN16931\NetPriceProductTradePrice\BasisQuantity;
+use Tiime\CrossIndustryInvoice\DataType\Basic\BasisQuantity;
 use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
 
 class NetPriceProductTradePrice
