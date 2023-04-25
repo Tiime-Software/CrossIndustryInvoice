@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\NetPriceProductTradePrice;
+namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\EN16931\DataType\UnitOfMeasurement;
 use Tiime\EN16931\SemanticDataType\Quantity;
 
 /**
- * BT-149 & BT-150.
+ * BT-149-1 & BT-150-1.
  */
 class BasisQuantity
 {
     /**
-     * BT-149.
+     * BT-149-1.
      */
     private Quantity $value;
 
     /**
-     * BT-150.
+     * BT-150-1.
      */
     private ?UnitOfMeasurement $unitCode;
 

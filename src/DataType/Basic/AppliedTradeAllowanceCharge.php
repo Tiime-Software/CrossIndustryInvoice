@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
-use Tiime\CrossIndustryInvoice\EN16931\AppliedTradeAllowanceCharge\ChargeIndicator;
+use Tiime\CrossIndustryInvoice\DataType\AllowanceChargeIndicator;
 use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
 
 /**
@@ -15,7 +15,7 @@ class AppliedTradeAllowanceCharge
     /**
      * BT-147-01.
      */
-    private ChargeIndicator $chargeIndicator;
+    private AllowanceChargeIndicator $chargeIndicator;
 
     /**
      * BT-147.
@@ -24,11 +24,11 @@ class AppliedTradeAllowanceCharge
 
     public function __construct(float $actualAmount)
     {
-        $this->chargeIndicator = new ChargeIndicator();
+        $this->chargeIndicator = new AllowanceChargeIndicator();
         $this->actualAmount    = new UnitPriceAmount($actualAmount);
     }
 
-    public function getChargeIndicator(): ChargeIndicator
+    public function getChargeIndicator(): AllowanceChargeIndicator
     {
         return $this->chargeIndicator;
     }

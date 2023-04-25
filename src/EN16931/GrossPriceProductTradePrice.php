@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
-use Tiime\CrossIndustryInvoice\EN16931\GrossPriceProductTradePrice\BasisQuantity;
+use Tiime\CrossIndustryInvoice\DataType\Basic\AppliedTradeAllowanceCharge;
+use Tiime\CrossIndustryInvoice\DataType\Basic\BasisQuantity;
 use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
 
 /**
