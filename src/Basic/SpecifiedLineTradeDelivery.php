@@ -2,7 +2,7 @@
 
 namespace Tiime\CrossIndustryInvoice\Basic;
 
-use Tiime\CrossIndustryInvoice\EN16931\BilledQuantity;
+use Tiime\CrossIndustryInvoice\DataType\Basic\BilledQuantity;
 
 class SpecifiedLineTradeDelivery
 {
