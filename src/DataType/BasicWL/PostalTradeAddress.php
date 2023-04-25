@@ -148,7 +148,7 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
             $currentNode->appendChild($document->createElement('ram:CityName', $this->cityName));
         }
 
-        $currentNode->appendChild($document->createElement('ram:CountryID', $this->getCountryID()->value));
+        $currentNode->appendChild($document->createElement('ram:CountryID', $this->getCountryIdentifier()->value));
 
         if (null !== $this->countrySubDivisionName) {
             $currentNode->appendChild($document->createElement('ram:CountrySubDivisionName', $this->countrySubDivisionName));

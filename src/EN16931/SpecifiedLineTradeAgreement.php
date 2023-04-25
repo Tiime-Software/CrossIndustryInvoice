@@ -28,7 +28,9 @@ class SpecifiedLineTradeAgreement
 
     public function __construct(NetPriceProductTradePrice $netPriceProductTradePrice)
     {
-        $this->netPriceProductTradePrice = $netPriceProductTradePrice;
+        $this->netPriceProductTradePrice    = $netPriceProductTradePrice;
+        $this->buyerOrderReferencedDocument = null;
+        $this->grossPriceProductTradePrice  = null;
     }
 
     public function getBuyerOrderReferencedDocument(): ?BuyerOrderReferencedDocument

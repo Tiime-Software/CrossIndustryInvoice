@@ -16,9 +16,9 @@ class SpecifiedTradeSettlementLineMonetarySummation
      */
     private Amount $lineTotalAmount;
 
-    public function __construct(Amount $lineTotalAmount)
+    public function __construct(float $lineTotalAmount)
     {
-        $this->lineTotalAmount = $lineTotalAmount;
+        $this->lineTotalAmount = new Amount($lineTotalAmount);
     }
 
     public function getLineTotalAmount(): Amount

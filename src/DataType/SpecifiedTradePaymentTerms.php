@@ -24,13 +24,13 @@ class SpecifiedTradePaymentTerms
     /**
      * BT-89.
      */
-    private ?MandateReferenceIdentifier $directDebitMandateID;
+    private ?MandateReferenceIdentifier $directDebitMandateIdentifier;
 
     public function __construct()
     {
-        $this->dueDateDateTime      = null;
-        $this->description          = null;
-        $this->directDebitMandateID = null;
+        $this->dueDateDateTime              = null;
+        $this->description                  = null;
+        $this->directDebitMandateIdentifier = null;
     }
 
     public function getDescription(): ?string
@@ -57,14 +57,14 @@ class SpecifiedTradePaymentTerms
         return $this;
     }
 
-    public function getDirectDebitMandateID(): ?MandateReferenceIdentifier
+    public function getDirectDebitMandateIdentifier(): ?MandateReferenceIdentifier
     {
-        return $this->directDebitMandateID;
+        return $this->directDebitMandateIdentifier;
     }
 
-    public function setDirectDebitMandateID(?MandateReferenceIdentifier $directDebitMandateID): static
+    public function setDirectDebitMandateIdentifier(?MandateReferenceIdentifier $directDebitMandateIdentifier): static
     {
-        $this->directDebitMandateID = $directDebitMandateID;
+        $this->directDebitMandateIdentifier = $directDebitMandateIdentifier;
 
         return $this;
     }
@@ -81,8 +81,8 @@ class SpecifiedTradePaymentTerms
             $element->appendChild($this->dueDateDateTime->toXML($document));
         }
 
-        if ($this->directDebitMandateID instanceof MandateReferenceIdentifier) {
-            $element->appendChild($document->createElement('ram:DirectDebitMandateID', $this->directDebitMandateID->value));
+        if ($this->directDebitMandateIdentifier instanceof MandateReferenceIdentifier) {
+            $element->appendChild($document->createElement('ram:DirectDebitMandateID', $this->directDebitMandateIdentifier->value));
         }
 
         return $element;

@@ -14,23 +14,23 @@ class DespatchAdviceReferencedDocument
     /**
      * BT-16.
      */
-    private DespatchAdviceReference $issuerAssignedID;
+    private DespatchAdviceReference $issuerAssignedIdentifier;
 
-    public function __construct(DespatchAdviceReference $issuerAssignedID)
+    public function __construct(DespatchAdviceReference $issuerAssignedIdentifier)
     {
-        $this->issuerAssignedID = $issuerAssignedID;
+        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
     }
 
-    public function getIssuerAssignedID(): DespatchAdviceReference
+    public function getIssuerAssignedIdentifier(): DespatchAdviceReference
     {
-        return $this->issuerAssignedID;
+        return $this->issuerAssignedIdentifier;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement('ram:DespatchAdviceReferencedDocument');
 
-        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
         return $element;
     }

@@ -59,13 +59,6 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $this->lineTotalAmount->getValueRounded();
     }
 
-    public function setLineTotalAmount(float $lineTotalAmount): static
-    {
-        $this->lineTotalAmount = new Amount($lineTotalAmount);
-
-        return $this;
-    }
-
     public function getChargeTotalAmount(): ?float
     {
         return $this->chargeTotalAmount instanceof Amount ? $this->chargeTotalAmount->getValueRounded() : null;

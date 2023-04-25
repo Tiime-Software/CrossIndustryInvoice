@@ -14,22 +14,22 @@ class InvoiceReferencedDocument
     /**
      * BT-25.
      */
-    private PrecedingInvoiceReference $issuerAssignedID;
+    private PrecedingInvoiceReference $issuerAssignedIdentifier;
 
     /**
      * BT-26-00.
      */
     private ?FormattedIssueDateTime $formattedIssueDateTime;
 
-    public function __construct(PrecedingInvoiceReference $issuerAssignedID)
+    public function __construct(PrecedingInvoiceReference $issuerAssignedIdentifier)
     {
-        $this->issuerAssignedID       = $issuerAssignedID;
-        $this->formattedIssueDateTime = null;
+        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
+        $this->formattedIssueDateTime   = null;
     }
 
-    public function getIssuerAssignedID(): PrecedingInvoiceReference
+    public function getIssuerAssignedIdentifier(): PrecedingInvoiceReference
     {
-        return $this->issuerAssignedID;
+        return $this->issuerAssignedIdentifier;
     }
 
     public function getFormattedIssueDateTime(): ?FormattedIssueDateTime
@@ -48,7 +48,7 @@ class InvoiceReferencedDocument
     {
         $element = $document->createElement('ram:InvoiceReferencedDocument');
 
-        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedID->value));
+        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
         if ($this->formattedIssueDateTime instanceof FormattedIssueDateTime) {
             $element->appendChild($this->formattedIssueDateTime->toXML($document));
