@@ -43,4 +43,10 @@ class IssueDateTime
 
         return $element;
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+        // todo $dateTimeString
+        // todo $dateFormat
+    }
 }

@@ -79,4 +79,8 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
 
         return $element;
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+    }
 }

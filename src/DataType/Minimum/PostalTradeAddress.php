@@ -33,4 +33,9 @@ class PostalTradeAddress
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+        // todo $countryIdentifier
+    }
 }

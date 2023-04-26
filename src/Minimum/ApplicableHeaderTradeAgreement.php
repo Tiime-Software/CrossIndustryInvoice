@@ -82,4 +82,14 @@ class ApplicableHeaderTradeAgreement
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+        // todo $buyerReference
+        $sellerTradeParty = SellerTradeParty::fromXML($document);
+        $buyerTradeParty = BuyerTradeParty::fromXML($document);
+        $buyerOrderReferencedDocument = BuyerOrderReferencedDocument::fromXML($document);
+
+        return new static($sellerTradeParty, $buyerTradeParty, $buyerOrderReferencedDocument);
+    }
 }

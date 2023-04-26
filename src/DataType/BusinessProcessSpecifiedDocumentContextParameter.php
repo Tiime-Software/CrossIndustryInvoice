@@ -35,4 +35,9 @@ class BusinessProcessSpecifiedDocumentContextParameter
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMDocument $document): ?static
+    {
+        // todo identifier
+    }
 }

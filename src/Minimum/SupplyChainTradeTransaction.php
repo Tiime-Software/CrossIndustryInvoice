@@ -57,4 +57,12 @@ class SupplyChainTradeTransaction
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+        $applicableHeaderTradeAgreement = ApplicableHeaderTradeAgreement::fromXML($document);
+        $applicableHeaderTradeSettlement  = ApplicableHeaderTradeSettlement::fromXML($document);
+
+        return new static($applicableHeaderTradeAgreement, $applicableHeaderTradeSettlement);
+    }
 }

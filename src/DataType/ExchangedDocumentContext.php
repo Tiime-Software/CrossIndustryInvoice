@@ -54,4 +54,18 @@ class ExchangedDocumentContext
 
         return $element;
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+        $businessProcessSpecifiedDocumentContextParameter = BusinessProcessSpecifiedDocumentContextParameter::fromXML($document);
+        $guidelineSpecifiedDocumentContextParameter = GuidelineSpecifiedDocumentContextParameter::fromXML($document);
+
+        $exchangedDocumentContext = new static($guidelineSpecifiedDocumentContextParameter);
+
+        if (null !== $businessProcessSpecifiedDocumentContextParameter) {
+            $exchangedDocumentContext->setBusinessProcessSpecifiedDocumentContextParameter($businessProcessSpecifiedDocumentContextParameter);
+        }
+
+        return $exchangedDocumentContext;
+    }
 }

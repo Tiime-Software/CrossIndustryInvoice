@@ -13,4 +13,9 @@ class ApplicableHeaderTradeDelivery
     {
         return $document->createElement('ram:ApplicableHeaderTradeDelivery');
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+        return new static();
+    }
 }

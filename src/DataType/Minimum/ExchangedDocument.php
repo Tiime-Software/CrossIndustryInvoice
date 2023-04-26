@@ -60,4 +60,13 @@ class ExchangedDocument
 
         return $element;
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+        // todo identifier
+        // todo typeCode
+        $issueDateTime = IssueDateTime::fromXML($document);
+
+//        return new static($identifier, $typeCode, $issueDateTime);
+    }
 }

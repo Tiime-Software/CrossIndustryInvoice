@@ -83,4 +83,13 @@ class CrossIndustryInvoice
 
         return $document;
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+        $exchangedDocumentContext = ExchangedDocumentContext::fromXML($document);
+        $exchangedDocument = ExchangedDocument::fromXML($document);
+        $supplyChainTradeTransaction = SupplyChainTradeTransaction::fromXML($document);
+
+        return new static($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
+    }
 }

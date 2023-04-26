@@ -38,4 +38,8 @@ class BuyerSpecifiedLegalOrganization
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+    }
 }

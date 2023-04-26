@@ -92,4 +92,18 @@ class SellerTradeParty
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+        //todo $name
+        $specifiedLegalOrganization = SellerSpecifiedLegalOrganization::fromXML($document);
+        $postalTradeAddress = PostalTradeAddress::fromXML($document);
+        //todo $specifiedTaxRegistrations
+
+//        $sellerTradeParty = new static($postalTradeAddress);
+
+//        if (null !== $specifiedLegalOrganization) {
+//            $sellerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
+//        }
+    }
 }

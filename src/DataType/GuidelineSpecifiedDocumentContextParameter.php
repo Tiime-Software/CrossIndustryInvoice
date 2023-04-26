@@ -34,4 +34,9 @@ class GuidelineSpecifiedDocumentContextParameter
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+        // todo identifier
+    }
 }
