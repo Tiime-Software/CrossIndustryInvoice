@@ -86,9 +86,28 @@ class CrossIndustryInvoice
 
     public static function fromXML(\DOMDocument $document): static
     {
-        $exchangedDocumentContext = ExchangedDocumentContext::fromXML($document);
-        $exchangedDocument = ExchangedDocument::fromXML($document);
-        $supplyChainTradeTransaction = SupplyChainTradeTransaction::fromXML($document);
+        $exchangedDocumentContext = null;
+        $exchangedDocument = null;
+        $supplyChainTradeTransaction = null;
+
+        /** @var \DOMNode $xmlNode */
+        foreach ($document->childNodes as $xmlNode) {
+
+            /** @var \DOMNode $crossIndustryInvoiceNode */
+            foreach ($xmlNode->childNodes as $crossIndustryInvoiceNode) {
+                if ('rsm:ExchangedDocumentContext' === $crossIndustryInvoiceNode->nodeName) {
+                    $exchangedDocumentContext = ExchangedDocumentContext::fromXML($crossIndustryInvoiceNode);
+                }
+
+                if ('rsm:ExchangedDocument' === $crossIndustryInvoiceNode->nodeName) {
+                    $exchangedDocument = ExchangedDocument::fromXML($crossIndustryInvoiceNode);
+                }
+
+                if ('rsm:SupplyChainTradeTransaction' === $crossIndustryInvoiceNode->nodeName) {
+                    $supplyChainTradeTransaction = SupplyChainTradeTransaction::fromXML($crossIndustryInvoiceNode);
+                }
+            }
+        }
 
         return new static($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
     }
