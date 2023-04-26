@@ -57,12 +57,30 @@ class ExchangedDocumentContext
 
     public static function fromXML(\DOMDocument $document): static
     {
-        $businessProcessSpecifiedDocumentContextParameter = BusinessProcessSpecifiedDocumentContextParameter::fromXML($document);
-        $guidelineSpecifiedDocumentContextParameter = GuidelineSpecifiedDocumentContextParameter::fromXML($document);
+        $xpath = new \DOMXPath($document);
+
+        $businessProcessSpecifiedDocumentContextParameterElements = $xpath->query('//ram:BusinessProcessSpecifiedDocumentContextParameter');
+        $guidelineSpecifiedDocumentContextParameterElements = $xpath->query('//ram:GuidelineSpecifiedDocumentContextParameter');
+
+        if ($businessProcessSpecifiedDocumentContextParameterElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($guidelineSpecifiedDocumentContextParameterElements->count() !== 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $guidelineSpecifiedDocumentContextParameterDocument = new \DOMDocument();
+        $guidelineSpecifiedDocumentContextParameterDocument->appendChild($guidelineSpecifiedDocumentContextParameterDocument->importNode($guidelineSpecifiedDocumentContextParameterElements->item(0), true));
+        $guidelineSpecifiedDocumentContextParameter = GuidelineSpecifiedDocumentContextParameter::fromXML($guidelineSpecifiedDocumentContextParameterDocument);
 
         $exchangedDocumentContext = new static($guidelineSpecifiedDocumentContextParameter);
 
-        if (null !== $businessProcessSpecifiedDocumentContextParameter) {
+        if ($guidelineSpecifiedDocumentContextParameterElements->count() === 1) {
+            $businessProcessSpecifiedDocumentContextParameterDocument = new \DOMDocument();
+            $businessProcessSpecifiedDocumentContextParameterDocument->appendChild($businessProcessSpecifiedDocumentContextParameterDocument->importNode($guidelineSpecifiedDocumentContextParameterElements->item(0), true));
+            $businessProcessSpecifiedDocumentContextParameter = BusinessProcessSpecifiedDocumentContextParameter::fromXML($businessProcessSpecifiedDocumentContextParameterDocument);
+
             $exchangedDocumentContext->setBusinessProcessSpecifiedDocumentContextParameter($businessProcessSpecifiedDocumentContextParameter);
         }
 
