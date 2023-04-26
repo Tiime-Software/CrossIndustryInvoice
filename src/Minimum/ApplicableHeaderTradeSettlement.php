@@ -52,5 +52,29 @@ class ApplicableHeaderTradeSettlement
 
     public static function fromXML(\DOMDocument $document): static
     {
+        $xpath = new \DOMXPath($document);
+
+        $invoiceCurrencyCodeElements                             = $xpath->query('//ram:InvoiceCurrencyCode');
+        $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query('//ram:SpecifiedTradeSettlementHeaderMonetarySummation');
+
+        if (1 !== $invoiceCurrencyCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $specifiedTradeSettlementHeaderMonetarySummationElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $invoiceCurrencyCode = CurrencyCode::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
+
+        if (null === $invoiceCurrencyCode) {
+            throw new \Exception('Wrong currency code');
+        }
+
+        $specifiedTradeSettlementHeaderMonetarySummationDocument = new \DOMDocument();
+        $specifiedTradeSettlementHeaderMonetarySummationDocument->appendChild($specifiedTradeSettlementHeaderMonetarySummationDocument->importNode($specifiedTradeSettlementHeaderMonetarySummationElements->item(0), true));
+        $specifiedTradeSettlementHeaderMonetarySummation = SpecifiedTradeSettlementHeaderMonetarySummation::fromXML($specifiedTradeSettlementHeaderMonetarySummationDocument);
+
+        return new static($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation);
     }
 }

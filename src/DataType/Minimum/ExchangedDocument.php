@@ -63,10 +63,31 @@ class ExchangedDocument
 
     public static function fromXML(\DOMDocument $document): static
     {
-        // todo identifier
-        // todo typeCode
-        $issueDateTime = IssueDateTime::fromXML($document);
+        $xpath = new \DOMXPath($document);
 
-//        return new static($identifier, $typeCode, $issueDateTime);
+        $identifierElements    = $xpath->query('//ram:ID');
+        $typeCodeElements      = $xpath->query('//ram:TypeCode');
+        $issueDateTimeElements = $xpath->query('//ram:IssueDateTime');
+
+        if (1 !== $identifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $typeCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $issueDateTimeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $identifier = $identifierElements->item(0)->nodeValue;
+        $typeCode   = $typeCodeElements->item(0)->nodeValue;
+
+        $issueDateTimeDocument = new \DOMDocument();
+        $issueDateTimeDocument->appendChild($issueDateTimeDocument->importNode($issueDateTimeElements->item(0), true));
+        $issueDateTime = IssueDateTime::fromXML($issueDateTimeDocument);
+
+        return new static($identifier, $typeCode, $issueDateTime);
     }
 }

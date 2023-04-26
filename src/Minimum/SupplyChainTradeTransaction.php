@@ -60,8 +60,33 @@ class SupplyChainTradeTransaction
 
     public static function fromXML(\DOMDocument $document): static
     {
-        $applicableHeaderTradeAgreement = ApplicableHeaderTradeAgreement::fromXML($document);
-        $applicableHeaderTradeSettlement  = ApplicableHeaderTradeSettlement::fromXML($document);
+        $xpath = new \DOMXPath($document);
+
+        $applicableHeaderTradeAgreementElements  = $xpath->query('//ram:ApplicableHeaderTradeAgreement');
+        $applicableHeaderTradeDeliveryElements   = $xpath->query('//ram:ApplicableHeaderTradeDelivery');
+        $applicableHeaderTradeSettlementElements = $xpath->query('//ram:ApplicableHeaderTradeSettlement');
+
+        if (1 !== $applicableHeaderTradeAgreementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        // The "ApplicableHeaderTradeDelivery" element is checked to make sure it is present, it is not converted
+        // afterwards because it is not needed for the constructor (empty object)
+        if (1 !== $applicableHeaderTradeDeliveryElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $applicableHeaderTradeSettlementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $applicableHeaderTradeAgreementDocument = new \DOMDocument();
+        $applicableHeaderTradeAgreementDocument->appendChild($applicableHeaderTradeAgreementDocument->importNode($applicableHeaderTradeAgreementElements->item(0), true));
+        $applicableHeaderTradeAgreement = ApplicableHeaderTradeAgreement::fromXML($applicableHeaderTradeAgreementDocument);
+
+        $applicableHeaderTradeSettlementDocument = new \DOMDocument();
+        $applicableHeaderTradeSettlementDocument->appendChild($applicableHeaderTradeSettlementDocument->importNode($applicableHeaderTradeSettlementElements->item(0), true));
+        $applicableHeaderTradeSettlement = ApplicableHeaderTradeSettlement::fromXML($applicableHeaderTradeSettlementDocument);
 
         return new static($applicableHeaderTradeAgreement, $applicableHeaderTradeSettlement);
     }

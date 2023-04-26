@@ -36,5 +36,16 @@ class BuyerOrderReferencedDocument
 
     public static function fromXML(\DOMDocument $document): static
     {
+        $xpath = new \DOMXPath($document);
+
+        $issuerAssignedIdentifierElements = $xpath->query('//ram:IssuerAssignedID');
+
+        if (1 !== $issuerAssignedIdentifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
+
+        return new static(new PurchaseOrderReference($issuerAssignedIdentifier));
     }
 }

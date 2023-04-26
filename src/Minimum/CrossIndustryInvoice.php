@@ -88,19 +88,19 @@ class CrossIndustryInvoice
     {
         $xpath = new \DOMXPath($document);
 
-        $exchangedDocumentContextElements = $xpath->query('//rsm:CrossIndustryInvoice/rsm:ExchangedDocumentContext');
-        $exchangedDocumentElements = $xpath->query('//rsm:CrossIndustryInvoice/rsm:ExchangedDocument');
+        $exchangedDocumentContextElements    = $xpath->query('//rsm:CrossIndustryInvoice/rsm:ExchangedDocumentContext');
+        $exchangedDocumentElements           = $xpath->query('//rsm:CrossIndustryInvoice/rsm:ExchangedDocument');
         $supplyChainTradeTransactionElements = $xpath->query('//rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction');
 
-        if ($exchangedDocumentContextElements->count() !== 1) {
+        if (1 !== $exchangedDocumentContextElements->count()) {
             throw new \Exception('Malformed');
         }
 
-        if ($exchangedDocumentElements->count() !== 1) {
+        if (1 !== $exchangedDocumentElements->count()) {
             throw new \Exception('Malformed');
         }
 
-        if ($supplyChainTradeTransactionElements->count() !== 1) {
+        if (1 !== $supplyChainTradeTransactionElements->count()) {
             throw new \Exception('Malformed');
         }
 

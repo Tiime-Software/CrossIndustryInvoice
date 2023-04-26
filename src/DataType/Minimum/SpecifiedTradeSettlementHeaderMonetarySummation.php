@@ -82,5 +82,43 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
 
     public static function fromXML(\DOMDocument $document): static
     {
+        $xpath = new \DOMXPath($document);
+
+        $taxBasisTotalAmountElements = $xpath->query('//ram:TaxBasisTotalAmount');
+        $taxTotalAmountElements      = $xpath->query('//ram:TaxTotalAmount');
+        $grandTotalAmountElements    = $xpath->query('//ram:GrandTotalAmount');
+        $duePayableAmountElements    = $xpath->query('//ram:DuePayableAmount');
+
+        if (1 !== $taxBasisTotalAmountElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($taxTotalAmountElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $grandTotalAmountElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $duePayableAmountElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $taxBasisTotalAmount = $taxBasisTotalAmountElements->item(0)->nodeValue;
+        $grandTotalAmount    = $grandTotalAmountElements->item(0)->nodeValue;
+        $duePayableAmount    = $duePayableAmountElements->item(0)->nodeValue;
+
+        if (1 === $taxTotalAmountElements->count()) {
+            $taxTotalAmountDocument = new \DOMDocument();
+            $taxTotalAmountDocument->appendChild($taxTotalAmountDocument->importNode($taxTotalAmountElements->item(0), true));
+            $taxTotalAmount = TaxTotalAmount::fromXML($taxTotalAmountDocument);
+
+            $specifiedTradeSettlementHeaderMonetarySummation = new static((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount, $taxTotalAmount);
+        } else {
+            $specifiedTradeSettlementHeaderMonetarySummation = new static((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount);
+        }
+
+        return $specifiedTradeSettlementHeaderMonetarySummation;
     }
 }

@@ -37,6 +37,16 @@ class GuidelineSpecifiedDocumentContextParameter
 
     public static function fromXML(\DOMDocument $document): static
     {
-        // todo identifier
+        $xpath = new \DOMXPath($document);
+
+        $identifierElements = $xpath->query('//ram:ID');
+
+        if (1 !== $identifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $identifier = $identifierElements->item(0)->nodeValue;
+
+        return new static(new SpecificationIdentifier($identifier));
     }
 }

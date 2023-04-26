@@ -58,5 +58,31 @@ class BuyerTradeParty
 
     public static function fromXML(\DOMDocument $document): static
     {
+        $xpath = new \DOMXPath($document);
+
+        $nameElements                       = $xpath->query('//ram:Name');
+        $specifiedLegalOrganizationElements = $xpath->query('//ram:SpecifiedLegalOrganization');
+
+        if (1 !== $nameElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($specifiedLegalOrganizationElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $name = $nameElements->item(0)->nodeValue;
+
+        $buyerTradeParty = new static($name);
+
+        if (1 === $specifiedLegalOrganizationElements->count()) {
+            $specifiedLegalOrganizationDocument = new \DOMDocument();
+            $specifiedLegalOrganizationDocument->appendChild($specifiedLegalOrganizationDocument->importNode($specifiedLegalOrganizationElements->item(0), true));
+            $specifiedLegalOrganization = BuyerSpecifiedLegalOrganization::fromXML($specifiedLegalOrganizationDocument);
+
+            $buyerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
+        }
+
+        return $buyerTradeParty;
     }
 }

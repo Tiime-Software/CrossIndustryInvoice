@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
 use Tiime\EN16931\DataType\Identifier\LegalRegistrationIdentifier;
+use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BT-30-00.
@@ -47,8 +48,28 @@ class SellerSpecifiedLegalOrganization
         return $currentNode;
     }
 
-    public static function fromXML(\DOMDocument $document): ?static
+    public static function fromXML(\DOMDocument $document): static
     {
-        // todo $identifier
+        $xpath = new \DOMXPath($document);
+
+        $identifierElements = $xpath->query('//ram:ID');
+
+        if ($identifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $sellerSpecifiedLegalOrganization = new static();
+
+        if (1 === $identifierElements->count()) {
+            /** @var \DOMElement $identifierItem */
+            $identifierItem = $identifierElements->item(0);
+            $identifier     = $identifierItem->nodeValue;
+            $scheme         = '' !== $identifierItem->getAttribute('schemeID') ?
+                InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID')) : null;
+
+            $sellerSpecifiedLegalOrganization->setIdentifier(new LegalRegistrationIdentifier($identifier, $scheme));
+        }
+
+        return $sellerSpecifiedLegalOrganization;
     }
 }

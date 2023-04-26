@@ -95,15 +95,53 @@ class SellerTradeParty
 
     public static function fromXML(\DOMDocument $document): static
     {
-        //todo $name
-        $specifiedLegalOrganization = SellerSpecifiedLegalOrganization::fromXML($document);
-        $postalTradeAddress = PostalTradeAddress::fromXML($document);
-        //todo $specifiedTaxRegistrations
+        $xpath = new \DOMXPath($document);
 
-//        $sellerTradeParty = new static($postalTradeAddress);
+        $nameElements                       = $xpath->query('//ram:Name');
+        $specifiedLegalOrganizationElements = $xpath->query('//ram:SpecifiedLegalOrganization');
+        $postalTradeAddressElements         = $xpath->query('//ram:PostalTradeAddress');
+        $specifiedTaxRegistrationElements   = $xpath->query('//ram:SpecifiedLegalOrganization');
 
-//        if (null !== $specifiedLegalOrganization) {
-//            $sellerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
-//        }
+        if (1 !== $nameElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($specifiedLegalOrganizationElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $postalTradeAddressElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $name = $nameElements->item(0)->nodeValue;
+
+        $postalTradeAddressDocument = new \DOMDocument();
+        $postalTradeAddressDocument->appendChild($postalTradeAddressDocument->importNode($postalTradeAddressElements->item(0), true));
+        $postalTradeAddress = PostalTradeAddress::fromXML($postalTradeAddressDocument);
+
+        $sellerTradeParty = new static($name, $postalTradeAddress);
+
+        if (1 === $specifiedLegalOrganizationElements->count()) {
+            $specifiedLegalOrganizationDocument = new \DOMDocument();
+            $specifiedLegalOrganizationDocument->appendChild($specifiedLegalOrganizationDocument->importNode($specifiedLegalOrganizationElements->item(0), true));
+            $specifiedLegalOrganization = SellerSpecifiedLegalOrganization::fromXML($specifiedLegalOrganizationDocument);
+
+            $sellerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
+        }
+
+        $specifiedTaxRegistrations = [];
+
+        foreach ($specifiedTaxRegistrationElements as $specifiedTaxRegistrationElement) {
+            $specifiedTaxRegistrationDocument = new \DOMDocument();
+            $specifiedTaxRegistrationDocument->appendChild($specifiedTaxRegistrationDocument->importNode($specifiedTaxRegistrationElement, true));
+            $specifiedTaxRegistrations[] = SpecifiedTaxRegistration::fromXML($specifiedTaxRegistrationDocument);
+        }
+
+        if (\count($specifiedTaxRegistrations)) {
+            $sellerTradeParty->setSpecifiedTaxRegistrations($specifiedTaxRegistrations);
+        }
+
+        return $sellerTradeParty;
     }
 }

@@ -50,5 +50,22 @@ class SpecifiedTaxRegistration
 
     public static function fromXML(\DOMDocument $document): static
     {
+        $xpath = new \DOMXPath($document);
+
+        $identifierElements = $xpath->query('//ram:ID');
+
+        if (1 !== $identifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $identifierItem */
+        $identifierItem = $identifierElements->item(0);
+        $identifier     = $identifierItem->nodeValue;
+
+        if ('VA' !== $identifierItem->getAttribute('schemeID')) {
+            throw new \Exception('Wrong schemeID');
+        }
+
+        return new static(new VatIdentifier($identifier));
     }
 }

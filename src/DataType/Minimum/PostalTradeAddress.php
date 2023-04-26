@@ -36,6 +36,20 @@ class PostalTradeAddress
 
     public static function fromXML(\DOMDocument $document): static
     {
-        // todo $countryIdentifier
+        $xpath = new \DOMXPath($document);
+
+        $countryIdentifierElements = $xpath->query('//ram:CountryID');
+
+        if (1 !== $countryIdentifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $countryIdentifier = CountryAlpha2Code::tryFrom($countryIdentifierElements->item(0)->nodeValue);
+
+        if (null === $countryIdentifier) {
+            throw new \Exception('Wrong country');
+        }
+
+        return new static($countryIdentifier);
     }
 }

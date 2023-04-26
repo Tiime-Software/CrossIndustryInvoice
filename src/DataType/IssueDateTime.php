@@ -46,7 +46,24 @@ class IssueDateTime
 
     public static function fromXML(\DOMDocument $document): static
     {
-        // todo $dateTimeString
-        // todo $dateFormat
+        $xpath = new \DOMXPath($document);
+
+        $dateTimeStringElements = $xpath->query('//udt:DateTimeString');
+
+        if (1 !== $dateTimeStringElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $dateTimeString = $dateTimeStringElements->item(0)->nodeValue;
+
+        $formattedDateTime = \DateTime::createFromFormat('Ymd', $dateTimeString);
+
+        if (!$formattedDateTime) {
+            throw new \Exception('Malformed date');
+        }
+
+        $formattedDateTime->setTime(0, 0);
+
+        return new static($formattedDateTime);
     }
 }

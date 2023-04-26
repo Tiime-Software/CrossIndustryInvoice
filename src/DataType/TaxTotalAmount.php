@@ -45,6 +45,24 @@ class TaxTotalAmount
 
     public static function fromXML(\DOMDocument $document): static
     {
-    }
+        $xpath = new \DOMXPath($document);
 
+        $valueElements = $xpath->query('//ram:TaxTotalAmount');
+
+        if (1 !== $valueElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $valueItem */
+        $valueItem = $valueElements->item(0);
+        $value     = $valueItem->nodeValue;
+
+        $currencyIdentifier = CurrencyCode::tryFrom($valueItem->getAttribute('currencyID'));
+
+        if (null === $currencyIdentifier) {
+            throw new \Exception('Wrong currencyID');
+        }
+
+        return new static((float) $value, $currencyIdentifier);
+    }
 }

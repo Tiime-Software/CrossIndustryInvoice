@@ -60,13 +60,13 @@ class ExchangedDocumentContext
         $xpath = new \DOMXPath($document);
 
         $businessProcessSpecifiedDocumentContextParameterElements = $xpath->query('//ram:BusinessProcessSpecifiedDocumentContextParameter');
-        $guidelineSpecifiedDocumentContextParameterElements = $xpath->query('//ram:GuidelineSpecifiedDocumentContextParameter');
+        $guidelineSpecifiedDocumentContextParameterElements       = $xpath->query('//ram:GuidelineSpecifiedDocumentContextParameter');
 
         if ($businessProcessSpecifiedDocumentContextParameterElements->count() > 1) {
             throw new \Exception('Malformed');
         }
 
-        if ($guidelineSpecifiedDocumentContextParameterElements->count() !== 1) {
+        if (1 !== $guidelineSpecifiedDocumentContextParameterElements->count()) {
             throw new \Exception('Malformed');
         }
 
@@ -76,9 +76,9 @@ class ExchangedDocumentContext
 
         $exchangedDocumentContext = new static($guidelineSpecifiedDocumentContextParameter);
 
-        if ($guidelineSpecifiedDocumentContextParameterElements->count() === 1) {
+        if (1 === $businessProcessSpecifiedDocumentContextParameterElements->count()) {
             $businessProcessSpecifiedDocumentContextParameterDocument = new \DOMDocument();
-            $businessProcessSpecifiedDocumentContextParameterDocument->appendChild($businessProcessSpecifiedDocumentContextParameterDocument->importNode($guidelineSpecifiedDocumentContextParameterElements->item(0), true));
+            $businessProcessSpecifiedDocumentContextParameterDocument->appendChild($businessProcessSpecifiedDocumentContextParameterDocument->importNode($businessProcessSpecifiedDocumentContextParameterElements->item(0), true));
             $businessProcessSpecifiedDocumentContextParameter = BusinessProcessSpecifiedDocumentContextParameter::fromXML($businessProcessSpecifiedDocumentContextParameterDocument);
 
             $exchangedDocumentContext->setBusinessProcessSpecifiedDocumentContextParameter($businessProcessSpecifiedDocumentContextParameter);
