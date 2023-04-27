@@ -85,7 +85,7 @@ class ApplicableHeaderTradeAgreement
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $applicableHeaderTradeAgreementElements = $xpath->query('//ram:ApplicableHeaderTradeAgreement', $currentElement);
+        $applicableHeaderTradeAgreementElements = $xpath->query('.//ram:ApplicableHeaderTradeAgreement', $currentElement);
 
         if (1 !== $applicableHeaderTradeAgreementElements->count()) {
             throw new \Exception('Malformed');
@@ -94,7 +94,7 @@ class ApplicableHeaderTradeAgreement
         /** @var \DOMElement $applicableHeaderTradeAgreementElement */
         $applicableHeaderTradeAgreementElement = $applicableHeaderTradeAgreementElements->item(0);
 
-        $buyerReferenceElements = $xpath->query('//ram:BuyerReference', $applicableHeaderTradeAgreementElement);
+        $buyerReferenceElements = $xpath->query('.//ram:BuyerReference', $applicableHeaderTradeAgreementElement);
 
         if ($buyerReferenceElements->count() > 1) {
             throw new \Exception('Malformed');

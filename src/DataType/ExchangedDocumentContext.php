@@ -57,7 +57,7 @@ class ExchangedDocumentContext
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $exchangedDocumentContextElements = $xpath->query('//rsm:ExchangedDocumentContext', $currentElement);
+        $exchangedDocumentContextElements = $xpath->query('.//rsm:ExchangedDocumentContext', $currentElement);
 
         if (1 !== $exchangedDocumentContextElements->count()) {
             throw new \Exception('Malformed');

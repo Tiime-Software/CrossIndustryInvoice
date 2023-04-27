@@ -45,7 +45,7 @@ class TaxTotalAmount
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        $taxTotalAmountElements = $xpath->query('//ram:TaxTotalAmount', $currentElement);
+        $taxTotalAmountElements = $xpath->query('.//ram:TaxTotalAmount', $currentElement);
 
         if (0 === $taxTotalAmountElements->count()) {
             return null;
@@ -58,7 +58,7 @@ class TaxTotalAmount
         /** @var \DOMElement $taxTotalAmountElement */
         $taxTotalAmountElement = $taxTotalAmountElements->item(0);
 
-        $valueElements = $xpath->query('//ram:TaxTotalAmount', $taxTotalAmountElement);
+        $valueElements = $xpath->query('.//ram:TaxTotalAmount', $taxTotalAmountElement);
 
         if (1 !== $valueElements->count()) {
             throw new \Exception('Malformed');
