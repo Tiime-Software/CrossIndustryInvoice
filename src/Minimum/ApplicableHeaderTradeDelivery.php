@@ -9,14 +9,16 @@ namespace Tiime\CrossIndustryInvoice\Minimum;
  */
 class ApplicableHeaderTradeDelivery
 {
+    private const XML_NODE = 'ram:ApplicableHeaderTradeDelivery';
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        return $document->createElement('ram:ApplicableHeaderTradeDelivery');
+        return $document->createElement(self::XML_NODE);
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $applicableHeaderTradeDeliveryElements = $xpath->query('.//ram:ApplicableHeaderTradeDelivery', $currentElement);
+        $applicableHeaderTradeDeliveryElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $applicableHeaderTradeDeliveryElements->count()) {
             throw new \Exception('Malformed');

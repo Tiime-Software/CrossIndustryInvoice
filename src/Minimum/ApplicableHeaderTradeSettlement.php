@@ -12,6 +12,8 @@ use Tiime\EN16931\DataType\CurrencyCode;
  */
 class ApplicableHeaderTradeSettlement
 {
+    private const XML_NODE = 'ram:ApplicableHeaderTradeSettlement';
+
     /**
      * BT-5.
      */
@@ -42,9 +44,10 @@ class ApplicableHeaderTradeSettlement
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ApplicableHeaderTradeSettlement');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:InvoiceCurrencyCode', $this->invoiceCurrencyCode->value));
+
         $element->appendChild($this->specifiedTradeSettlementHeaderMonetarySummation->toXML($document));
 
         return $element;
@@ -52,7 +55,7 @@ class ApplicableHeaderTradeSettlement
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $applicableHeaderTradeSettlementElements = $xpath->query('.//ram:ApplicableHeaderTradeSettlement', $currentElement);
+        $applicableHeaderTradeSettlementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $applicableHeaderTradeSettlementElements->count()) {
             throw new \Exception('Malformed');

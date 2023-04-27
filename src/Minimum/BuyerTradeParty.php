@@ -11,6 +11,8 @@ use Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerSpecifiedLegalOrganization;
  */
 class BuyerTradeParty
 {
+    private const XML_NODE = 'ram:BuyerTradeParty';
+
     /**
      * BT-44.
      */
@@ -46,7 +48,8 @@ class BuyerTradeParty
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:BuyerTradeParty');
+        $currentNode = $document->createElement(self::XML_NODE);
+
         $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
         if (null !== $this->specifiedLegalOrganization) {
@@ -58,7 +61,7 @@ class BuyerTradeParty
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $buyerTradePartyElements = $xpath->query('.//ram:BuyerTradeParty', $currentElement);
+        $buyerTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $buyerTradePartyElements->count()) {
             throw new \Exception('Malformed');
