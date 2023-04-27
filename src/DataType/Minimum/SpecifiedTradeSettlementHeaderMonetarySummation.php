@@ -110,7 +110,8 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         $taxBasisTotalAmount = $taxBasisTotalAmountElements->item(0)->nodeValue;
         $grandTotalAmount    = $grandTotalAmountElements->item(0)->nodeValue;
         $duePayableAmount    = $duePayableAmountElements->item(0)->nodeValue;
-        $taxTotalAmount      = TaxTotalAmount::fromXML($xpath, $specifiedTradeSettlementHeaderMonetarySummationElement);
+
+        $taxTotalAmount = TaxTotalAmount::fromXML($xpath, $specifiedTradeSettlementHeaderMonetarySummationElement);
 
         return new static((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount, $taxTotalAmount);
     }

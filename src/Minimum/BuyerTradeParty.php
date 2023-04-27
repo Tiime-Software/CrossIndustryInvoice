@@ -73,7 +73,8 @@ class BuyerTradeParty
             throw new \Exception('Malformed');
         }
 
-        $name                       = $nameElements->item(0)->nodeValue;
+        $name = $nameElements->item(0)->nodeValue;
+
         $specifiedLegalOrganization = BuyerSpecifiedLegalOrganization::fromXML($xpath, $buyerTradePartyElement);
 
         $buyerTradeParty = new static($name);
