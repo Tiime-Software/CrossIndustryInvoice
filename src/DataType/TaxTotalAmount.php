@@ -9,6 +9,8 @@ use Tiime\EN16931\SemanticDataType\Amount;
 
 class TaxTotalAmount
 {
+    private const XML_NODE = 'ram:TaxTotalAmount';
+
     /**
      * BT-110.
      */
@@ -37,7 +39,8 @@ class TaxTotalAmount
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:TaxTotalAmount', (string) $this->value->getValueRounded());
+        $element = $document->createElement(self::XML_NODE, (string) $this->value->getValueRounded());
+
         $element->setAttribute('currencyID', $this->currencyIdentifier->value);
 
         return $element;
@@ -45,7 +48,7 @@ class TaxTotalAmount
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        $taxTotalAmountElements = $xpath->query('.//ram:TaxTotalAmount', $currentElement);
+        $taxTotalAmountElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (0 === $taxTotalAmountElements->count()) {
             return null;

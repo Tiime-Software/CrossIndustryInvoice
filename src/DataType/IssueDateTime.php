@@ -6,6 +6,8 @@ namespace Tiime\CrossIndustryInvoice\DataType;
 
 class IssueDateTime
 {
+    private const XML_NODE = 'ram:IssueDateTime';
+
     /**
      * BT-2.
      */
@@ -34,7 +36,7 @@ class IssueDateTime
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:IssueDateTime');
+        $element = $document->createElement(self::XML_NODE);
 
         $dateTimeElement = $document->createElement('udt:DateTimeString', $this->dateTimeString->format('Ymd'));
         $dateTimeElement->setAttribute('format', $this->dateFormat);
@@ -46,7 +48,7 @@ class IssueDateTime
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $issueDateTimeElements = $xpath->query('.//ram:IssueDateTime', $currentElement);
+        $issueDateTimeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $issueDateTimeElements->count()) {
             throw new \Exception('Malformed');

@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Reference\PurchaseOrderReference;
  */
 class BuyerOrderReferencedDocument
 {
+    private const XML_NODE = 'ram:BuyerOrderReferencedDocument';
+
     /**
      * BT-13.
      */
@@ -28,15 +30,20 @@ class BuyerOrderReferencedDocument
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:BuyerOrderReferencedDocument');
+        $currentNode = $document->createElement(self::XML_NODE);
+
         $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        $buyerOrderReferencedDocumentElements = $xpath->query('.//ram:BuyerOrderReferencedDocument', $currentElement);
+        $buyerOrderReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $buyerOrderReferencedDocumentElements->count()) {
+            return null;
+        }
 
         if (1 !== $buyerOrderReferencedDocumentElements->count()) {
             throw new \Exception('Malformed');

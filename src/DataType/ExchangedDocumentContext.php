@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class ExchangedDocumentContext
 {
+    private const XML_NODE = 'rsm:ExchangedDocumentContext';
+
     /**
      * BT-23-00.
      */
@@ -44,7 +46,7 @@ class ExchangedDocumentContext
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('rsm:ExchangedDocumentContext');
+        $element = $document->createElement(self::XML_NODE);
 
         if ($this->businessProcessSpecifiedDocumentContextParameter instanceof BusinessProcessSpecifiedDocumentContextParameter) {
             $element->appendChild($this->businessProcessSpecifiedDocumentContextParameter->toXML($document));
@@ -57,7 +59,7 @@ class ExchangedDocumentContext
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $exchangedDocumentContextElements = $xpath->query('.//rsm:ExchangedDocumentContext', $currentElement);
+        $exchangedDocumentContextElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $exchangedDocumentContextElements->count()) {
             throw new \Exception('Malformed');
