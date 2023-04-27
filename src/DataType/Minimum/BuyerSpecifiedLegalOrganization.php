@@ -12,6 +12,8 @@ use Tiime\EN16931\DataType\InternationalCodeDesignator;
  */
 class BuyerSpecifiedLegalOrganization
 {
+    private const XML_NODE = 'ram:SpecifiedLegalOrganization';
+
     /**
      * BT-47 & BT-47-1.
      */
@@ -29,7 +31,8 @@ class BuyerSpecifiedLegalOrganization
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode    = $document->createElement('ram:SpecifiedLegalOrganization');
+        $currentNode = $document->createElement(self::XML_NODE);
+
         $identifierNode = $document->createElement('ram:ID', $this->identifier->value);
 
         if (null !== $this->identifier->scheme) {
@@ -43,7 +46,7 @@ class BuyerSpecifiedLegalOrganization
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        $specifiedLegalOrganizationElements = $xpath->query('.//ram:SpecifiedLegalOrganization', $currentElement);
+        $specifiedLegalOrganizationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedLegalOrganizationElements->count()) {
             return null;

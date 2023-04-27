@@ -12,6 +12,8 @@ use Tiime\EN16931\SemanticDataType\Amount;
  */
 class SpecifiedTradeSettlementHeaderMonetarySummation
 {
+    private const XML_NODE = 'ram:SpecifiedTradeSettlementHeaderMonetarySummation';
+
     /**
      * BT-109.
      */
@@ -66,7 +68,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedTradeSettlementHeaderMonetarySummation');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:TaxBasisTotalAmount', (string) $this->taxBasisTotalAmount->getValueRounded()));
 
@@ -82,7 +84,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query('.//ram:SpecifiedTradeSettlementHeaderMonetarySummation', $currentElement);
+        $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $specifiedTradeSettlementHeaderMonetarySummationElements->count()) {
             throw new \Exception('Malformed');

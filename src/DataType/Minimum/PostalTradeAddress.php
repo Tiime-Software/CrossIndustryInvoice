@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\CountryAlpha2Code;
  */
 class PostalTradeAddress
 {
+    private const XML_NODE = 'ram:PostalTradeAddress';
+
     /**
      * BT-40.
      */
@@ -28,7 +30,8 @@ class PostalTradeAddress
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:PostalTradeAddress');
+        $currentNode = $document->createElement(self::XML_NODE);
+
         $currentNode->appendChild($document->createElement('ram:CountryID', $this->countryIdentifier->value));
 
         return $currentNode;
@@ -36,7 +39,7 @@ class PostalTradeAddress
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $postalTradeAddressElements = $xpath->query('.//ram:PostalTradeAddress', $currentElement);
+        $postalTradeAddressElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $postalTradeAddressElements->count()) {
             throw new \Exception('Malformed');
