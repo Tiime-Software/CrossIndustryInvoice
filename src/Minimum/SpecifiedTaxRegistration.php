@@ -39,7 +39,7 @@ class SpecifiedTaxRegistration
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SpecifiedLegalOrganization');
+        $currentNode = $document->createElement('ram:SpecifiedTaxRegistration');
 
         $identifierNode = $document->createElement('ram:ID', $this->identifier->getValue());
         $identifierNode->setAttribute('schemeID', $this->schemeIdentifier);
@@ -50,7 +50,7 @@ class SpecifiedTaxRegistration
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $specifiedTaxRegistrationElements = $xpath->query('//ram:SpecifiedLegalOrganization', $currentElement);
+        $specifiedTaxRegistrationElements = $xpath->query('.//ram:SpecifiedTaxRegistration', $currentElement);
 
         if (0 === $specifiedTaxRegistrationElements->count()) {
             return [];
