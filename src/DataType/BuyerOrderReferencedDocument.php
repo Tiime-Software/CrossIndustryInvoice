@@ -34,11 +34,18 @@ class BuyerOrderReferencedDocument
         return $currentNode;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $xpath = new \DOMXPath($document);
+        $buyerOrderReferencedDocumentElements = $xpath->query('//ram:BuyerOrderReferencedDocument', $currentElement);
 
-        $issuerAssignedIdentifierElements = $xpath->query('//ram:IssuerAssignedID');
+        if (1 !== $buyerOrderReferencedDocumentElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $buyerOrderReferencedDocumentElement */
+        $buyerOrderReferencedDocumentElement = $buyerOrderReferencedDocumentElements->item(0);
+
+        $issuerAssignedIdentifierElements = $xpath->query('//ram:IssuerAssignedID', $buyerOrderReferencedDocumentElement);
 
         if (1 !== $issuerAssignedIdentifierElements->count()) {
             throw new \Exception('Malformed');

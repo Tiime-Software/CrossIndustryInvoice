@@ -50,18 +50,20 @@ class ApplicableHeaderTradeSettlement
         return $element;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $xpath = new \DOMXPath($document);
+        $applicableHeaderTradeSettlementElements = $xpath->query('//ram:ApplicableHeaderTradeSettlement', $currentElement);
 
-        $invoiceCurrencyCodeElements                             = $xpath->query('//ram:InvoiceCurrencyCode');
-        $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query('//ram:SpecifiedTradeSettlementHeaderMonetarySummation');
-
-        if (1 !== $invoiceCurrencyCodeElements->count()) {
+        if (1 !== $applicableHeaderTradeSettlementElements->count()) {
             throw new \Exception('Malformed');
         }
 
-        if (1 !== $specifiedTradeSettlementHeaderMonetarySummationElements->count()) {
+        /** @var \DOMElement $applicableHeaderTradeSettlementElement */
+        $applicableHeaderTradeSettlementElement = $applicableHeaderTradeSettlementElements->item(0);
+
+        $invoiceCurrencyCodeElements = $xpath->query('//ram:InvoiceCurrencyCode', $applicableHeaderTradeSettlementElement);
+
+        if (1 !== $invoiceCurrencyCodeElements->count()) {
             throw new \Exception('Malformed');
         }
 
@@ -71,9 +73,7 @@ class ApplicableHeaderTradeSettlement
             throw new \Exception('Wrong currency code');
         }
 
-        $specifiedTradeSettlementHeaderMonetarySummationDocument = new \DOMDocument();
-        $specifiedTradeSettlementHeaderMonetarySummationDocument->appendChild($specifiedTradeSettlementHeaderMonetarySummationDocument->importNode($specifiedTradeSettlementHeaderMonetarySummationElements->item(0), true));
-        $specifiedTradeSettlementHeaderMonetarySummation = SpecifiedTradeSettlementHeaderMonetarySummation::fromXML($specifiedTradeSettlementHeaderMonetarySummationDocument);
+        $specifiedTradeSettlementHeaderMonetarySummation = SpecifiedTradeSettlementHeaderMonetarySummation::fromXML($xpath, $applicableHeaderTradeSettlementElement);
 
         return new static($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation);
     }

@@ -34,11 +34,18 @@ class PostalTradeAddress
         return $currentNode;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $xpath = new \DOMXPath($document);
+        $postalTradeAddressElements = $xpath->query('//ram:PostalTradeAddress', $currentElement);
 
-        $countryIdentifierElements = $xpath->query('//ram:CountryID');
+        if (1 !== $postalTradeAddressElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $postalTradeAddressElement */
+        $postalTradeAddressElement = $postalTradeAddressElements->item(0);
+
+        $countryIdentifierElements = $xpath->query('//ram:CountryID', $postalTradeAddressElement);
 
         if (1 !== $countryIdentifierElements->count()) {
             throw new \Exception('Malformed');

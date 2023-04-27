@@ -88,33 +88,18 @@ class CrossIndustryInvoice
     {
         $xpath = new \DOMXPath($document);
 
-        $exchangedDocumentContextElements    = $xpath->query('//rsm:CrossIndustryInvoice/rsm:ExchangedDocumentContext');
-        $exchangedDocumentElements           = $xpath->query('//rsm:CrossIndustryInvoice/rsm:ExchangedDocument');
-        $supplyChainTradeTransactionElements = $xpath->query('//rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction');
+        $crossIndustryInvoiceElements = $xpath->query('//rsm:CrossIndustryInvoice');
 
-        if (1 !== $exchangedDocumentContextElements->count()) {
+        if (1 !== $crossIndustryInvoiceElements->count()) {
             throw new \Exception('Malformed');
         }
 
-        if (1 !== $exchangedDocumentElements->count()) {
-            throw new \Exception('Malformed');
-        }
+        /** @var \DOMElement $crossIndustryInvoiceElement */
+        $crossIndustryInvoiceElement = $crossIndustryInvoiceElements->item(0);
 
-        if (1 !== $supplyChainTradeTransactionElements->count()) {
-            throw new \Exception('Malformed');
-        }
-
-        $exchangedDocumentContextDocument = new \DOMDocument();
-        $exchangedDocumentContextDocument->appendChild($exchangedDocumentContextDocument->importNode($exchangedDocumentContextElements->item(0), true));
-        $exchangedDocumentContext = ExchangedDocumentContext::fromXML($exchangedDocumentContextDocument);
-
-        $exchangedDocumentDocument = new \DOMDocument();
-        $exchangedDocumentDocument->appendChild($exchangedDocumentDocument->importNode($exchangedDocumentElements->item(0), true));
-        $exchangedDocument = ExchangedDocument::fromXML($exchangedDocumentDocument);
-
-        $supplyChainTradeTransactionDocument = new \DOMDocument();
-        $supplyChainTradeTransactionDocument->appendChild($supplyChainTradeTransactionDocument->importNode($supplyChainTradeTransactionElements->item(0), true));
-        $supplyChainTradeTransaction = SupplyChainTradeTransaction::fromXML($supplyChainTradeTransactionDocument);
+        $exchangedDocumentContext    = ExchangedDocumentContext::fromXML($xpath, $crossIndustryInvoiceElement);
+        $exchangedDocument           = ExchangedDocument::fromXML($xpath, $crossIndustryInvoiceElement);
+        $supplyChainTradeTransaction = SupplyChainTradeTransaction::fromXML($xpath, $crossIndustryInvoiceElement);
 
         return new static($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
     }

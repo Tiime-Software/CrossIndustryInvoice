@@ -35,11 +35,18 @@ class GuidelineSpecifiedDocumentContextParameter
         return $currentNode;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $xpath = new \DOMXPath($document);
+        $guidelineSpecifiedDocumentContextParameterElements = $xpath->query('//ram:GuidelineSpecifiedDocumentContextParameter', $currentElement);
 
-        $identifierElements = $xpath->query('//ram:ID');
+        if (1 !== $guidelineSpecifiedDocumentContextParameterElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $guidelineSpecifiedDocumentContextParameterElement */
+        $guidelineSpecifiedDocumentContextParameterElement = $guidelineSpecifiedDocumentContextParameterElements->item(0);
+
+        $identifierElements = $xpath->query('//ram:ID', $guidelineSpecifiedDocumentContextParameterElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');

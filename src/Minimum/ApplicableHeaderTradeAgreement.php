@@ -83,42 +83,53 @@ class ApplicableHeaderTradeAgreement
         return $currentNode;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $xpath = new \DOMXPath($document);
+        $applicableHeaderTradeAgreementElements = $xpath->query('//ram:ApplicableHeaderTradeAgreement', $currentElement);
 
-        $buyerReferenceElements               = $xpath->query('//ram:BuyerReference');
-        $sellerTradePartyElements             = $xpath->query('//ram:SellerTradeParty');
-        $buyerTradePartyElements              = $xpath->query('//ram:BuyerTradeParty');
-        $buyerOrderReferencedDocumentElements = $xpath->query('//ram:BuyerOrderReferencedDocument');
+        if (1 !== $applicableHeaderTradeAgreementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $applicableHeaderTradeAgreementElement */
+        $applicableHeaderTradeAgreementElement = $applicableHeaderTradeAgreementElements->item(0);
+
+        $buyerReferenceElements = $xpath->query('//ram:BuyerReference', $applicableHeaderTradeAgreementElement);
+        //        $sellerTradePartyElements             = $xpath->query('//ram:SellerTradeParty');
+        //        $buyerTradePartyElements              = $xpath->query('//ram:BuyerTradeParty');
+        //        $buyerOrderReferencedDocumentElements = $xpath->query('//ram:BuyerOrderReferencedDocument');
 
         if ($buyerReferenceElements->count() > 1) {
             throw new \Exception('Malformed');
         }
 
-        if (1 !== $sellerTradePartyElements->count()) {
-            throw new \Exception('Malformed');
-        }
+        //        if (1 !== $sellerTradePartyElements->count()) {
+        //            throw new \Exception('Malformed');
+        //        }
+        //
+        //        if (1 !== $buyerTradePartyElements->count()) {
+        //            throw new \Exception('Malformed');
+        //        }
+        //
+        //        if (1 !== $buyerOrderReferencedDocumentElements->count()) {
+        //            throw new \Exception('Malformed');
+        //        }
 
-        if (1 !== $buyerTradePartyElements->count()) {
-            throw new \Exception('Malformed');
-        }
+        //        $sellerTradePartyDocument = new \DOMDocument();
+        //        $sellerTradePartyDocument->appendChild($sellerTradePartyDocument->importNode($sellerTradePartyElements->item(0), true));
+        //        $sellerTradeParty = SellerTradeParty::fromXML($sellerTradePartyDocument);
+        //
+        //        $buyerTradePartyDocument = new \DOMDocument();
+        //        $buyerTradePartyDocument->appendChild($buyerTradePartyDocument->importNode($buyerTradePartyElements->item(0), true));
+        //        $buyerTradeParty = BuyerTradeParty::fromXML($buyerTradePartyDocument);
+        //
+        //        $buyerOrderReferencedDocumentDocument = new \DOMDocument();
+        //        $buyerOrderReferencedDocumentDocument->appendChild($buyerOrderReferencedDocumentDocument->importNode($buyerOrderReferencedDocumentElements->item(0), true));
+        //        $buyerOrderReferencedDocument = BuyerOrderReferencedDocument::fromXML($buyerOrderReferencedDocumentDocument);
 
-        if (1 !== $buyerOrderReferencedDocumentElements->count()) {
-            throw new \Exception('Malformed');
-        }
-
-        $sellerTradePartyDocument = new \DOMDocument();
-        $sellerTradePartyDocument->appendChild($sellerTradePartyDocument->importNode($sellerTradePartyElements->item(0), true));
-        $sellerTradeParty = SellerTradeParty::fromXML($sellerTradePartyDocument);
-
-        $buyerTradePartyDocument = new \DOMDocument();
-        $buyerTradePartyDocument->appendChild($buyerTradePartyDocument->importNode($buyerTradePartyElements->item(0), true));
-        $buyerTradeParty = BuyerTradeParty::fromXML($buyerTradePartyDocument);
-
-        $buyerOrderReferencedDocumentDocument = new \DOMDocument();
-        $buyerOrderReferencedDocumentDocument->appendChild($buyerOrderReferencedDocumentDocument->importNode($buyerOrderReferencedDocumentElements->item(0), true));
-        $buyerOrderReferencedDocument = BuyerOrderReferencedDocument::fromXML($buyerOrderReferencedDocumentDocument);
+        $sellerTradeParty             = SellerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $buyerTradeParty              = BuyerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $buyerOrderReferencedDocument = BuyerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
 
         $applicableHeaderTradeAgreement = new static($sellerTradeParty, $buyerTradeParty, $buyerOrderReferencedDocument);
 

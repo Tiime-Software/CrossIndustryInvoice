@@ -58,35 +58,22 @@ class SupplyChainTradeTransaction
         return $currentNode;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $xpath = new \DOMXPath($document);
+        $supplyChainTradeTransactionElements = $xpath->query('//rsm:SupplyChainTradeTransaction', $currentElement);
 
-        $applicableHeaderTradeAgreementElements  = $xpath->query('//ram:ApplicableHeaderTradeAgreement');
-        $applicableHeaderTradeDeliveryElements   = $xpath->query('//ram:ApplicableHeaderTradeDelivery');
-        $applicableHeaderTradeSettlementElements = $xpath->query('//ram:ApplicableHeaderTradeSettlement');
-
-        if (1 !== $applicableHeaderTradeAgreementElements->count()) {
+        if (1 !== $supplyChainTradeTransactionElements->count()) {
             throw new \Exception('Malformed');
         }
 
-        // The "ApplicableHeaderTradeDelivery" element is checked to make sure it is present, it is not converted
-        // afterwards because it is not needed for the constructor (empty object)
-        if (1 !== $applicableHeaderTradeDeliveryElements->count()) {
-            throw new \Exception('Malformed');
-        }
+        /** @var \DOMElement $supplyChainTradeTransactionElement */
+        $supplyChainTradeTransactionElement = $supplyChainTradeTransactionElements->item(0);
 
-        if (1 !== $applicableHeaderTradeSettlementElements->count()) {
-            throw new \Exception('Malformed');
-        }
-
-        $applicableHeaderTradeAgreementDocument = new \DOMDocument();
-        $applicableHeaderTradeAgreementDocument->appendChild($applicableHeaderTradeAgreementDocument->importNode($applicableHeaderTradeAgreementElements->item(0), true));
-        $applicableHeaderTradeAgreement = ApplicableHeaderTradeAgreement::fromXML($applicableHeaderTradeAgreementDocument);
-
-        $applicableHeaderTradeSettlementDocument = new \DOMDocument();
-        $applicableHeaderTradeSettlementDocument->appendChild($applicableHeaderTradeSettlementDocument->importNode($applicableHeaderTradeSettlementElements->item(0), true));
-        $applicableHeaderTradeSettlement = ApplicableHeaderTradeSettlement::fromXML($applicableHeaderTradeSettlementDocument);
+        // The "ApplicableHeaderTradeDelivery" element is checked to make sure it is present, because it's not in the
+        // constructor (empty object for Minimum profile), we will do nothing with it
+        $applicableHeaderTradeDelivery   = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
+        $applicableHeaderTradeAgreement  = ApplicableHeaderTradeAgreement::fromXML($xpath, $supplyChainTradeTransactionElement);
+        $applicableHeaderTradeSettlement = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
 
         return new static($applicableHeaderTradeAgreement, $applicableHeaderTradeSettlement);
     }

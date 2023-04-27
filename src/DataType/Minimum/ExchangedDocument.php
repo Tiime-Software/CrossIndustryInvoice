@@ -61,13 +61,19 @@ class ExchangedDocument
         return $element;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $xpath = new \DOMXPath($document);
+        $exchangedDocumentElements = $xpath->query('//rsm:ExchangedDocument', $currentElement);
 
-        $identifierElements    = $xpath->query('//ram:ID');
-        $typeCodeElements      = $xpath->query('//ram:TypeCode');
-        $issueDateTimeElements = $xpath->query('//ram:IssueDateTime');
+        if (1 !== $exchangedDocumentElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $exchangedDocumentElement */
+        $exchangedDocumentElement = $exchangedDocumentElements->item(0);
+
+        $identifierElements = $xpath->query('//ram:ID', $exchangedDocumentElement);
+        $typeCodeElements   = $xpath->query('//ram:TypeCode', $exchangedDocumentElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');
@@ -77,16 +83,10 @@ class ExchangedDocument
             throw new \Exception('Malformed');
         }
 
-        if (1 !== $issueDateTimeElements->count()) {
-            throw new \Exception('Malformed');
-        }
-
         $identifier = $identifierElements->item(0)->nodeValue;
         $typeCode   = $typeCodeElements->item(0)->nodeValue;
 
-        $issueDateTimeDocument = new \DOMDocument();
-        $issueDateTimeDocument->appendChild($issueDateTimeDocument->importNode($issueDateTimeElements->item(0), true));
-        $issueDateTime = IssueDateTime::fromXML($issueDateTimeDocument);
+        $issueDateTime = IssueDateTime::fromXML($xpath, $exchangedDocumentElement);
 
         return new static($identifier, $typeCode, $issueDateTime);
     }

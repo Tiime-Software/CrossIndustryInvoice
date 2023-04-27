@@ -44,11 +44,18 @@ class IssueDateTime
         return $element;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $xpath = new \DOMXPath($document);
+        $issueDateTimeElements = $xpath->query('//ram:IssueDateTime', $currentElement);
 
-        $dateTimeStringElements = $xpath->query('//udt:DateTimeString');
+        if (1 !== $issueDateTimeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $issueDateTimeElement */
+        $issueDateTimeElement = $issueDateTimeElements->item(0);
+
+        $dateTimeStringElements = $xpath->query('//udt:DateTimeString', $issueDateTimeElement);
 
         if (1 !== $dateTimeStringElements->count()) {
             throw new \Exception('Malformed');

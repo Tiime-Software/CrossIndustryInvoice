@@ -56,30 +56,29 @@ class BuyerTradeParty
         return $currentNode;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $xpath = new \DOMXPath($document);
+        $buyerTradePartyElements = $xpath->query('//ram:BuyerTradeParty', $currentElement);
 
-        $nameElements                       = $xpath->query('//ram:Name');
-        $specifiedLegalOrganizationElements = $xpath->query('//ram:SpecifiedLegalOrganization');
+        if (1 !== $buyerTradePartyElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $buyerTradePartyElement */
+        $buyerTradePartyElement = $buyerTradePartyElements->item(0);
+
+        $nameElements = $xpath->query('//ram:Name', $buyerTradePartyElement);
 
         if (1 !== $nameElements->count()) {
             throw new \Exception('Malformed');
         }
 
-        if ($specifiedLegalOrganizationElements->count() > 1) {
-            throw new \Exception('Malformed');
-        }
-
-        $name = $nameElements->item(0)->nodeValue;
+        $name                       = $nameElements->item(0)->nodeValue;
+        $specifiedLegalOrganization = BuyerSpecifiedLegalOrganization::fromXML($xpath, $buyerTradePartyElement);
 
         $buyerTradeParty = new static($name);
 
-        if (1 === $specifiedLegalOrganizationElements->count()) {
-            $specifiedLegalOrganizationDocument = new \DOMDocument();
-            $specifiedLegalOrganizationDocument->appendChild($specifiedLegalOrganizationDocument->importNode($specifiedLegalOrganizationElements->item(0), true));
-            $specifiedLegalOrganization = BuyerSpecifiedLegalOrganization::fromXML($specifiedLegalOrganizationDocument);
-
+        if (null !== $specifiedLegalOrganization) {
             $buyerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
         }
 

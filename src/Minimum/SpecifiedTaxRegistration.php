@@ -48,24 +48,36 @@ class SpecifiedTaxRegistration
         return $currentNode;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $xpath = new \DOMXPath($document);
+        $specifiedTaxRegistrationElements = $xpath->query('//ram:SpecifiedLegalOrganization', $currentElement);
 
-        $identifierElements = $xpath->query('//ram:ID');
-
-        if (1 !== $identifierElements->count()) {
-            throw new \Exception('Malformed');
+        if (0 === $specifiedTaxRegistrationElements->count()) {
+            return [];
         }
 
-        /** @var \DOMElement $identifierItem */
-        $identifierItem = $identifierElements->item(0);
-        $identifier     = $identifierItem->nodeValue;
+        $specifiedTaxRegistrations = [];
 
-        if ('VA' !== $identifierItem->getAttribute('schemeID')) {
-            throw new \Exception('Wrong schemeID');
+        foreach ($specifiedTaxRegistrationElements as $specifiedTaxRegistrationElement) {
+            $specifiedTaxRegistrationItem = $specifiedTaxRegistrationElement->item(0);
+
+            $identifierElements = $xpath->query('//ram:ID', $specifiedTaxRegistrationItem);
+
+            if (1 !== $identifierElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            /** @var \DOMElement $identifierItem */
+            $identifierItem = $identifierElements->item(0);
+            $identifier     = $identifierItem->nodeValue;
+
+            if ('VA' !== $identifierItem->getAttribute('schemeID')) {
+                throw new \Exception('Wrong schemeID');
+            }
+
+            $specifiedTaxRegistrations[] = new static(new VatIdentifier($identifier));
         }
 
-        return new static(new VatIdentifier($identifier));
+        return $specifiedTaxRegistrations;
     }
 }

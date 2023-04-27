@@ -43,11 +43,22 @@ class TaxTotalAmount
         return $element;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        $xpath = new \DOMXPath($document);
+        $taxTotalAmountElements = $xpath->query('//ram:TaxTotalAmount', $currentElement);
 
-        $valueElements = $xpath->query('//ram:TaxTotalAmount');
+        if (0 === $taxTotalAmountElements->count()) {
+            return null;
+        }
+
+        if ($taxTotalAmountElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $taxTotalAmountElement */
+        $taxTotalAmountElement = $taxTotalAmountElements->item(0);
+
+        $valueElements = $xpath->query('//ram:TaxTotalAmount', $taxTotalAmountElement);
 
         if (1 !== $valueElements->count()) {
             throw new \Exception('Malformed');
