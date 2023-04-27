@@ -29,8 +29,14 @@ class ContractReferencedDocument
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement('ram:ContractReferencedDocument');
+
         $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        // todo
     }
 }

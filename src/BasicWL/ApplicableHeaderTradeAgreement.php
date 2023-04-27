@@ -13,6 +13,8 @@ use Tiime\CrossIndustryInvoice\DataType\SellerTaxRepresentativeTradeParty;
  */
 class ApplicableHeaderTradeAgreement
 {
+    private const XML_NODE = 'ram:ApplicableHeaderTradeAgreement';
+
     /**
      * BT-10.
      */
@@ -113,7 +115,7 @@ class ApplicableHeaderTradeAgreement
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:ApplicableHeaderTradeAgreement');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         if (null !== $this->buyerReference) {
             $currentNode->appendChild($document->createElement('ram:BuyerReference', $this->buyerReference));
@@ -135,5 +137,51 @@ class ApplicableHeaderTradeAgreement
         }
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $applicableHeaderTradeAgreementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $applicableHeaderTradeAgreementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $applicableHeaderTradeAgreementElement */
+        $applicableHeaderTradeAgreementElement = $applicableHeaderTradeAgreementElements->item(0);
+
+        $buyerReferenceElements = $xpath->query('.//ram:BuyerReference', $applicableHeaderTradeAgreementElement);
+
+        if ($buyerReferenceElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $sellerTradeParty                  = SellerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $buyerTradeParty                   = BuyerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $sellerTaxRepresentativeTradeParty = SellerTaxRepresentativeTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $buyerOrderReferencedDocument      = BuyerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $contractReferencedDocument        = ContractReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+
+        $applicableHeaderTradeAgreement = new static($sellerTradeParty, $buyerTradeParty);
+
+        if (1 === $buyerReferenceElements->count()) {
+            $buyerReference = $buyerReferenceElements->item(0)->nodeValue;
+
+            $applicableHeaderTradeAgreement->setBuyerReference($buyerReference);
+        }
+
+        if (null !== $sellerTaxRepresentativeTradeParty) {
+            $applicableHeaderTradeAgreement->setSellerTaxRepresentativeTradeParty($sellerTaxRepresentativeTradeParty);
+        }
+
+        if (null !== $buyerOrderReferencedDocument) {
+            $applicableHeaderTradeAgreement->setBuyerOrderReferencedDocument($buyerOrderReferencedDocument);
+        }
+
+        if (null !== $contractReferencedDocument) {
+            $applicableHeaderTradeAgreement->setContractReferencedDocument($contractReferencedDocument);
+        }
+
+        return $applicableHeaderTradeAgreement;
     }
 }

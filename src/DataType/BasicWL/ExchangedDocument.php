@@ -57,4 +57,9 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
 
         return $element;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        // todo
+    }
 }

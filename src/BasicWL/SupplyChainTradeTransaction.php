@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\BasicWL;
  */
 class SupplyChainTradeTransaction
 {
+    private const XML_NODE = 'rsm:SupplyChainTradeTransaction';
+
     /**
      * BT-10-00.
      */
@@ -48,12 +50,30 @@ class SupplyChainTradeTransaction
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('rsm:SupplyChainTradeTransaction');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($this->applicableHeaderTradeAgreement->toXML($document));
         $element->appendChild($this->applicableHeaderTradeDelivery->toXML($document));
         $element->appendChild($this->applicableHeaderTradeSettlement->toXML($document));
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $supplyChainTradeTransactionElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $supplyChainTradeTransactionElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $supplyChainTradeTransactionElement */
+        $supplyChainTradeTransactionElement = $supplyChainTradeTransactionElements->item(0);
+
+        $applicableHeaderTradeAgreement  = ApplicableHeaderTradeAgreement::fromXML($xpath, $supplyChainTradeTransactionElement);
+        $applicableHeaderTradeDelivery   = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
+        $applicableHeaderTradeSettlement = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
+
+        return new static($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
     }
 }

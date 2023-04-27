@@ -16,4 +16,14 @@ class SellerGlobalIdentifier extends SellerIdentifier
     {
         parent::__construct($value, $scheme);
     }
+
+    public function toXML(\DOMDocument $document): \DOMElement
+    {
+        // todo
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        // todo
+    }
 }

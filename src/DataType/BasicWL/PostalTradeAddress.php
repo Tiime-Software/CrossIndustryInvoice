@@ -156,4 +156,9 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        // todo
+    }
 }
