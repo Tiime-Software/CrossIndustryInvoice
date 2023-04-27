@@ -60,7 +60,7 @@ class SupplyChainTradeTransaction
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $supplyChainTradeTransactionElements = $xpath->query('//rsm:SupplyChainTradeTransaction', $currentElement);
+        $supplyChainTradeTransactionElements = $xpath->query('.//rsm:SupplyChainTradeTransaction', $currentElement);
 
         if (1 !== $supplyChainTradeTransactionElements->count()) {
             throw new \Exception('Malformed');

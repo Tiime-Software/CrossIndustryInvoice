@@ -63,7 +63,7 @@ class ExchangedDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $exchangedDocumentElements = $xpath->query('//rsm:ExchangedDocument', $currentElement);
+        $exchangedDocumentElements = $xpath->query('.//rsm:ExchangedDocument', $currentElement);
 
         if (1 !== $exchangedDocumentElements->count()) {
             throw new \Exception('Malformed');
@@ -72,8 +72,8 @@ class ExchangedDocument
         /** @var \DOMElement $exchangedDocumentElement */
         $exchangedDocumentElement = $exchangedDocumentElements->item(0);
 
-        $identifierElements = $xpath->query('//ram:ID', $exchangedDocumentElement);
-        $typeCodeElements   = $xpath->query('//ram:TypeCode', $exchangedDocumentElement);
+        $identifierElements = $xpath->query('.//ram:ID', $exchangedDocumentElement);
+        $typeCodeElements   = $xpath->query('.//ram:TypeCode', $exchangedDocumentElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');
@@ -84,10 +84,15 @@ class ExchangedDocument
         }
 
         $identifier = $identifierElements->item(0)->nodeValue;
-        $typeCode   = $typeCodeElements->item(0)->nodeValue;
+
+        $typeCode = InvoiceTypeCode::tryFrom($typeCodeElements->item(0)->nodeValue);
+
+        if (null === $typeCode) {
+            throw new \Exception('Wrong currency code');
+        }
 
         $issueDateTime = IssueDateTime::fromXML($xpath, $exchangedDocumentElement);
 
-        return new static($identifier, $typeCode, $issueDateTime);
+        return new static(new InvoiceIdentifier($identifier), $typeCode, $issueDateTime);
     }
 }

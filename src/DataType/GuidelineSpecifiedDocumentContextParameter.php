@@ -37,7 +37,7 @@ class GuidelineSpecifiedDocumentContextParameter
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $guidelineSpecifiedDocumentContextParameterElements = $xpath->query('//ram:GuidelineSpecifiedDocumentContextParameter', $currentElement);
+        $guidelineSpecifiedDocumentContextParameterElements = $xpath->query('.//ram:GuidelineSpecifiedDocumentContextParameter', $currentElement);
 
         if (1 !== $guidelineSpecifiedDocumentContextParameterElements->count()) {
             throw new \Exception('Malformed');
@@ -46,7 +46,7 @@ class GuidelineSpecifiedDocumentContextParameter
         /** @var \DOMElement $guidelineSpecifiedDocumentContextParameterElement */
         $guidelineSpecifiedDocumentContextParameterElement = $guidelineSpecifiedDocumentContextParameterElements->item(0);
 
-        $identifierElements = $xpath->query('//ram:ID', $guidelineSpecifiedDocumentContextParameterElement);
+        $identifierElements = $xpath->query('.//ram:ID', $guidelineSpecifiedDocumentContextParameterElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');

@@ -16,7 +16,7 @@ class ApplicableHeaderTradeDelivery
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $applicableHeaderTradeDeliveryElements = $xpath->query('//ram:ApplicableHeaderTradeDelivery', $currentElement);
+        $applicableHeaderTradeDeliveryElements = $xpath->query('.//ram:ApplicableHeaderTradeDelivery', $currentElement);
 
         if (1 !== $applicableHeaderTradeDeliveryElements->count()) {
             throw new \Exception('Malformed');

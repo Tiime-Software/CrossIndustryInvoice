@@ -35,6 +35,7 @@ class BuyerSpecifiedLegalOrganization
         if (null !== $this->identifier->scheme) {
             $identifierNode->setAttribute('schemeID', $this->identifier->scheme->value);
         }
+
         $currentNode->appendChild($identifierNode);
 
         return $currentNode;
@@ -42,7 +43,7 @@ class BuyerSpecifiedLegalOrganization
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        $specifiedLegalOrganizationElements = $xpath->query('//ram:SpecifiedLegalOrganization', $currentElement);
+        $specifiedLegalOrganizationElements = $xpath->query('.//ram:SpecifiedLegalOrganization', $currentElement);
 
         if (0 === $specifiedLegalOrganizationElements->count()) {
             return null;
@@ -55,7 +56,7 @@ class BuyerSpecifiedLegalOrganization
         /** @var \DOMElement $specifiedLegalOrganizationElement */
         $specifiedLegalOrganizationElement = $specifiedLegalOrganizationElements->item(0);
 
-        $identifierElements = $xpath->query('//ram:ID', $specifiedLegalOrganizationElement);
+        $identifierElements = $xpath->query('.//ram:ID', $specifiedLegalOrganizationElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');

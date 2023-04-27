@@ -58,7 +58,7 @@ class BuyerTradeParty
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $buyerTradePartyElements = $xpath->query('//ram:BuyerTradeParty', $currentElement);
+        $buyerTradePartyElements = $xpath->query('.//ram:BuyerTradeParty', $currentElement);
 
         if (1 !== $buyerTradePartyElements->count()) {
             throw new \Exception('Malformed');
@@ -67,7 +67,7 @@ class BuyerTradeParty
         /** @var \DOMElement $buyerTradePartyElement */
         $buyerTradePartyElement = $buyerTradePartyElements->item(0);
 
-        $nameElements = $xpath->query('//ram:Name', $buyerTradePartyElement);
+        $nameElements = $xpath->query('.//ram:Name', $buyerTradePartyElement);
 
         if (1 !== $nameElements->count()) {
             throw new \Exception('Malformed');

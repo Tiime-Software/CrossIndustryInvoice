@@ -39,7 +39,7 @@ class SpecifiedTaxRegistration
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SpecifiedLegalOrganization');
+        $currentNode = $document->createElement('ram:SpecifiedTaxRegistration');
 
         $identifierNode = $document->createElement('ram:ID', $this->identifier->getValue());
         $identifierNode->setAttribute('schemeID', $this->schemeIdentifier);
@@ -50,7 +50,7 @@ class SpecifiedTaxRegistration
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $specifiedTaxRegistrationElements = $xpath->query('//ram:SpecifiedLegalOrganization', $currentElement);
+        $specifiedTaxRegistrationElements = $xpath->query('.//ram:SpecifiedTaxRegistration', $currentElement);
 
         if (0 === $specifiedTaxRegistrationElements->count()) {
             return [];
@@ -59,9 +59,7 @@ class SpecifiedTaxRegistration
         $specifiedTaxRegistrations = [];
 
         foreach ($specifiedTaxRegistrationElements as $specifiedTaxRegistrationElement) {
-            $specifiedTaxRegistrationItem = $specifiedTaxRegistrationElement->item(0);
-
-            $identifierElements = $xpath->query('//ram:ID', $specifiedTaxRegistrationItem);
+            $identifierElements = $xpath->query('.//ram:ID', $specifiedTaxRegistrationElement);
 
             if (1 !== $identifierElements->count()) {
                 throw new \Exception('Malformed');

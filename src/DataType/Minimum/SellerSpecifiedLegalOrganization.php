@@ -39,10 +39,10 @@ class SellerSpecifiedLegalOrganization
         $currentNode = $document->createElement('ram:SpecifiedLegalOrganization');
 
         if (null !== $this->identifier) {
-            $currentNode->appendChild(
-                $document->createElement('ram:ID', $this->identifier->value)
-                    ->setAttribute('schemeID', $this->identifier->scheme->value)
-            );
+            $identifierElement = $document->createElement('ram:ID', $this->identifier->value);
+            $identifierElement->setAttribute('schemeID', $this->identifier->scheme->value);
+
+            $currentNode->appendChild($identifierElement);
         }
 
         return $currentNode;
@@ -50,7 +50,7 @@ class SellerSpecifiedLegalOrganization
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        $specifiedLegalOrganizationElements = $xpath->query('//ram:SpecifiedLegalOrganization', $currentElement);
+        $specifiedLegalOrganizationElements = $xpath->query('.//ram:SpecifiedLegalOrganization', $currentElement);
 
         if (0 === $specifiedLegalOrganizationElements->count()) {
             return null;
@@ -63,7 +63,7 @@ class SellerSpecifiedLegalOrganization
         /** @var \DOMElement $specifiedLegalOrganizationElement */
         $specifiedLegalOrganizationElement = $specifiedLegalOrganizationElements->item(0);
 
-        $identifierElements = $xpath->query('//ram:ID', $specifiedLegalOrganizationElement);
+        $identifierElements = $xpath->query('.//ram:ID', $specifiedLegalOrganizationElement);
 
         if ($identifierElements->count() > 1) {
             throw new \Exception('Malformed');

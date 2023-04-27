@@ -45,7 +45,7 @@ class TaxTotalAmount
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        $taxTotalAmountElements = $xpath->query('//ram:TaxTotalAmount', $currentElement);
+        $taxTotalAmountElements = $xpath->query('.//ram:TaxTotalAmount', $currentElement);
 
         if (0 === $taxTotalAmountElements->count()) {
             return null;
@@ -55,17 +55,8 @@ class TaxTotalAmount
             throw new \Exception('Malformed');
         }
 
-        /** @var \DOMElement $taxTotalAmountElement */
-        $taxTotalAmountElement = $taxTotalAmountElements->item(0);
-
-        $valueElements = $xpath->query('//ram:TaxTotalAmount', $taxTotalAmountElement);
-
-        if (1 !== $valueElements->count()) {
-            throw new \Exception('Malformed');
-        }
-
         /** @var \DOMElement $valueItem */
-        $valueItem = $valueElements->item(0);
+        $valueItem = $taxTotalAmountElements->item(0);
         $value     = $valueItem->nodeValue;
 
         $currencyIdentifier = CurrencyCode::tryFrom($valueItem->getAttribute('currencyID'));
