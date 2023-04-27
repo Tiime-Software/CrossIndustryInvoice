@@ -55,17 +55,8 @@ class TaxTotalAmount
             throw new \Exception('Malformed');
         }
 
-        /** @var \DOMElement $taxTotalAmountElement */
-        $taxTotalAmountElement = $taxTotalAmountElements->item(0);
-
-        $valueElements = $xpath->query('.//ram:TaxTotalAmount', $taxTotalAmountElement);
-
-        if (1 !== $valueElements->count()) {
-            throw new \Exception('Malformed');
-        }
-
         /** @var \DOMElement $valueItem */
-        $valueItem = $valueElements->item(0);
+        $valueItem = $taxTotalAmountElements->item(0);
         $value     = $valueItem->nodeValue;
 
         $currencyIdentifier = CurrencyCode::tryFrom($valueItem->getAttribute('currencyID'));

@@ -59,9 +59,7 @@ class SpecifiedTaxRegistration
         $specifiedTaxRegistrations = [];
 
         foreach ($specifiedTaxRegistrationElements as $specifiedTaxRegistrationElement) {
-            $specifiedTaxRegistrationItem = $specifiedTaxRegistrationElement->item(0);
-
-            $identifierElements = $xpath->query('.//ram:ID', $specifiedTaxRegistrationItem);
+            $identifierElements = $xpath->query('.//ram:ID', $specifiedTaxRegistrationElement);
 
             if (1 !== $identifierElements->count()) {
                 throw new \Exception('Malformed');

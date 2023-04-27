@@ -39,10 +39,10 @@ class SellerSpecifiedLegalOrganization
         $currentNode = $document->createElement('ram:SpecifiedLegalOrganization');
 
         if (null !== $this->identifier) {
-            $currentNode->appendChild(
-                $document->createElement('ram:ID', $this->identifier->value)
-                    ->setAttribute('schemeID', $this->identifier->scheme->value)
-            );
+            $identifierElement = $document->createElement('ram:ID', $this->identifier->value);
+            $identifierElement->setAttribute('schemeID', $this->identifier->scheme->value);
+
+            $currentNode->appendChild($identifierElement);
         }
 
         return $currentNode;

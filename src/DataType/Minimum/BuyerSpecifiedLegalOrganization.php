@@ -35,6 +35,7 @@ class BuyerSpecifiedLegalOrganization
         if (null !== $this->identifier->scheme) {
             $identifierNode->setAttribute('schemeID', $this->identifier->scheme->value);
         }
+
         $currentNode->appendChild($identifierNode);
 
         return $currentNode;
