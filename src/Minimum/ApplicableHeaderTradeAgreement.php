@@ -11,6 +11,8 @@ use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
  */
 class ApplicableHeaderTradeAgreement
 {
+    private const XML_NODE = 'ram:ApplicableHeaderTradeAgreement';
+
     /**
      * BT-10.
      */
@@ -29,16 +31,13 @@ class ApplicableHeaderTradeAgreement
     /**
      * BT-13-00.
      */
-    private BuyerOrderReferencedDocument $buyerOrderReferencedDocument;
+    private ?BuyerOrderReferencedDocument $buyerOrderReferencedDocument;
 
-    public function __construct(
-        SellerTradeParty $sellerTradeParty,
-        BuyerTradeParty $buyerTradeParty,
-        BuyerOrderReferencedDocument $buyerOrderReferencedDocument
-    ) {
+    public function __construct(SellerTradeParty $sellerTradeParty, BuyerTradeParty $buyerTradeParty)
+    {
         $this->sellerTradeParty             = $sellerTradeParty;
         $this->buyerTradeParty              = $buyerTradeParty;
-        $this->buyerOrderReferencedDocument = $buyerOrderReferencedDocument;
+        $this->buyerOrderReferencedDocument = null;
         $this->buyerReference               = null;
     }
 
@@ -69,23 +68,32 @@ class ApplicableHeaderTradeAgreement
         return $this->buyerOrderReferencedDocument;
     }
 
+    public function setBuyerOrderReferencedDocument(?BuyerOrderReferencedDocument $buyerOrderReferencedDocument): void
+    {
+        $this->buyerOrderReferencedDocument = $buyerOrderReferencedDocument;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:ApplicableHeaderTradeAgreement');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         if (null !== $this->buyerReference) {
             $currentNode->appendChild($document->createElement('ram:BuyerReference', $this->buyerReference));
         }
+
         $currentNode->appendChild($this->sellerTradeParty->toXML($document));
         $currentNode->appendChild($this->buyerTradeParty->toXML($document));
-        $currentNode->appendChild($this->buyerOrderReferencedDocument->toXML($document));
+
+        if (null !== $this->buyerOrderReferencedDocument) {
+            $currentNode->appendChild($this->buyerOrderReferencedDocument->toXML($document));
+        }
 
         return $currentNode;
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $applicableHeaderTradeAgreementElements = $xpath->query('.//ram:ApplicableHeaderTradeAgreement', $currentElement);
+        $applicableHeaderTradeAgreementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $applicableHeaderTradeAgreementElements->count()) {
             throw new \Exception('Malformed');
@@ -104,12 +112,16 @@ class ApplicableHeaderTradeAgreement
         $buyerTradeParty              = BuyerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
         $buyerOrderReferencedDocument = BuyerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
 
-        $applicableHeaderTradeAgreement = new static($sellerTradeParty, $buyerTradeParty, $buyerOrderReferencedDocument);
+        $applicableHeaderTradeAgreement = new static($sellerTradeParty, $buyerTradeParty);
 
         if (1 === $buyerReferenceElements->count()) {
             $buyerReference = $buyerReferenceElements->item(0)->nodeValue;
 
             $applicableHeaderTradeAgreement->setBuyerReference($buyerReference);
+        }
+
+        if (null !== $buyerOrderReferencedDocument) {
+            $applicableHeaderTradeAgreement->setBuyerOrderReferencedDocument($buyerOrderReferencedDocument);
         }
 
         return $applicableHeaderTradeAgreement;
