@@ -172,6 +172,9 @@ class CIIMinimumTest extends TestCase
 
         $xmlInvoice = $invoice->toXML();
 
-        CrossIndustryInvoice::fromXML($xmlInvoice);
+        $document = new \DOMDocument();
+        $document->loadXML($xmlInvoice->saveXML());
+
+        CrossIndustryInvoice::fromXML($document);
     }
 }
