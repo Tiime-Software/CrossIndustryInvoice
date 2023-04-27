@@ -92,4 +92,40 @@ class SellerTradeParty
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $sellerTradePartyElements = $xpath->query('//ram:SellerTradeParty', $currentElement);
+
+        if (1 !== $sellerTradePartyElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $sellerTradePartyElement */
+        $sellerTradePartyElement = $sellerTradePartyElements->item(0);
+
+        $nameElements = $xpath->query('//ram:Name', $sellerTradePartyElement);
+
+        if (1 !== $nameElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $name = $nameElements->item(0)->nodeValue;
+
+        $postalTradeAddress         = PostalTradeAddress::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedLegalOrganization = SellerSpecifiedLegalOrganization::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedTaxRegistrations  = SpecifiedTaxRegistration::fromXML($xpath, $sellerTradePartyElement);
+
+        $sellerTradeParty = new static($name, $postalTradeAddress);
+
+        if (null !== $specifiedLegalOrganization) {
+            $sellerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
+        }
+
+        if (\count($specifiedTaxRegistrations) > 0) {
+            $sellerTradeParty->setSpecifiedTaxRegistrations($specifiedTaxRegistrations);
+        }
+
+        return $sellerTradeParty;
+    }
 }

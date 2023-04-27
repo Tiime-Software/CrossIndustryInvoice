@@ -34,4 +34,26 @@ class GuidelineSpecifiedDocumentContextParameter
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $guidelineSpecifiedDocumentContextParameterElements = $xpath->query('//ram:GuidelineSpecifiedDocumentContextParameter', $currentElement);
+
+        if (1 !== $guidelineSpecifiedDocumentContextParameterElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $guidelineSpecifiedDocumentContextParameterElement */
+        $guidelineSpecifiedDocumentContextParameterElement = $guidelineSpecifiedDocumentContextParameterElements->item(0);
+
+        $identifierElements = $xpath->query('//ram:ID', $guidelineSpecifiedDocumentContextParameterElement);
+
+        if (1 !== $identifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $identifier = $identifierElements->item(0)->nodeValue;
+
+        return new static(new SpecificationIdentifier($identifier));
+    }
 }

@@ -55,4 +55,34 @@ class BuyerTradeParty
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $buyerTradePartyElements = $xpath->query('//ram:BuyerTradeParty', $currentElement);
+
+        if (1 !== $buyerTradePartyElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $buyerTradePartyElement */
+        $buyerTradePartyElement = $buyerTradePartyElements->item(0);
+
+        $nameElements = $xpath->query('//ram:Name', $buyerTradePartyElement);
+
+        if (1 !== $nameElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $name = $nameElements->item(0)->nodeValue;
+
+        $specifiedLegalOrganization = BuyerSpecifiedLegalOrganization::fromXML($xpath, $buyerTradePartyElement);
+
+        $buyerTradeParty = new static($name);
+
+        if (null !== $specifiedLegalOrganization) {
+            $buyerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
+        }
+
+        return $buyerTradeParty;
+    }
 }

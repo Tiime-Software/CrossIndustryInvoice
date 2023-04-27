@@ -60,4 +60,34 @@ class ExchangedDocument
 
         return $element;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $exchangedDocumentElements = $xpath->query('//rsm:ExchangedDocument', $currentElement);
+
+        if (1 !== $exchangedDocumentElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $exchangedDocumentElement */
+        $exchangedDocumentElement = $exchangedDocumentElements->item(0);
+
+        $identifierElements = $xpath->query('//ram:ID', $exchangedDocumentElement);
+        $typeCodeElements   = $xpath->query('//ram:TypeCode', $exchangedDocumentElement);
+
+        if (1 !== $identifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $typeCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $identifier = $identifierElements->item(0)->nodeValue;
+        $typeCode   = $typeCodeElements->item(0)->nodeValue;
+
+        $issueDateTime = IssueDateTime::fromXML($xpath, $exchangedDocumentElement);
+
+        return new static($identifier, $typeCode, $issueDateTime);
+    }
 }

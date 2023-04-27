@@ -54,4 +54,27 @@ class ExchangedDocumentContext
 
         return $element;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $exchangedDocumentContextElements = $xpath->query('//rsm:ExchangedDocumentContext', $currentElement);
+
+        if (1 !== $exchangedDocumentContextElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $exchangedDocumentContextElement */
+        $exchangedDocumentContextElement = $exchangedDocumentContextElements->item(0);
+
+        $guidelineSpecifiedDocumentContextParameter       = GuidelineSpecifiedDocumentContextParameter::fromXML($xpath, $exchangedDocumentContextElement);
+        $businessProcessSpecifiedDocumentContextParameter = BusinessProcessSpecifiedDocumentContextParameter::fromXML($xpath, $exchangedDocumentContextElement);
+
+        $exchangedDocumentContext = new static($guidelineSpecifiedDocumentContextParameter);
+
+        if (null !== $businessProcessSpecifiedDocumentContextParameter) {
+            $exchangedDocumentContext->setBusinessProcessSpecifiedDocumentContextParameter($businessProcessSpecifiedDocumentContextParameter);
+        }
+
+        return $exchangedDocumentContext;
+    }
 }

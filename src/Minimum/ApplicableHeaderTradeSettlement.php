@@ -49,4 +49,32 @@ class ApplicableHeaderTradeSettlement
 
         return $element;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $applicableHeaderTradeSettlementElements = $xpath->query('//ram:ApplicableHeaderTradeSettlement', $currentElement);
+
+        if (1 !== $applicableHeaderTradeSettlementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $applicableHeaderTradeSettlementElement */
+        $applicableHeaderTradeSettlementElement = $applicableHeaderTradeSettlementElements->item(0);
+
+        $invoiceCurrencyCodeElements = $xpath->query('//ram:InvoiceCurrencyCode', $applicableHeaderTradeSettlementElement);
+
+        if (1 !== $invoiceCurrencyCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $invoiceCurrencyCode = CurrencyCode::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
+
+        if (null === $invoiceCurrencyCode) {
+            throw new \Exception('Wrong currency code');
+        }
+
+        $specifiedTradeSettlementHeaderMonetarySummation = SpecifiedTradeSettlementHeaderMonetarySummation::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+
+        return new static($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation);
+    }
 }

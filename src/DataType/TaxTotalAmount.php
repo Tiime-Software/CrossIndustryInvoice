@@ -42,4 +42,38 @@ class TaxTotalAmount
 
         return $element;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $taxTotalAmountElements = $xpath->query('//ram:TaxTotalAmount', $currentElement);
+
+        if (0 === $taxTotalAmountElements->count()) {
+            return null;
+        }
+
+        if ($taxTotalAmountElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $taxTotalAmountElement */
+        $taxTotalAmountElement = $taxTotalAmountElements->item(0);
+
+        $valueElements = $xpath->query('//ram:TaxTotalAmount', $taxTotalAmountElement);
+
+        if (1 !== $valueElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $valueItem */
+        $valueItem = $valueElements->item(0);
+        $value     = $valueItem->nodeValue;
+
+        $currencyIdentifier = CurrencyCode::tryFrom($valueItem->getAttribute('currencyID'));
+
+        if (null === $currencyIdentifier) {
+            throw new \Exception('Wrong currencyID');
+        }
+
+        return new static((float) $value, $currencyIdentifier);
+    }
 }

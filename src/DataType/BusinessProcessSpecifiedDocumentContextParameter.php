@@ -35,4 +35,30 @@ class BusinessProcessSpecifiedDocumentContextParameter
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $businessProcessSpecifiedDocumentContextParameterElements = $xpath->query('//ram:BusinessProcessSpecifiedDocumentContextParameter', $currentElement);
+
+        if (0 === $businessProcessSpecifiedDocumentContextParameterElements->count()) {
+            return null;
+        }
+
+        if ($businessProcessSpecifiedDocumentContextParameterElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $businessProcessSpecifiedDocumentContextParameterElement */
+        $businessProcessSpecifiedDocumentContextParameterElement = $businessProcessSpecifiedDocumentContextParameterElements->item(0);
+
+        $identifierElements = $xpath->query('//ram:ID', $businessProcessSpecifiedDocumentContextParameterElement);
+
+        if (1 !== $identifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $identifier = $identifierElements->item(0)->nodeValue;
+
+        return new static($identifier);
+    }
 }

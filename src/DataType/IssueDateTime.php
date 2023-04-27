@@ -43,4 +43,34 @@ class IssueDateTime
 
         return $element;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $issueDateTimeElements = $xpath->query('//ram:IssueDateTime', $currentElement);
+
+        if (1 !== $issueDateTimeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $issueDateTimeElement */
+        $issueDateTimeElement = $issueDateTimeElements->item(0);
+
+        $dateTimeStringElements = $xpath->query('//udt:DateTimeString', $issueDateTimeElement);
+
+        if (1 !== $dateTimeStringElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $dateTimeString = $dateTimeStringElements->item(0)->nodeValue;
+
+        $formattedDateTime = \DateTime::createFromFormat('Ymd', $dateTimeString);
+
+        if (!$formattedDateTime) {
+            throw new \Exception('Malformed date');
+        }
+
+        $formattedDateTime->setTime(0, 0);
+
+        return new static($formattedDateTime);
+    }
 }

@@ -82,4 +82,36 @@ class ApplicableHeaderTradeAgreement
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $applicableHeaderTradeAgreementElements = $xpath->query('//ram:ApplicableHeaderTradeAgreement', $currentElement);
+
+        if (1 !== $applicableHeaderTradeAgreementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $applicableHeaderTradeAgreementElement */
+        $applicableHeaderTradeAgreementElement = $applicableHeaderTradeAgreementElements->item(0);
+
+        $buyerReferenceElements = $xpath->query('//ram:BuyerReference', $applicableHeaderTradeAgreementElement);
+
+        if ($buyerReferenceElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $sellerTradeParty             = SellerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $buyerTradeParty              = BuyerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $buyerOrderReferencedDocument = BuyerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+
+        $applicableHeaderTradeAgreement = new static($sellerTradeParty, $buyerTradeParty, $buyerOrderReferencedDocument);
+
+        if (1 === $buyerReferenceElements->count()) {
+            $buyerReference = $buyerReferenceElements->item(0)->nodeValue;
+
+            $applicableHeaderTradeAgreement->setBuyerReference($buyerReference);
+        }
+
+        return $applicableHeaderTradeAgreement;
+    }
 }

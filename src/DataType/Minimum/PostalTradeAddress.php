@@ -33,4 +33,30 @@ class PostalTradeAddress
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $postalTradeAddressElements = $xpath->query('//ram:PostalTradeAddress', $currentElement);
+
+        if (1 !== $postalTradeAddressElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $postalTradeAddressElement */
+        $postalTradeAddressElement = $postalTradeAddressElements->item(0);
+
+        $countryIdentifierElements = $xpath->query('//ram:CountryID', $postalTradeAddressElement);
+
+        if (1 !== $countryIdentifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $countryIdentifier = CountryAlpha2Code::tryFrom($countryIdentifierElements->item(0)->nodeValue);
+
+        if (null === $countryIdentifier) {
+            throw new \Exception('Wrong country');
+        }
+
+        return new static($countryIdentifier);
+    }
 }

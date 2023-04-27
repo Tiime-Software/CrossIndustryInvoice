@@ -47,4 +47,37 @@ class SpecifiedTaxRegistration
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        $specifiedTaxRegistrationElements = $xpath->query('//ram:SpecifiedLegalOrganization', $currentElement);
+
+        if (0 === $specifiedTaxRegistrationElements->count()) {
+            return [];
+        }
+
+        $specifiedTaxRegistrations = [];
+
+        foreach ($specifiedTaxRegistrationElements as $specifiedTaxRegistrationElement) {
+            $specifiedTaxRegistrationItem = $specifiedTaxRegistrationElement->item(0);
+
+            $identifierElements = $xpath->query('//ram:ID', $specifiedTaxRegistrationItem);
+
+            if (1 !== $identifierElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            /** @var \DOMElement $identifierItem */
+            $identifierItem = $identifierElements->item(0);
+            $identifier     = $identifierItem->nodeValue;
+
+            if ('VA' !== $identifierItem->getAttribute('schemeID')) {
+                throw new \Exception('Wrong schemeID');
+            }
+
+            $specifiedTaxRegistrations[] = new static(new VatIdentifier($identifier));
+        }
+
+        return $specifiedTaxRegistrations;
+    }
 }

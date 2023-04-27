@@ -33,4 +33,26 @@ class BuyerOrderReferencedDocument
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $buyerOrderReferencedDocumentElements = $xpath->query('//ram:BuyerOrderReferencedDocument', $currentElement);
+
+        if (1 !== $buyerOrderReferencedDocumentElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $buyerOrderReferencedDocumentElement */
+        $buyerOrderReferencedDocumentElement = $buyerOrderReferencedDocumentElements->item(0);
+
+        $issuerAssignedIdentifierElements = $xpath->query('//ram:IssuerAssignedID', $buyerOrderReferencedDocumentElement);
+
+        if (1 !== $issuerAssignedIdentifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
+
+        return new static(new PurchaseOrderReference($issuerAssignedIdentifier));
+    }
 }

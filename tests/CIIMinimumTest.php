@@ -139,4 +139,42 @@ class CIIMinimumTest extends TestCase
         $xml = $invoice->toXML();
         $this->assertIsString($xml->saveXML());
     }
+
+    /**
+     * @test
+     * @testdox Create Minimum profile from XML data
+     */
+    public function createMinimumProfileFromXMLData(): void
+    {
+        $invoice = new CrossIndustryInvoice(
+            new ExchangedDocumentContext(
+                new GuidelineSpecifiedDocumentContextParameter(
+                    new SpecificationIdentifier(SpecificationIdentifier::MINIMUM)
+                )
+            ),
+            new ExchangedDocument(
+                new InvoiceIdentifier('FA-1545'),
+                InvoiceTypeCode::COMMERCIAL_INVOICE,
+                new IssueDateTime(new \DateTime())
+            ),
+            new SupplyChainTradeTransaction(
+                new ApplicableHeaderTradeAgreement(
+                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
+                    new BuyerTradeParty('BuyerTradePartyName'),
+                    new BuyerOrderReferencedDocument(new PurchaseOrderReference('A380'))
+                ),
+                new ApplicableHeaderTradeSettlement(
+                    CurrencyCode::EURO,
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(12, 13, 14)
+                )
+            )
+        );
+
+        $xmlInvoice = $invoice->toXML();
+
+        $document = new \DOMDocument();
+        $document->loadXML($xmlInvoice->saveXML());
+
+        CrossIndustryInvoice::fromXML($document);
+    }
 }

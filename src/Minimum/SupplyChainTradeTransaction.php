@@ -57,4 +57,24 @@ class SupplyChainTradeTransaction
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $supplyChainTradeTransactionElements = $xpath->query('//rsm:SupplyChainTradeTransaction', $currentElement);
+
+        if (1 !== $supplyChainTradeTransactionElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $supplyChainTradeTransactionElement */
+        $supplyChainTradeTransactionElement = $supplyChainTradeTransactionElements->item(0);
+
+        // The "ApplicableHeaderTradeDelivery" element is checked to make sure it is present, because it's not in the
+        // constructor (empty object for Minimum profile), we will do nothing with it
+        $applicableHeaderTradeDelivery   = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
+        $applicableHeaderTradeAgreement  = ApplicableHeaderTradeAgreement::fromXML($xpath, $supplyChainTradeTransactionElement);
+        $applicableHeaderTradeSettlement = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
+
+        return new static($applicableHeaderTradeAgreement, $applicableHeaderTradeSettlement);
+    }
 }
