@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Reference\DespatchAdviceReference;
  */
 class DespatchAdviceReferencedDocument
 {
+    protected const XML_NODE = 'ram:DespatchAdviceReferencedDocument';
+
     /**
      * BT-16.
      */
@@ -28,10 +30,36 @@ class DespatchAdviceReferencedDocument
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:DespatchAdviceReferencedDocument');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $despatchAdviceReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $despatchAdviceReferencedDocumentElements->count()) {
+            return null;
+        }
+
+        if ($despatchAdviceReferencedDocumentElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $despatchAdviceReferencedDocumentElement */
+        $despatchAdviceReferencedDocumentElement = $despatchAdviceReferencedDocumentElements->item(0);
+
+        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $despatchAdviceReferencedDocumentElement);
+
+        if (1 !== $issuerAssignedIdentifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
+
+        return new static(new DespatchAdviceReference($issuerAssignedIdentifier));
     }
 }
