@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class ActualDeliverySupplyChainEvent
 {
+    protected const XML_NODE = 'ram:ActualDeliverySupplyChainEvent';
+
     /**
      * BT-72-01.
      */
@@ -26,10 +28,30 @@ class ActualDeliverySupplyChainEvent
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ActualDeliverySupplyChainEvent');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($this->occurrenceDateTime->toXML($document));
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $actualDeliverySupplyChainEventElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $actualDeliverySupplyChainEventElements->count()) {
+            return null;
+        }
+
+        if ($actualDeliverySupplyChainEventElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $actualDeliverySupplyChainEventElement */
+        $actualDeliverySupplyChainEventElement = $actualDeliverySupplyChainEventElements->item(0);
+
+        $occurrenceDateTime = OccurrenceDateTime::fromXML($xpath, $actualDeliverySupplyChainEventElement);
+
+        return new static($occurrenceDateTime);
     }
 }
