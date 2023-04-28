@@ -21,6 +21,8 @@ use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
  */
 class ApplicableHeaderTradeSettlement
 {
+    protected const XML_NODE = 'ram:ApplicableHeaderTradeSettlement';
+
     /**
      * BT-90.
      */

@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Identifier\DebitedAccountIdentifier;
  */
 class PayerPartyDebtorFinancialAccount
 {
+    protected const XML_NODE = 'ram:PayerPartyDebtorFinancialAccount';
+
     /**
      * BT-91.
      */

@@ -11,7 +11,7 @@ use Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerSpecifiedLegalOrganization;
  */
 class BuyerTradeParty
 {
-    private const XML_NODE = 'ram:BuyerTradeParty';
+    protected const XML_NODE = 'ram:BuyerTradeParty';
 
     /**
      * BT-44.

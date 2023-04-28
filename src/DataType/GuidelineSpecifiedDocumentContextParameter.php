@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
  */
 class GuidelineSpecifiedDocumentContextParameter
 {
-    private const XML_NODE = 'ram:GuidelineSpecifiedDocumentContextParameter';
+    protected const XML_NODE = 'ram:GuidelineSpecifiedDocumentContextParameter';
 
     /**
      * BT-24.

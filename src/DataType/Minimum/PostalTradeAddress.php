@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\CountryAlpha2Code;
  */
 class PostalTradeAddress
 {
-    private const XML_NODE = 'ram:PostalTradeAddress';
+    protected const XML_NODE = 'ram:PostalTradeAddress';
 
     /**
      * BT-40.

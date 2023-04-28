@@ -6,7 +6,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
 
 class IssueDateTime
 {
-    private const XML_NODE = 'ram:IssueDateTime';
+    protected const XML_NODE = 'ram:IssueDateTime';
 
     /**
      * BT-2.

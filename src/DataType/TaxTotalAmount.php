@@ -9,7 +9,7 @@ use Tiime\EN16931\SemanticDataType\Amount;
 
 class TaxTotalAmount
 {
-    private const XML_NODE = 'ram:TaxTotalAmount';
+    protected const XML_NODE = 'ram:TaxTotalAmount';
 
     /**
      * BT-110.

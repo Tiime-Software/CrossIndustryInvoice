@@ -12,7 +12,7 @@ use Tiime\CrossIndustryInvoice\DataType\Minimum\SellerSpecifiedLegalOrganization
  */
 class SellerTradeParty
 {
-    private const XML_NODE = 'ram:SellerTradeParty';
+    protected const XML_NODE = 'ram:SellerTradeParty';
 
     /**
      * BT-27.

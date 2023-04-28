@@ -13,7 +13,7 @@ use Tiime\CrossIndustryInvoice\DataType\SellerTaxRepresentativeTradeParty;
  */
 class ApplicableHeaderTradeAgreement
 {
-    private const XML_NODE = 'ram:ApplicableHeaderTradeAgreement';
+    protected const XML_NODE = 'ram:ApplicableHeaderTradeAgreement';
 
     /**
      * BT-10.

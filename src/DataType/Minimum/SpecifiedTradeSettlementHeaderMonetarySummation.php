@@ -12,7 +12,7 @@ use Tiime\EN16931\SemanticDataType\Amount;
  */
 class SpecifiedTradeSettlementHeaderMonetarySummation
 {
-    private const XML_NODE = 'ram:SpecifiedTradeSettlementHeaderMonetarySummation';
+    protected const XML_NODE = 'ram:SpecifiedTradeSettlementHeaderMonetarySummation';
 
     /**
      * BT-109.

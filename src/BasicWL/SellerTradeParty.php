@@ -16,7 +16,7 @@ use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
  */
 class SellerTradeParty
 {
-    private const XML_NODE = 'ram:SellerTradeParty';
+    protected const XML_NODE = 'ram:SellerTradeParty';
 
     /**
      * BT-29.

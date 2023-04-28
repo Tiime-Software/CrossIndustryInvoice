@@ -11,7 +11,7 @@ use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
  */
 class ApplicableHeaderTradeAgreement
 {
-    private const XML_NODE = 'ram:ApplicableHeaderTradeAgreement';
+    protected const XML_NODE = 'ram:ApplicableHeaderTradeAgreement';
 
     /**
      * BT-10.

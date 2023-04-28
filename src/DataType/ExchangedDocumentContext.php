@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class ExchangedDocumentContext
 {
-    private const XML_NODE = 'rsm:ExchangedDocumentContext';
+    protected const XML_NODE = 'rsm:ExchangedDocumentContext';
 
     /**
      * BT-23-00.

@@ -12,7 +12,7 @@ use Tiime\EN16931\DataType\CurrencyCode;
  */
 class ApplicableHeaderTradeSettlement
 {
-    private const XML_NODE = 'ram:ApplicableHeaderTradeSettlement';
+    protected const XML_NODE = 'ram:ApplicableHeaderTradeSettlement';
 
     /**
      * BT-5.

@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Identifier\MandateReferenceIdentifier;
  */
 class SpecifiedTradePaymentTerms
 {
+    protected const XML_NODE = 'ram:SpecifiedTradePaymentTerms';
+
     /**
      * BT-20.
      */

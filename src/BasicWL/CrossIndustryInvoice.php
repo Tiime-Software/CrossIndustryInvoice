@@ -9,7 +9,7 @@ use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 
 class CrossIndustryInvoice
 {
-    private const XML_NODE = 'rsm:CrossIndustryInvoice';
+    protected const XML_NODE = 'rsm:CrossIndustryInvoice';
 
     /**
      * BG-2.
