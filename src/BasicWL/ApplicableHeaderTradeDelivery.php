@@ -103,21 +103,21 @@ class ApplicableHeaderTradeDelivery
         /** @var \DOMElement $applicableHeaderTradeDeliveryElement */
         $applicableHeaderTradeDeliveryElement = $applicableHeaderTradeDeliveryElements->item(0);
 
-        $shipToTradeParty = ShipToTradeParty::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
-        $actualDeliverySupplyChainEvent = ActualDeliverySupplyChainEvent::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
+        $shipToTradeParty                 = ShipToTradeParty::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
+        $actualDeliverySupplyChainEvent   = ActualDeliverySupplyChainEvent::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
         $despatchAdviceReferencedDocument = DespatchAdviceReferencedDocument::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
 
         $applicableHeaderTradeDelivery = new static();
 
-        if ($shipToTradeParty !== null) {
+        if (null !== $shipToTradeParty) {
             $applicableHeaderTradeDelivery->setShipToTradeParty($shipToTradeParty);
         }
 
-        if ($actualDeliverySupplyChainEvent !== null) {
+        if (null !== $actualDeliverySupplyChainEvent) {
             $applicableHeaderTradeDelivery->setActualDeliverySupplyChainEvent($actualDeliverySupplyChainEvent);
         }
 
-        if ($despatchAdviceReferencedDocument !== null) {
+        if (null !== $despatchAdviceReferencedDocument) {
             $applicableHeaderTradeDelivery->setDespatchAdviceReferencedDocument($despatchAdviceReferencedDocument);
         }
 

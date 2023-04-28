@@ -76,7 +76,7 @@ class InvoiceReferencedDocument
 
         $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $invoiceReferencedDocumentElement);
 
-        if ($issuerAssignedIdentifierElements->count() > 1) {
+        if (1 !== $issuerAssignedIdentifierElements->count()) {
             throw new \Exception('Malformed');
         }
 

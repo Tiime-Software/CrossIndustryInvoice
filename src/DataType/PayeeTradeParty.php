@@ -123,32 +123,32 @@ class PayeeTradeParty
         $payeeTradePartyElement = $payeeTradePartyElements->item(0);
 
         $identifierElements = $xpath->query('.//ram:ID', $payeeTradePartyElement);
-        $nameElements = $xpath->query('.//ram:Name', $payeeTradePartyElement);
+        $nameElements       = $xpath->query('.//ram:Name', $payeeTradePartyElement);
 
         if ($identifierElements->count() > 1) {
             throw new \Exception('Malformed');
         }
 
-        if ($nameElements->count() !== 1) {
+        if (1 !== $nameElements->count()) {
             throw new \Exception('Malformed');
         }
 
         $name = $nameElements->item(0)->nodeValue;
 
-        $globalIdentifier = PayeeGlobalIdentifier::fromXML($xpath, $payeeTradePartyElement);
+        $globalIdentifier           = PayeeGlobalIdentifier::fromXML($xpath, $payeeTradePartyElement);
         $specifiedLegalOrganization = PayeeSpecifiedLegalOrganization::fromXML($xpath, $payeeTradePartyElement);
 
         $payeeTradeParty = new static($name);
 
-        if ($identifierElements->count() === 1) {
+        if (1 === $identifierElements->count()) {
             $payeeTradeParty->setIdentifier($identifierElements->item(0)->nodeValue);
         }
 
-        if ($globalIdentifier !== null) {
+        if (null !== $globalIdentifier) {
             $payeeTradeParty->setGlobalIdentifier($globalIdentifier);
         }
 
-        if ($specifiedLegalOrganization !== null) {
+        if (null !== $specifiedLegalOrganization) {
             $payeeTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
         }
 
