@@ -307,7 +307,7 @@ class ApplicableHeaderTradeSettlement
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ApplicableHeaderTradeSettlement');
+        $element = $document->createElement(self::XML_NODE);
 
         if (null !== $this->creditorReferenceIdentifier) {
             $element->appendChild($document->createElement('ram:CreditorReferenceID', $this->creditorReferenceIdentifier->value));
@@ -366,6 +366,107 @@ class ApplicableHeaderTradeSettlement
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        // todo
+        $applicableHeaderTradeSettlementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $applicableHeaderTradeSettlementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $applicableHeaderTradeSettlementElement */
+        $applicableHeaderTradeSettlementElement = $applicableHeaderTradeSettlementElements->item(0);
+
+        $creditorReferenceIdentifierElements = $xpath->query('.//ram:CreditorReferenceID', $applicableHeaderTradeSettlementElement);
+        $paymentReferenceElements            = $xpath->query('.//ram:PaymentReference', $applicableHeaderTradeSettlementElement);
+        $taxCurrencyCodeElements             = $xpath->query('.//ram:TaxCurrencyCode', $applicableHeaderTradeSettlementElement);
+        $invoiceCurrencyCodeElements         = $xpath->query('.//ram:InvoiceCurrencyCode', $applicableHeaderTradeSettlementElement);
+
+        if ($creditorReferenceIdentifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($paymentReferenceElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($taxCurrencyCodeElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $invoiceCurrencyCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $creditorReferenceIdentifier = $creditorReferenceIdentifierElements->item(0)->nodeValue;
+        $paymentReference            = $paymentReferenceElements->item(0)->nodeValue;
+
+        $taxCurrencyCode = null;
+
+        if (1 === $taxCurrencyCodeElements->count()) {
+            $taxCurrencyCode = CurrencyCode::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
+
+            if (null === $taxCurrencyCode) {
+                throw new \Exception('Wrong TaxCurrencyCode');
+            }
+        }
+
+        $invoiceCurrencyCode = CurrencyCode::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
+
+        if (null === $invoiceCurrencyCode) {
+            throw new \Exception('Wrong InvoiceCurrencyCode');
+        }
+
+        $payeeTradeParty                                 = PayeeTradeParty::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $specifiedTradeSettlementPaymentMeans            = SpecifiedTradeSettlementPaymentMeans::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $applicableTradeTaxes                            = HeaderApplicableTradeTax::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $billingSpecifiedPeriod                          = BillingSpecifiedPeriod::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $specifiedTradeAllowances                        = SpecifiedTradeAllowance::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $specifiedTradeCharges                           = SpecifiedTradeCharge::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $specifiedTradePaymentTerms                      = SpecifiedTradePaymentTerms::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $specifiedTradeSettlementHeaderMonetarySummation = SpecifiedTradeSettlementHeaderMonetarySummation::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $invoiceReferencedDocument                       = InvoiceReferencedDocument::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $receivableSpecifiedTradeAccountingAccount       = ReceivableSpecifiedTradeAccountingAccount::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+
+        $applicableHeaderTradeSettlement = new static($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
+
+        $applicableHeaderTradeSettlement->setCreditorReferenceIdentifier($creditorReferenceIdentifier);
+        $applicableHeaderTradeSettlement->setPaymentReference($paymentReference);
+
+        if (null !== $taxCurrencyCode) {
+            $applicableHeaderTradeSettlement->setTaxCurrencyCode($taxCurrencyCode);
+        }
+
+        if (null !== $payeeTradeParty) {
+            $applicableHeaderTradeSettlement->setPayeeTradeParty($payeeTradeParty);
+        }
+
+        if (null !== $specifiedTradeSettlementPaymentMeans) {
+            $applicableHeaderTradeSettlement->setSpecifiedTradeSettlementPaymentMeans($specifiedTradeSettlementPaymentMeans);
+        }
+
+        if (null !== $billingSpecifiedPeriod) {
+            $applicableHeaderTradeSettlement->setBillingSpecifiedPeriod($billingSpecifiedPeriod);
+        }
+
+        if (\count($specifiedTradeAllowances) > 0) {
+            $applicableHeaderTradeSettlement->setSpecifiedTradeAllowances($specifiedTradeAllowances);
+        }
+
+        if (\count($specifiedTradeCharges) > 0) {
+            $applicableHeaderTradeSettlement->setSpecifiedTradeCharges($specifiedTradeCharges);
+        }
+
+        if (null !== $specifiedTradePaymentTerms) {
+            $applicableHeaderTradeSettlement->setSpecifiedTradePaymentTerms($specifiedTradePaymentTerms);
+        }
+
+        if (null !== $invoiceReferencedDocument) {
+            $applicableHeaderTradeSettlement->setInvoiceReferencedDocument($invoiceReferencedDocument);
+        }
+
+        if (null !== $receivableSpecifiedTradeAccountingAccount) {
+            $applicableHeaderTradeSettlement->setReceivableSpecifiedTradeAccountingAccount($receivableSpecifiedTradeAccountingAccount);
+        }
+
+        return $applicableHeaderTradeSettlement;
     }
 }

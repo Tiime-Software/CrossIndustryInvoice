@@ -141,4 +141,9 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        // todo
+    }
 }

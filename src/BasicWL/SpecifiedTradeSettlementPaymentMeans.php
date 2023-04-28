@@ -68,7 +68,7 @@ class SpecifiedTradeSettlementPaymentMeans
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedTradeSettlementPaymentMeans');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode->value));
 
@@ -81,5 +81,48 @@ class SpecifiedTradeSettlementPaymentMeans
         }
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $specifiedTradeSettlementPaymentMeansElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $specifiedTradeSettlementPaymentMeansElements->count()) {
+            return null;
+        }
+
+        if ($specifiedTradeSettlementPaymentMeansElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedTradeSettlementPaymentMeansElement */
+        $specifiedTradeSettlementPaymentMeansElement = $specifiedTradeSettlementPaymentMeansElements->item(0);
+
+        $typeCodeElements = $xpath->query('.//ram:TypeCode', $specifiedTradeSettlementPaymentMeansElement);
+
+        if (1 !== $typeCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $typeCode = PaymentMeansCode::tryFrom($typeCodeElements->item(0)->nodeValue);
+
+        if (null === $typeCode) {
+            throw new \Exception('Wrong TypeCode');
+        }
+
+        $payerPartyDebtorFinancialAccount   = PayerPartyDebtorFinancialAccount::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
+        $payeePartyCreditorFinancialAccount = PayeePartyCreditorFinancialAccount::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
+
+        $specifiedTradeSettlementPaymentMeans = new static($typeCode);
+
+        if (null !== $payerPartyDebtorFinancialAccount) {
+            $specifiedTradeSettlementPaymentMeans->setPayerPartyDebtorFinancialAccount($payerPartyDebtorFinancialAccount);
+        }
+
+        if (null !== $payeePartyCreditorFinancialAccount) {
+            $specifiedTradeSettlementPaymentMeans->setPayeePartyCreditorFinancialAccount($payeePartyCreditorFinancialAccount);
+        }
+
+        return $specifiedTradeSettlementPaymentMeans;
     }
 }

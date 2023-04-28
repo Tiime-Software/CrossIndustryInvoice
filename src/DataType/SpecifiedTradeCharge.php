@@ -150,4 +150,9 @@ class SpecifiedTradeCharge
 
         return $element;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        // todo
+    }
 }
