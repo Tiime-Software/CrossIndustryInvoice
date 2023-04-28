@@ -46,4 +46,9 @@ class EndDateTime
 
         return $element;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        // todo
+    }
 }
