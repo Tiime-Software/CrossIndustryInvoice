@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Tiime\CrossIndustryInvoice;
+namespace Tiime\CrossIndustryInvoice\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
