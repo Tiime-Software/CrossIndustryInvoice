@@ -165,9 +165,7 @@ class ApplicableHeaderTradeAgreement
         $applicableHeaderTradeAgreement = new static($sellerTradeParty, $buyerTradeParty);
 
         if (1 === $buyerReferenceElements->count()) {
-            $buyerReference = $buyerReferenceElements->item(0)->nodeValue;
-
-            $applicableHeaderTradeAgreement->setBuyerReference($buyerReference);
+            $applicableHeaderTradeAgreement->setBuyerReference($buyerReferenceElements->item(0)->nodeValue);
         }
 
         if (null !== $sellerTaxRepresentativeTradeParty) {
