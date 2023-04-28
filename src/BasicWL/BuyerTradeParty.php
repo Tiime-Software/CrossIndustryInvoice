@@ -16,6 +16,8 @@ use Tiime\EN16931\DataType\Identifier\BuyerIdentifier;
  */
 class BuyerTradeParty
 {
+    protected const XML_NODE = 'ram:BuyerTradeParty';
+
     /**
      * BT-46.
      */
@@ -129,7 +131,7 @@ class BuyerTradeParty
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:BuyerTradeParty');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         if (null !== $this->identifier) {
             $currentNode->appendChild($document->createElement('ram:ID', $this->identifier->value));
@@ -160,6 +162,15 @@ class BuyerTradeParty
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        // todo
+        $buyerTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $buyerTradePartyElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $buyerTradePartyElement */
+        $buyerTradePartyElement = $buyerTradePartyElements->item(0);
+
+        // ?BuyerIdentifier $identifier;
     }
 }

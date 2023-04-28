@@ -121,6 +121,10 @@ class SellerTradeParty
         $specifiedLegalOrganization = SellerSpecifiedLegalOrganization::fromXML($xpath, $sellerTradePartyElement);
         $specifiedTaxRegistrations  = SpecifiedTaxRegistration::fromXML($xpath, $sellerTradePartyElement);
 
+        if (null === $postalTradeAddress) {
+            throw new \Exception('Malformed');
+        }
+
         $sellerTradeParty = new static($name, $postalTradeAddress);
 
         if (null !== $specifiedLegalOrganization) {

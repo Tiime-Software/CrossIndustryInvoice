@@ -37,7 +37,12 @@ class PostalTradeAddress
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    /**
+     * PostalTradeAddress is mandatory everywhere except for "ShipToTradeParty" which is optional
+     * BasicWL\PostalTradeAddress have to return ?static
+     * Because of the heritage, Minimum\PostalTradeAddress have to return ?static too.
+     */
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
         $postalTradeAddressElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
