@@ -17,6 +17,11 @@
             "Tiime\\CrossIndustryInvoice\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tiime\\CrossIndustryInvoice\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Lucas-Gerard",
