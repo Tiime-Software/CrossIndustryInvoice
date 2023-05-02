@@ -12,6 +12,8 @@ use Tiime\EN16931\SemanticDataType\Percentage;
  */
 class CategoryTradeTax
 {
+    protected const XML_NODE = 'ram:CategoryTradeTax';
+
     /**
      * BT-95-0.
      */
@@ -58,15 +60,62 @@ class CategoryTradeTax
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:CategoryTradeTax');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
-        $element->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
+        $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
-        if ($this->rateApplicablePercent instanceof Percentage) {
-            $element->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->rateApplicablePercent->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
+
+        if (null !== $this->rateApplicablePercent) {
+            $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->rateApplicablePercent->getValueRounded()));
         }
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $categoryTradeTaxElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $categoryTradeTaxElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $categoryTradeTaxElement */
+        $categoryTradeTaxElement = $categoryTradeTaxElements->item(0);
+
+        $typeCodeElements              = $xpath->query('.//ram:TypeCode', $categoryTradeTaxElement);
+        $categoryCodeElements          = $xpath->query('.//ram:CategoryCode', $categoryTradeTaxElement);
+        $rateApplicablePercentElements = $xpath->query('.//ram:RateApplicablePercent', $categoryTradeTaxElement);
+
+        if (1 !== $typeCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $categoryCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($rateApplicablePercentElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $categoryCode = VatCategory::tryFrom($categoryCodeElements->item(0)->nodeValue);
+
+        if (null === $categoryCode) {
+            throw new \Exception('Wrong CategoryCode');
+        }
+
+        if ('VAT' !== $typeCodeElements->item(0)->nodeValue) {
+            throw new \Exception('Wrong TypeCode');
+        }
+
+        $categoryTradeTax = new static($categoryCode);
+
+        if (1 === $rateApplicablePercentElements->count()) {
+            $categoryTradeTax->setRateApplicablePercent(new Percentage((float) $rateApplicablePercentElements->item(0)->nodeValue));
+        }
+
+        return $categoryTradeTax;
     }
 }
