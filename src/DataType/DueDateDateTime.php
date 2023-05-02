@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class DueDateDateTime
 {
+    protected const XML_NODE = 'ram:DueDateDateTime';
+
     /**
      * BT-9.
      */
@@ -39,7 +41,7 @@ class DueDateDateTime
     {
         $element = $document->createElement('ram:DueDateDateTime');
 
-        $dateTimeElement = $document->createElement('ram:DateTimeString', $this->dateTimeString->format('Ymd'));
+        $dateTimeElement = $document->createElement('udt:DateTimeString', $this->dateTimeString->format('Ymd'));
         $dateTimeElement->setAttribute('format', $this->format);
 
         $element->appendChild($dateTimeElement);
@@ -49,6 +51,40 @@ class DueDateDateTime
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        // todo
+        $dueDateDateTimeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $dueDateDateTimeElements->count()) {
+            return null;
+        }
+
+        if ($dueDateDateTimeElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $dueDateDateTimeElement */
+        $dueDateDateTimeElement = $dueDateDateTimeElements->item(0);
+
+        $dateTimeStringElements = $xpath->query('.//udt:DateTimeString', $dueDateDateTimeElement);
+
+        if (1 !== $dateTimeStringElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $dateTimeStringItem = $dateTimeStringElements->item(0);
+        $dateTimeString     = $dateTimeStringItem->nodeValue;
+
+        if ('102' !== $dateTimeStringItem->getAttribute('format')) {
+            throw new \Exception('Wrong format');
+        }
+
+        $formattedDateTime = \DateTime::createFromFormat('Ymd', $dateTimeString);
+
+        if (!$formattedDateTime) {
+            throw new \Exception('Malformed date');
+        }
+
+        $formattedDateTime->setTime(0, 0);
+
+        return new static($formattedDateTime);
     }
 }
