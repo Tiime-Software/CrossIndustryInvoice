@@ -199,8 +199,8 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         $specifiedTradeSettlementHeaderMonetarySummation = new static((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount, (float) $lineTotalAmount);
 
         /** Checks BT-5/BT-6 for BT-110/BT-111 */
-        $invoiceCurrencyCodeElements = $xpath->query('.//ram:InvoiceCurrencyCode', $currentElement); // 1..1
-        $taxCurrencyCodeElements     = $xpath->query('.//ram:TaxCurrencyCode'); // 0..1
+        $invoiceCurrencyCodeElements = $xpath->query('.//ram:InvoiceCurrencyCode', $currentElement);
+        $taxCurrencyCodeElements     = $xpath->query('.//ram:TaxCurrencyCode');
 
         if (1 !== $invoiceCurrencyCodeElements->count()) {
             throw new \Exception('Malformed');
@@ -228,31 +228,31 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
 
         $taxTotalAmountElements = $xpath->query('.//ram:TaxTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
 
-        if ($taxCurrencyCode === null || $invoiceCurrencyCode === $taxCurrencyCode) {
-            /** Same currency code for BT-5 & BT-6, only fill BT-110, no need to fill BT-111 */
-            /** Because we have one currency, one line maximum */
+        if (null === $taxCurrencyCode || $invoiceCurrencyCode === $taxCurrencyCode) {
+            /* Same currency code for BT-5 & BT-6, only fill BT-110, no need to fill BT-111 */
+            /* Because we have one currency, one line maximum */
             if ($taxTotalAmountElements->count() > 1) {
                 throw new \Exception('Malformed');
             }
 
-            if ($taxTotalAmountElements->count() === 1) {
+            if (1 === $taxTotalAmountElements->count()) {
                 $taxTotalAmountItem = $taxTotalAmountElements->item(0);
-                $taxTotalAmount = $taxTotalAmountItem->nodeValue;
-                $currency       = '' !== $taxTotalAmountItem->getAttribute('currencyID') ?
+                $taxTotalAmount     = $taxTotalAmountItem->nodeValue;
+                $currency           = '' !== $taxTotalAmountItem->getAttribute('currencyID') ?
                     CurrencyCode::tryFrom($taxTotalAmountItem->getAttribute('currencyID')) : null;
 
                 $specifiedTradeSettlementHeaderMonetarySummation->setTaxTotalAmount(new TaxTotalAmount((float) $taxTotalAmount, $currency));
             }
         } else {
-            /** Not same currency code for BT-5 & BT-6, have to fill BT-110 & BT-111 */
-            /** Because we have two currencies, two lines maximum */
+            /* Not same currency code for BT-5 & BT-6, have to fill BT-110 & BT-111 */
+            /* Because we have two currencies, two lines maximum */
             if ($taxTotalAmountElements->count() > 2) {
                 throw new \Exception('Malformed');
             }
 
             foreach ($taxTotalAmountElements as $taxTotalAmountElement) {
                 $taxTotalAmount = $taxTotalAmountElement->nodeValue;
-                $currency = '' !== $taxTotalAmountElement->getAttribute('currencyID') ?
+                $currency       = '' !== $taxTotalAmountElement->getAttribute('currencyID') ?
                     CurrencyCode::tryFrom($taxTotalAmountElement->getAttribute('currencyID')) : null;
 
                 if ($currency === $taxCurrencyCode) {
