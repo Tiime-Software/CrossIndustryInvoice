@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class ReceivableSpecifiedTradeAccountingAccount
 {
+    protected const XML_NODE = 'ram:ReceivableSpecifiedTradeAccountingAccount';
+
     /**
      * BT-19.
      */
@@ -26,15 +28,34 @@ class ReceivableSpecifiedTradeAccountingAccount
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ReceivableSpecifiedTradeAccountingAccount');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:ID', $this->identifier));
+        $currentNode->appendChild($document->createElement('ram:ID', $this->identifier));
 
-        return $element;
+        return $currentNode;
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        // todo
+        $receivableSpecifiedTradeAccountingAccountElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $receivableSpecifiedTradeAccountingAccountElements->count()) {
+            return null;
+        }
+
+        if (1 !== $receivableSpecifiedTradeAccountingAccountElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $receivableSpecifiedTradeAccountingAccountElement */
+        $receivableSpecifiedTradeAccountingAccountElement = $receivableSpecifiedTradeAccountingAccountElements->item(0);
+
+        $identifierElements = $xpath->query('.//ram:ID', $receivableSpecifiedTradeAccountingAccountElement);
+
+        if (1 !== $identifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        return new static($identifierElements->item(0)->nodeValue);
     }
 }
