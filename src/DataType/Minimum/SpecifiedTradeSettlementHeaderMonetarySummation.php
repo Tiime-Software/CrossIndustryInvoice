@@ -38,12 +38,11 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         float $taxBasisTotalAmount,
         float $grandTotalAmount,
         float $duePayableAmount,
-        TaxTotalAmount $taxTotalAmount = null
     ) {
         $this->taxBasisTotalAmount = new Amount($taxBasisTotalAmount);
         $this->grandTotalAmount    = new Amount($grandTotalAmount);
         $this->duePayableAmount    = new Amount($duePayableAmount);
-        $this->taxTotalAmount      = $taxTotalAmount;
+        $this->taxTotalAmount      = null;
     }
 
     public function getTaxBasisTotalAmount(): float
@@ -54,6 +53,11 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
     public function getTaxTotalAmount(): ?TaxTotalAmount
     {
         return $this->taxTotalAmount;
+    }
+
+    public function setTaxTotalAmount(?TaxTotalAmount $taxTotalAmount): void
+    {
+        $this->taxTotalAmount = $taxTotalAmount;
     }
 
     public function getGrandTotalAmount(): float

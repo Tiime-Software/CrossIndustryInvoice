@@ -402,7 +402,7 @@ class ApplicableHeaderTradeSettlement
         $taxCurrencyCode = null;
 
         if (1 === $taxCurrencyCodeElements->count()) {
-            $taxCurrencyCode = CurrencyCode::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
+            $taxCurrencyCode = CurrencyCode::tryFrom($taxCurrencyCodeElements->item(0)->nodeValue);
 
             if (null === $taxCurrencyCode) {
                 throw new \Exception('Wrong TaxCurrencyCode');
