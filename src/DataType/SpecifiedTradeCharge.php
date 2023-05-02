@@ -23,7 +23,7 @@ class SpecifiedTradeCharge
     /**
      * BT-101.
      */
-    private ?Percentage $calculationPercentage;
+    private ?Percentage $calculationPercent;
 
     /**
      * BT-100.
@@ -52,13 +52,13 @@ class SpecifiedTradeCharge
 
     public function __construct(float $actualAmount, CategoryTradeTax $categoryTradeTax)
     {
-        $this->chargeIndicator       = new ChargeIndicator();
-        $this->actualAmount          = new Amount($actualAmount);
-        $this->categoryTradeTax      = $categoryTradeTax;
-        $this->calculationPercentage = null;
-        $this->basisAmount           = null;
-        $this->reasonCode            = null;
-        $this->reason                = null;
+        $this->chargeIndicator    = new ChargeIndicator();
+        $this->actualAmount       = new Amount($actualAmount);
+        $this->categoryTradeTax   = $categoryTradeTax;
+        $this->calculationPercent = null;
+        $this->basisAmount        = null;
+        $this->reasonCode         = null;
+        $this->reason             = null;
     }
 
     public function getChargeIndicator(): ChargeIndicator
@@ -66,14 +66,14 @@ class SpecifiedTradeCharge
         return $this->chargeIndicator;
     }
 
-    public function getCalculationPercentage(): ?float
+    public function getCalculationPercent(): ?float
     {
-        return $this->calculationPercentage?->getValueRounded();
+        return $this->calculationPercent?->getValueRounded();
     }
 
-    public function setCalculationPercentage(?Percentage $calculationPercentage): static
+    public function setCalculationPercent(?float $calculationPercent): static
     {
-        $this->calculationPercentage = $calculationPercentage;
+        $this->calculationPercent = \is_float($calculationPercent) ? new Percentage($calculationPercent) : null;
 
         return $this;
     }
@@ -83,9 +83,9 @@ class SpecifiedTradeCharge
         return $this->basisAmount?->getValueRounded();
     }
 
-    public function setBasisAmount(?Amount $basisAmount): static
+    public function setBasisAmount(?float $basisAmount): static
     {
-        $this->basisAmount = $basisAmount;
+        $this->basisAmount = \is_float($basisAmount) ? new Amount($basisAmount) : null;
 
         return $this;
     }
@@ -130,8 +130,8 @@ class SpecifiedTradeCharge
 
         $currentNode->appendChild($this->chargeIndicator->toXML($document));
 
-        if (null !== $this->calculationPercentage) {
-            $currentNode->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercentage->getValueRounded()));
+        if (null !== $this->calculationPercent) {
+            $currentNode->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercent->getValueRounded()));
         }
 
         if (null !== $this->basisAmount) {
@@ -172,13 +172,13 @@ class SpecifiedTradeCharge
         $specifiedTradeCharges = [];
 
         foreach ($specifiedTradeChargeElements as $specifiedTradeChargeElement) {
-            $calculationPercentageElements = $xpath->query('.//ram:CalculationPercent', $specifiedTradeChargeElement);
-            $basisAmountElements           = $xpath->query('.//ram:CalculationPercent', $specifiedTradeChargeElement);
-            $actualAmountElements          = $xpath->query('.//ram:ActualAmount', $specifiedTradeChargeElement);
-            $reasonCodeElements            = $xpath->query('.//ram:ReasonCode', $specifiedTradeChargeElement);
-            $reasonElements                = $xpath->query('.//ram:Reason', $specifiedTradeChargeElement);
+            $calculationPercentElements = $xpath->query('.//ram:CalculationPercent', $specifiedTradeChargeElement);
+            $basisAmountElements        = $xpath->query('.//ram:BasisAmount', $specifiedTradeChargeElement);
+            $actualAmountElements       = $xpath->query('.//ram:ActualAmount', $specifiedTradeChargeElement);
+            $reasonCodeElements         = $xpath->query('.//ram:ReasonCode', $specifiedTradeChargeElement);
+            $reasonElements             = $xpath->query('.//ram:Reason', $specifiedTradeChargeElement);
 
-            if ($calculationPercentageElements->count() > 1) {
+            if ($calculationPercentElements->count() > 1) {
                 throw new \Exception('Malformed');
             }
 
@@ -204,16 +204,22 @@ class SpecifiedTradeCharge
 
             $specifiedTradeCharge = new static((float) $actualAmount, $categoryTradeTax);
 
-            if (1 === $calculationPercentageElements->count()) {
-                $specifiedTradeCharge->setCalculationPercentage($calculationPercentageElements->item(0)->nodeValue);
+            if (1 === $calculationPercentElements->count()) {
+                $specifiedTradeCharge->setCalculationPercent((float) $calculationPercentElements->item(0)->nodeValue);
             }
 
             if (1 === $basisAmountElements->count()) {
-                $specifiedTradeCharge->setBasisAmount($basisAmountElements->item(0)->nodeValue);
+                $specifiedTradeCharge->setBasisAmount((float) $basisAmountElements->item(0)->nodeValue);
             }
 
             if (1 === $reasonCodeElements->count()) {
-                $specifiedTradeCharge->setReasonCode($reasonCodeElements->item(0)->nodeValue);
+                $reasonCode = ChargeReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);
+
+                if (null === $reasonCode) {
+                    throw new \Exception('Wrong ReasonCode');
+                }
+
+                $specifiedTradeCharge->setReasonCode($reasonCode);
             }
 
             if (1 === $reasonElements->count()) {
