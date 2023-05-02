@@ -74,7 +74,7 @@ class SupplyChainTradeTransaction
 
         // The "ApplicableHeaderTradeDelivery" element is checked to make sure it is present, because it's not in the
         // constructor (empty object for Minimum profile), we will do nothing with it
-        $applicableHeaderTradeDelivery   = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
+        ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
         $applicableHeaderTradeAgreement  = ApplicableHeaderTradeAgreement::fromXML($xpath, $supplyChainTradeTransactionElement);
         $applicableHeaderTradeSettlement = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
 
