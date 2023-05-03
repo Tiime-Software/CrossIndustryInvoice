@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
-use Tiime\EN16931\DataType\Identifier\PaymentAccountIdentifier;
-
 class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeePartyCreditorFinancialAccount
 {
     /**
@@ -13,14 +11,10 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
      */
     private ?string $accountName;
 
-    public function __construct(
-        ?PaymentAccountIdentifier $ibanIdentifier = null,
-        ?string $accountName = null,
-        ?PaymentAccountIdentifier $proprietaryIdentifier = null
-    ) {
-        parent::__construct($ibanIdentifier, $proprietaryIdentifier);
-
-        $this->accountName = $accountName;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->accountName = null;
     }
 
     public function getAccountName(): ?string

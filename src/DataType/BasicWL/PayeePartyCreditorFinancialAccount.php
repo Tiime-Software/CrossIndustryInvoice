@@ -23,12 +23,10 @@ class PayeePartyCreditorFinancialAccount
      */
     private ?PaymentAccountIdentifier $proprietaryIdentifier;
 
-    public function __construct(
-        ?PaymentAccountIdentifier $ibanIdentifier = null,
-        ?PaymentAccountIdentifier $proprietaryIdentifier = null
-    ) {
-        $this->ibanIdentifier        = $ibanIdentifier;
-        $this->proprietaryIdentifier = $proprietaryIdentifier;
+    public function __construct()
+    {
+        $this->ibanIdentifier        = null;
+        $this->proprietaryIdentifier = null;
     }
 
     public function getIbanIdentifier(): ?PaymentAccountIdentifier

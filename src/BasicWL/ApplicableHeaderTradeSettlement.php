@@ -124,11 +124,11 @@ class ApplicableHeaderTradeSettlement
         $this->payeeTradeParty                                 = null;
         $this->specifiedTradeSettlementPaymentMeans            = null;
         $this->billingSpecifiedPeriod                          = null;
-        $this->specifiedTradeAllowances                        = [];
-        $this->specifiedTradeCharges                           = [];
         $this->specifiedTradePaymentTerms                      = null;
         $this->invoiceReferencedDocument                       = null;
         $this->receivableSpecifiedTradeAccountingAccount       = null;
+        $this->specifiedTradeAllowances                        = [];
+        $this->specifiedTradeCharges                           = [];
     }
 
     public function getCreditorReferenceIdentifier(): ?BankAssignedCreditorIdentifier
