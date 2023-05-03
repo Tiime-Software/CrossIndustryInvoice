@@ -46,23 +46,12 @@ class TaxTotalAmount
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    /** Doesn't take DOMXPath as an argument like other classes to fit the use of this method for Minumum and BasicWL profiles */
+    public static function fromXML(\DOMElement $currentElement): static
     {
-        $taxTotalAmountElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
-
-        if (0 === $taxTotalAmountElements->count()) {
-            return null;
-        }
-
-        if ($taxTotalAmountElements->count() > 1) {
-            throw new \Exception('Malformed');
-        }
-
-        /** @var \DOMElement $valueItem */
-        $valueItem = $taxTotalAmountElements->item(0);
-        $value     = $valueItem->nodeValue;
-
-        $currencyIdentifier = CurrencyCode::tryFrom($valueItem->getAttribute('currencyID'));
+        $value              = $currentElement->nodeValue;
+        $currencyIdentifier = '' !== $currentElement->getAttribute('currencyID') ?
+            CurrencyCode::tryFrom($currentElement->getAttribute('currencyID')) : null;
 
         if (null === $currencyIdentifier) {
             throw new \Exception('Wrong currencyID');

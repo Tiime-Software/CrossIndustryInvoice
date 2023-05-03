@@ -236,12 +236,12 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
             }
 
             if (1 === $taxTotalAmountElements->count()) {
+                /** @var \DOMElement $taxTotalAmountItem */
                 $taxTotalAmountItem = $taxTotalAmountElements->item(0);
-                $taxTotalAmount     = $taxTotalAmountItem->nodeValue;
-                $currency           = '' !== $taxTotalAmountItem->getAttribute('currencyID') ?
-                    CurrencyCode::tryFrom($taxTotalAmountItem->getAttribute('currencyID')) : null;
 
-                $specifiedTradeSettlementHeaderMonetarySummation->setTaxTotalAmount(new TaxTotalAmount((float) $taxTotalAmount, $currency));
+                $taxTotalAmount = TaxTotalAmount::fromXML($taxTotalAmountItem);
+
+                $specifiedTradeSettlementHeaderMonetarySummation->setTaxTotalAmount($taxTotalAmount);
             }
         } else {
             /* Not same currency code for BT-5 & BT-6, have to fill BT-110 & BT-111 */
@@ -250,17 +250,16 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
                 throw new \Exception('Malformed');
             }
 
+            /** @var \DOMElement $taxTotalAmountElement */
             foreach ($taxTotalAmountElements as $taxTotalAmountElement) {
-                $taxTotalAmount = $taxTotalAmountElement->nodeValue;
-                $currency       = '' !== $taxTotalAmountElement->getAttribute('currencyID') ?
-                    CurrencyCode::tryFrom($taxTotalAmountElement->getAttribute('currencyID')) : null;
+                $taxTotalAmount = TaxTotalAmount::fromXML($taxTotalAmountElement);
 
-                if ($currency === $taxCurrencyCode) {
-                    $specifiedTradeSettlementHeaderMonetarySummation->setTaxTotalAmountCurrency(new TaxTotalAmount((float) $taxTotalAmount, $currency));
+                if ($taxTotalAmount->getCurrencyIdentifier() === $taxCurrencyCode) {
+                    $specifiedTradeSettlementHeaderMonetarySummation->setTaxTotalAmountCurrency($taxTotalAmount);
                 }
 
-                if ($currency === $invoiceCurrencyCode) {
-                    $specifiedTradeSettlementHeaderMonetarySummation->setTaxTotalAmount(new TaxTotalAmount((float) $taxTotalAmount, $currency));
+                if ($taxTotalAmount->getCurrencyIdentifier() === $invoiceCurrencyCode) {
+                    $specifiedTradeSettlementHeaderMonetarySummation->setTaxTotalAmount($taxTotalAmount);
                 }
             }
         }
