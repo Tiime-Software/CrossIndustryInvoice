@@ -11,6 +11,8 @@ use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
  */
 class SellerTaxRepresentativeTradeParty
 {
+    protected const XML_NODE = 'ram:SellerTaxRepresentativeTradeParty';
+
     /**
      * BT-62.
      */
@@ -50,11 +52,12 @@ class SellerTaxRepresentativeTradeParty
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SellerTaxRepresentativeTradeParty');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
         $currentNode->appendChild($this->postalTradeAddress->toXML($document));
+
         $currentNode->appendChild($this->specifiedTaxRegistration->toXML($document));
 
         return $currentNode;
@@ -62,6 +65,38 @@ class SellerTaxRepresentativeTradeParty
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        // todo
+        $sellerTaxRepresentativeTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $sellerTaxRepresentativeTradePartyElements->count()) {
+            return null;
+        }
+
+        if ($sellerTaxRepresentativeTradePartyElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $sellerTaxRepresentativeTradePartyElement */
+        $sellerTaxRepresentativeTradePartyElement = $sellerTaxRepresentativeTradePartyElements->item(0);
+
+        $nameElements = $xpath->query('.//ram:Name', $sellerTaxRepresentativeTradePartyElement);
+
+        if (1 !== $nameElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $name = $nameElements->item(0)->nodeValue;
+
+        $postalTradeAddress        = PostalTradeAddress::fromXML($xpath, $sellerTaxRepresentativeTradePartyElement);
+        $specifiedTaxRegistrations = SpecifiedTaxRegistration::fromXML($xpath, $sellerTaxRepresentativeTradePartyElement);
+
+        if (null === $postalTradeAddress) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== \count($specifiedTaxRegistrations)) {
+            throw new \Exception('Malformed');
+        }
+
+        return new static($name, $postalTradeAddress, $specifiedTaxRegistrations[0]);
     }
 }

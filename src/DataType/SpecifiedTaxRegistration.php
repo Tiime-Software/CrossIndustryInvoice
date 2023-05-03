@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Identifier\VatIdentifier;
  */
 class SpecifiedTaxRegistration
 {
+    protected const XML_NODE = 'ram:SpecifiedTaxRegistration';
+
     /**
      * BT-48 or BT-63 or BT-31.
      */
@@ -39,7 +41,7 @@ class SpecifiedTaxRegistration
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SpecifiedTaxRegistration', $this->identifier->getValue());
+        $currentNode = $document->createElement(self::XML_NODE, $this->identifier->getValue());
         $currentNode->setAttribute('schemeID', $this->schemeIdentifier);
 
         return $currentNode;
@@ -47,6 +49,24 @@ class SpecifiedTaxRegistration
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        // todo
+        $specifiedTaxRegistrationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $specifiedTaxRegistrationElements->count()) {
+            return [];
+        }
+
+        $specifiedTaxRegistrations = [];
+
+        foreach ($specifiedTaxRegistrationElements as $specifiedTaxRegistrationElement) {
+            $identifier = $specifiedTaxRegistrationElement->nodeValue;
+
+            if ('VA' !== $specifiedTaxRegistrationElement->getAttribute('schemeID')) {
+                throw new \Exception('Wrong schemeID');
+            }
+
+            $specifiedTaxRegistrations[] = new static(new VatIdentifier($identifier));
+        }
+
+        return $specifiedTaxRegistrations;
     }
 }
