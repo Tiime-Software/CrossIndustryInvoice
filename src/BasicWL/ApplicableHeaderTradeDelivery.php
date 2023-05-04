@@ -13,6 +13,8 @@ use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
  */
 class ApplicableHeaderTradeDelivery
 {
+    protected const XML_NODE = 'ram:ApplicableHeaderTradeDelivery';
+
     /**
      * BG-13.
      */
@@ -73,7 +75,7 @@ class ApplicableHeaderTradeDelivery
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ApplicableHeaderTradeDelivery');
+        $element = $document->createElement(self::XML_NODE);
 
         if ($this->shipToTradeParty instanceof ShipToTradeParty) {
             $element->appendChild($this->shipToTradeParty->toXML($document));
@@ -88,5 +90,37 @@ class ApplicableHeaderTradeDelivery
         }
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $applicableHeaderTradeDeliveryElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $applicableHeaderTradeDeliveryElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $applicableHeaderTradeDeliveryElement */
+        $applicableHeaderTradeDeliveryElement = $applicableHeaderTradeDeliveryElements->item(0);
+
+        $shipToTradeParty                 = ShipToTradeParty::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
+        $actualDeliverySupplyChainEvent   = ActualDeliverySupplyChainEvent::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
+        $despatchAdviceReferencedDocument = DespatchAdviceReferencedDocument::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
+
+        $applicableHeaderTradeDelivery = new static();
+
+        if (null !== $shipToTradeParty) {
+            $applicableHeaderTradeDelivery->setShipToTradeParty($shipToTradeParty);
+        }
+
+        if (null !== $actualDeliverySupplyChainEvent) {
+            $applicableHeaderTradeDelivery->setActualDeliverySupplyChainEvent($actualDeliverySupplyChainEvent);
+        }
+
+        if (null !== $despatchAdviceReferencedDocument) {
+            $applicableHeaderTradeDelivery->setDespatchAdviceReferencedDocument($despatchAdviceReferencedDocument);
+        }
+
+        return $applicableHeaderTradeDelivery;
     }
 }

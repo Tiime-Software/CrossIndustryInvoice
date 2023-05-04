@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Identifier\MandateReferenceIdentifier;
  */
 class SpecifiedTradePaymentTerms
 {
+    protected const XML_NODE = 'ram:SpecifiedTradePaymentTerms';
+
     /**
      * BT-20.
      */
@@ -71,7 +73,7 @@ class SpecifiedTradePaymentTerms
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedTradePaymentTerms');
+        $element = $document->createElement(self::XML_NODE);
 
         if (\is_string($this->description)) {
             $element->appendChild($document->createElement('ram:Description', $this->description));
@@ -86,5 +88,50 @@ class SpecifiedTradePaymentTerms
         }
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $specifiedTradePaymentTermsElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $specifiedTradePaymentTermsElements->count()) {
+            return null;
+        }
+
+        if ($specifiedTradePaymentTermsElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedTradePaymentTermsElement */
+        $specifiedTradePaymentTermsElement = $specifiedTradePaymentTermsElements->item(0);
+
+        $descriptionElements                  = $xpath->query('.//ram:Description', $specifiedTradePaymentTermsElement);
+        $directDebitMandateIdentifierElements = $xpath->query('.//ram:DirectDebitMandateID', $specifiedTradePaymentTermsElement);
+
+        if ($descriptionElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($directDebitMandateIdentifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $dueDateDateTime = DueDateDateTime::fromXML($xpath, $specifiedTradePaymentTermsElement);
+
+        $specifiedTradePaymentTerms = new static();
+
+        if (1 === $descriptionElements->count()) {
+            $specifiedTradePaymentTerms->setDescription($descriptionElements->item(0)->nodeValue);
+        }
+
+        if (1 === $directDebitMandateIdentifierElements->count()) {
+            $specifiedTradePaymentTerms->setDirectDebitMandateIdentifier($directDebitMandateIdentifierElements->item(0)->nodeValue);
+        }
+
+        if (null !== $dueDateDateTime) {
+            $specifiedTradePaymentTerms->setDueDateDateTime($dueDateDateTime);
+        }
+
+        return $specifiedTradePaymentTerms;
     }
 }

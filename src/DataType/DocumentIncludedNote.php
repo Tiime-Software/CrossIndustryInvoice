@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\InvoiceNoteCode;
  */
 class DocumentIncludedNote
 {
+    protected const XML_NODE = 'ram:IncludedNote';
+
     /**
      * BT-22.
      */
@@ -46,14 +48,56 @@ class DocumentIncludedNote
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:IncludedNote');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:Content', $this->content));
+        $currentNode->appendChild($document->createElement('ram:Content', $this->content));
 
-        if ($this->subjectCode instanceof InvoiceNoteCode) {
-            $element->appendChild($document->createElement('ram:SubjectCode', $this->subjectCode->value));
+        if (null !== $this->subjectCode) {
+            $currentNode->appendChild($document->createElement('ram:SubjectCode', $this->subjectCode->value));
         }
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        $documentIncludedNoteElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $documentIncludedNoteElements->count()) {
+            return [];
+        }
+
+        $documentIncludedNotes = [];
+
+        foreach ($documentIncludedNoteElements as $documentIncludedNoteElement) {
+            $contentElements     = $xpath->query('.//ram:Content', $documentIncludedNoteElement);
+            $subjectCodeElements = $xpath->query('.//ram:SubjectCode', $documentIncludedNoteElement);
+
+            if (1 !== $contentElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($subjectCodeElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            $content = $contentElements->item(0)->nodeValue;
+
+            $documentIncludedNote = new static($content);
+
+            if (1 === $subjectCodeElements->count()) {
+                $subjectCode = InvoiceNoteCode::tryFrom($subjectCodeElements->item(0)->nodeValue);
+
+                if (null === $subjectCode) {
+                    throw new \Exception('Wrong SubjectCode');
+                }
+
+                $documentIncludedNote->setSubjectCode($subjectCode);
+            }
+
+            $documentIncludedNotes[] = $documentIncludedNote;
+        }
+
+        return $documentIncludedNotes;
     }
 }

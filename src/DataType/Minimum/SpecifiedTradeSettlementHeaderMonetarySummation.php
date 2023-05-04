@@ -12,6 +12,8 @@ use Tiime\EN16931\SemanticDataType\Amount;
  */
 class SpecifiedTradeSettlementHeaderMonetarySummation
 {
+    protected const XML_NODE = 'ram:SpecifiedTradeSettlementHeaderMonetarySummation';
+
     /**
      * BT-109.
      */
@@ -36,12 +38,11 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         float $taxBasisTotalAmount,
         float $grandTotalAmount,
         float $duePayableAmount,
-        TaxTotalAmount $taxTotalAmount = null
     ) {
         $this->taxBasisTotalAmount = new Amount($taxBasisTotalAmount);
         $this->grandTotalAmount    = new Amount($grandTotalAmount);
         $this->duePayableAmount    = new Amount($duePayableAmount);
-        $this->taxTotalAmount      = $taxTotalAmount;
+        $this->taxTotalAmount      = null;
     }
 
     public function getTaxBasisTotalAmount(): float
@@ -52,6 +53,11 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
     public function getTaxTotalAmount(): ?TaxTotalAmount
     {
         return $this->taxTotalAmount;
+    }
+
+    public function setTaxTotalAmount(?TaxTotalAmount $taxTotalAmount): void
+    {
+        $this->taxTotalAmount = $taxTotalAmount;
     }
 
     public function getGrandTotalAmount(): float
@@ -66,7 +72,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedTradeSettlementHeaderMonetarySummation');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:TaxBasisTotalAmount', (string) $this->taxBasisTotalAmount->getValueRounded()));
 
@@ -82,7 +88,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query('.//ram:SpecifiedTradeSettlementHeaderMonetarySummation', $currentElement);
+        $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $specifiedTradeSettlementHeaderMonetarySummationElements->count()) {
             throw new \Exception('Malformed');
@@ -111,8 +117,23 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         $grandTotalAmount    = $grandTotalAmountElements->item(0)->nodeValue;
         $duePayableAmount    = $duePayableAmountElements->item(0)->nodeValue;
 
-        $taxTotalAmount = TaxTotalAmount::fromXML($xpath, $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $taxTotalAmountElements = $xpath->query('.//ram:TaxTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
 
-        return new static((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount, $taxTotalAmount);
+        if ($taxTotalAmountElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $specifiedTradeSettlementHeaderMonetarySummation = new static((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount);
+
+        if (1 === $taxTotalAmountElements->count()) {
+            /** @var \DOMElement $taxTotalAmountItem */
+            $taxTotalAmountItem = $taxTotalAmountElements->item(0);
+
+            $taxTotalAmount = TaxTotalAmount::fromXML($taxTotalAmountItem);
+
+            $specifiedTradeSettlementHeaderMonetarySummation->setTaxTotalAmount($taxTotalAmount);
+        }
+
+        return $specifiedTradeSettlementHeaderMonetarySummation;
     }
 }

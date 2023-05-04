@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
  */
 class StartDateTime
 {
+    protected const XML_NODE = 'ram:StartDateTime';
+
     /**
      * BT-73.
      */
@@ -37,13 +39,52 @@ class StartDateTime
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:StartDateTime');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $dateTimeElement = $document->createElement('ram:DateTimeString', $this->dateTimeString->format('Ymd'));
+        $dateTimeElement = $document->createElement('udt:DateTimeString', $this->dateTimeString->format('Ymd'));
         $dateTimeElement->setAttribute('format', $this->format);
 
-        $element->appendChild($dateTimeElement);
+        $currentNode->appendChild($dateTimeElement);
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $startDateTimeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $startDateTimeElements->count()) {
+            return null;
+        }
+
+        if ($startDateTimeElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $startDateTimeElement */
+        $startDateTimeElement = $startDateTimeElements->item(0);
+
+        $dateTimeStringElements = $xpath->query('.//udt:DateTimeString', $startDateTimeElement);
+
+        if (1 !== $dateTimeStringElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $dateTimeStringItem = $dateTimeStringElements->item(0);
+        $dateTimeString     = $dateTimeStringItem->nodeValue;
+
+        if ('102' !== $dateTimeStringItem->getAttribute('format')) {
+            throw new \Exception('Wrong format');
+        }
+
+        $formattedDateTime = \DateTime::createFromFormat('Ymd', $dateTimeString);
+
+        if (!$formattedDateTime) {
+            throw new \Exception('Malformed date');
+        }
+
+        $formattedDateTime->setTime(0, 0);
+
+        return new static($formattedDateTime);
     }
 }

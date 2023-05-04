@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\CountryAlpha2Code;
  */
 class PostalTradeAddress
 {
+    protected const XML_NODE = 'ram:PostalTradeAddress';
+
     /**
      * BT-40.
      */
@@ -28,15 +30,21 @@ class PostalTradeAddress
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:PostalTradeAddress');
+        $currentNode = $document->createElement(self::XML_NODE);
+
         $currentNode->appendChild($document->createElement('ram:CountryID', $this->countryIdentifier->value));
 
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    /**
+     * PostalTradeAddress is mandatory everywhere except for "ShipToTradeParty" which is optional
+     * BasicWL\PostalTradeAddress have to return ?static
+     * Because of the heritage, Minimum\PostalTradeAddress have to return ?static too.
+     */
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        $postalTradeAddressElements = $xpath->query('.//ram:PostalTradeAddress', $currentElement);
+        $postalTradeAddressElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $postalTradeAddressElements->count()) {
             throw new \Exception('Malformed');

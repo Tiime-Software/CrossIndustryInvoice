@@ -12,6 +12,8 @@ use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod\StartDateTime;
  */
 class BillingSpecifiedPeriod
 {
+    protected const XML_NODE = 'ram:BillingSpecifiedPeriod';
+
     /**
      * BT-73-00.
      */
@@ -54,7 +56,7 @@ class BillingSpecifiedPeriod
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:BillingSpecifiedPeriod');
+        $element = $document->createElement(self::XML_NODE);
 
         if ($this->startDateTime instanceof StartDateTime) {
             $element->appendChild($this->startDateTime->toXML($document));
@@ -65,5 +67,36 @@ class BillingSpecifiedPeriod
         }
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $billingSpecifiedPeriodElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $billingSpecifiedPeriodElements->count()) {
+            return null;
+        }
+
+        if ($billingSpecifiedPeriodElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $billingSpecifiedPeriodElement */
+        $billingSpecifiedPeriodElement = $billingSpecifiedPeriodElements->item(0);
+
+        $startDateTime = StartDateTime::fromXML($xpath, $billingSpecifiedPeriodElement);
+        $endDateTime   = EndDateTime::fromXML($xpath, $billingSpecifiedPeriodElement);
+
+        $billingSpecifiedPeriod = new static();
+
+        if (null !== $startDateTime) {
+            $billingSpecifiedPeriod->setStartDateTime($startDateTime);
+        }
+
+        if (null !== $endDateTime) {
+            $billingSpecifiedPeriod->setEndDateTime($endDateTime);
+        }
+
+        return $billingSpecifiedPeriod;
     }
 }

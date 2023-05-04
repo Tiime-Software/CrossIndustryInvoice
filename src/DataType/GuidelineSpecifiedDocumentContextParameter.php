@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
  */
 class GuidelineSpecifiedDocumentContextParameter
 {
+    protected const XML_NODE = 'ram:GuidelineSpecifiedDocumentContextParameter';
+
     /**
      * BT-24.
      */
@@ -28,7 +30,7 @@ class GuidelineSpecifiedDocumentContextParameter
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:GuidelineSpecifiedDocumentContextParameter');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($document->createElement('ram:ID', $this->identifier->value));
 
@@ -37,7 +39,7 @@ class GuidelineSpecifiedDocumentContextParameter
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $guidelineSpecifiedDocumentContextParameterElements = $xpath->query('.//ram:GuidelineSpecifiedDocumentContextParameter', $currentElement);
+        $guidelineSpecifiedDocumentContextParameterElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $guidelineSpecifiedDocumentContextParameterElements->count()) {
             throw new \Exception('Malformed');

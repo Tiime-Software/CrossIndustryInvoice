@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Identifier\VatIdentifier;
  */
 class SpecifiedTaxRegistration
 {
+    protected const XML_NODE = 'ram:SpecifiedTaxRegistration';
+
     /**
      * BT-31.
      */
@@ -39,7 +41,7 @@ class SpecifiedTaxRegistration
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SpecifiedTaxRegistration');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         $identifierNode = $document->createElement('ram:ID', $this->identifier->getValue());
         $identifierNode->setAttribute('schemeID', $this->schemeIdentifier);
@@ -50,7 +52,7 @@ class SpecifiedTaxRegistration
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $specifiedTaxRegistrationElements = $xpath->query('.//ram:SpecifiedTaxRegistration', $currentElement);
+        $specifiedTaxRegistrationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedTaxRegistrationElements->count()) {
             return [];

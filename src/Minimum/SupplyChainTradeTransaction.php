@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\Minimum;
  */
 class SupplyChainTradeTransaction
 {
+    protected const XML_NODE = 'rsm:SupplyChainTradeTransaction';
+
     /**
      * BG-10-00.
      */
@@ -50,7 +52,8 @@ class SupplyChainTradeTransaction
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('rsm:SupplyChainTradeTransaction');
+        $currentNode = $document->createElement(self::XML_NODE);
+
         $currentNode->appendChild($this->applicableHeaderTradeAgreement->toXML($document));
         $currentNode->appendChild($this->applicableHeaderTradeDelivery->toXML($document));
         $currentNode->appendChild($this->applicableHeaderTradeSettlement->toXML($document));
@@ -60,7 +63,7 @@ class SupplyChainTradeTransaction
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $supplyChainTradeTransactionElements = $xpath->query('.//rsm:SupplyChainTradeTransaction', $currentElement);
+        $supplyChainTradeTransactionElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $supplyChainTradeTransactionElements->count()) {
             throw new \Exception('Malformed');
@@ -71,7 +74,7 @@ class SupplyChainTradeTransaction
 
         // The "ApplicableHeaderTradeDelivery" element is checked to make sure it is present, because it's not in the
         // constructor (empty object for Minimum profile), we will do nothing with it
-        $applicableHeaderTradeDelivery   = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
+        ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
         $applicableHeaderTradeAgreement  = ApplicableHeaderTradeAgreement::fromXML($xpath, $supplyChainTradeTransactionElement);
         $applicableHeaderTradeSettlement = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
 

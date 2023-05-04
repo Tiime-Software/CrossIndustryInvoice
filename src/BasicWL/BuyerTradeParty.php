@@ -16,6 +16,8 @@ use Tiime\EN16931\DataType\Identifier\BuyerIdentifier;
  */
 class BuyerTradeParty
 {
+    protected const XML_NODE = 'ram:BuyerTradeParty';
+
     /**
      * BT-46.
      */
@@ -129,7 +131,7 @@ class BuyerTradeParty
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:BuyerTradeParty');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         if (null !== $this->identifier) {
             $currentNode->appendChild($document->createElement('ram:ID', $this->identifier->value));
@@ -156,5 +158,68 @@ class BuyerTradeParty
         }
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $buyerTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $buyerTradePartyElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $buyerTradePartyElement */
+        $buyerTradePartyElement = $buyerTradePartyElements->item(0);
+
+        $identifierElements = $xpath->query('.//ram:ID', $buyerTradePartyElement);
+        $nameElements       = $xpath->query('.//ram:Name', $buyerTradePartyElement);
+
+        if ($identifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $nameElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $name = $nameElements->item(0)->nodeValue;
+
+        $globalIdentifier           = BuyerGlobalIdentifier::fromXML($xpath, $buyerTradePartyElement);
+        $specifiedLegalOrganization = BuyerSpecifiedLegalOrganization::fromXML($xpath, $buyerTradePartyElement);
+        $postalTradeAddress         = PostalTradeAddress::fromXML($xpath, $buyerTradePartyElement);
+        $URIUniversalCommunication  = URIUniversalCommunication::fromXML($xpath, $buyerTradePartyElement);
+        $specifiedTaxRegistration   = SpecifiedTaxRegistration::fromXML($xpath, $buyerTradePartyElement);
+
+        if (null === $postalTradeAddress) {
+            throw new \Exception('Malformed');
+        }
+
+        if (\count($specifiedTaxRegistration) > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $buyerTradeParty = new static($name, $postalTradeAddress);
+
+        if (1 === $identifierElements->count()) {
+            $buyerTradeParty->setIdentifier(new BuyerIdentifier($identifierElements->item(0)->nodeValue));
+        }
+
+        if (null !== $globalIdentifier) {
+            $buyerTradeParty->setGlobalIdentifier($globalIdentifier);
+        }
+
+        if (null !== $specifiedLegalOrganization) {
+            $buyerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
+        }
+
+        if (null !== $URIUniversalCommunication) {
+            $buyerTradeParty->setURIUniversalCommunication($URIUniversalCommunication);
+        }
+
+        if (1 === \count($specifiedTaxRegistration)) {
+            $buyerTradeParty->setSpecifiedTaxRegistration($specifiedTaxRegistration[0]);
+        }
+
+        return $buyerTradeParty;
     }
 }

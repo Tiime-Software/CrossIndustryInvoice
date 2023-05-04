@@ -13,15 +13,17 @@ use Tiime\EN16931\SemanticDataType\Percentage;
  */
 class SpecifiedTradeCharge
 {
+    protected const XML_NODE = 'ram:SpecifiedTradeAllowanceCharge';
+
     /**
      * BG-21-0.
      */
-    private ChargeIndicator $chargeChargeIndicator;
+    private ChargeIndicator $chargeIndicator;
 
     /**
      * BT-101.
      */
-    private ?Percentage $calculationPercentage;
+    private ?Percentage $calculationPercent;
 
     /**
      * BT-100.
@@ -50,28 +52,28 @@ class SpecifiedTradeCharge
 
     public function __construct(float $actualAmount, CategoryTradeTax $categoryTradeTax)
     {
-        $this->chargeChargeIndicator = new ChargeIndicator();
-        $this->actualAmount          = new Amount($actualAmount);
-        $this->categoryTradeTax      = $categoryTradeTax;
-        $this->calculationPercentage = null;
-        $this->basisAmount           = null;
-        $this->reasonCode            = null;
-        $this->reason                = null;
+        $this->chargeIndicator    = new ChargeIndicator();
+        $this->actualAmount       = new Amount($actualAmount);
+        $this->categoryTradeTax   = $categoryTradeTax;
+        $this->calculationPercent = null;
+        $this->basisAmount        = null;
+        $this->reasonCode         = null;
+        $this->reason             = null;
     }
 
-    public function getChargeChargeIndicator(): ChargeIndicator
+    public function getChargeIndicator(): ChargeIndicator
     {
-        return $this->chargeChargeIndicator;
+        return $this->chargeIndicator;
     }
 
-    public function getCalculationPercentage(): ?float
+    public function getCalculationPercent(): ?float
     {
-        return $this->calculationPercentage?->getValueRounded();
+        return $this->calculationPercent?->getValueRounded();
     }
 
-    public function setCalculationPercentage(?Percentage $calculationPercentage): static
+    public function setCalculationPercent(?float $calculationPercent): static
     {
-        $this->calculationPercentage = $calculationPercentage;
+        $this->calculationPercent = \is_float($calculationPercent) ? new Percentage($calculationPercent) : null;
 
         return $this;
     }
@@ -81,9 +83,9 @@ class SpecifiedTradeCharge
         return $this->basisAmount?->getValueRounded();
     }
 
-    public function setBasisAmount(?Amount $basisAmount): static
+    public function setBasisAmount(?float $basisAmount): static
     {
-        $this->basisAmount = $basisAmount;
+        $this->basisAmount = \is_float($basisAmount) ? new Amount($basisAmount) : null;
 
         return $this;
     }
@@ -124,30 +126,109 @@ class SpecifiedTradeCharge
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedTradeAllowanceCharge');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($this->chargeChargeIndicator->toXML($document));
+        $currentNode->appendChild($this->chargeIndicator->toXML($document));
 
-        if ($this->calculationPercentage instanceof Percentage) {
-            $element->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercentage->getValueRounded()));
+        if (null !== $this->calculationPercent) {
+            $currentNode->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercent->getValueRounded()));
         }
 
-        if ($this->basisAmount instanceof Amount) {
-            $element->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
+        if (null !== $this->basisAmount) {
+            $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
         }
 
-        $element->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
 
-        if ($this->reasonCode instanceof ChargeReasonCode) {
-            $element->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
+        if (null !== $this->reasonCode) {
+            $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
         }
 
-        if (\is_string($this->reason)) {
-            $element->appendChild($document->createElement('ram:Reason', $this->reason));
+        if (null !== $this->reason) {
+            $currentNode->appendChild($document->createElement('ram:Reason', $this->reason));
         }
 
-        $element->appendChild($this->categoryTradeTax->toXML($document));
+        $currentNode->appendChild($this->categoryTradeTax->toXML($document));
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        $specifiedTradeChargeTrueIndicatorElements = $xpath->query(sprintf('.//%s/ram:ChargeIndicator/udt:Indicator[text() = \'true\']', self::XML_NODE), $currentElement);
+
+        if (0 === $specifiedTradeChargeTrueIndicatorElements->count()) {
+            return [];
+        }
+
+        $specifiedTradeChargeElements = [];
+
+        foreach ($specifiedTradeChargeTrueIndicatorElements as $specifiedTradeChargeTrueIndicatorElement) {
+            $specifiedTradeChargeElement = $xpath->query('.//../..', $specifiedTradeChargeTrueIndicatorElement);
+
+            $specifiedTradeChargeElements[] = $specifiedTradeChargeElement->item(0);
+        }
+
+        $specifiedTradeCharges = [];
+
+        foreach ($specifiedTradeChargeElements as $specifiedTradeChargeElement) {
+            $calculationPercentElements = $xpath->query('.//ram:CalculationPercent', $specifiedTradeChargeElement);
+            $basisAmountElements        = $xpath->query('.//ram:BasisAmount', $specifiedTradeChargeElement);
+            $actualAmountElements       = $xpath->query('.//ram:ActualAmount', $specifiedTradeChargeElement);
+            $reasonCodeElements         = $xpath->query('.//ram:ReasonCode', $specifiedTradeChargeElement);
+            $reasonElements             = $xpath->query('.//ram:Reason', $specifiedTradeChargeElement);
+
+            if ($calculationPercentElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($basisAmountElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if (1 !== $actualAmountElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonCodeElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            $actualAmount = $actualAmountElements->item(0)->nodeValue;
+
+            $categoryTradeTax = CategoryTradeTax::fromXML($xpath, $specifiedTradeChargeElement);
+
+            $specifiedTradeCharge = new static((float) $actualAmount, $categoryTradeTax);
+
+            if (1 === $calculationPercentElements->count()) {
+                $specifiedTradeCharge->setCalculationPercent((float) $calculationPercentElements->item(0)->nodeValue);
+            }
+
+            if (1 === $basisAmountElements->count()) {
+                $specifiedTradeCharge->setBasisAmount((float) $basisAmountElements->item(0)->nodeValue);
+            }
+
+            if (1 === $reasonCodeElements->count()) {
+                $reasonCode = ChargeReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);
+
+                if (null === $reasonCode) {
+                    throw new \Exception('Wrong ReasonCode');
+                }
+
+                $specifiedTradeCharge->setReasonCode($reasonCode);
+            }
+
+            if (1 === $reasonElements->count()) {
+                $specifiedTradeCharge->setReason($reasonElements->item(0)->nodeValue);
+            }
+
+            $specifiedTradeCharges[] = $specifiedTradeCharge;
+        }
+
+        return $specifiedTradeCharges;
     }
 }

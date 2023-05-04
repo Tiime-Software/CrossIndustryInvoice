@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
+use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 
 /**
@@ -12,6 +13,8 @@ use Tiime\EN16931\SemanticDataType\Amount;
  */
 class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndustryInvoice\DataType\Minimum\SpecifiedTradeSettlementHeaderMonetarySummation
 {
+    protected const XML_NODE = 'ram:SpecifiedTradeSettlementHeaderMonetarySummation';
+
     /**
      * BT-106.
      */
@@ -42,9 +45,8 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         float $lineTotalAmount,
         float $grandTotalAmount,
         float $duePayableAmount,
-        TaxTotalAmount $taxTotalAmount = null,
     ) {
-        parent::__construct($taxBasisTotalAmount, $grandTotalAmount, $duePayableAmount, $taxTotalAmount);
+        parent::__construct($taxBasisTotalAmount, $grandTotalAmount, $duePayableAmount);
 
         $this->lineTotalAmount = new Amount($lineTotalAmount);
 
@@ -64,7 +66,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $this->chargeTotalAmount instanceof Amount ? $this->chargeTotalAmount->getValueRounded() : null;
     }
 
-    public function setChargeTotalAmount(?float $chargeTotalAmount = null): static
+    public function setChargeTotalAmount(?float $chargeTotalAmount): static
     {
         $this->chargeTotalAmount = \is_float($chargeTotalAmount) ? new Amount($chargeTotalAmount) : null;
 
@@ -109,7 +111,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SpecifiedTradeSettlementHeaderMonetarySummation');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($document->createElement('ram:LineTotalAmount', (string) $this->lineTotalAmount->getValueRounded()));
 
@@ -140,5 +142,126 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         $currentNode->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->getDuePayableAmount()));
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $specifiedTradeSettlementHeaderMonetarySummationElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedTradeSettlementHeaderMonetarySummationElement */
+        $specifiedTradeSettlementHeaderMonetarySummationElement = $specifiedTradeSettlementHeaderMonetarySummationElements->item(0);
+
+        $lineTotalAmountElements      = $xpath->query('.//ram:LineTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $chargeTotalAmountElements    = $xpath->query('.//ram:ChargeTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $allowanceTotalAmountElements = $xpath->query('.//ram:AllowanceTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $taxBasisTotalAmountElements  = $xpath->query('.//ram:TaxBasisTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $grandTotalAmountElements     = $xpath->query('.//ram:GrandTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $totalPrepaidAmountElements   = $xpath->query('.//ram:TotalPrepaidAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $duePayableAmountElements     = $xpath->query('.//ram:DuePayableAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+
+        if (1 !== $lineTotalAmountElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($chargeTotalAmountElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($allowanceTotalAmountElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($totalPrepaidAmountElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $taxBasisTotalAmountElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $grandTotalAmountElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $duePayableAmountElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $lineTotalAmount     = $lineTotalAmountElements->item(0)->nodeValue;
+        $taxBasisTotalAmount = $taxBasisTotalAmountElements->item(0)->nodeValue;
+        $grandTotalAmount    = $grandTotalAmountElements->item(0)->nodeValue;
+        $duePayableAmount    = $duePayableAmountElements->item(0)->nodeValue;
+
+        $specifiedTradeSettlementHeaderMonetarySummation = new static((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount, (float) $lineTotalAmount);
+
+        /** Checks BT-5/BT-6 for BT-110/BT-111 */
+        $invoiceCurrencyCodeElements = $xpath->query('.//ram:InvoiceCurrencyCode', $currentElement);
+        $taxCurrencyCodeElements     = $xpath->query('.//ram:TaxCurrencyCode');
+
+        if (1 !== $invoiceCurrencyCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($taxCurrencyCodeElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $invoiceCurrencyCode = CurrencyCode::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
+
+        if (null === $invoiceCurrencyCode) {
+            throw new \Exception('Wrong InvoiceCurrencyCode');
+        }
+
+        $taxCurrencyCode = null;
+
+        if (1 === $taxCurrencyCodeElements->count()) {
+            $taxCurrencyCode = CurrencyCode::tryFrom($taxCurrencyCodeElements->item(0)->nodeValue);
+
+            if (null === $taxCurrencyCode) {
+                throw new \Exception('Wrong TaxCurrencyCode');
+            }
+        }
+
+        $taxTotalAmountElements = $xpath->query('.//ram:TaxTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+
+        if (null === $taxCurrencyCode || $invoiceCurrencyCode === $taxCurrencyCode) {
+            /* Same currency code for BT-5 & BT-6, only fill BT-110, no need to fill BT-111 */
+            /* Because we have one currency, one line maximum */
+            if ($taxTotalAmountElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if (1 === $taxTotalAmountElements->count()) {
+                /** @var \DOMElement $taxTotalAmountItem */
+                $taxTotalAmountItem = $taxTotalAmountElements->item(0);
+
+                $taxTotalAmount = TaxTotalAmount::fromXML($taxTotalAmountItem);
+
+                $specifiedTradeSettlementHeaderMonetarySummation->setTaxTotalAmount($taxTotalAmount);
+            }
+        } else {
+            /* Not same currency code for BT-5 & BT-6, have to fill BT-110 & BT-111 */
+            /* Because we have two currencies, two lines maximum */
+            if ($taxTotalAmountElements->count() > 2) {
+                throw new \Exception('Malformed');
+            }
+
+            /** @var \DOMElement $taxTotalAmountElement */
+            foreach ($taxTotalAmountElements as $taxTotalAmountElement) {
+                $taxTotalAmount = TaxTotalAmount::fromXML($taxTotalAmountElement);
+
+                if ($taxTotalAmount->getCurrencyIdentifier() === $taxCurrencyCode) {
+                    $specifiedTradeSettlementHeaderMonetarySummation->setTaxTotalAmountCurrency($taxTotalAmount);
+                }
+
+                if ($taxTotalAmount->getCurrencyIdentifier() === $invoiceCurrencyCode) {
+                    $specifiedTradeSettlementHeaderMonetarySummation->setTaxTotalAmount($taxTotalAmount);
+                }
+            }
+        }
     }
 }

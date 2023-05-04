@@ -12,6 +12,8 @@ use Tiime\EN16931\DataType\Identifier\LocationIdentifier;
  */
 class ShipToTradeParty
 {
+    protected const XML_NODE = 'ram:ShipToTradeParty';
+
     /**
      * BT-71.
      */
@@ -90,7 +92,7 @@ class ShipToTradeParty
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ShipToTradeParty');
+        $element = $document->createElement(self::XML_NODE);
 
         if ($this->identifier instanceof LocationIdentifier) {
             $element->appendChild($document->createElement('ram:ID', $this->identifier->value));
@@ -113,5 +115,53 @@ class ShipToTradeParty
         }
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $shipToTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $shipToTradePartyElements->count()) {
+            return null;
+        }
+
+        if ($shipToTradePartyElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $shipToTradePartyElement */
+        $shipToTradePartyElement = $shipToTradePartyElements->item(0);
+
+        $identifierElements = $xpath->query('.//ram:ID', $shipToTradePartyElement);
+        $nameElements       = $xpath->query('.//ram:Name', $shipToTradePartyElement);
+
+        if ($identifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($nameElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $globalIdentifier   = LocationGlobalIdentifier::fromXML($xpath, $shipToTradePartyElement);
+        $postalTradeAddress = PostalTradeAddress::fromXML($xpath, $shipToTradePartyElement);
+
+        $shipToTradeParty = new static();
+
+        if (1 === $identifierElements->count()) {
+            $shipToTradeParty->setName($identifierElements->item(0)->nodeValue);
+        }
+
+        if (null !== $globalIdentifier) {
+            $shipToTradeParty->setGlobalIdentifier($globalIdentifier);
+        }
+
+        if (1 === $nameElements->count()) {
+            $shipToTradeParty->setName($nameElements->item(0)->nodeValue);
+        }
+
+        if (null !== $postalTradeAddress) {
+            $shipToTradeParty->setPostalTradeAddress($postalTradeAddress);
+        }
     }
 }

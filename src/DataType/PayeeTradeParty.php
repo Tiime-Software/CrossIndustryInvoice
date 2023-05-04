@@ -12,6 +12,8 @@ use Tiime\EN16931\DataType\Identifier\PayeeIdentifier;
  */
 class PayeeTradeParty
 {
+    protected const XML_NODE = 'ram:PayeeTradeParty';
+
     /**
      * BT-60.
      */
@@ -83,7 +85,7 @@ class PayeeTradeParty
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:PayeeTradeParty');
+        $element = $document->createElement(self::XML_NODE);
 
         if ($this->identifier instanceof PayeeIdentifier) {
             $element->appendChild($document->createElement('ram:ID', $this->identifier->value));
@@ -103,5 +105,53 @@ class PayeeTradeParty
         }
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $payeeTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $payeeTradePartyElements->count()) {
+            return null;
+        }
+
+        if ($payeeTradePartyElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $payeeTradePartyElement */
+        $payeeTradePartyElement = $payeeTradePartyElements->item(0);
+
+        $identifierElements = $xpath->query('.//ram:ID', $payeeTradePartyElement);
+        $nameElements       = $xpath->query('.//ram:Name', $payeeTradePartyElement);
+
+        if ($identifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $nameElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $name = $nameElements->item(0)->nodeValue;
+
+        $globalIdentifier           = PayeeGlobalIdentifier::fromXML($xpath, $payeeTradePartyElement);
+        $specifiedLegalOrganization = PayeeSpecifiedLegalOrganization::fromXML($xpath, $payeeTradePartyElement);
+
+        $payeeTradeParty = new static($name);
+
+        if (1 === $identifierElements->count()) {
+            $payeeTradeParty->setIdentifier($identifierElements->item(0)->nodeValue);
+        }
+
+        if (null !== $globalIdentifier) {
+            $payeeTradeParty->setGlobalIdentifier($globalIdentifier);
+        }
+
+        if (null !== $specifiedLegalOrganization) {
+            $payeeTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
+        }
+
+        return $payeeTradeParty;
     }
 }

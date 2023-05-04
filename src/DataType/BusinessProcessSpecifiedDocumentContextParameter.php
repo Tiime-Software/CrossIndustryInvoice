@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class BusinessProcessSpecifiedDocumentContextParameter
 {
+    protected const XML_NODE = 'ram:BusinessProcessSpecifiedDocumentContextParameter';
+
     /**
      * BT-23.
      */
@@ -24,12 +26,9 @@ class BusinessProcessSpecifiedDocumentContextParameter
         return $this->identifier;
     }
 
-    /**
-     * @throws \DOMException
-     */
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:BusinessProcessSpecifiedDocumentContextParameter');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($document->createElement('ram:ID', $this->identifier));
 
@@ -38,7 +37,7 @@ class BusinessProcessSpecifiedDocumentContextParameter
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        $businessProcessSpecifiedDocumentContextParameterElements = $xpath->query('.//ram:BusinessProcessSpecifiedDocumentContextParameter', $currentElement);
+        $businessProcessSpecifiedDocumentContextParameterElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (0 === $businessProcessSpecifiedDocumentContextParameterElements->count()) {
             return null;

@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Reference\PrecedingInvoiceReference;
  */
 class InvoiceReferencedDocument
 {
+    protected const XML_NODE = 'ram:InvoiceReferencedDocument';
+
     /**
      * BT-25.
      */
@@ -46,7 +48,7 @@ class InvoiceReferencedDocument
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:InvoiceReferencedDocument');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
@@ -55,5 +57,39 @@ class InvoiceReferencedDocument
         }
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $invoiceReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $invoiceReferencedDocumentElements->count()) {
+            return null;
+        }
+
+        if ($invoiceReferencedDocumentElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $invoiceReferencedDocumentElement */
+        $invoiceReferencedDocumentElement = $invoiceReferencedDocumentElements->item(0);
+
+        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $invoiceReferencedDocumentElement);
+
+        if (1 !== $issuerAssignedIdentifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
+
+        $formattedIssueDateTime = FormattedIssueDateTime::fromXML($xpath, $invoiceReferencedDocumentElement);
+
+        $invoiceReferencedDocument = new static(new PrecedingInvoiceReference($issuerAssignedIdentifier));
+
+        if (null !== $formattedIssueDateTime) {
+            $invoiceReferencedDocument->setFormattedIssueDateTime($formattedIssueDateTime);
+        }
+
+        return $invoiceReferencedDocument;
     }
 }

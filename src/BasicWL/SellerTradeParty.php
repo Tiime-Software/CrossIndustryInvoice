@@ -16,6 +16,8 @@ use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
  */
 class SellerTradeParty
 {
+    protected const XML_NODE = 'ram:SellerTradeParty';
+
     /**
      * BT-29.
      *
@@ -165,13 +167,13 @@ class SellerTradeParty
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SellerTradeParty');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         foreach ($this->identifiers as $identifier) {
             $currentNode->appendChild($document->createElement('ram:ID', $identifier->value));
         }
 
-        foreach ($this->globalIdentifiers as $globalIdentifier) {
+        foreach ($this->globalIdentifiers as $globalIdentifier) { // move inside class
             $globalIdentifierElement = $document->createElement('ram:GlobalID', $globalIdentifier->value);
             $globalIdentifierElement->setAttribute('schemeID', $globalIdentifier->scheme->value);
             $currentNode->appendChild($globalIdentifierElement);
@@ -194,5 +196,69 @@ class SellerTradeParty
         }
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $sellerTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $sellerTradePartyElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $sellerTradePartyElement */
+        $sellerTradePartyElement = $sellerTradePartyElements->item(0);
+
+        $identifierElements = $xpath->query('.//ram:ID', $sellerTradePartyElement);
+
+        $identifiers = [];
+
+        foreach ($identifierElements as $identifierElement) {
+            $identifier = $identifierElement->nodeValue;
+
+            $identifiers[] = new SellerIdentifier($identifier);
+        }
+
+        $nameElements = $xpath->query('.//ram:Name', $sellerTradePartyElement);
+
+        if (1 !== $nameElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $name = $nameElements->item(0)->nodeValue;
+
+        $globalIdentifiers          = SellerGlobalIdentifier::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedLegalOrganization = SellerSpecifiedLegalOrganization::fromXML($xpath, $sellerTradePartyElement);
+        $postalTradeAddress         = PostalTradeAddress::fromXML($xpath, $sellerTradePartyElement);
+        $URIUniversalCommunication  = URIUniversalCommunication::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedTaxRegistrations  = SpecifiedTaxRegistration::fromXML($xpath, $sellerTradePartyElement);
+
+        if (null === $postalTradeAddress) {
+            throw new \Exception('Malformed');
+        }
+
+        $sellerTradeParty = new static($name, $postalTradeAddress);
+
+        if (\count($identifiers) > 0) {
+            $sellerTradeParty->setIdentifiers($identifiers);
+        }
+
+        if (\count($globalIdentifiers) > 0) {
+            $sellerTradeParty->setGlobalIdentifiers($globalIdentifiers);
+        }
+
+        if (null !== $specifiedLegalOrganization) {
+            $sellerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
+        }
+
+        if (null !== $URIUniversalCommunication) {
+            $sellerTradeParty->setURIUniversalCommunication($URIUniversalCommunication);
+        }
+
+        if (\count($specifiedTaxRegistrations) > 0) {
+            $sellerTradeParty->setSpecifiedTaxRegistrations($specifiedTaxRegistrations);
+        }
+
+        return $sellerTradeParty;
     }
 }

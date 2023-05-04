@@ -12,6 +12,8 @@ use Tiime\EN16931\DataType\InternationalCodeDesignator;
  */
 class BuyerGlobalIdentifier extends BuyerIdentifier
 {
+    protected const XML_NODE = 'ram:GlobalID';
+
     public function __construct(string $value, InternationalCodeDesignator $scheme)
     {
         parent::__construct($value, $scheme);
@@ -23,5 +25,31 @@ class BuyerGlobalIdentifier extends BuyerIdentifier
         $currentNode->setAttribute('schemeID', $this->scheme->value);
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $buyerGlobalIdentifierElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $buyerGlobalIdentifierElements->count()) {
+            return null;
+        }
+
+        if ($buyerGlobalIdentifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $buyerGlobalIdentifierElement */
+        $buyerGlobalIdentifierElement = $buyerGlobalIdentifierElements->item(0);
+
+        $identifier = $buyerGlobalIdentifierElement->nodeValue;
+        $scheme     = '' !== $buyerGlobalIdentifierElement->getAttribute('schemeID') ?
+            InternationalCodeDesignator::tryFrom($buyerGlobalIdentifierElement->getAttribute('schemeID')) : null;
+
+        if (null === $scheme) {
+            throw new \Exception('Wrong schemeID');
+        }
+
+        return new static($identifier, $scheme);
     }
 }

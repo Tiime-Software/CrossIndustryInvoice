@@ -13,6 +13,8 @@ use Tiime\EN16931\DataType\InvoiceTypeCode;
  */
 class ExchangedDocument
 {
+    protected const XML_NODE = 'rsm:ExchangedDocument';
+
     /**
      * BT-1.
      */
@@ -52,10 +54,11 @@ class ExchangedDocument
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('rsm:ExchangedDocument');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:ID', $this->identifier->value));
         $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode->value));
+
         $element->appendChild($this->issueDateTime->toXML($document));
 
         return $element;
@@ -63,7 +66,7 @@ class ExchangedDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $exchangedDocumentElements = $xpath->query('.//rsm:ExchangedDocument', $currentElement);
+        $exchangedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $exchangedDocumentElements->count()) {
             throw new \Exception('Malformed');

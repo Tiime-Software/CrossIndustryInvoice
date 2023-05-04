@@ -9,6 +9,8 @@ use Tiime\EN16931\SemanticDataType\Amount;
 
 class TaxTotalAmount
 {
+    protected const XML_NODE = 'ram:TaxTotalAmount';
+
     /**
      * BT-110.
      */
@@ -37,29 +39,19 @@ class TaxTotalAmount
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:TaxTotalAmount', (string) $this->value->getValueRounded());
+        $element = $document->createElement(self::XML_NODE, (string) $this->value->getValueRounded());
+
         $element->setAttribute('currencyID', $this->currencyIdentifier->value);
 
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    /** Doesn't take DOMXPath as an argument like other classes to fit the use of this method for Minumum and BasicWL profiles */
+    public static function fromXML(\DOMElement $currentElement): static
     {
-        $taxTotalAmountElements = $xpath->query('.//ram:TaxTotalAmount', $currentElement);
-
-        if (0 === $taxTotalAmountElements->count()) {
-            return null;
-        }
-
-        if ($taxTotalAmountElements->count() > 1) {
-            throw new \Exception('Malformed');
-        }
-
-        /** @var \DOMElement $valueItem */
-        $valueItem = $taxTotalAmountElements->item(0);
-        $value     = $valueItem->nodeValue;
-
-        $currencyIdentifier = CurrencyCode::tryFrom($valueItem->getAttribute('currencyID'));
+        $value              = $currentElement->nodeValue;
+        $currencyIdentifier = '' !== $currentElement->getAttribute('currencyID') ?
+            CurrencyCode::tryFrom($currentElement->getAttribute('currencyID')) : null;
 
         if (null === $currencyIdentifier) {
             throw new \Exception('Wrong currencyID');

@@ -13,6 +13,8 @@ use Tiime\EN16931\SemanticDataType\Percentage;
  */
 class SpecifiedTradeAllowance
 {
+    protected const XML_NODE = 'ram:SpecifiedTradeAllowanceCharge';
+
     /**
      * BG-20-0.
      */
@@ -124,30 +126,109 @@ class SpecifiedTradeAllowance
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedTradeAllowanceCharge');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($this->allowanceChargeIndicator->toXML($document));
+        $currentNode->appendChild($this->allowanceChargeIndicator->toXML($document));
 
-        if ($this->calculationPercent instanceof Percentage) {
-            $element->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercent->getValueRounded()));
+        if (null !== $this->calculationPercent) {
+            $currentNode->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercent->getValueRounded()));
         }
 
-        if ($this->basisAmount instanceof Amount) {
-            $element->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
+        if (null !== $this->basisAmount) {
+            $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
         }
 
-        $element->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
 
-        if ($this->reasonCode instanceof AllowanceReasonCode) {
-            $element->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
+        if (null !== $this->reasonCode) {
+            $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
         }
 
-        if (\is_string($this->reason)) {
-            $element->appendChild($document->createElement('ram:Reason', $this->reason));
+        if (null !== $this->reason) {
+            $currentNode->appendChild($document->createElement('ram:Reason', $this->reason));
         }
 
-        $element->appendChild($this->allowanceCategoryTradeTax->toXML($document));
+        $currentNode->appendChild($this->allowanceCategoryTradeTax->toXML($document));
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        $specifiedTradeAllowanceFalseIndicatorElements = $xpath->query(sprintf('.//%s/ram:ChargeIndicator/udt:Indicator[text() = \'false\']', self::XML_NODE), $currentElement);
+
+        if (0 === $specifiedTradeAllowanceFalseIndicatorElements->count()) {
+            return [];
+        }
+
+        $specifiedTradeAllowanceElements = [];
+
+        foreach ($specifiedTradeAllowanceFalseIndicatorElements as $specifiedTradeAllowanceFalseIndicatorElement) {
+            $specifiedTradeAllowanceElement = $xpath->query('.//../..', $specifiedTradeAllowanceFalseIndicatorElement);
+
+            $specifiedTradeAllowanceElements[] = $specifiedTradeAllowanceElement->item(0);
+        }
+
+        $specifiedTradeAllowances = [];
+
+        foreach ($specifiedTradeAllowanceElements as $specifiedTradeAllowanceElement) {
+            $calculationPercentageElements = $xpath->query('.//ram:CalculationPercent', $specifiedTradeAllowanceElement);
+            $basisAmountElements           = $xpath->query('.//ram:BasisAmount', $specifiedTradeAllowanceElement);
+            $actualAmountElements          = $xpath->query('.//ram:ActualAmount', $specifiedTradeAllowanceElement);
+            $reasonCodeElements            = $xpath->query('.//ram:ReasonCode', $specifiedTradeAllowanceElement);
+            $reasonElements                = $xpath->query('.//ram:Reason', $specifiedTradeAllowanceElement);
+
+            if ($calculationPercentageElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($basisAmountElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if (1 !== $actualAmountElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonCodeElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            $actualAmount = $actualAmountElements->item(0)->nodeValue;
+
+            $categoryTradeTax = CategoryTradeTax::fromXML($xpath, $specifiedTradeAllowanceElement);
+
+            $specifiedTradeAllowance = new static((float) $actualAmount, $categoryTradeTax);
+
+            if (1 === $calculationPercentageElements->count()) {
+                $specifiedTradeAllowance->setCalculationPercent((float) $calculationPercentageElements->item(0)->nodeValue);
+            }
+
+            if (1 === $basisAmountElements->count()) {
+                $specifiedTradeAllowance->setBasisAmount((float) $basisAmountElements->item(0)->nodeValue);
+            }
+
+            if (1 === $reasonCodeElements->count()) {
+                $reasonCode = AllowanceReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);
+
+                if (null === $reasonCode) {
+                    throw new \Exception('Wrong ReasonCode');
+                }
+
+                $specifiedTradeAllowance->setReasonCode($reasonCode);
+            }
+
+            if (1 === $reasonElements->count()) {
+                $specifiedTradeAllowance->setReason($reasonElements->item(0)->nodeValue);
+            }
+
+            $specifiedTradeAllowances[] = $specifiedTradeAllowance;
+        }
+
+        return $specifiedTradeAllowances;
     }
 }

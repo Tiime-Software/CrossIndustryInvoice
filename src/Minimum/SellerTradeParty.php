@@ -12,6 +12,8 @@ use Tiime\CrossIndustryInvoice\DataType\Minimum\SellerSpecifiedLegalOrganization
  */
 class SellerTradeParty
 {
+    protected const XML_NODE = 'ram:SellerTradeParty';
+
     /**
      * BT-27.
      */
@@ -78,13 +80,16 @@ class SellerTradeParty
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SellerTradeParty');
+        $currentNode = $document->createElement(self::XML_NODE);
+
         $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
         if (null !== $this->specifiedLegalOrganization) {
             $currentNode->appendChild($this->specifiedLegalOrganization->toXML($document));
         }
+
         $currentNode->appendChild($this->postalTradeAddress->toXML($document));
+
         /** @var SpecifiedTaxRegistration $specifiedTaxRegistration */
         foreach ($this->specifiedTaxRegistrations as $specifiedTaxRegistration) {
             $currentNode->appendChild($specifiedTaxRegistration->toXML($document));
@@ -95,7 +100,7 @@ class SellerTradeParty
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        $sellerTradePartyElements = $xpath->query('.//ram:SellerTradeParty', $currentElement);
+        $sellerTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (1 !== $sellerTradePartyElements->count()) {
             throw new \Exception('Malformed');
@@ -115,6 +120,10 @@ class SellerTradeParty
         $postalTradeAddress         = PostalTradeAddress::fromXML($xpath, $sellerTradePartyElement);
         $specifiedLegalOrganization = SellerSpecifiedLegalOrganization::fromXML($xpath, $sellerTradePartyElement);
         $specifiedTaxRegistrations  = SpecifiedTaxRegistration::fromXML($xpath, $sellerTradePartyElement);
+
+        if (null === $postalTradeAddress) {
+            throw new \Exception('Malformed');
+        }
 
         $sellerTradeParty = new static($name, $postalTradeAddress);
 
