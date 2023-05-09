@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class AllowanceIndicator
 {
+    protected const XML_NODE = 'ram:ChargeIndicator';
+
     /**
      * BG-20-1.
      */
@@ -26,15 +28,36 @@ class AllowanceIndicator
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ChargeIndicator');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('udt:Indicator', 'false'));
+        $currentNode->appendChild($document->createElement('udt:Indicator', 'false'));
 
-        return $element;
+        return $currentNode;
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        // todo
+        $allowanceIndicatorElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $allowanceIndicatorElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $allowanceIndicatorElement */
+        $allowanceIndicatorElement = $allowanceIndicatorElements->item(0);
+
+        $indicatorElements = $xpath->query('.//udt:Indicator', $allowanceIndicatorElement);
+
+        if (1 !== $indicatorElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $indicator = $indicatorElements->item(0)->nodeValue;
+
+        if ('false' !== $indicator) {
+            throw new \Exception('Malformed');
+        }
+
+        return new static();
     }
 }

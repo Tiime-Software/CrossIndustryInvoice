@@ -77,8 +77,16 @@ class SellerSpecifiedLegalOrganization
             /** @var \DOMElement $identifierItem */
             $identifierItem = $identifierElements->item(0);
             $identifier     = $identifierItem->nodeValue;
-            $scheme         = '' !== $identifierItem->getAttribute('schemeID') ?
-                InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID')) : null;
+
+            $scheme = null;
+
+            if ('' !== $identifierItem->getAttribute('schemeID')) {
+                $scheme = InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID'));
+
+                if (!$scheme instanceof InternationalCodeDesignator) {
+                    throw new \Exception('Wrong schemeID');
+                }
+            }
 
             $sellerSpecifiedLegalOrganization->setIdentifier(new LegalRegistrationIdentifier($identifier, $scheme));
         }

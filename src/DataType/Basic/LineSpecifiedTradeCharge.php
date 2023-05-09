@@ -95,6 +95,54 @@ class LineSpecifiedTradeCharge
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        // todo
+        $lineSpecifiedTradeChargeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $lineSpecifiedTradeChargeElements->count()) {
+            return [];
+        }
+
+        $lineSpecifiedTradeCharges = [];
+
+        foreach ($lineSpecifiedTradeChargeElements as $lineSpecifiedTradeChargeElement) {
+            $actualAmountElements = $xpath->query('.//ram:ActualAmount', $lineSpecifiedTradeChargeElement);
+            $reasonCodeElements   = $xpath->query('.//ram:ReasonCode', $lineSpecifiedTradeChargeElement);
+            $reasonElements       = $xpath->query('.//ram:Reason', $lineSpecifiedTradeChargeElement);
+
+            if (1 !== $actualAmountElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonCodeElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            $actualAmount = $actualAmountElements->item(0)->nodeValue;
+            // Look if node is well constructed, already created in the constructor
+            ChargeIndicator::fromXML($xpath, $lineSpecifiedTradeChargeElement);
+
+            $lineSpecifiedTradeCharge = new static($actualAmount);
+
+            if (1 === $reasonCodeElements->count()) {
+                $reasonCode = ChargeReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);
+
+                if (null === $reasonCode) {
+                    throw new \Exception('Wrong ReasonCode');
+                }
+
+                $lineSpecifiedTradeCharge->setReasonCode($reasonCode);
+            }
+
+            if (1 === $reasonElements->count()) {
+                $lineSpecifiedTradeCharge->setReason($reasonElements->item(0)->nodeValue);
+            }
+
+            $lineSpecifiedTradeCharges[] = $lineSpecifiedTradeCharge;
+        }
+
+        return $lineSpecifiedTradeCharges;
     }
 }
