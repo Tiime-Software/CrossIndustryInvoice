@@ -12,6 +12,8 @@ use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
  */
 class AppliedTradeAllowanceCharge
 {
+    protected const XML_NODE = 'ram:AppliedTradeAllowanceCharge';
+
     /**
      * BT-147-01.
      */
@@ -40,11 +42,40 @@ class AppliedTradeAllowanceCharge
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:AppliedTradeAllowanceCharge');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($this->chargeIndicator->toXML($document));
-        $element->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
+        $currentNode->appendChild($this->chargeIndicator->toXML($document));
+        $currentNode->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $appliedTradeAllowanceChargeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $appliedTradeAllowanceChargeElements->count()) {
+            return null;
+        }
+
+        if ($appliedTradeAllowanceChargeElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $appliedTradeAllowanceChargeElement */
+        $appliedTradeAllowanceChargeElement = $appliedTradeAllowanceChargeElements->item(0);
+
+        $actualAmountElements = $xpath->query('.//ram:ActualAmount', $appliedTradeAllowanceChargeElement);
+
+        if ($actualAmountElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $actualAmount = $actualAmountElements->item(0)->nodeValue;
+
+        // Look if node is well constructed, already created in the constructor
+        AllowanceIndicator::fromXML($xpath, $appliedTradeAllowanceChargeElement);
+
+        return new static((float) $actualAmount);
     }
 }

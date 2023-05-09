@@ -12,6 +12,8 @@ use Tiime\EN16931\SemanticDataType\Quantity;
  */
 class BasisQuantity
 {
+    protected const XML_NODE = 'ram:BasisQuantity';
+
     /**
      * BT-149-1.
      */
@@ -47,7 +49,7 @@ class BasisQuantity
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:BasisQuantity', (string) $this->value->getValueRounded());
+        $element = $document->createElement(self::XML_NODE, (string) $this->value->getValueRounded());
 
         if ($this->unitCode instanceof UnitOfMeasurement) {
             $element->setAttribute('unitCode', $this->unitCode->value);
@@ -58,6 +60,37 @@ class BasisQuantity
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
     {
-        // todo
+        $basisQuantityElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $basisQuantityElements->count()) {
+            return null;
+        }
+
+        if ($basisQuantityElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $basisQuantityElement */
+        $basisQuantityElement = $basisQuantityElements->item(0);
+
+        $value = $basisQuantityElement->nodeValue;
+
+        $unitCode = null;
+
+        if ('' !== $basisQuantityElement->getAttribute('unitCode')) {
+            $unitCode = UnitOfMeasurement::tryFrom($basisQuantityElement->getAttribute('unitCode'));
+
+            if (!$unitCode instanceof UnitOfMeasurement) {
+                throw new \Exception('Wrong unitCode');
+            }
+        }
+
+        $basisQuantity = new static((float) $value);
+
+        if ($unitCode instanceof UnitOfMeasurement) {
+            $basisQuantity->setUnitCode($unitCode);
+        }
+
+        return $basisQuantity;
     }
 }

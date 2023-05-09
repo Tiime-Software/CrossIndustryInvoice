@@ -37,6 +37,17 @@ class SpecifiedLineTradeDelivery
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
     {
-        // todo
+        $specifiedLineTradeDeliveryElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $specifiedLineTradeDeliveryElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedLineTradeDeliveryElement */
+        $specifiedLineTradeDeliveryElement = $specifiedLineTradeDeliveryElements->item(0);
+
+        $billedQuantity = BilledQuantity::fromXML($xpath, $specifiedLineTradeDeliveryElement);
+
+        return new static($billedQuantity);
     }
 }

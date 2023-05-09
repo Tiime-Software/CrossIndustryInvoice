@@ -95,6 +95,54 @@ class LineSpecifiedTradeAllowance
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        // todo
+        $lineSpecifiedTradeAllowanceElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $lineSpecifiedTradeAllowanceElements->count()) {
+            return [];
+        }
+
+        $lineSpecifiedTradeAllowances = [];
+
+        foreach ($lineSpecifiedTradeAllowanceElements as $lineSpecifiedTradeAllowanceElement) {
+            $actualAmountElements = $xpath->query('.//ram:ActualAmount', $lineSpecifiedTradeAllowanceElement);
+            $reasonCodeElements   = $xpath->query('.//ram:ReasonCode', $lineSpecifiedTradeAllowanceElement);
+            $reasonElements       = $xpath->query('.//ram:Reason', $lineSpecifiedTradeAllowanceElement);
+
+            if (1 !== $actualAmountElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonCodeElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            $actualAmount = $actualAmountElements->item(0)->nodeValue;
+            // Look if node is well constructed, already created in the constructor
+            AllowanceIndicator::fromXML($xpath, $lineSpecifiedTradeAllowanceElement);
+
+            $lineSpecifiedTradeAllowance = new static($actualAmount);
+
+            if (1 === $reasonCodeElements->count()) {
+                $reasonCode = AllowanceReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);
+
+                if (null === $reasonCode) {
+                    throw new \Exception('Wrong ReasonCode');
+                }
+
+                $lineSpecifiedTradeAllowance->setReasonCode($reasonCode);
+            }
+
+            if (1 === $reasonElements->count()) {
+                $lineSpecifiedTradeAllowance->setReason($reasonElements->item(0)->nodeValue);
+            }
+
+            $lineSpecifiedTradeAllowances[] = $lineSpecifiedTradeAllowance;
+        }
+
+        return $lineSpecifiedTradeAllowances;
     }
 }
