@@ -362,10 +362,10 @@ class CIIEN16931Test extends TestCase
                             (new CategoryTradeTax(VatCategory::STANDARD))
                                 ->setRateApplicablePercent(new Percentage(20))
                         ))
-                            ->setBasisAmount(new Amount(50))
+                            ->setBasisAmount(50)
                             ->setReason('Reason')
                             ->setReasonCode(ChargeReasonCode::ACCEPTANCE)
-                            ->setCalculationPercentage(new Percentage(20))
+                            ->setCalculationPercent(20)
                     ])
                     ->setSpecifiedTradePaymentTerms(
                         (new SpecifiedTradePaymentTerms())
