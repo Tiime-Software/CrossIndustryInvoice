@@ -11,6 +11,8 @@ use Tiime\EN16931\SemanticDataType\Amount;
  */
 class LineSpecifiedTradeCharge
 {
+    protected const XML_NODE = 'ram:SpecifiedTradeAllowanceCharge';
+
     /**
      * BG-28-0.
      */
@@ -75,17 +77,16 @@ class LineSpecifiedTradeCharge
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SpecifiedTradeAllowanceCharge');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($this->chargeIndicator->toXML($document));
-
         $currentNode->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
 
-        if (null !== $this->reasonCode) {
+        if ($this->reasonCode instanceof ChargeReasonCode) {
             $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
         }
 
-        if (null !== $this->reason) {
+        if (\is_string($this->reason)) {
             $currentNode->appendChild($document->createElement('ram:Reason', $this->reason));
         }
 

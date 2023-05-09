@@ -11,6 +11,8 @@ use Tiime\EN16931\SemanticDataType\Amount;
  */
 class SpecifiedTradeSettlementLineMonetarySummation
 {
+    protected const XML_NODE = 'ram:SpecifiedTradeSettlementLineMonetarySummation';
+
     /**
      * BT-131.
      */
@@ -28,7 +30,7 @@ class SpecifiedTradeSettlementLineMonetarySummation
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedTradeSettlementLineMonetarySummation');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:LineTotalAmount', (string) $this->lineTotalAmount->getValueRounded()));
 

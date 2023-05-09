@@ -12,6 +12,8 @@ use Tiime\EN16931\SemanticDataType\Percentage;
  */
 class ApplicableTradeTax
 {
+    protected const XML_NODE = 'ram:ApplicableTradeTax';
+
     /**
      * BT-151-0.
      */
@@ -58,7 +60,7 @@ class ApplicableTradeTax
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ApplicableTradeTax');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
         $element->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));

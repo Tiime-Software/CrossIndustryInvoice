@@ -8,6 +8,8 @@ use Tiime\CrossIndustryInvoice\BasicWL\ApplicableHeaderTradeSettlement;
 
 class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\SupplyChainTradeTransaction
 {
+    protected const XML_NODE = 'rsm:SupplyChainTradeTransaction';
+
     /**
      * BG-25.
      *
@@ -59,7 +61,7 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\Su
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('rsm:SupplyChainTradeTransaction');
+        $element = $document->createElement(self::XML_NODE);
 
         foreach ($this->includedSupplyChainTradeLineItems as $includedSupplyChainTradeLineItem) {
             $element->appendChild($includedSupplyChainTradeLineItem->toXML($document));
