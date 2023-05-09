@@ -11,6 +11,8 @@ use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
  */
 class GrossPriceProductTradePrice
 {
+    protected const XML_NODE = 'ram:GrossPriceProductTradePrice';
+
     /**
      * BT-148.
      */
@@ -64,7 +66,7 @@ class GrossPriceProductTradePrice
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:GrossPriceProductTradePrice');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:ChargeAmount', (string) $this->chargeAmount->getValueRounded()));
 
@@ -77,5 +79,10 @@ class GrossPriceProductTradePrice
         }
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        // todo
     }
 }

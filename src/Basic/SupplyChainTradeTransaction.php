@@ -32,13 +32,17 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\Su
             throw new \TypeError();
         }
 
+        $tmpIncludedSupplyChainTradeLineItems = [];
+
         foreach ($includedSupplyChainTradeLineItems as $includedSupplyChainTradeLineItem) {
             if (!$includedSupplyChainTradeLineItem instanceof IncludedSupplyChainTradeLineItem) {
                 throw new \TypeError();
             }
 
-            $this->includedSupplyChainTradeLineItems[] = $includedSupplyChainTradeLineItem;
+            $tmpIncludedSupplyChainTradeLineItems[] = $includedSupplyChainTradeLineItem;
         }
+
+        $this->includedSupplyChainTradeLineItems = $tmpIncludedSupplyChainTradeLineItems;
     }
 
     /**
@@ -47,16 +51,6 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\Su
     public function getIncludedSupplyChainTradeLineItems(): array
     {
         return $this->includedSupplyChainTradeLineItems;
-    }
-
-    /**
-     * @param non-empty-array<int, IncludedSupplyChainTradeLineItem> $includedSupplyChainTradeLineItems
-     */
-    public function setIncludedSupplyChainTradeLineItems(array $includedSupplyChainTradeLineItems): static
-    {
-        $this->includedSupplyChainTradeLineItems = $includedSupplyChainTradeLineItems;
-
-        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
@@ -72,5 +66,24 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\Su
         $element->appendChild($this->getApplicableHeaderTradeSettlement()->toXML($document));
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $supplyChainTradeTransactionElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $supplyChainTradeTransactionElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $supplyChainTradeTransactionElement */
+        $supplyChainTradeTransactionElement = $supplyChainTradeTransactionElements->item(0);
+
+        $includedSupplyChainTradeLineItems = IncludedSupplyChainTradeLineItem::fromXML($xpath, $supplyChainTradeTransactionElement);
+        $applicableHeaderTradeAgreement    = ApplicableHeaderTradeAgreement::fromXML($xpath, $supplyChainTradeTransactionElement);
+        $applicableHeaderTradeDelivery     = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
+        $applicableHeaderTradeSettlement   = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
+
+        return new static($includedSupplyChainTradeLineItems, $applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
     }
 }

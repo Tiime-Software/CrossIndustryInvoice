@@ -92,4 +92,9 @@ class LineSpecifiedTradeCharge
 
         return $currentNode;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        // todo
+    }
 }

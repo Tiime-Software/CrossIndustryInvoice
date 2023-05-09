@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\Basic\GrossPriceProductTradePrice;
+use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement\BuyerOrderReferencedDocument;
 
 /**

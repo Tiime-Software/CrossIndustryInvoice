@@ -50,9 +50,9 @@ class SpecifiedLineTradeSettlement
     ) {
         $this->applicableTradeTax                        = $applicableTradeTax;
         $this->specifiedTradeSettlementMonetarySummation = $specifiedTradeSettlementMonetarySummation;
-        $this->specifiedTradeAllowances = [];
-        $this->specifiedTradeCharges = [];
-        $this->billingSpecifiedPeriod = null;
+        $this->specifiedTradeAllowances                  = [];
+        $this->specifiedTradeCharges                     = [];
+        $this->billingSpecifiedPeriod                    = null;
     }
 
     public function getApplicableTradeTax(): ApplicableTradeTax
@@ -140,5 +140,39 @@ class SpecifiedLineTradeSettlement
         $this->specifiedTradeSettlementMonetarySummation->toXML($document);
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $specifiedLineTradeSettlementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $specifiedLineTradeSettlementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedLineTradeSettlementElement */
+        $specifiedLineTradeSettlementElement = $specifiedLineTradeSettlementElements->item(0);
+
+        $applicableTradeTax                        = ApplicableTradeTax::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $billingSpecifiedPeriod                    = BillingSpecifiedPeriod::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $specifiedTradeAllowances                  = LineSpecifiedTradeAllowance::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $specifiedTradeCharges                     = LineSpecifiedTradeCharge::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $specifiedTradeSettlementMonetarySummation = SpecifiedTradeSettlementLineMonetarySummation::fromXML($xpath, $specifiedLineTradeSettlementElement);
+
+        $specifiedLineTradeSettlement = new static($applicableTradeTax, $specifiedTradeSettlementMonetarySummation);
+
+        if ($billingSpecifiedPeriod instanceof BillingSpecifiedPeriod) {
+            $specifiedLineTradeSettlement->setBillingSpecifiedPeriod($billingSpecifiedPeriod);
+        }
+
+        if (\count($specifiedTradeAllowances) > 0) {
+            $specifiedLineTradeSettlement->setSpecifiedTradeAllowances($specifiedTradeAllowances);
+        }
+
+        if (\count($specifiedTradeCharges) > 0) {
+            $specifiedLineTradeSettlement->setSpecifiedTradeCharges($specifiedTradeCharges);
+        }
+
+        return $specifiedLineTradeSettlement;
     }
 }

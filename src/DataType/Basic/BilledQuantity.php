@@ -12,6 +12,8 @@ use Tiime\EN16931\SemanticDataType\Quantity;
  */
 class BilledQuantity
 {
+    protected const XML_NODE = 'ram:BilledQuantity';
+
     /**
      * BT-129.
      */
@@ -40,10 +42,31 @@ class BilledQuantity
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:BilledQuantity', (string) $this->value->getValueRounded());
-
+        $element = $document->createElement(self::XML_NODE, (string) $this->value->getValueRounded());
         $element->setAttribute('unitCode', $this->unitCode->value);
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $billedQuantityElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $billedQuantityElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $billedQuantityElement */
+        $billedQuantityElement = $billedQuantityElements->item(0);
+
+        $billedQuantity = $billedQuantityElement->nodeValue;
+        $unitCode       = '' !== $billedQuantityElement->getAttribute('unitCode') ?
+            UnitOfMeasurement::tryFrom($billedQuantityElement->getAttribute('unitCode')) : null;
+
+        if (null === $unitCode) {
+            throw new \Exception('Wrong unitCode');
+        }
+
+        return new static((float) $billedQuantity, $unitCode);
     }
 }

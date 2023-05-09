@@ -3,7 +3,7 @@
 namespace Tiime\CrossIndustryInvoice\Basic;
 
 use Tiime\CrossIndustryInvoice\DataType\Basic\GrossPriceProductTradePrice;
-use Tiime\CrossIndustryInvoice\EN16931\NetPriceProductTradePrice;
+use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
 
 class SpecifiedLineTradeAgreement
 {
@@ -53,5 +53,28 @@ class SpecifiedLineTradeAgreement
         $currentNode->appendChild($this->netPriceProductTradePrice->toXML($document));
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $specifiedLineTradeAgreementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $specifiedLineTradeAgreementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedLineTradeAgreementElement */
+        $specifiedLineTradeAgreementElement = $specifiedLineTradeAgreementElements->item(0);
+
+        $netPriceProductTradePrice   = NetPriceProductTradePrice::fromXML($xpath, $specifiedLineTradeAgreementElement);
+        $grossPriceProductTradePrice = GrossPriceProductTradePrice::fromXML($xpath, $specifiedLineTradeAgreementElement);
+
+        $specifiedLineTradeAgreement = new static($netPriceProductTradePrice);
+
+        if ($grossPriceProductTradePrice instanceof GrossPriceProductTradePrice) {
+            $specifiedLineTradeAgreement->setGrossPriceProductTradePrice($grossPriceProductTradePrice);
+        }
+
+        return $specifiedLineTradeAgreement;
     }
 }

@@ -36,4 +36,26 @@ class SpecifiedTradeSettlementLineMonetarySummation
 
         return $element;
     }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $specifiedTradeSettlementLineMonetarySummationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $specifiedTradeSettlementLineMonetarySummationElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedTradeSettlementLineMonetarySummationElement */
+        $specifiedTradeSettlementLineMonetarySummationElement = $specifiedTradeSettlementLineMonetarySummationElements->item(0);
+
+        $lineTotalAmountElements = $xpath->query('.//ram:LineTotalAmount', $specifiedTradeSettlementLineMonetarySummationElement);
+
+        if (1 !== $lineTotalAmountElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $lineTotalAmount = $lineTotalAmountElements->item(0)->nodeValue;
+
+        return new static((float) $lineTotalAmount);
+    }
 }
