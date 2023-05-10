@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
  */
 class TelephoneUniversalCommunication
 {
+    protected const XML_NODE = 'ram:TelephoneUniversalCommunication';
+
     /**
      * BT-42 or BT-57.
      */
@@ -26,10 +28,36 @@ class TelephoneUniversalCommunication
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:TelephoneUniversalCommunication');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:CompleteNumber', $this->completeNumber));
+        $currentNode->appendChild($document->createElement('ram:CompleteNumber', $this->completeNumber));
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $telephoneUniversalCommunicationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $telephoneUniversalCommunicationElements->count()) {
+            return null;
+        }
+
+        if ($telephoneUniversalCommunicationElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $telephoneUniversalCommunicationElement */
+        $telephoneUniversalCommunicationElement = $telephoneUniversalCommunicationElements->item(0);
+
+        $completeNumberElements = $xpath->query('.//ram:CompleteNumber', $telephoneUniversalCommunicationElement);
+
+        if (1 !== $completeNumberElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $completeNumber = $completeNumberElements->item(0)->nodeValue;
+
+        return new static($completeNumber);
     }
 }

@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\CountryAlpha2Code;
  */
 class OriginTradeCountry
 {
+    protected const XML_NODE = 'ram:OriginTradeCountry';
+
     /**
      * BT-159.
      */
@@ -34,10 +36,46 @@ class OriginTradeCountry
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:OriginTradeCountry');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:ID', $this->identifier->value));
+        $currentNode->appendChild($document->createElement('ram:ID', $this->identifier->value));
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $originTradeCountryElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $originTradeCountryElements->count()) {
+            return null;
+        }
+
+        if ($originTradeCountryElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $originTradeCountryElement */
+        $originTradeCountryElement = $originTradeCountryElements->item(0);
+
+        $identifierElements = $xpath->query('.//ram:ID', $originTradeCountryElement);
+
+        if ($identifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $originTradeCountry = new static();
+
+        if ($identifierElements->count() === 1) {
+            $identifier = CountryAlpha2Code::tryFrom($identifierElements->item(0)->nodeValue);
+
+            if (!$identifier instanceof CountryAlpha2Code) {
+                throw new \Exception('Wrong ID');
+            }
+
+            $originTradeCountry->setIdentifier($identifier);
+        }
+
+        return $originTradeCountry;
     }
 }

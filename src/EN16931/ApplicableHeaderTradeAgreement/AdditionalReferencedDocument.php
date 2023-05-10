@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement;
 
 use Tiime\EN16931\DataType\BinaryObject;
+use Tiime\EN16931\DataType\MimeCode;
 use Tiime\EN16931\DataType\Reference\SupportingDocumentReference;
 
 /**
@@ -12,6 +13,8 @@ use Tiime\EN16931\DataType\Reference\SupportingDocumentReference;
  */
 class AdditionalReferencedDocument
 {
+    protected const XML_NODE = 'ram:AdditionalReferencedDocument';
+
     /**
      * BT-122.
      */
@@ -94,29 +97,103 @@ class AdditionalReferencedDocument
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:AdditionalReferencedDocument');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
+        $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
         if (\is_string($this->uriIdentifier)) {
-            $element->appendChild($document->createElement('ram:URIID', $this->uriIdentifier));
+            $currentNode->appendChild($document->createElement('ram:URIID', $this->uriIdentifier));
         }
 
-        $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
+        $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
         if (\is_string($this->name)) {
-            $element->appendChild($document->createElement('ram:Name', $this->name));
+            $currentNode->appendChild($document->createElement('ram:Name', $this->name));
         }
 
         if ($this->attachmentBinaryObject instanceof BinaryObject) {
             $binaryObjectElement = $document->createElement('ram:AttachmentBinaryObject', $this->attachmentBinaryObject->content);
-
             $binaryObjectElement->setAttribute('mimeCode', $this->attachmentBinaryObject->mimeCode->value);
             $binaryObjectElement->setAttribute('filename', $this->attachmentBinaryObject->filename);
 
-            $element->appendChild($binaryObjectElement);
+            $currentNode->appendChild($binaryObjectElement);
         }
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        $additionalReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $additionalReferencedDocumentElements->count()) {
+            return [];
+        }
+
+        $additionalReferencedDocuments = [];
+
+        foreach ($additionalReferencedDocumentElements as $additionalReferencedDocumentElement) {
+            $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $additionalReferencedDocumentElement);
+            $uriIdentifierElements            = $xpath->query('.//ram:URIID', $additionalReferencedDocumentElement);
+            $typeCodeElements                 = $xpath->query('.//ram:TypeCode', $additionalReferencedDocumentElement);
+            $nameElements                     = $xpath->query('.//ram:Name', $additionalReferencedDocumentElement);
+            $attachmentBinaryObjectElements   = $xpath->query('.//ram:AttachmentBinaryObject', $additionalReferencedDocumentElement);
+
+            if (1 !== $issuerAssignedIdentifierElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($uriIdentifierElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if (1 !== $typeCodeElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($nameElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($attachmentBinaryObjectElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
+            $typeCode                 = $typeCodeElements->item(0)->nodeValue;
+
+            if ('916' !== $typeCode) {
+                throw new \Exception('Wrong TypeCode');
+            }
+
+            $additionalReferencedDocument = new static(new SupportingDocumentReference($issuerAssignedIdentifier));
+
+            if (1 === $uriIdentifierElements->count()) {
+                $additionalReferencedDocument->setUriIdentifier($uriIdentifierElements->item(0)->nodeValue);
+            }
+
+            if (1 === $nameElements->count()) {
+                $additionalReferencedDocument->setName($nameElements->item(0)->nodeValue);
+            }
+
+            if (1 === $attachmentBinaryObjectElements->count()) {
+                $attachmentBinaryObjectItem = $attachmentBinaryObjectElements->item(0);
+                $content                    = $attachmentBinaryObjectItem->nodeValue;
+
+                $mimeCode = MimeCode::tryFrom($attachmentBinaryObjectItem->getAttribute('mimeCode'));
+
+                if (!$mimeCode instanceof MimeCode) {
+                    throw new \Exception('Wrong mimeCode');
+                }
+
+                $filename = $attachmentBinaryObjectItem->getAttribute('filename');
+
+                $additionalReferencedDocument->setAttachmentBinaryObject(new BinaryObject($content, $mimeCode, $filename));
+            }
+
+            $additionalReferencedDocuments[] = $additionalReferencedDocument;
+        }
+
+        return $additionalReferencedDocuments;
     }
 }

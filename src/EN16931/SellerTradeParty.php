@@ -18,6 +18,8 @@ use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
  */
 class SellerTradeParty
 {
+    protected const XML_NODE = 'ram:SellerTradeParty';
+
     /**
      * BT-29.
      *
@@ -93,7 +95,17 @@ class SellerTradeParty
 
     public function setIdentifiers(array $identifiers): static
     {
-        $this->identifiers = $identifiers;
+        $tmpIdentifiers = [];
+
+        foreach ($identifiers as $identifier) {
+            if (!$identifier instanceof SellerIdentifier) {
+                throw new \TypeError();
+            }
+
+            $tmpIdentifiers[] = $identifier;
+        }
+
+        $this->identifiers = $tmpIdentifiers;
 
         return $this;
     }
@@ -105,7 +117,17 @@ class SellerTradeParty
 
     public function setGlobalIdentifiers(array $globalIdentifiers): static
     {
-        $this->globalIdentifiers = $globalIdentifiers;
+        $tmpGlobalIdentifiers = [];
+
+        foreach ($globalIdentifiers as $globalIdentifier) {
+            if (!$globalIdentifier instanceof SellerGlobalIdentifier) {
+                throw new \TypeError();
+            }
+
+            $tmpGlobalIdentifiers[] = $globalIdentifier;
+        }
+
+        $this->globalIdentifiers = $tmpGlobalIdentifiers;
 
         return $this;
     }
@@ -194,47 +216,128 @@ class SellerTradeParty
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SellerTradeParty');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         foreach ($this->identifiers as $identifier) {
-            $element->appendChild($document->createElement('ram:ID', $identifier->value));
+            $currentNode->appendChild($document->createElement('ram:ID', $identifier->value));
         }
 
         foreach ($this->globalIdentifiers as $globalIdentifier) {
             $globalIdentifierElement = $document->createElement('ram:GlobalID', $globalIdentifier->value);
             $globalIdentifierElement->setAttribute('schemeID', $globalIdentifier->scheme->value);
 
-            $element->appendChild($globalIdentifierElement);
+            $currentNode->appendChild($globalIdentifierElement);
         }
 
-        $element->appendChild($document->createElement('ram:Name', $this->name));
+        $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
         if (\is_string($this->description)) {
-            $element->appendChild($document->createElement('ram:Description', $this->description));
+            $currentNode->appendChild($document->createElement('ram:Description', $this->description));
         }
 
         if ($this->specifiedLegalOrganization instanceof SellerSpecifiedLegalOrganization) {
-            $element->appendChild($this->specifiedLegalOrganization->toXML($document));
+            $currentNode->appendChild($this->specifiedLegalOrganization->toXML($document));
         }
 
         if ($this->definedTradeContact instanceof DefinedTradeContact) {
-            $element->appendChild($this->definedTradeContact->toXML($document));
+            $currentNode->appendChild($this->definedTradeContact->toXML($document));
         }
 
-        $element->appendChild($this->postalTradeAddress->toXML($document));
+        $currentNode->appendChild($this->postalTradeAddress->toXML($document));
 
         if ($this->uriUniversalCommunication instanceof URIUniversalCommunication) {
-            $element->appendChild($this->uriUniversalCommunication->toXML($document));
+            $currentNode->appendChild($this->uriUniversalCommunication->toXML($document));
         }
 
         if ($this->specifiedTaxRegistrationVAT instanceof SpecifiedTaxRegistrationVAT) {
-            $element->appendChild($this->specifiedTaxRegistrationVAT->toXML($document));
+            $currentNode->appendChild($this->specifiedTaxRegistrationVAT->toXML($document));
         }
 
         if ($this->specifiedTaxRegistration instanceof SpecifiedTaxRegistration) {
-            $element->appendChild($this->specifiedTaxRegistration->toXML($document));
+            $currentNode->appendChild($this->specifiedTaxRegistration->toXML($document));
         }
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $sellerTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $sellerTradePartyElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $sellerTradePartyElement */
+        $sellerTradePartyElement = $sellerTradePartyElements->item(0);
+
+        $identifierElements = $xpath->query('.//ram:ID', $sellerTradePartyElement);
+        $nameElements = $xpath->query('.//ram:Name', $sellerTradePartyElement);
+        $descriptionElements = $xpath->query('.//ram:Description', $sellerTradePartyElement);
+
+        if ($nameElements->count() !== 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($descriptionElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $name = $nameElements->item(0)->nodeValue;
+
+        $globalIdentifiers = SellerGlobalIdentifier::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedLegalOrganization = SellerSpecifiedLegalOrganization::fromXML($xpath, $sellerTradePartyElement);
+        $definedTradeContact = DefinedTradeContact::fromXML($xpath, $sellerTradePartyElement);
+        $postalTradeAddress = PostalTradeAddress::fromXML($xpath, $sellerTradePartyElement);
+        $uriUniversalCommunication = URIUniversalCommunication::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedTaxRegistrationVAT = SpecifiedTaxRegistrationVAT::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedTaxRegistration = SpecifiedTaxRegistration::fromXML($xpath, $sellerTradePartyElement);
+
+        if (!$postalTradeAddress instanceof PostalTradeAddress) {
+            throw new \Exception('Malformed');
+        }
+
+        $sellerTradeParty = new static($name, $postalTradeAddress);
+
+        $identifiers = [];
+
+        /** @var \DOMDocument $identifierElement */
+        foreach ($identifierElements as $identifierElement) {
+            $identifiers[] = new SellerIdentifier($identifierElement->nodeValue);
+        }
+
+        if (count($identifiers) > 0) {
+            $sellerTradeParty->setIdentifiers($identifiers);
+        }
+
+        if (count($globalIdentifiers) > 0) {
+            $sellerTradeParty->setGlobalIdentifiers($globalIdentifiers);
+        }
+
+        if ($descriptionElements->count() === 1) {
+            $sellerTradeParty->setDescription($descriptionElements->item(0)->nodeValue);
+        }
+
+        if ($specifiedLegalOrganization instanceof SellerSpecifiedLegalOrganization) {
+            $sellerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
+        }
+
+        if ($definedTradeContact instanceof DefinedTradeContact) {
+            $sellerTradeParty->setDefinedTradeContact($definedTradeContact);
+        }
+
+        if ($uriUniversalCommunication instanceof URIUniversalCommunication) {
+            $sellerTradeParty->setUriUniversalCommunication($uriUniversalCommunication);
+        }
+
+        if ($specifiedTaxRegistrationVAT instanceof SpecifiedTaxRegistrationVAT) {
+            $sellerTradeParty->setSpecifiedTaxRegistrationVATs($specifiedTaxRegistrationVAT);
+        }
+
+        if ($specifiedTaxRegistration instanceof SpecifiedTaxRegistration) {
+            $sellerTradeParty->setSpecifiedTaxRegistrations($specifiedTaxRegistration);
+        }
+
+        return $sellerTradeParty;
     }
 }

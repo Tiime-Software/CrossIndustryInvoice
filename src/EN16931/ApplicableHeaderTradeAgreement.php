@@ -17,6 +17,8 @@ use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\SellerOrde
  */
 class ApplicableHeaderTradeAgreement
 {
+    protected const XML_NODE = 'ram:ApplicableHeaderTradeAgreement';
+
     /**
      * BT-10.
      */
@@ -84,9 +86,9 @@ class ApplicableHeaderTradeAgreement
         $this->buyerOrderReferencedDocument                         = null;
         $this->contractReferencedDocument                           = null;
         $this->specifiedProcuringProject                            = null;
-        $this->additionalReferencedDocuments                        = [];
         $this->additionalReferencedDocumentTenderOrLotReference     = null;
         $this->additionalReferencedDocumentInvoicedObjectIdentifier = null;
+        $this->additionalReferencedDocuments                        = [];
     }
 
     public function getBuyerReference(): ?string
@@ -180,6 +182,39 @@ class ApplicableHeaderTradeAgreement
         return $this;
     }
 
+
+    /**
+     * @return AdditionalReferencedDocumentTenderOrLotReference|null
+     */
+    public function getAdditionalReferencedDocumentTenderOrLotReference(): ?AdditionalReferencedDocumentTenderOrLotReference
+    {
+        return $this->additionalReferencedDocumentTenderOrLotReference;
+    }
+
+    /**
+     * @param AdditionalReferencedDocumentTenderOrLotReference|null $additionalReferencedDocumentTenderOrLotReference
+     */
+    public function setAdditionalReferencedDocumentTenderOrLotReference(?AdditionalReferencedDocumentTenderOrLotReference $additionalReferencedDocumentTenderOrLotReference): void
+    {
+        $this->additionalReferencedDocumentTenderOrLotReference = $additionalReferencedDocumentTenderOrLotReference;
+    }
+
+    /**
+     * @return AdditionalReferencedDocumentInvoicedObjectIdentifier|null
+     */
+    public function getAdditionalReferencedDocumentInvoicedObjectIdentifier(): ?AdditionalReferencedDocumentInvoicedObjectIdentifier
+    {
+        return $this->additionalReferencedDocumentInvoicedObjectIdentifier;
+    }
+
+    /**
+     * @param AdditionalReferencedDocumentInvoicedObjectIdentifier|null $additionalReferencedDocumentInvoicedObjectIdentifier
+     */
+    public function setAdditionalReferencedDocumentInvoicedObjectIdentifier(?AdditionalReferencedDocumentInvoicedObjectIdentifier $additionalReferencedDocumentInvoicedObjectIdentifier): void
+    {
+        $this->additionalReferencedDocumentInvoicedObjectIdentifier = $additionalReferencedDocumentInvoicedObjectIdentifier;
+    }
+
     public function getSpecifiedProcuringProject(): ?SpecifiedProcuringProject
     {
         return $this->specifiedProcuringProject;
@@ -194,47 +229,116 @@ class ApplicableHeaderTradeAgreement
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ApplicableHeaderTradeAgreement');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         if (\is_string($this->buyerReference)) {
-            $element->appendChild($document->createElement('ram:BuyerReference', $this->buyerReference));
+            $currentNode->appendChild($document->createElement('ram:BuyerReference', $this->buyerReference));
         }
 
-        $element->appendChild($this->sellerTradeParty->toXML($document));
-        $element->appendChild($this->buyerTradeParty->toXML($document));
+        $currentNode->appendChild($this->sellerTradeParty->toXML($document));
+        $currentNode->appendChild($this->buyerTradeParty->toXML($document));
 
         if ($this->sellerTaxRepresentativeTradeParty instanceof SellerTaxRepresentativeTradeParty) {
-            $element->appendChild($this->sellerTaxRepresentativeTradeParty->toXML($document));
+            $currentNode->appendChild($this->sellerTaxRepresentativeTradeParty->toXML($document));
         }
 
         if ($this->sellerOrderReferencedDocument instanceof SellerOrderReferencedDocument) {
-            $element->appendChild($this->sellerOrderReferencedDocument->toXML($document));
+            $currentNode->appendChild($this->sellerOrderReferencedDocument->toXML($document));
         }
 
         if ($this->buyerOrderReferencedDocument instanceof BuyerOrderReferencedDocument) {
-            $element->appendChild($this->buyerOrderReferencedDocument->toXML($document));
+            $currentNode->appendChild($this->buyerOrderReferencedDocument->toXML($document));
         }
 
         if ($this->contractReferencedDocument instanceof ContractReferencedDocument) {
-            $element->appendChild($this->contractReferencedDocument->toXML($document));
+            $currentNode->appendChild($this->contractReferencedDocument->toXML($document));
         }
 
         foreach ($this->additionalReferencedDocuments as $additionalReferencedDocument) {
-            $element->appendChild($additionalReferencedDocument->toXML($document));
+            $currentNode->appendChild($additionalReferencedDocument->toXML($document));
         }
 
         if ($this->additionalReferencedDocumentTenderOrLotReference instanceof AdditionalReferencedDocumentTenderOrLotReference) {
-            $element->appendChild($this->additionalReferencedDocumentTenderOrLotReference->toXML($document));
+            $currentNode->appendChild($this->additionalReferencedDocumentTenderOrLotReference->toXML($document));
         }
 
         if ($this->additionalReferencedDocumentInvoicedObjectIdentifier instanceof AdditionalReferencedDocumentInvoicedObjectIdentifier) {
-            $element->appendChild($this->additionalReferencedDocumentInvoicedObjectIdentifier->toXML($document));
+            $currentNode->appendChild($this->additionalReferencedDocumentInvoicedObjectIdentifier->toXML($document));
         }
 
         if ($this->specifiedProcuringProject instanceof SpecifiedProcuringProject) {
-            $element->appendChild($this->specifiedProcuringProject->toXML($document));
+            $currentNode->appendChild($this->specifiedProcuringProject->toXML($document));
         }
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $applicableHeaderTradeAgreementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $applicableHeaderTradeAgreementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $applicableHeaderTradeAgreementElement */
+        $applicableHeaderTradeAgreementElement = $applicableHeaderTradeAgreementElements->item(0);
+
+        $buyerReferenceElements = $xpath->query('.//ram:BuyerReference', $applicableHeaderTradeAgreementElement);
+
+        if ($buyerReferenceElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $sellerTradeParty = SellerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $buyerTradeParty = BuyerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $sellerTaxRepresentativeTradeParty = SellerTaxRepresentativeTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $sellerOrderReferencedDocument = SellerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $buyerOrderReferencedDocument = BuyerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $contractReferencedDocument = ContractReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $additionalReferencedDocuments = AdditionalReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $additionalReferencedDocumentTenderOrLotReference = AdditionalReferencedDocumentTenderOrLotReference::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $additionalReferencedDocumentInvoicedObjectIdentifier = AdditionalReferencedDocumentInvoicedObjectIdentifier::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $specifiedProcuringProject = SpecifiedProcuringProject::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+
+        $applicableHeaderTradeAgreement = new static($sellerTradeParty, $buyerTradeParty);
+
+        if ($buyerReferenceElements->count() === 1) {
+            $applicableHeaderTradeAgreement->setBuyerReference($buyerReferenceElements->item(0)->nodeValue);
+        }
+
+        if ($sellerTaxRepresentativeTradeParty instanceof SellerTaxRepresentativeTradeParty) {
+            $applicableHeaderTradeAgreement->setSellerTaxRepresentativeTradeParty($sellerTaxRepresentativeTradeParty);
+        }
+
+        if ($sellerOrderReferencedDocument instanceof SellerOrderReferencedDocument) {
+            $applicableHeaderTradeAgreement->setSellerOrderReferencedDocument($sellerOrderReferencedDocument);
+        }
+
+        if ($buyerOrderReferencedDocument instanceof BuyerOrderReferencedDocument) {
+            $applicableHeaderTradeAgreement->setBuyerOrderReferencedDocument($buyerOrderReferencedDocument);
+        }
+
+        if ($contractReferencedDocument instanceof ContractReferencedDocument) {
+            $applicableHeaderTradeAgreement->setContractReferencedDocument($contractReferencedDocument);
+        }
+
+        if (count($additionalReferencedDocuments) > 0) {
+            $applicableHeaderTradeAgreement->setAdditionalReferencedDocuments($additionalReferencedDocuments);
+        }
+
+        if ($additionalReferencedDocumentTenderOrLotReference instanceof AdditionalReferencedDocumentTenderOrLotReference) {
+            $applicableHeaderTradeAgreement->setAdditionalReferencedDocumentTenderOrLotReference($additionalReferencedDocumentTenderOrLotReference);
+        }
+
+        if ($additionalReferencedDocumentInvoicedObjectIdentifier instanceof AdditionalReferencedDocumentInvoicedObjectIdentifier) {
+            $applicableHeaderTradeAgreement->setAdditionalReferencedDocumentInvoicedObjectIdentifier($additionalReferencedDocumentInvoicedObjectIdentifier);
+        }
+
+        if ($specifiedProcuringProject instanceof SpecifiedProcuringProject) {
+            $applicableHeaderTradeAgreement->setSpecifiedProcuringProject($specifiedProcuringProject);
+        }
+
+        return $applicableHeaderTradeAgreement;
     }
 }

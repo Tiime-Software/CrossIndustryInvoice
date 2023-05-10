@@ -6,6 +6,8 @@ use Tiime\EN16931\DataType\ItemTypeCode;
 
 class ClassCode
 {
+    protected const XML_NODE = 'ram:ClassCode';
+
     /**
      * BT-158.
      */
@@ -52,14 +54,47 @@ class ClassCode
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:ClassCode', $this->value);
-
-        $element->setAttribute('listID', $this->listIdentifier->value);
+        $currentNode = $document->createElement(self::XML_NODE, $this->value);
+        $currentNode->setAttribute('listID', $this->listIdentifier->value);
 
         if (\is_string($this->listVersionIdentifier)) {
-            $element->setAttribute('listVersionID', $this->listVersionIdentifier);
+            $currentNode->setAttribute('listVersionID', $this->listVersionIdentifier);
         }
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $classCodeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $classCodeElements->count()) {
+            return null;
+        }
+
+        if ($classCodeElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $classCodeElement */
+        $classCodeElement = $classCodeElements->item(0);
+
+        $value = $classCodeElement->nodeValue;
+
+        $identifier = ItemTypeCode::tryFrom($classCodeElement->getAttribute('listID'));
+
+        if (!$identifier instanceof ItemTypeCode) {
+            throw new \Exception('Wrong listID');
+        }
+
+        $classCode = new static($value, $identifier);
+
+        if ($classCodeElement->hasAttribute('listVersionID')) {
+            $listVersionIdentifier = $classCodeElement->getAttribute('listVersionID');
+
+            $classCode->setListVersionIdentifier($listVersionIdentifier);
+        }
+
+        return $classCode;
     }
 }
