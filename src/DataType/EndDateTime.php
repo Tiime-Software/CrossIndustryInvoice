@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 /**
  * BT-74-00.

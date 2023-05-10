@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod\EndDateTime;
-use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod\StartDateTime;
-
 /**
  * BG-14.
  */
