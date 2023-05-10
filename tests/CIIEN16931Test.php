@@ -36,6 +36,7 @@ use Tiime\CrossIndustryInvoice\DataType\GuidelineSpecifiedDocumentContextParamet
 use Tiime\CrossIndustryInvoice\DataType\InvoiceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
 use Tiime\CrossIndustryInvoice\DataType\LocationGlobalIdentifier;
+use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
 use Tiime\CrossIndustryInvoice\DataType\OccurrenceDateTime;
 use Tiime\CrossIndustryInvoice\DataType\PayeeGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\PayeeSpecifiedCreditorFinancialInstitution;
@@ -53,7 +54,6 @@ use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty;
 use Tiime\CrossIndustryInvoice\EN16931\CrossIndustryInvoice;
 use Tiime\CrossIndustryInvoice\EN16931\IncludedSupplyChainTradeLineItem;
-use Tiime\CrossIndustryInvoice\EN16931\NetPriceProductTradePrice;
 use Tiime\CrossIndustryInvoice\EN16931\ReceivingAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement;
@@ -92,7 +92,6 @@ use Tiime\EN16931\DataType\Reference\ReceivingAdviceReference;
 use Tiime\EN16931\DataType\UnitOfMeasurement;
 use Tiime\EN16931\DataType\VatCategory;
 use Tiime\EN16931\DataType\VatExoneration;
-use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
 class CIIEN16931Test extends TestCase
@@ -201,7 +200,7 @@ class CIIEN16931Test extends TestCase
                         ),
                         (new SpecifiedLineTradeSettlement(
                             (new ApplicableTradeTax(VatCategory::STANDARD))
-                                ->setRateApplicablePercent(new Percentage(20)),
+                                ->setRateApplicablePercent(20),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         ))
                             ->setBillingSpecifiedPeriod(
