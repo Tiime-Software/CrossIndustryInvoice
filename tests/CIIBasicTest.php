@@ -256,4 +256,67 @@ class CIIBasicTest extends TestCase
         $xml = $invoice->toXML();
         $this->assertIsString($xml->saveXML());
     }
+
+    /**
+     * @test
+     * @testdox Create BasicWL profile from XML mandatory data
+     */
+    public function createBasicWLProfileFromXMLMandatoryData(): void
+    {
+        $invoiceToConvert = new CrossIndustryInvoice(
+            new ExchangedDocumentContext(
+                new GuidelineSpecifiedDocumentContextParameter(
+                    new SpecificationIdentifier(SpecificationIdentifier::BASIC_WL)
+                )
+            ),
+            new ExchangedDocument(
+                new InvoiceIdentifier('FA-1545'),
+                InvoiceTypeCode::COMMERCIAL_INVOICE,
+                new IssueDateTime(new \DateTime())
+            ),
+            new SupplyChainTradeTransaction(
+                [
+                    new IncludedSupplyChainTradeLineItem(
+                        new AssociatedDocumentLineDocument(new InvoiceLineIdentifier('FA-0001')),
+                        new SpecifiedTradeProduct('Product 1'),
+                        new SpecifiedLineTradeAgreement(new NetPriceProductTradePrice(100)),
+                        new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasurement::BALL_REC21)),
+                        new SpecifiedLineTradeSettlement(
+                            new ApplicableTradeTax(VatCategory::STANDARD),
+                            new SpecifiedTradeSettlementLineMonetarySummation(100)
+                        )
+                    )
+                ],
+                new ApplicableHeaderTradeAgreement(
+                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
+                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
+                ),
+                new ApplicableHeaderTradeDelivery(),
+                new ApplicableHeaderTradeSettlement(
+                    CurrencyCode::EURO,
+                    [
+                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD)
+                    ],
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 0, 50, 50)
+                )
+            )
+        );
+
+        $xmlInvoice = $invoiceToConvert->toXML();
+
+        $document = new \DOMDocument();
+        $document->loadXML($xmlInvoice->saveXML());
+
+        $invoice = CrossIndustryInvoice::fromXML($document);
+        $this->assertInstanceOf(CrossIndustryInvoice::class, $invoice);
+    }
+
+    /**
+     * @test
+     * @testdox Create BasicWL profile from XML mandatory and optional data
+     */
+    public function createBasicWLProfileFromXMLMandatoryAndOptionalData(): void
+    {
+        $this->markTestSkipped('@todo');
+    }
 }
