@@ -29,7 +29,7 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\Su
         parent::__construct($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
 
         if (0 === \count($includedSupplyChainTradeLineItems)) {
-            throw new \TypeError();
+            throw new \Exception('Malformed');
         }
 
         $tmpIncludedSupplyChainTradeLineItems = [];
