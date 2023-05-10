@@ -182,34 +182,21 @@ class ApplicableHeaderTradeAgreement
         return $this;
     }
 
-
-    /**
-     * @return AdditionalReferencedDocumentTenderOrLotReference|null
-     */
     public function getAdditionalReferencedDocumentTenderOrLotReference(): ?AdditionalReferencedDocumentTenderOrLotReference
     {
         return $this->additionalReferencedDocumentTenderOrLotReference;
     }
 
-    /**
-     * @param AdditionalReferencedDocumentTenderOrLotReference|null $additionalReferencedDocumentTenderOrLotReference
-     */
     public function setAdditionalReferencedDocumentTenderOrLotReference(?AdditionalReferencedDocumentTenderOrLotReference $additionalReferencedDocumentTenderOrLotReference): void
     {
         $this->additionalReferencedDocumentTenderOrLotReference = $additionalReferencedDocumentTenderOrLotReference;
     }
 
-    /**
-     * @return AdditionalReferencedDocumentInvoicedObjectIdentifier|null
-     */
     public function getAdditionalReferencedDocumentInvoicedObjectIdentifier(): ?AdditionalReferencedDocumentInvoicedObjectIdentifier
     {
         return $this->additionalReferencedDocumentInvoicedObjectIdentifier;
     }
 
-    /**
-     * @param AdditionalReferencedDocumentInvoicedObjectIdentifier|null $additionalReferencedDocumentInvoicedObjectIdentifier
-     */
     public function setAdditionalReferencedDocumentInvoicedObjectIdentifier(?AdditionalReferencedDocumentInvoicedObjectIdentifier $additionalReferencedDocumentInvoicedObjectIdentifier): void
     {
         $this->additionalReferencedDocumentInvoicedObjectIdentifier = $additionalReferencedDocumentInvoicedObjectIdentifier;
@@ -290,20 +277,20 @@ class ApplicableHeaderTradeAgreement
             throw new \Exception('Malformed');
         }
 
-        $sellerTradeParty = SellerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
-        $buyerTradeParty = BuyerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
-        $sellerTaxRepresentativeTradeParty = SellerTaxRepresentativeTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
-        $sellerOrderReferencedDocument = SellerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
-        $buyerOrderReferencedDocument = BuyerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
-        $contractReferencedDocument = ContractReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
-        $additionalReferencedDocuments = AdditionalReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
-        $additionalReferencedDocumentTenderOrLotReference = AdditionalReferencedDocumentTenderOrLotReference::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $sellerTradeParty                                     = SellerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $buyerTradeParty                                      = BuyerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $sellerTaxRepresentativeTradeParty                    = SellerTaxRepresentativeTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $sellerOrderReferencedDocument                        = SellerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $buyerOrderReferencedDocument                         = BuyerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $contractReferencedDocument                           = ContractReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $additionalReferencedDocuments                        = AdditionalReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $additionalReferencedDocumentTenderOrLotReference     = AdditionalReferencedDocumentTenderOrLotReference::fromXML($xpath, $applicableHeaderTradeAgreementElement);
         $additionalReferencedDocumentInvoicedObjectIdentifier = AdditionalReferencedDocumentInvoicedObjectIdentifier::fromXML($xpath, $applicableHeaderTradeAgreementElement);
-        $specifiedProcuringProject = SpecifiedProcuringProject::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $specifiedProcuringProject                            = SpecifiedProcuringProject::fromXML($xpath, $applicableHeaderTradeAgreementElement);
 
         $applicableHeaderTradeAgreement = new static($sellerTradeParty, $buyerTradeParty);
 
-        if ($buyerReferenceElements->count() === 1) {
+        if (1 === $buyerReferenceElements->count()) {
             $applicableHeaderTradeAgreement->setBuyerReference($buyerReferenceElements->item(0)->nodeValue);
         }
 
@@ -323,7 +310,7 @@ class ApplicableHeaderTradeAgreement
             $applicableHeaderTradeAgreement->setContractReferencedDocument($contractReferencedDocument);
         }
 
-        if (count($additionalReferencedDocuments) > 0) {
+        if (\count($additionalReferencedDocuments) > 0) {
             $applicableHeaderTradeAgreement->setAdditionalReferencedDocuments($additionalReferencedDocuments);
         }
 

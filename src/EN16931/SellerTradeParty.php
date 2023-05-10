@@ -271,11 +271,11 @@ class SellerTradeParty
         /** @var \DOMElement $sellerTradePartyElement */
         $sellerTradePartyElement = $sellerTradePartyElements->item(0);
 
-        $identifierElements = $xpath->query('.//ram:ID', $sellerTradePartyElement);
-        $nameElements = $xpath->query('.//ram:Name', $sellerTradePartyElement);
+        $identifierElements  = $xpath->query('.//ram:ID', $sellerTradePartyElement);
+        $nameElements        = $xpath->query('.//ram:Name', $sellerTradePartyElement);
         $descriptionElements = $xpath->query('.//ram:Description', $sellerTradePartyElement);
 
-        if ($nameElements->count() !== 1) {
+        if (1 !== $nameElements->count()) {
             throw new \Exception('Malformed');
         }
 
@@ -285,13 +285,13 @@ class SellerTradeParty
 
         $name = $nameElements->item(0)->nodeValue;
 
-        $globalIdentifiers = SellerGlobalIdentifier::fromXML($xpath, $sellerTradePartyElement);
-        $specifiedLegalOrganization = SellerSpecifiedLegalOrganization::fromXML($xpath, $sellerTradePartyElement);
-        $definedTradeContact = DefinedTradeContact::fromXML($xpath, $sellerTradePartyElement);
-        $postalTradeAddress = PostalTradeAddress::fromXML($xpath, $sellerTradePartyElement);
-        $uriUniversalCommunication = URIUniversalCommunication::fromXML($xpath, $sellerTradePartyElement);
+        $globalIdentifiers           = SellerGlobalIdentifier::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedLegalOrganization  = SellerSpecifiedLegalOrganization::fromXML($xpath, $sellerTradePartyElement);
+        $definedTradeContact         = DefinedTradeContact::fromXML($xpath, $sellerTradePartyElement);
+        $postalTradeAddress          = PostalTradeAddress::fromXML($xpath, $sellerTradePartyElement);
+        $uriUniversalCommunication   = URIUniversalCommunication::fromXML($xpath, $sellerTradePartyElement);
         $specifiedTaxRegistrationVAT = SpecifiedTaxRegistrationVAT::fromXML($xpath, $sellerTradePartyElement);
-        $specifiedTaxRegistration = SpecifiedTaxRegistration::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedTaxRegistration    = SpecifiedTaxRegistration::fromXML($xpath, $sellerTradePartyElement);
 
         if (!$postalTradeAddress instanceof PostalTradeAddress) {
             throw new \Exception('Malformed');
@@ -306,15 +306,15 @@ class SellerTradeParty
             $identifiers[] = new SellerIdentifier($identifierElement->nodeValue);
         }
 
-        if (count($identifiers) > 0) {
+        if (\count($identifiers) > 0) {
             $sellerTradeParty->setIdentifiers($identifiers);
         }
 
-        if (count($globalIdentifiers) > 0) {
+        if (\count($globalIdentifiers) > 0) {
             $sellerTradeParty->setGlobalIdentifiers($globalIdentifiers);
         }
 
-        if ($descriptionElements->count() === 1) {
+        if (1 === $descriptionElements->count()) {
             $sellerTradeParty->setDescription($descriptionElements->item(0)->nodeValue);
         }
 

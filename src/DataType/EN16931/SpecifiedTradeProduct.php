@@ -16,6 +16,8 @@ use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
  */
 class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeProduct
 {
+    protected const XML_NODE = 'ram:SpecifiedTradeProduct';
+
     /**
      * BT-155.
      */
@@ -156,41 +158,41 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedTradeProduct');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         if ($this->getGlobalIdentifier() instanceof StandardItemIdentifier) {
             $identifierElement = $document->createElement('ram:GlobalID', $this->getGlobalIdentifier()->value);
             $identifierElement->setAttribute('schemeID', $this->getGlobalIdentifier()->scheme->value);
 
-            $element->appendChild($identifierElement);
+            $currentNode->appendChild($identifierElement);
         }
 
         if ($this->sellerAssignedIdentifier instanceof SellerItemIdentifier) {
-            $element->appendChild($document->createElement('ram:SellerAssignedID', $this->sellerAssignedIdentifier->value));
+            $currentNode->appendChild($document->createElement('ram:SellerAssignedID', $this->sellerAssignedIdentifier->value));
         }
 
         if ($this->buyerAssignedIdentifier instanceof BuyerItemIdentifier) {
-            $element->appendChild($document->createElement('ram:BuyerAssignedID', $this->buyerAssignedIdentifier->value));
+            $currentNode->appendChild($document->createElement('ram:BuyerAssignedID', $this->buyerAssignedIdentifier->value));
         }
 
-        $element->appendChild($document->createElement('ram:Name', $this->getName()));
+        $currentNode->appendChild($document->createElement('ram:Name', $this->getName()));
 
         if (\is_string($this->description)) {
-            $element->appendChild($document->createElement('ram:Description', $this->description));
+            $currentNode->appendChild($document->createElement('ram:Description', $this->description));
         }
 
         foreach ($this->applicableProductCharacteristics as $applicableProductCharacteristic) {
-            $element->appendChild($applicableProductCharacteristic->toXML($document));
+            $currentNode->appendChild($applicableProductCharacteristic->toXML($document));
         }
 
         foreach ($this->designatedProductClassifications as $designatedProductClassification) {
-            $element->appendChild($designatedProductClassification->toXML($document));
+            $currentNode->appendChild($designatedProductClassification->toXML($document));
         }
 
         if ($this->originTradeCountry instanceof OriginTradeCountry) {
-            $element->appendChild($this->originTradeCountry->toXML($document));
+            $currentNode->appendChild($this->originTradeCountry->toXML($document));
         }
 
-        return $element;
+        return $currentNode;
     }
 }

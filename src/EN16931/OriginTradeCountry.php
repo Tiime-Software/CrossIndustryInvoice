@@ -66,7 +66,7 @@ class OriginTradeCountry
 
         $originTradeCountry = new static();
 
-        if ($identifierElements->count() === 1) {
+        if (1 === $identifierElements->count()) {
             $identifier = CountryAlpha2Code::tryFrom($identifierElements->item(0)->nodeValue);
 
             if (!$identifier instanceof CountryAlpha2Code) {
