@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Identifier\InvoiceLineIdentifier;
  */
 class AssociatedDocumentLineDocument
 {
+    protected const XML_NODE = 'ram:AssociatedDocumentLineDocument';
+
     /**
      * BT-126.
      */
@@ -46,7 +48,7 @@ class AssociatedDocumentLineDocument
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:AssociatedDocumentLineDocument');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:LineID', $this->lineIdentifier->value));
 
@@ -55,5 +57,34 @@ class AssociatedDocumentLineDocument
         }
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $associatedDocumentLineDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $associatedDocumentLineDocumentElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $associatedDocumentLineDocumentElement */
+        $associatedDocumentLineDocumentElement = $associatedDocumentLineDocumentElements->item(0);
+
+        $lineIdentifierElements = $xpath->query('.//ram:LineID', $associatedDocumentLineDocumentElement);
+
+        if (1 !== $lineIdentifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $lineIdentifier = $lineIdentifierElements->item(0)->nodeValue;
+        $includedNote   = LineIncludedNote::fromXML($xpath, $associatedDocumentLineDocumentElement);
+
+        $associatedDocumentLineDocument = new static(new InvoiceLineIdentifier($lineIdentifier));
+
+        if ($includedNote instanceof LineIncludedNote) {
+            $associatedDocumentLineDocument->setIncludedNote($includedNote);
+        }
+
+        return $associatedDocumentLineDocument;
     }
 }

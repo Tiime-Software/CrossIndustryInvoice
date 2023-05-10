@@ -263,5 +263,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
                 }
             }
         }
+
+        return $specifiedTradeSettlementHeaderMonetarySummation;
     }
 }

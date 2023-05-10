@@ -87,7 +87,7 @@ class CrossIndustryInvoice
     {
         $xpath = new \DOMXPath($document);
 
-        $crossIndustryInvoiceElements = $xpath->query(sprintf('.//%s', self::XML_NODE));
+        $crossIndustryInvoiceElements = $xpath->query(sprintf('//%s', self::XML_NODE));
 
         if (1 !== $crossIndustryInvoiceElements->count()) {
             throw new \Exception('Malformed');

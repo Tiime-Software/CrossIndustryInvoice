@@ -17,8 +17,6 @@ use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeeSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
-use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod\EndDateTime;
-use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod\StartDateTime;
 use Tiime\CrossIndustryInvoice\DataType\BusinessProcessSpecifiedDocumentContextParameter;
 use Tiime\CrossIndustryInvoice\DataType\CategoryTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\DespatchAdviceReferencedDocument;
@@ -30,12 +28,14 @@ use Tiime\CrossIndustryInvoice\DataType\EN16931\LineSpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\PayeePartyCreditorFinancialAccount;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeProduct;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeSettlementHeaderMonetarySummation;
+use Tiime\CrossIndustryInvoice\DataType\EndDateTime;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 use Tiime\CrossIndustryInvoice\DataType\FormattedIssueDateTime;
 use Tiime\CrossIndustryInvoice\DataType\GuidelineSpecifiedDocumentContextParameter;
 use Tiime\CrossIndustryInvoice\DataType\InvoiceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
 use Tiime\CrossIndustryInvoice\DataType\LocationGlobalIdentifier;
+use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
 use Tiime\CrossIndustryInvoice\DataType\OccurrenceDateTime;
 use Tiime\CrossIndustryInvoice\DataType\PayeeGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\PayeeSpecifiedCreditorFinancialInstitution;
@@ -45,6 +45,7 @@ use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
+use Tiime\CrossIndustryInvoice\DataType\StartDateTime;
 use Tiime\CrossIndustryInvoice\DataType\TaxPointDate;
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement;
@@ -53,7 +54,6 @@ use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty;
 use Tiime\CrossIndustryInvoice\EN16931\CrossIndustryInvoice;
 use Tiime\CrossIndustryInvoice\EN16931\IncludedSupplyChainTradeLineItem;
-use Tiime\CrossIndustryInvoice\EN16931\NetPriceProductTradePrice;
 use Tiime\CrossIndustryInvoice\EN16931\ReceivingAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement;
@@ -92,7 +92,6 @@ use Tiime\EN16931\DataType\Reference\ReceivingAdviceReference;
 use Tiime\EN16931\DataType\UnitOfMeasurement;
 use Tiime\EN16931\DataType\VatCategory;
 use Tiime\EN16931\DataType\VatExoneration;
-use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
 class CIIEN16931Test extends TestCase
@@ -201,7 +200,7 @@ class CIIEN16931Test extends TestCase
                         ),
                         (new SpecifiedLineTradeSettlement(
                             (new ApplicableTradeTax(VatCategory::STANDARD))
-                                ->setRateApplicablePercent(new Percentage(20)),
+                                ->setRateApplicablePercent(20),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         ))
                             ->setBillingSpecifiedPeriod(
@@ -362,10 +361,10 @@ class CIIEN16931Test extends TestCase
                             (new CategoryTradeTax(VatCategory::STANDARD))
                                 ->setRateApplicablePercent(new Percentage(20))
                         ))
-                            ->setBasisAmount(new Amount(50))
+                            ->setBasisAmount(50)
                             ->setReason('Reason')
                             ->setReasonCode(ChargeReasonCode::ACCEPTANCE)
-                            ->setCalculationPercentage(new Percentage(20))
+                            ->setCalculationPercent(20)
                     ])
                     ->setSpecifiedTradePaymentTerms(
                         (new SpecifiedTradePaymentTerms())

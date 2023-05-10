@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class LineIncludedNote
 {
+    protected const XML_NODE = 'ram:IncludedNote';
+
     /**
      * BT-127.
      */
@@ -26,10 +28,30 @@ class LineIncludedNote
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:IncludedNote');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:Content', $this->content));
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $lineIncludedNoteElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $lineIncludedNoteElements->count()) {
+            return null;
+        }
+
+        if ($lineIncludedNoteElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $lineIncludedNoteElement */
+        $lineIncludedNoteElement = $lineIncludedNoteElements->item(0);
+
+        $content = $xpath->query('.//ram:Content', $lineIncludedNoteElement);
+
+        return new static($content);
     }
 }

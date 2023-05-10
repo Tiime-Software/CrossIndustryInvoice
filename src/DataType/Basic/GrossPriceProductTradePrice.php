@@ -11,6 +11,8 @@ use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
  */
 class GrossPriceProductTradePrice
 {
+    protected const XML_NODE = 'ram:GrossPriceProductTradePrice';
+
     /**
      * BT-148.
      */
@@ -64,7 +66,7 @@ class GrossPriceProductTradePrice
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:GrossPriceProductTradePrice');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:ChargeAmount', (string) $this->chargeAmount->getValueRounded()));
 
@@ -77,5 +79,44 @@ class GrossPriceProductTradePrice
         }
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $grossPriceProductTradePriceElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $grossPriceProductTradePriceElements->count()) {
+            return null;
+        }
+
+        if ($grossPriceProductTradePriceElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $grossPriceProductTradePriceElement */
+        $grossPriceProductTradePriceElement = $grossPriceProductTradePriceElements->item(0);
+
+        $chargeAmountElements = $xpath->query('.//ram:ChargeAmount', $grossPriceProductTradePriceElement);
+
+        if (1 !== $chargeAmountElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $chargeAmount = $chargeAmountElements->item(0)->nodeValue;
+
+        $basisQuantity               = BasisQuantity::fromXML($xpath, $grossPriceProductTradePriceElement);
+        $appliedTradeAllowanceCharge = AppliedTradeAllowanceCharge::fromXML($xpath, $grossPriceProductTradePriceElement);
+
+        $grossPriceProductTradePrice = new static((float) $chargeAmount);
+
+        if ($basisQuantity instanceof BasisQuantity) {
+            $grossPriceProductTradePrice->setBasisQuantity($basisQuantity);
+        }
+
+        if ($appliedTradeAllowanceCharge instanceof AppliedTradeAllowanceCharge) {
+            $grossPriceProductTradePrice->setAppliedTradeAllowanceCharge($appliedTradeAllowanceCharge);
+        }
+
+        return $grossPriceProductTradePrice;
     }
 }
