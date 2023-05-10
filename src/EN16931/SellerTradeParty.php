@@ -173,19 +173,19 @@ class SellerTradeParty
         return $this->specifiedTaxRegistrationVAT;
     }
 
-    public function setSpecifiedTaxRegistrationVATs(?SpecifiedTaxRegistrationVAT $specifiedTaxRegistrationVAT): static
+    public function setSpecifiedTaxRegistrationVAT(?SpecifiedTaxRegistrationVAT $specifiedTaxRegistrationVAT): static
     {
         $this->specifiedTaxRegistrationVAT = $specifiedTaxRegistrationVAT;
 
         return $this;
     }
 
-    public function getSpecifiedTaxRegistrations(): ?SpecifiedTaxRegistration
+    public function getSpecifiedTaxRegistration(): ?SpecifiedTaxRegistration
     {
         return $this->specifiedTaxRegistration;
     }
 
-    public function setSpecifiedTaxRegistrations(?SpecifiedTaxRegistration $specifiedTaxRegistration): static
+    public function setSpecifiedTaxRegistration(?SpecifiedTaxRegistration $specifiedTaxRegistration): static
     {
         $this->specifiedTaxRegistration = $specifiedTaxRegistration;
 
