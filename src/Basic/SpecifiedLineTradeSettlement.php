@@ -137,7 +137,7 @@ class SpecifiedLineTradeSettlement
             $currentNode->appendChild($specifiedTradeCharge->toXML($document));
         }
 
-        $this->specifiedTradeSettlementMonetarySummation->toXML($document);
+        $currentNode->appendChild($this->specifiedTradeSettlementMonetarySummation->toXML($document));
 
         return $currentNode;
     }
