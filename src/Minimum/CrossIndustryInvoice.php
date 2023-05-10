@@ -9,6 +9,8 @@ use Tiime\CrossIndustryInvoice\DataType\Minimum\ExchangedDocument;
 
 class CrossIndustryInvoice
 {
+    protected const XML_NODE = 'rsm:CrossIndustryInvoice';
+
     /**
      * BG-2.
      */
@@ -53,7 +55,7 @@ class CrossIndustryInvoice
     {
         $document = new \DOMDocument('1.0', 'UTF-8');
 
-        $crossIndustryInvoice = $document->createElement('rsm:CrossIndustryInvoice');
+        $crossIndustryInvoice = $document->createElement(self::XML_NODE);
         $crossIndustryInvoice->setAttribute(
             'xmlns:qdt',
             'urn:un:unece:uncefact:data:standard:QualifiedDataType:100'
@@ -88,7 +90,7 @@ class CrossIndustryInvoice
     {
         $xpath = new \DOMXPath($document);
 
-        $crossIndustryInvoiceElements = $xpath->query('//rsm:CrossIndustryInvoice');
+        $crossIndustryInvoiceElements = $xpath->query(sprintf('//%s', self::XML_NODE));
 
         if (1 !== $crossIndustryInvoiceElements->count()) {
             throw new \Exception('Malformed');
