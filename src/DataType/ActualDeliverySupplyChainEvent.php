@@ -52,6 +52,6 @@ class ActualDeliverySupplyChainEvent
 
         $occurrenceDateTime = OccurrenceDateTime::fromXML($xpath, $actualDeliverySupplyChainEventElement);
 
-        return new static($occurrenceDateTime);
+        return new self($occurrenceDateTime);
     }
 }

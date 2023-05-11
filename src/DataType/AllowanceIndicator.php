@@ -58,6 +58,6 @@ class AllowanceIndicator
             throw new \Exception('Malformed');
         }
 
-        return new static();
+        return new self();
     }
 }

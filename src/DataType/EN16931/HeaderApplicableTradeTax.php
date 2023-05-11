@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxPointDate;
+use Tiime\EN16931\BusinessTermsGroup\VatBreakdown;
+use Tiime\EN16931\DataType\DateCode2005;
 use Tiime\EN16931\DataType\VatCategory;
 
 /**
@@ -68,5 +70,22 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
         }
 
         return $currentNode;
+    }
+
+    public static function fromEN16931(VatBreakdown $vatBreakdown, ?DateCode2005 $taxPointDateCode): static
+    {
+        $headerApplicableTradeTax = new self(
+            $vatBreakdown->getVatCategoryTaxAmount(),
+            $vatBreakdown->getVatCategoryTaxableAmount(),
+            $vatBreakdown->getVatCategoryCode()
+        );
+
+        $headerApplicableTradeTax
+            ->setExemptionReason($vatBreakdown->getVatExemptionReasonText())
+            ->setExemptionReasonCode($vatBreakdown->getVatExemptionReasonCode())
+            ->setDueDateTypeCode($taxPointDateCode)
+            ->setRateApplicablePercent($vatBreakdown->getVatCategoryRate());
+
+        return $headerApplicableTradeTax;
     }
 }

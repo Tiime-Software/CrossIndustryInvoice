@@ -107,7 +107,7 @@ class ApplicableHeaderTradeDelivery
         $actualDeliverySupplyChainEvent   = ActualDeliverySupplyChainEvent::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
         $despatchAdviceReferencedDocument = DespatchAdviceReferencedDocument::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
 
-        $applicableHeaderTradeDelivery = new static();
+        $applicableHeaderTradeDelivery = new self();
 
         if (null !== $shipToTradeParty) {
             $applicableHeaderTradeDelivery->setShipToTradeParty($shipToTradeParty);

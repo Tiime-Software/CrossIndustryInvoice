@@ -78,6 +78,6 @@ class ApplicableHeaderTradeSettlement
 
         $specifiedTradeSettlementHeaderMonetarySummation = SpecifiedTradeSettlementHeaderMonetarySummation::fromXML($xpath, $applicableHeaderTradeSettlementElement);
 
-        return new static($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation);
+        return new self($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation);
     }
 }

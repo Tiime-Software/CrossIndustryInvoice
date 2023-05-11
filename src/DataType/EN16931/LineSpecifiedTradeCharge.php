@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\EN16931\BusinessTermsGroup\InvoiceLineCharge;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
@@ -78,5 +79,14 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
         }
 
         return $currentNode;
+    }
+
+    public static function fromEN16931(InvoiceLineCharge $charge): static
+    {
+        return (new self($charge->getAmount()))
+            ->setCalculationPercent($charge->getPercentage())
+            ->setBasisAmount($charge->getBaseAmount())
+            ->setReasonCode($charge->getReasonCode())
+            ->setReason($charge->getReason());
     }
 }

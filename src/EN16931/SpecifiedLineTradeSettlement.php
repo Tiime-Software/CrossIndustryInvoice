@@ -11,6 +11,7 @@ use Tiime\CrossIndustryInvoice\DataType\EN16931\LineSpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\LineSpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\AdditionalReferencedDocument;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\ReceivableSpecifiedTradeAccountingAccount;
+use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
 
 /**
  * BG-30-00.
@@ -184,5 +185,36 @@ class SpecifiedLineTradeSettlement
         }
 
         return $element;
+    }
+
+    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    {
+        $applicableTradeTax = (new ApplicableTradeTax($invoiceLine->getLineVatInformation()->getInvoicedItemVatCategoryCode()))
+            ->setRateApplicablePercent($invoiceLine->getLineVatInformation()->getInvoicedItemVatRate());
+
+        $specifiedTradeAllowances = [];
+        $specifiedTradeCharges    = [];
+
+        foreach ($invoiceLine->getAllowances() as $allowance) {
+            $specifiedTradeAllowances[] = LineSpecifiedTradeAllowance::fromEN16931($allowance);
+        }
+
+        foreach ($invoiceLine->getCharges() as $charge) {
+            $specifiedTradeCharges[] = LineSpecifiedTradeCharge::fromEN16931($charge);
+        }
+
+        $specifiedLineTradeSettlement = new self(
+            $applicableTradeTax,
+            new SpecifiedTradeSettlementLineMonetarySummation($invoiceLine->getNetAmount())
+        );
+
+        $specifiedLineTradeSettlement
+            ->setBillingSpecifiedPeriod(BillingSpecifiedPeriod::fromEN16931($invoiceLine->getPeriod()))
+            ->setSpecifiedTradeAllowances($specifiedTradeAllowances)
+            ->setSpecifiedTradeCharges($specifiedTradeCharges)
+            ->setAdditionalReferencedDocument(new AdditionalReferencedDocument($invoiceLine->getObjectIdentifier()))
+            ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount($invoiceLine->getBuyerAccountingReference()));
+
+        return $specifiedLineTradeSettlement;
     }
 }

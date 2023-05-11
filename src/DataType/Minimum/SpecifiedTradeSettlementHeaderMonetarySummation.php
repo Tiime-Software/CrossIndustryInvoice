@@ -123,7 +123,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
             throw new \Exception('Malformed');
         }
 
-        $specifiedTradeSettlementHeaderMonetarySummation = new static((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount);
+        $specifiedTradeSettlementHeaderMonetarySummation = new self((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount);
 
         if (1 === $taxTotalAmountElements->count()) {
             /** @var \DOMElement $taxTotalAmountItem */

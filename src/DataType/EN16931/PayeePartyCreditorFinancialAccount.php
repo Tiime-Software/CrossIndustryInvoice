@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\EN16931\BusinessTermsGroup\CreditTransfer;
+
 class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeePartyCreditorFinancialAccount
 {
     /**
@@ -46,5 +48,13 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
         }
 
         return $currentNode;
+    }
+
+    public static function fromEN16931(CreditTransfer $creditTransfer): static
+    {
+        return (new self())
+            ->setIbanIdentifier($creditTransfer->getPaymentAccountIdentifier()) // @todo : Should only be set if the identifier's value is a valid IBAN
+            ->setAccountName($creditTransfer->getPaymentAccountName())
+            ->setProprietaryIdentifier($creditTransfer->getPaymentAccountIdentifier()); // @todo : Should only be set if the identifier's value is not a valid IBAN
     }
 }

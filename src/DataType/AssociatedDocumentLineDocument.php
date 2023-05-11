@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
 use Tiime\EN16931\DataType\Identifier\InvoiceLineIdentifier;
 
 /**
@@ -79,12 +80,18 @@ class AssociatedDocumentLineDocument
         $lineIdentifier = $lineIdentifierElements->item(0)->nodeValue;
         $includedNote   = LineIncludedNote::fromXML($xpath, $associatedDocumentLineDocumentElement);
 
-        $associatedDocumentLineDocument = new static(new InvoiceLineIdentifier($lineIdentifier));
+        $associatedDocumentLineDocument = new self(new InvoiceLineIdentifier($lineIdentifier));
 
         if ($includedNote instanceof LineIncludedNote) {
             $associatedDocumentLineDocument->setIncludedNote($includedNote);
         }
 
         return $associatedDocumentLineDocument;
+    }
+
+    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    {
+        return (new self($invoiceLine->getIdentifier()))
+            ->setIncludedNote(\is_string($invoiceLine->getNote()) ? new LineIncludedNote($invoiceLine->getNote()) : null);
     }
 }

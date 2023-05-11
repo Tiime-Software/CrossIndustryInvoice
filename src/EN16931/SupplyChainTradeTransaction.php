@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\EN16931\Invoice;
+
 /**
  * BG-25-00.
  */
@@ -90,5 +92,21 @@ class SupplyChainTradeTransaction
         $element->appendChild($this->applicableHeaderTradeSettlement->toXML($document));
 
         return $element;
+    }
+
+    public static function fromEN16931(Invoice $invoice): static
+    {
+        $items = [];
+
+        foreach ($invoice->getInvoiceLines() as $invoiceLine) {
+            $items[] = IncludedSupplyChainTradeLineItem::fromEN16931($invoiceLine);
+        }
+
+        return new self(
+            $items,
+            ApplicableHeaderTradeAgreement::fromEN16931($invoice),
+            ApplicableHeaderTradeDelivery::fromEN16931($invoice),
+            ApplicableHeaderTradeSettlement::fromEN16931($invoice),
+        );
     }
 }

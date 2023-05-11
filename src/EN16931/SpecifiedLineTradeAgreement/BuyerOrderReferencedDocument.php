@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement;
 
+use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
 use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
 
 /**
@@ -41,5 +42,10 @@ class BuyerOrderReferencedDocument
         }
 
         return $element;
+    }
+
+    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    {
+        return (new self())->setLineIdentifier($invoiceLine->getReferencedPurchaseOrderLineReference());
     }
 }

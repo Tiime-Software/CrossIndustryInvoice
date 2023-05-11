@@ -50,6 +50,6 @@ class BuyerGlobalIdentifier extends BuyerIdentifier
             throw new \Exception('Wrong schemeID');
         }
 
-        return new static($identifier, $scheme);
+        return new self($identifier, $scheme);
     }
 }

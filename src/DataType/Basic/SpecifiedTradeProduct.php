@@ -81,7 +81,7 @@ class SpecifiedTradeProduct
 
         $name = $nameElements->item(0)->nodeValue;
 
-        $specifiedTradeProduct = new static($name);
+        $specifiedTradeProduct = new self($name);
 
         if (1 === $globalIdentifierElements->count()) {
             $specifiedTradeProduct->setGlobalIdentifier($globalIdentifierElements->item(0)->nodeValue);

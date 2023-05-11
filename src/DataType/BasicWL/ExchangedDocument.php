@@ -7,7 +7,9 @@ namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 use Tiime\CrossIndustryInvoice\DataType\DocumentIncludedNote;
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
 use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
+use Tiime\EN16931\DataType\InvoiceNoteCode;
 use Tiime\EN16931\DataType\InvoiceTypeCode;
+use Tiime\EN16931\Invoice;
 
 /**
  * BT-1-00.
@@ -93,11 +95,35 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
         $issueDateTime = IssueDateTime::fromXML($xpath, $exchangedDocumentElement);
         $includedNotes = DocumentIncludedNote::fromXML($xpath, $exchangedDocumentElement);
 
-        $exchangedDocument = new static(new InvoiceIdentifier($identifier), $typeCode, $issueDateTime);
+        $exchangedDocument = new self(new InvoiceIdentifier($identifier), $typeCode, $issueDateTime);
 
         if (\count($includedNotes) > 0) {
             $exchangedDocument->setIncludedNotes($includedNotes);
         }
+
+        return $exchangedDocument;
+    }
+
+    public static function fromEN16931(Invoice $invoice): static
+    {
+        $documentNotes     = [];
+        $exchangedDocument = new self(
+            $invoice->getNumber(),
+            $invoice->getTypeCode(),
+            new IssueDateTime($invoice->getIssueDate())
+        );
+
+        foreach ($invoice->getInvoiceNote() as $invoiceNote) {
+            $documentNote = new DocumentIncludedNote($invoiceNote->getNote());
+
+            if ($invoiceNote->getSubjectCode() instanceof InvoiceNoteCode) {
+                $documentNote->setSubjectCode($invoiceNote->getSubjectCode());
+            }
+
+            $documentNotes[] = $documentNote;
+        }
+
+        $exchangedDocument->setIncludedNotes($documentNotes);
 
         return $exchangedDocument;
     }

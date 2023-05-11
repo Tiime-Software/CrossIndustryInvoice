@@ -80,7 +80,7 @@ class BuyerTradeParty
 
         $specifiedLegalOrganization = BuyerSpecifiedLegalOrganization::fromXML($xpath, $buyerTradePartyElement);
 
-        $buyerTradeParty = new static($name);
+        $buyerTradeParty = new self($name);
 
         if (null !== $specifiedLegalOrganization) {
             $buyerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);

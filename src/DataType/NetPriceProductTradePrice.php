@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\DataType\Basic\BasisQuantity;
+use Tiime\EN16931\BusinessTermsGroup\PriceDetails;
 use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
 
 /**
@@ -80,12 +81,22 @@ class NetPriceProductTradePrice
         $chargeAmount  = $chargeAmountElements->item(0)->nodeValue;
         $basisQuantity = BasisQuantity::fromXML($xpath, $netPriceProductTradePriceElement);
 
-        $netPriceProductTradePrice = new static((float) $chargeAmount);
+        $netPriceProductTradePrice = new self((float) $chargeAmount);
 
         if ($basisQuantity instanceof BasisQuantity) {
             $netPriceProductTradePrice->setBasisQuantity($basisQuantity);
         }
 
         return $netPriceProductTradePrice;
+    }
+
+    public static function fromEN16931(PriceDetails $priceDetails): static
+    {
+        $basisQuantity = \is_float($priceDetails->getItemPriceBaseQuantity())
+            ? BasisQuantity::fromEN16931($priceDetails)
+            : null;
+
+        return (new self($priceDetails->getItemNetPrice()))
+            ->setBasisQuantity($basisQuantity);
     }
 }

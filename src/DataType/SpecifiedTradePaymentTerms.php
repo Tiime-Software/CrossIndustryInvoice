@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\DataType\Identifier\MandateReferenceIdentifier;
+use Tiime\EN16931\Invoice;
 
 /**
  * BT-20-00.
@@ -118,7 +119,7 @@ class SpecifiedTradePaymentTerms
 
         $dueDateDateTime = DueDateDateTime::fromXML($xpath, $specifiedTradePaymentTermsElement);
 
-        $specifiedTradePaymentTerms = new static();
+        $specifiedTradePaymentTerms = new self();
 
         if (1 === $descriptionElements->count()) {
             $specifiedTradePaymentTerms->setDescription($descriptionElements->item(0)->nodeValue);
@@ -133,5 +134,13 @@ class SpecifiedTradePaymentTerms
         }
 
         return $specifiedTradePaymentTerms;
+    }
+
+    public static function fromEN16931(Invoice $invoice): static
+    {
+        return (new self())
+            ->setDescription($invoice->getPaymentTerms())
+            ->setDueDateDateTime($invoice->getPaymentDueDate())
+            ->setDirectDebitMandateIdentifier($invoice->getPaymentInstructions()?->getDirectDebit()?->getMandateReferenceIdentifier());
     }
 }

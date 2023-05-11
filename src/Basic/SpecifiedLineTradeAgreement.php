@@ -69,7 +69,7 @@ class SpecifiedLineTradeAgreement
         $netPriceProductTradePrice   = NetPriceProductTradePrice::fromXML($xpath, $specifiedLineTradeAgreementElement);
         $grossPriceProductTradePrice = GrossPriceProductTradePrice::fromXML($xpath, $specifiedLineTradeAgreementElement);
 
-        $specifiedLineTradeAgreement = new static($netPriceProductTradePrice);
+        $specifiedLineTradeAgreement = new self($netPriceProductTradePrice);
 
         if ($grossPriceProductTradePrice instanceof GrossPriceProductTradePrice) {
             $specifiedLineTradeAgreement->setGrossPriceProductTradePrice($grossPriceProductTradePrice);

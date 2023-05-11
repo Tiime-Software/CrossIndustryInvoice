@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\BusinessTermsGroup\PaymentCardInformation;
+
 /**
  * BG-18.
  */
@@ -53,5 +55,11 @@ class ApplicableTradeSettlementFinancialCard
         }
 
         return $currentNode;
+    }
+
+    public static function fromEN16931(PaymentCardInformation $paymentCardInformation): static
+    {
+        return (new self($paymentCardInformation->getPrimaryAccountNumber()))
+            ->setCardholderName($paymentCardInformation->getHolderName());
     }
 }

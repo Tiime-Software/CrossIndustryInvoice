@@ -113,7 +113,7 @@ class SpecifiedTradeSettlementPaymentMeans
         $payerPartyDebtorFinancialAccount   = PayerPartyDebtorFinancialAccount::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
         $payeePartyCreditorFinancialAccount = PayeePartyCreditorFinancialAccount::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
 
-        $specifiedTradeSettlementPaymentMeans = new static($typeCode);
+        $specifiedTradeSettlementPaymentMeans = new self($typeCode);
 
         if (null !== $payerPartyDebtorFinancialAccount) {
             $specifiedTradeSettlementPaymentMeans->setPayerPartyDebtorFinancialAccount($payerPartyDebtorFinancialAccount);

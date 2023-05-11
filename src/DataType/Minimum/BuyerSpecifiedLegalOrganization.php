@@ -71,6 +71,6 @@ class BuyerSpecifiedLegalOrganization
         $scheme         = '' !== $identifierItem->getAttribute('schemeID') ?
             InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID')) : null;
 
-        return new static(new LegalRegistrationIdentifier($identifier, $scheme));
+        return new self(new LegalRegistrationIdentifier($identifier, $scheme));
     }
 }

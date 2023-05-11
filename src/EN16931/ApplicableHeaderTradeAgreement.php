@@ -11,6 +11,11 @@ use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\Additional
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\AdditionalReferencedDocumentInvoicedObjectIdentifier;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\AdditionalReferencedDocumentTenderOrLotReference;
 use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\SellerOrderReferencedDocument;
+use Tiime\EN16931\DataType\Reference\ContractReference;
+use Tiime\EN16931\DataType\Reference\ProjectReference;
+use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
+use Tiime\EN16931\DataType\Reference\SalesOrderReference;
+use Tiime\EN16931\Invoice;
 
 /**
  * BT-10-00.
@@ -236,5 +241,46 @@ class ApplicableHeaderTradeAgreement
         }
 
         return $element;
+    }
+
+    public static function fromEN16931(Invoice $invoice): static
+    {
+        $additionalReferencedDocuments = [];
+
+        foreach ($invoice->getAdditionalSupportingDocuments() as $additionalSupportingDocument) {
+            $additionalReferencedDocuments[] = AdditionalReferencedDocument::fromEN16931($additionalSupportingDocument);
+        }
+
+        $applicableHeaderTradeAgreement = new self(
+            SellerTradeParty::fromEN16931($invoice->getSeller()),
+            BuyerTradeParty::fromEN16931($invoice->getBuyer()),
+        );
+
+        $applicableHeaderTradeAgreement
+            ->setAdditionalReferencedDocuments($additionalReferencedDocuments)
+            ->setBuyerReference($invoice->getBuyerReference())
+            ->setBuyerOrderReferencedDocument(
+                $invoice->getPurchaseOrderReference() instanceof PurchaseOrderLineReference
+                    ? new BuyerOrderReferencedDocument($invoice->getPurchaseOrderReference())
+                    : null
+            )
+            ->setContractReferencedDocument(
+                $invoice->getContractReference() instanceof ContractReference
+                    ? new ContractReferencedDocument($invoice->getContractReference())
+                    : null
+            )
+            ->setSellerTaxRepresentativeTradeParty(SellerTaxRepresentativeTradeParty::fromEN16931($invoice->getSellerTaxRepresentativeParty()))
+            ->setSellerOrderReferencedDocument(
+                $invoice->getSalesOrderReference() instanceof SalesOrderReference
+                    ? new SellerOrderReferencedDocument($invoice->getSalesOrderReference())
+                    : null
+            )
+            ->setSpecifiedProcuringProject(
+                $invoice->getProjectReference() instanceof ProjectReference
+                    ? new SpecifiedProcuringProject($invoice->getProjectReference())
+                    : null
+            );
+
+        return $applicableHeaderTradeAgreement;
     }
 }

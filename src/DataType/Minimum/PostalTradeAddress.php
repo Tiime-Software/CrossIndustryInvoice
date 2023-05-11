@@ -65,6 +65,6 @@ class PostalTradeAddress
             throw new \Exception('Wrong country');
         }
 
-        return new static($countryIdentifier);
+        return new self($countryIdentifier);
     }
 }

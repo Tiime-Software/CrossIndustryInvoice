@@ -11,6 +11,11 @@ use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\BuyerIdentifier;
 use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty\DefinedTradeContact;
+use Tiime\EN16931\BusinessTermsGroup\Buyer;
+use Tiime\EN16931\BusinessTermsGroup\BuyerContact;
+use Tiime\EN16931\DataType\Identifier\LegalRegistrationIdentifier;
+use Tiime\EN16931\DataType\Identifier\VatIdentifier;
+use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BG-7.
@@ -184,5 +189,41 @@ class BuyerTradeParty
         }
 
         return $element;
+    }
+
+    public static function fromEN16931(Buyer $buyer): static
+    {
+        $identifier       = null;
+        $globalIdentifier = null;
+
+        if ($buyer->getIdentifier()->scheme instanceof InternationalCodeDesignator) {
+            $globalIdentifier = new BuyerGlobalIdentifier($buyer->getIdentifier()->value, $buyer->getIdentifier()->scheme);
+        } else {
+            $identifier = $buyer->getIdentifier();
+        }
+
+        $buyerTradeParty = new self($buyer->getName(), PostalTradeAddress::fromEN16931($buyer->getAddress()));
+
+        $buyerTradeParty
+            ->setIdentifier($identifier)
+            ->setGlobalIdentifier($globalIdentifier)
+            ->setSpecifiedLegalOrganization(
+                $buyer->getLegalRegistrationIdentifier() instanceof LegalRegistrationIdentifier
+                    ? new BuyerSpecifiedLegalOrganization($buyer->getLegalRegistrationIdentifier())
+                    : null
+            )
+            ->setDefinedTradeContact(
+                $buyer->getContact() instanceof BuyerContact
+                    ? DefinedTradeContact::fromEN16931($buyer->getContact())
+                    : null
+            )
+            ->setURIUniversalCommunication(new URIUniversalCommunication($buyer->getElectronicAddress()))
+            ->setSpecifiedTaxRegistration(
+                $buyer->getVatIdentifier() instanceof VatIdentifier
+                    ? new SpecifiedTaxRegistration($buyer->getVatIdentifier())
+                    : null
+            );
+
+        return $buyerTradeParty;
     }
 }

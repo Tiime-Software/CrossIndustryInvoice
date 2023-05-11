@@ -6,7 +6,11 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
 use Tiime\CrossIndustryInvoice\DataType\DespatchAdviceReferencedDocument;
+use Tiime\CrossIndustryInvoice\DataType\OccurrenceDateTime;
 use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
+use Tiime\EN16931\DataType\Reference\DespatchAdviceReference;
+use Tiime\EN16931\DataType\Reference\ReceivingAdviceReference;
+use Tiime\EN16931\Invoice;
 
 /**
  * BG-13-00.
@@ -110,5 +114,26 @@ class ApplicableHeaderTradeDelivery
         }
 
         return $currentNode;
+    }
+
+    public static function fromEN16931(Invoice $invoice): static
+    {
+        return (new self())
+            ->setShipToTradeParty(ShipToTradeParty::fromEN16931($invoice->getDeliveryInformation()))
+            ->setActualDeliverySupplyChainEvent(
+                $invoice->getDeliveryInformation()->getActualDeliveryDate() instanceof \DateTimeInterface
+                    ? new ActualDeliverySupplyChainEvent(new OccurrenceDateTime($invoice->getDeliveryInformation()->getActualDeliveryDate()))
+                    : null
+            )
+            ->setDespatchAdviceReferencedDocument(
+                $invoice->getDespatchAdviceReference() instanceof DespatchAdviceReference
+                    ? new DespatchAdviceReferencedDocument($invoice->getDespatchAdviceReference())
+                    : null
+            )
+            ->setReceivingAdviceReferencedDocument(
+                $invoice->getReceivingAdviceReference() instanceof ReceivingAdviceReference
+                    ? new ReceivingAdviceReferencedDocument($invoice->getReceivingAdviceReference())
+                    : null
+            );
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
+use Tiime\EN16931\BusinessTermsGroup\PriceDetails;
 use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
 
 /**
@@ -107,7 +108,7 @@ class GrossPriceProductTradePrice
         $basisQuantity               = BasisQuantity::fromXML($xpath, $grossPriceProductTradePriceElement);
         $appliedTradeAllowanceCharge = AppliedTradeAllowanceCharge::fromXML($xpath, $grossPriceProductTradePriceElement);
 
-        $grossPriceProductTradePrice = new static((float) $chargeAmount);
+        $grossPriceProductTradePrice = new self((float) $chargeAmount);
 
         if ($basisQuantity instanceof BasisQuantity) {
             $grossPriceProductTradePrice->setBasisQuantity($basisQuantity);
@@ -118,5 +119,16 @@ class GrossPriceProductTradePrice
         }
 
         return $grossPriceProductTradePrice;
+    }
+
+    public static function fromEN16931(PriceDetails $priceDetails): static
+    {
+        $appliedTradeAllowanceCharge = \is_float($priceDetails->getItemPriceDiscount())
+            ? AppliedTradeAllowanceCharge::fromEN16931($priceDetails)
+            : null;
+
+        return (new self($priceDetails->getItemGrossPrice()))
+            ->setBasisQuantity(BasisQuantity::fromEN16931($priceDetails))
+            ->setAppliedTradeAllowanceCharge($appliedTradeAllowanceCharge);
     }
 }

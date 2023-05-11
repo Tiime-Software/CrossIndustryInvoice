@@ -198,7 +198,7 @@ class BuyerTradeParty
             throw new \Exception('Malformed');
         }
 
-        $buyerTradeParty = new static($name, $postalTradeAddress);
+        $buyerTradeParty = new self($name, $postalTradeAddress);
 
         if (1 === $identifierElements->count()) {
             $buyerTradeParty->setIdentifier(new BuyerIdentifier($identifierElements->item(0)->nodeValue));
