@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Reference\SalesOrderReference;
  */
 class SellerOrderReferencedDocument
 {
+    protected const XML_NODE = 'ram:SellerOrderReferencedDocument';
+
     /**
      * BT-14.
      */
@@ -28,10 +30,36 @@ class SellerOrderReferencedDocument
 
     public function toXML(\DOMDocument $document)
     {
-        $element = $document->createElement('ram:SellerOrderReferencedDocument');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
+        $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $sellerOrderReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $sellerOrderReferencedDocumentElements->count()) {
+            return null;
+        }
+
+        if ($sellerOrderReferencedDocumentElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $sellerOrderReferencedDocumentElement */
+        $sellerOrderReferencedDocumentElement = $sellerOrderReferencedDocumentElements->item(0);
+
+        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $sellerOrderReferencedDocumentElement);
+
+        if (1 !== $issuerAssignedIdentifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
+
+        return new static(new SalesOrderReference($issuerAssignedIdentifier));
     }
 }

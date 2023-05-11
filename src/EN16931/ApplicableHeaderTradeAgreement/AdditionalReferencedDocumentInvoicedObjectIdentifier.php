@@ -6,12 +6,15 @@ namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement;
 
 use Tiime\EN16931\DataType\BinaryObject;
 use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
+use Tiime\EN16931\DataType\MimeCode;
 
 /**
  * BT-18-00.
  */
 class AdditionalReferencedDocumentInvoicedObjectIdentifier
 {
+    protected const XML_NODE = 'ram:AdditionalReferencedDocument';
+
     /**
      * BT-18.
      */
@@ -112,7 +115,7 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:AdditionalReferencedDocument');
+        $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
 
@@ -140,5 +143,89 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
         }
 
         return $element;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $additionalReferencedDocumentInvoicedObjectIdentifierElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $additionalReferencedDocumentInvoicedObjectIdentifierElements->count()) {
+            return null;
+        }
+
+        if ($additionalReferencedDocumentInvoicedObjectIdentifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $additionalReferencedDocumentInvoicedObjectIdentifierElement */
+        $additionalReferencedDocumentInvoicedObjectIdentifierElement = $additionalReferencedDocumentInvoicedObjectIdentifierElements->item(0);
+
+        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+        $uriIdentifierElements            = $xpath->query('.//ram:URIID', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+        $typeCodeElements                 = $xpath->query('.//ram:TypeCode', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+        $referenceTypeCodeElements        = $xpath->query('.//ram:ReferenceTypeCode', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+        $nameElements                     = $xpath->query('.//ram:Name', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+        $attachmentBinaryObjectElements   = $xpath->query('.//ram:AttachmentBinaryObject', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+
+        if (1 !== $issuerAssignedIdentifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($uriIdentifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $typeCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($referenceTypeCodeElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($nameElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($attachmentBinaryObjectElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
+        $typeCode                 = $typeCodeElements->item(0)->nodeValue;
+
+        if ('130' !== $typeCode) {
+            throw new \Exception('Wrong TypeCode');
+        }
+
+        $additionalReferencedDocumentInvoicedObjectIdentifier = new static(new ObjectIdentifier($issuerAssignedIdentifier));
+
+        if (1 === $uriIdentifierElements->count()) {
+            $additionalReferencedDocumentInvoicedObjectIdentifier->setUriIdentifier($uriIdentifierElements->item(0)->nodeValue);
+        }
+
+        if (1 === $referenceTypeCodeElements->count()) {
+            $additionalReferencedDocumentInvoicedObjectIdentifier->setReferenceTypeCode($referenceTypeCodeElements->item(0)->nodeValue);
+        }
+
+        if (1 === $nameElements->count()) {
+            $additionalReferencedDocumentInvoicedObjectIdentifier->setName($nameElements->item(0)->nodeValue);
+        }
+
+        if (1 === $attachmentBinaryObjectElements->count()) {
+            $attachmentBinaryObjectItem = $attachmentBinaryObjectElements->item(0);
+            $content                    = $attachmentBinaryObjectItem->nodeValue;
+            $mimeCode                   = MimeCode::tryFrom($attachmentBinaryObjectItem->getAttribute('mimeCode'));
+
+            if (!$mimeCode instanceof MimeCode) {
+                throw new \Exception('Wrong mimeCode');
+            }
+
+            $filename = $attachmentBinaryObjectItem->getAttribute('filename');
+
+            $additionalReferencedDocumentInvoicedObjectIdentifier->setAttachmentBinaryObject(new BinaryObject($content, $mimeCode, $filename));
+        }
+
+        return $additionalReferencedDocumentInvoicedObjectIdentifier;
     }
 }

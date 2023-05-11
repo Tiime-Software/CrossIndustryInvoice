@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty;
  */
 class BuyerIdentifier
 {
+    protected const XML_NODE = 'ram:ID';
+
     private string $value;
 
     public function __construct(string $value)
@@ -23,6 +25,23 @@ class BuyerIdentifier
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        return $document->createElement('ram:ID', $this->value);
+        return $document->createElement(self::XML_NODE, $this->value);
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $buyerIdentifierElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $buyerIdentifierElements->count()) {
+            return null;
+        }
+
+        if ($buyerIdentifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $value = $buyerIdentifierElements->item(0)->nodeValue;
+
+        return new static($value);
     }
 }

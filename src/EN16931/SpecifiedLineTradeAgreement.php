@@ -16,7 +16,7 @@ class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\Basic\Spec
     protected const XML_NODE = 'ram:SpecifiedLineTradeAgreement';
 
     /**
-     * BT-13-00.
+     * BT-132-00.
      */
     private ?BuyerOrderReferencedDocument $buyerOrderReferencedDocument;
 
