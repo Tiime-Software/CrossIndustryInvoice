@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\AllowanceIndicator;
+use Tiime\EN16931\DataType\AllowanceReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
@@ -55,7 +57,7 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SpecifiedTradeAllowanceCharge');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($this->getChargeIndicator()->toXML($document));
 
@@ -78,5 +80,78 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
         }
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        // TODO
+
+        $lineSpecifiedTradeAllowanceElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $lineSpecifiedTradeAllowanceElements->count()) {
+            return [];
+        }
+
+        $lineSpecifiedTradeAllowances = [];
+
+        foreach ($lineSpecifiedTradeAllowanceElements as $lineSpecifiedTradeAllowanceElement) {
+            $calculationPercentElements = $xpath->query('.//ram:CalculationPercent', $lineSpecifiedTradeAllowanceElement);
+            $basisAmountElements        = $xpath->query('.//ram:BasisAmount', $lineSpecifiedTradeAllowanceElement);
+            $actualAmountElements       = $xpath->query('.//ram:ActualAmount', $lineSpecifiedTradeAllowanceElement);
+            $reasonCodeElements         = $xpath->query('.//ram:ReasonCode', $lineSpecifiedTradeAllowanceElement);
+            $reasonElements             = $xpath->query('.//ram:Reason', $lineSpecifiedTradeAllowanceElement);
+
+            if ($calculationPercentElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($basisAmountElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if (1 !== $actualAmountElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonCodeElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            $actualAmount = $actualAmountElements->item(0)->nodeValue;
+            // Look if node is well constructed, already created in the constructor
+            AllowanceIndicator::fromXML($xpath, $lineSpecifiedTradeAllowanceElement);
+
+            $lineSpecifiedTradeAllowance = new static((float) $actualAmount);
+
+            if (1 === $calculationPercentElements->count()) {
+                $lineSpecifiedTradeAllowance->setCalculationPercent((float) $calculationPercentElements->item(0)->nodeValue);
+            }
+
+            if (1 === $basisAmountElements->count()) {
+                $lineSpecifiedTradeAllowance->setBasisAmount((float) $basisAmountElements->item(0)->nodeValue);
+            }
+
+            if (1 === $reasonCodeElements->count()) {
+                $reasonCode = AllowanceReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);
+
+                if (null === $reasonCode) {
+                    throw new \Exception('Wrong ReasonCode');
+                }
+
+                $lineSpecifiedTradeAllowance->setReasonCode($reasonCode);
+            }
+
+            if (1 === $reasonElements->count()) {
+                $lineSpecifiedTradeAllowance->setReason($reasonElements->item(0)->nodeValue);
+            }
+
+            $lineSpecifiedTradeAllowances[] = $lineSpecifiedTradeAllowance;
+        }
+
+        return $lineSpecifiedTradeAllowances;
     }
 }

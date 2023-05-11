@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\ChargeIndicator;
+use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
@@ -55,28 +57,99 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SpecifiedTradeAllowanceCharge');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($this->getChargeIndicator()->toXML($document));
 
-        if (null !== $this->calculationPercent) {
+        if ($this->calculationPercent instanceof Percentage) {
             $currentNode->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercent->getValueRounded()));
         }
 
-        if (null !== $this->basisAmount) {
+        if ($this->basisAmount instanceof Amount) {
             $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
         }
 
-        $currentNode->appendChild($document->createElement('ram:ActualAmount', (string) $this->getActualAmount()));
+        $currentNode->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
 
-        if (null !== $this->getReasonCode()) {
-            $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->getReasonCode()->value));
+        if ($this->reasonCode instanceof ChargeReasonCode) {
+            $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
         }
 
-        if (null !== $this->getReason()) {
-            $currentNode->appendChild($document->createElement('ram:Reason', $this->getReason()));
+        if (\is_string($this->reason)) {
+            $currentNode->appendChild($document->createElement('ram:Reason', $this->reason));
         }
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        $lineSpecifiedTradeChargeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $lineSpecifiedTradeChargeElements->count()) {
+            return [];
+        }
+
+        $lineSpecifiedTradeCharges = [];
+
+        foreach ($lineSpecifiedTradeChargeElements as $lineSpecifiedTradeChargeElement) {
+            $calculationPercentElements = $xpath->query('.//ram:CalculationPercent', $lineSpecifiedTradeChargeElement);
+            $basisAmountElements        = $xpath->query('.//ram:BasisAmount', $lineSpecifiedTradeChargeElement);
+            $actualAmountElements       = $xpath->query('.//ram:ActualAmount', $lineSpecifiedTradeChargeElement);
+            $reasonCodeElements         = $xpath->query('.//ram:ReasonCode', $lineSpecifiedTradeChargeElement);
+            $reasonElements             = $xpath->query('.//ram:Reason', $lineSpecifiedTradeChargeElement);
+
+            if ($calculationPercentElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($basisAmountElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if (1 !== $actualAmountElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonCodeElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($reasonElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            $actualAmount = $actualAmountElements->item(0)->nodeValue;
+            // Look if node is well constructed, already created in the constructor
+            ChargeIndicator::fromXML($xpath, $lineSpecifiedTradeChargeElement);
+
+            $lineSpecifiedTradeCharge = new static((float) $actualAmount);
+
+            if (1 === $calculationPercentElements->count()) {
+                $lineSpecifiedTradeCharge->setCalculationPercent((float) $calculationPercentElements->item(0)->nodeValue);
+            }
+
+            if (1 === $basisAmountElements->count()) {
+                $lineSpecifiedTradeCharge->setBasisAmount((float) $basisAmountElements->item(0)->nodeValue);
+            }
+
+            if (1 === $reasonCodeElements->count()) {
+                $reasonCode = ChargeReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);
+
+                if (null === $reasonCode) {
+                    throw new \Exception('Wrong ReasonCode');
+                }
+
+                $lineSpecifiedTradeCharge->setReasonCode($reasonCode);
+            }
+
+            if (1 === $reasonElements->count()) {
+                $lineSpecifiedTradeCharge->setReason($reasonElements->item(0)->nodeValue);
+            }
+
+            $lineSpecifiedTradeCharges[] = $lineSpecifiedTradeCharge;
+        }
+
+        return $lineSpecifiedTradeCharges;
     }
 }

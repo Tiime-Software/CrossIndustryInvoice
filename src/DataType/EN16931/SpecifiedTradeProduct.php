@@ -10,6 +10,7 @@ use Tiime\CrossIndustryInvoice\EN16931\OriginTradeCountry;
 use Tiime\EN16931\DataType\Identifier\BuyerItemIdentifier;
 use Tiime\EN16931\DataType\Identifier\SellerItemIdentifier;
 use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
+use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BG-31.
@@ -56,12 +57,12 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
     {
         parent::__construct($name);
 
+        $this->applicableProductCharacteristics = [];
+        $this->designatedProductClassifications = [];
         $this->sellerAssignedIdentifier         = null;
         $this->buyerAssignedIdentifier          = null;
         $this->description                      = null;
         $this->originTradeCountry               = null;
-        $this->applicableProductCharacteristics = [];
-        $this->designatedProductClassifications = [];
     }
 
     public function getSellerAssignedIdentifier(): ?SellerItemIdentifier
@@ -160,10 +161,9 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        if ($this->getGlobalIdentifier() instanceof StandardItemIdentifier) {
-            $identifierElement = $document->createElement('ram:GlobalID', $this->getGlobalIdentifier()->value);
-            $identifierElement->setAttribute('schemeID', $this->getGlobalIdentifier()->scheme->value);
-
+        if ($this->globalIdentifier instanceof StandardItemIdentifier) {
+            $identifierElement = $document->createElement('ram:GlobalID', $this->globalIdentifier->value);
+            $identifierElement->setAttribute('schemeID', $this->globalIdentifier->scheme->value);
             $currentNode->appendChild($identifierElement);
         }
 
@@ -175,7 +175,7 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
             $currentNode->appendChild($document->createElement('ram:BuyerAssignedID', $this->buyerAssignedIdentifier->value));
         }
 
-        $currentNode->appendChild($document->createElement('ram:Name', $this->getName()));
+        $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
         if (\is_string($this->description)) {
             $currentNode->appendChild($document->createElement('ram:Description', $this->description));
@@ -194,5 +194,96 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
         }
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $specifiedTradeProductElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $specifiedTradeProductElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedTradeProductElement */
+        $specifiedTradeProductElement = $specifiedTradeProductElements->item(0);
+
+        $globalIdentifierElements         = $xpath->query('.//ram:GlobalID', $specifiedTradeProductElement);
+        $sellerAssignedIdentifierElements = $xpath->query('.//ram:SellerAssignedID', $specifiedTradeProductElement);
+        $buyerAssignedIdentifierElements  = $xpath->query('.//ram:BuyerAssignedID', $specifiedTradeProductElement);
+        $nameElements                     = $xpath->query('.//ram:Name', $specifiedTradeProductElement);
+        $descriptionElements              = $xpath->query('.//ram:Description', $specifiedTradeProductElement);
+
+        if ($globalIdentifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($sellerAssignedIdentifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($buyerAssignedIdentifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $nameElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($descriptionElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $name = $nameElements->item(0)->nodeValue;
+
+        $applicableProductCharacteristics = ApplicableProductCharacteristic::fromXML($xpath, $specifiedTradeProductElement);
+        $designatedProductClassifications = DesignatedProductClassification::fromXML($xpath, $specifiedTradeProductElement);
+        $originTradeCountry               = OriginTradeCountry::fromXML($xpath, $specifiedTradeProductElement);
+
+        $specifiedTradeProduct = new static($name);
+
+        if (1 === $globalIdentifierElements->count()) {
+            $globalIdentifierItem = $globalIdentifierElements->item(0);
+            $scheme               = null;
+
+            if (!$globalIdentifierItem->hasAttribute('schemeID')) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($globalIdentifierItem->hasAttribute('schemeID')) {
+                $scheme = InternationalCodeDesignator::tryFrom($globalIdentifierItem->getAttribute('schemeID'));
+
+                if (!$scheme instanceof InternationalCodeDesignator) {
+                    throw new \Exception('Wrong schemeID');
+                }
+            }
+
+            $specifiedTradeProduct->setGlobalIdentifier(new StandardItemIdentifier($globalIdentifierElements->item(0)->nodeValue, $scheme));
+        }
+
+        if (1 === $sellerAssignedIdentifierElements->count()) {
+            $specifiedTradeProduct->setSellerAssignedIdentifier(new SellerItemIdentifier($sellerAssignedIdentifierElements->item(0)->nodeValue));
+        }
+
+        if (1 === $buyerAssignedIdentifierElements->count()) {
+            $specifiedTradeProduct->setBuyerAssignedIdentifier($buyerAssignedIdentifierElements->item(0)->nodeValue);
+        }
+
+        if ($descriptionElements->count() > 1) {
+            $specifiedTradeProduct->setDescription($descriptionElements->item(0)->nodeValue);
+        }
+
+        if (\count($applicableProductCharacteristics) > 0) {
+            $specifiedTradeProduct->setApplicableProductCharacteristics($applicableProductCharacteristics);
+        }
+
+        if (\count($designatedProductClassifications) > 0) {
+            $specifiedTradeProduct->setDesignatedProductClassifications($designatedProductClassifications);
+        }
+
+        if ($originTradeCountry instanceof OriginTradeCountry) {
+            $specifiedTradeProduct->setOriginTradeCountry($originTradeCountry);
+        }
+
+        return $specifiedTradeProduct;
     }
 }

@@ -15,6 +15,8 @@ use Tiime\EN16931\DataType\PaymentMeansCode;
  */
 class SpecifiedTradeSettlementPaymentMeans
 {
+    protected const XML_NODE = 'ram:SpecifiedTradeSettlementPaymentMeans';
+
     /**
      * BT-81.
      */
@@ -122,30 +124,92 @@ class SpecifiedTradeSettlementPaymentMeans
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:SpecifiedTradeSettlementPaymentMeans');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode->value));
 
-        if (null !== $this->information) {
+        if (\is_string($this->information)) {
             $currentNode->appendChild($document->createElement('ram:Information', $this->information));
         }
 
-        if (null !== $this->applicableTradeSettlementFinancialCard) {
+        if ($this->applicableTradeSettlementFinancialCard instanceof ApplicableTradeSettlementFinancialCard) {
             $currentNode->appendChild($this->applicableTradeSettlementFinancialCard->toXML($document));
         }
 
-        if (null !== $this->payerPartyDebtorFinancialAccount) {
+        if ($this->payerPartyDebtorFinancialAccount instanceof PayerPartyDebtorFinancialAccount) {
             $currentNode->appendChild($this->payerPartyDebtorFinancialAccount->toXML($document));
         }
 
-        if (null !== $this->payeePartyCreditorFinancialAccount) {
+        if ($this->payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
             $currentNode->appendChild($this->payeePartyCreditorFinancialAccount->toXML($document));
         }
 
-        if (null !== $this->payeeSpecifiedCreditorFinancialInstitution) {
+        if ($this->payeeSpecifiedCreditorFinancialInstitution instanceof PayeeSpecifiedCreditorFinancialInstitution) {
             $currentNode->appendChild($this->payeeSpecifiedCreditorFinancialInstitution->toXML($document));
         }
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $specifiedTradeSettlementPaymentMeansElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $specifiedTradeSettlementPaymentMeansElements->count()) {
+            return null;
+        }
+
+        if ($specifiedTradeSettlementPaymentMeansElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedTradeSettlementPaymentMeansElement */
+        $specifiedTradeSettlementPaymentMeansElement = $specifiedTradeSettlementPaymentMeansElements->item(0);
+
+        $typeCodeElements    = $xpath->query('.//ram:TypeCode', $specifiedTradeSettlementPaymentMeansElement);
+        $informationElements = $xpath->query('.//ram:Information', $specifiedTradeSettlementPaymentMeansElement);
+
+        if (1 !== $typeCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($informationElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $typeCode = PaymentMeansCode::tryFrom($typeCodeElements->item(0)->nodeValue);
+
+        if (null === $typeCode) {
+            throw new \Exception('Wrong TypeCode');
+        }
+
+        $applicableTradeSettlementFinancialCard     = ApplicableTradeSettlementFinancialCard::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
+        $payerPartyDebtorFinancialAccount           = PayerPartyDebtorFinancialAccount::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
+        $payeePartyCreditorFinancialAccount         = PayeePartyCreditorFinancialAccount::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
+        $payeeSpecifiedCreditorFinancialInstitution = PayeeSpecifiedCreditorFinancialInstitution::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
+
+        $specifiedTradeSettlementPaymentMeans = new static($typeCode);
+
+        if (1 === $informationElements->count()) {
+            $specifiedTradeSettlementPaymentMeans->setInformation($informationElements->item(0)->nodeValue);
+        }
+
+        if ($applicableTradeSettlementFinancialCard instanceof ApplicableTradeSettlementFinancialCard) {
+            $specifiedTradeSettlementPaymentMeans->setApplicableTradeSettlementFinancialCard($applicableTradeSettlementFinancialCard);
+        }
+
+        if ($payerPartyDebtorFinancialAccount instanceof PayerPartyDebtorFinancialAccount) {
+            $specifiedTradeSettlementPaymentMeans->setPayerPartyDebtorFinancialAccount($payeeSpecifiedCreditorFinancialInstitution);
+        }
+
+        if ($payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
+            $specifiedTradeSettlementPaymentMeans->setPayeePartyCreditorFinancialAccount($payeeSpecifiedCreditorFinancialInstitution);
+        }
+
+        if ($payeeSpecifiedCreditorFinancialInstitution instanceof PayeeSpecifiedCreditorFinancialInstitution) {
+            $specifiedTradeSettlementPaymentMeans->setPayeeSpecifiedCreditorFinancialInstitution($payeeSpecifiedCreditorFinancialInstitution);
+        }
+
+        return $specifiedTradeSettlementPaymentMeans;
     }
 }
