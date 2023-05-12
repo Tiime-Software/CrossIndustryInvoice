@@ -16,7 +16,7 @@ class PostalTradeAddress
     /**
      * BT-40.
      */
-    private CountryAlpha2Code $countryIdentifier;
+    protected CountryAlpha2Code $countryIdentifier;
 
     public function __construct(CountryAlpha2Code $countryIdentifier)
     {

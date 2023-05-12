@@ -62,22 +62,22 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
 
         $currentNode->appendChild($this->getChargeIndicator()->toXML($document));
 
-        if (null !== $this->calculationPercent) {
+        if ($this->calculationPercent instanceof Percentage) {
             $currentNode->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercent->getValueRounded()));
         }
 
-        if (null !== $this->basisAmount) {
+        if ($this->basisAmount instanceof Amount) {
             $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
         }
 
         $currentNode->appendChild($document->createElement('ram:ActualAmount', (string) $this->getActualAmount()));
 
-        if (null !== $this->getReasonCode()) {
-            $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->getReasonCode()->value));
+        if ($this->reasonCode instanceof AllowanceReasonCode) {
+            $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
         }
 
-        if (null !== $this->getReason()) {
-            $currentNode->appendChild($document->createElement('ram:Reason', $this->getReason()));
+        if (\is_string($this->reason)) {
+            $currentNode->appendChild($document->createElement('ram:Reason', $this->reason));
         }
 
         return $currentNode;

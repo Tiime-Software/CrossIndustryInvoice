@@ -130,21 +130,21 @@ class SpecifiedTradeCharge
 
         $currentNode->appendChild($this->chargeIndicator->toXML($document));
 
-        if (null !== $this->calculationPercent) {
+        if ($this->calculationPercent instanceof Percentage) {
             $currentNode->appendChild($document->createElement('ram:CalculationPercent', (string) $this->calculationPercent->getValueRounded()));
         }
 
-        if (null !== $this->basisAmount) {
+        if ($this->basisAmount instanceof Amount) {
             $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
         }
 
         $currentNode->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
 
-        if (null !== $this->reasonCode) {
+        if ($this->reasonCode instanceof ChargeReasonCode) {
             $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
         }
 
-        if (null !== $this->reason) {
+        if (\is_string($this->reason)) {
             $currentNode->appendChild($document->createElement('ram:Reason', $this->reason));
         }
 

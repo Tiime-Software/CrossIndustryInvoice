@@ -77,14 +77,14 @@ class ApplicableHeaderTradeAgreement
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        if (null !== $this->buyerReference) {
+        if (\is_string($this->buyerReference)) {
             $currentNode->appendChild($document->createElement('ram:BuyerReference', $this->buyerReference));
         }
 
         $currentNode->appendChild($this->sellerTradeParty->toXML($document));
         $currentNode->appendChild($this->buyerTradeParty->toXML($document));
 
-        if (null !== $this->buyerOrderReferencedDocument) {
+        if ($this->buyerOrderReferencedDocument instanceof BuyerOrderReferencedDocument) {
             $currentNode->appendChild($this->buyerOrderReferencedDocument->toXML($document));
         }
 
@@ -120,7 +120,7 @@ class ApplicableHeaderTradeAgreement
             $applicableHeaderTradeAgreement->setBuyerReference($buyerReference);
         }
 
-        if (null !== $buyerOrderReferencedDocument) {
+        if ($buyerOrderReferencedDocument instanceof BuyerOrderReferencedDocument) {
             $applicableHeaderTradeAgreement->setBuyerOrderReferencedDocument($buyerOrderReferencedDocument);
         }
 

@@ -93,7 +93,6 @@ class PayeeTradeParty
 
         if ($this->globalIdentifier instanceof PayeeGlobalIdentifier) {
             $globalIdentifierElement = $document->createElement('ram:GlobalID', $this->globalIdentifier->value);
-
             $globalIdentifierElement->setAttribute('schemeID', $this->globalIdentifier->scheme->value);
             $element->appendChild($globalIdentifierElement);
         }
@@ -144,11 +143,11 @@ class PayeeTradeParty
             $payeeTradeParty->setIdentifier($identifierElements->item(0)->nodeValue);
         }
 
-        if (null !== $globalIdentifier) {
+        if ($globalIdentifier instanceof PayeeGlobalIdentifier) {
             $payeeTradeParty->setGlobalIdentifier($globalIdentifier);
         }
 
-        if (null !== $specifiedLegalOrganization) {
+        if ($specifiedLegalOrganization instanceof PayeeSpecifiedLegalOrganization) {
             $payeeTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
         }
 

@@ -67,18 +67,18 @@ class SpecifiedProcuringProject
         $identifierElements = $xpath->query('.//ram:ID', $specifiedProcuringProjectElement);
         $nameElements       = $xpath->query('.//ram:Name', $specifiedProcuringProjectElement);
 
-        if ($identifierElements->count() !== 1) {
+        if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');
         }
 
-        if ($nameElements->count() !== 1) {
+        if (1 !== $nameElements->count()) {
             throw new \Exception('Malformed');
         }
 
         $identifier = $identifierElements->item(0)->nodeValue;
-        $name = $nameElements->item(0)->nodeValue;
+        $name       = $nameElements->item(0)->nodeValue;
 
-        if ($name !== 'Project Reference') {
+        if ('Project Reference' !== $name) {
             throw new \Exception('Wrong Name');
         }
 

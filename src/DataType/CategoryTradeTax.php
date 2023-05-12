@@ -63,10 +63,9 @@ class CategoryTradeTax
         $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
-
         $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
 
-        if (null !== $this->rateApplicablePercent) {
+        if ($this->rateApplicablePercent instanceof Percentage) {
             $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->rateApplicablePercent->getValueRounded()));
         }
 

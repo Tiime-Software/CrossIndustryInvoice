@@ -109,15 +109,15 @@ class ApplicableHeaderTradeDelivery
 
         $applicableHeaderTradeDelivery = new self();
 
-        if (null !== $shipToTradeParty) {
+        if ($shipToTradeParty instanceof ShipToTradeParty) {
             $applicableHeaderTradeDelivery->setShipToTradeParty($shipToTradeParty);
         }
 
-        if (null !== $actualDeliverySupplyChainEvent) {
+        if ($actualDeliverySupplyChainEvent instanceof ActualDeliverySupplyChainEvent) {
             $applicableHeaderTradeDelivery->setActualDeliverySupplyChainEvent($actualDeliverySupplyChainEvent);
         }
 
-        if (null !== $despatchAdviceReferencedDocument) {
+        if ($despatchAdviceReferencedDocument instanceof DespatchAdviceReferencedDocument) {
             $applicableHeaderTradeDelivery->setDespatchAdviceReferencedDocument($despatchAdviceReferencedDocument);
         }
 

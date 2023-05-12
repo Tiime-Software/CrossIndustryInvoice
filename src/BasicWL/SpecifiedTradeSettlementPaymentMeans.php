@@ -115,11 +115,11 @@ class SpecifiedTradeSettlementPaymentMeans
 
         $specifiedTradeSettlementPaymentMeans = new self($typeCode);
 
-        if (null !== $payerPartyDebtorFinancialAccount) {
+        if ($payerPartyDebtorFinancialAccount instanceof PayerPartyDebtorFinancialAccount) {
             $specifiedTradeSettlementPaymentMeans->setPayerPartyDebtorFinancialAccount($payerPartyDebtorFinancialAccount);
         }
 
-        if (null !== $payeePartyCreditorFinancialAccount) {
+        if ($payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
             $specifiedTradeSettlementPaymentMeans->setPayeePartyCreditorFinancialAccount($payeePartyCreditorFinancialAccount);
         }
 
