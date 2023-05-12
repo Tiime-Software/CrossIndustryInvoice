@@ -35,7 +35,7 @@ class BuyerSpecifiedLegalOrganization
 
         $identifierNode = $document->createElement('ram:ID', $this->identifier->value);
 
-        if (null !== $this->identifier->scheme) {
+        if ($this->identifier->scheme instanceof InternationalCodeDesignator) {
             $identifierNode->setAttribute('schemeID', $this->identifier->scheme->value);
         }
 
@@ -68,8 +68,16 @@ class BuyerSpecifiedLegalOrganization
         /** @var \DOMElement $identifierItem */
         $identifierItem = $identifierElements->item(0);
         $identifier     = $identifierItem->nodeValue;
-        $scheme         = '' !== $identifierItem->getAttribute('schemeID') ?
-            InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID')) : null;
+
+        $scheme = null;
+
+        if ($identifierItem->hasAttribute('schemeID')) {
+            $scheme = InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID'));
+        }
+
+        if (!$scheme instanceof InternationalCodeDesignator) {
+            throw new \Exception('Wrong schemeID');
+        }
 
         return new static(new LegalRegistrationIdentifier($identifier, $scheme));
     }

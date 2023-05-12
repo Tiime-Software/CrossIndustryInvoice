@@ -27,6 +27,7 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
     public function __construct(float $actualAmount)
     {
         parent::__construct($actualAmount);
+
         $this->calculationPercent = null;
         $this->basisAmount        = null;
     }
@@ -84,8 +85,6 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        // TODO
-
         $lineSpecifiedTradeAllowanceElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
         if (0 === $lineSpecifiedTradeAllowanceElements->count()) {

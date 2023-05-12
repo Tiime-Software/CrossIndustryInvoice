@@ -13,32 +13,30 @@ use Tiime\EN16931\SemanticDataType\Amount;
  */
 class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndustryInvoice\DataType\Minimum\SpecifiedTradeSettlementHeaderMonetarySummation
 {
-    protected const XML_NODE = 'ram:SpecifiedTradeSettlementHeaderMonetarySummation';
-
     /**
      * BT-106.
      */
-    private Amount $lineTotalAmount;
+    protected Amount $lineTotalAmount;
 
     /**
      * BT-108.
      */
-    private ?Amount $chargeTotalAmount;
+    protected ?Amount $chargeTotalAmount;
 
     /**
      * BT-107.
      */
-    private ?Amount $allowanceTotalAmount;
+    protected ?Amount $allowanceTotalAmount;
 
     /**
      * BT-111 & BT-111-0.
      */
-    private ?TaxTotalAmount $taxTotalAmountCurrency;
+    protected ?TaxTotalAmount $taxTotalAmountCurrency;
 
     /**
      * BT-113.
      */
-    private ?Amount $totalPrepaidAmount;
+    protected ?Amount $totalPrepaidAmount;
 
     public function __construct(
         float $taxBasisTotalAmount,
@@ -115,31 +113,31 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
 
         $currentNode->appendChild($document->createElement('ram:LineTotalAmount', (string) $this->lineTotalAmount->getValueRounded()));
 
-        if (null !== $this->chargeTotalAmount) {
+        if ($this->chargeTotalAmount instanceof Amount) {
             $currentNode->appendChild($document->createElement('ram:ChargeTotalAmount', (string) $this->chargeTotalAmount->getValueRounded()));
         }
 
-        if (null !== $this->allowanceTotalAmount) {
+        if ($this->allowanceTotalAmount instanceof Amount) {
             $currentNode->appendChild($document->createElement('ram:AllowanceTotalAmount', (string) $this->allowanceTotalAmount->getValueRounded()));
         }
 
-        $currentNode->appendChild($document->createElement('ram:TaxBasisTotalAmount', (string) $this->getTaxBasisTotalAmount()));
+        $currentNode->appendChild($document->createElement('ram:TaxBasisTotalAmount', (string) $this->taxBasisTotalAmount->getValueRounded()));
 
-        if (null !== $this->getTaxTotalAmount()) {
-            $currentNode->appendChild($this->getTaxTotalAmount()->toXML($document));
+        if ($this->taxTotalAmount instanceof TaxTotalAmount) {
+            $currentNode->appendChild($this->taxTotalAmount->toXML($document));
         }
 
-        if (null !== $this->taxTotalAmountCurrency) {
+        if ($this->taxTotalAmountCurrency instanceof TaxTotalAmount) {
             $currentNode->appendChild($this->taxTotalAmountCurrency->toXML($document));
         }
 
-        $currentNode->appendChild($document->createElement('ram:GrandTotalAmount', (string) $this->getGrandTotalAmount()));
+        $currentNode->appendChild($document->createElement('ram:GrandTotalAmount', (string) $this->grandTotalAmount->getValueRounded()));
 
-        if (null !== $this->totalPrepaidAmount) {
+        if ($this->totalPrepaidAmount instanceof Amount) {
             $currentNode->appendChild($document->createElement('ram:TotalPrepaidAmount', (string) $this->totalPrepaidAmount->getValueRounded()));
         }
 
-        $currentNode->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->getDuePayableAmount()));
+        $currentNode->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->duePayableAmount->getValueRounded()));
 
         return $currentNode;
     }
@@ -175,15 +173,15 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
             throw new \Exception('Malformed');
         }
 
-        if ($totalPrepaidAmountElements->count() > 1) {
-            throw new \Exception('Malformed');
-        }
-
         if (1 !== $taxBasisTotalAmountElements->count()) {
             throw new \Exception('Malformed');
         }
 
         if (1 !== $grandTotalAmountElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($totalPrepaidAmountElements->count() > 1) {
             throw new \Exception('Malformed');
         }
 
@@ -197,6 +195,18 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         $duePayableAmount    = $duePayableAmountElements->item(0)->nodeValue;
 
         $specifiedTradeSettlementHeaderMonetarySummation = new static((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount, (float) $lineTotalAmount);
+
+        if (1 === $chargeTotalAmountElements->count()) {
+            $specifiedTradeSettlementHeaderMonetarySummation->setChargeTotalAmount((float) $chargeTotalAmountElements->item(0)->nodeValue);
+        }
+
+        if (1 === $allowanceTotalAmountElements->count()) {
+            $specifiedTradeSettlementHeaderMonetarySummation->setAllowanceTotalAmount((float) $allowanceTotalAmountElements->item(0)->nodeValue);
+        }
+
+        if ($totalPrepaidAmountElements->count() > 1) {
+            $specifiedTradeSettlementHeaderMonetarySummation->setTotalPrepaidAmount((float) $totalPrepaidAmountElements->item(0)->nodeValue);
+        }
 
         /** Checks BT-5/BT-6 for BT-110/BT-111 */
         $invoiceCurrencyCodeElements = $xpath->query('.//ram:InvoiceCurrencyCode', $currentElement);
