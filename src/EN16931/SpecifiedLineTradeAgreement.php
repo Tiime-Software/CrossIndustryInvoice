@@ -71,7 +71,7 @@ class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\Basic\Spec
         $grossPriceProductTradePrice  = GrossPriceProductTradePrice::fromXML($xpath, $specifiedLineTradeAgreementElement);
         $netPriceProductTradePrice    = NetPriceProductTradePrice::fromXML($xpath, $specifiedLineTradeAgreementElement);
 
-        $specifiedLineTradeAgreement = new static($netPriceProductTradePrice);
+        $specifiedLineTradeAgreement = new self($netPriceProductTradePrice);
 
         if ($buyerOrderReferencedDocument instanceof BuyerOrderReferencedDocument) {
             $specifiedLineTradeAgreement->setBuyerOrderReferencedDocument($buyerOrderReferencedDocument);

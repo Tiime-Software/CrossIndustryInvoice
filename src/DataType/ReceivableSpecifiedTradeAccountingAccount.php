@@ -56,6 +56,6 @@ class ReceivableSpecifiedTradeAccountingAccount
             throw new \Exception('Malformed');
         }
 
-        return new static($identifierElements->item(0)->nodeValue);
+        return new self($identifierElements->item(0)->nodeValue);
     }
 }

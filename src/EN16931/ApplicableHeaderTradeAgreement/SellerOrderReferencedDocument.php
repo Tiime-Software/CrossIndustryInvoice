@@ -60,6 +60,6 @@ class SellerOrderReferencedDocument
 
         $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
 
-        return new static(new SalesOrderReference($issuerAssignedIdentifier));
+        return new self(new SalesOrderReference($issuerAssignedIdentifier));
     }
 }

@@ -71,7 +71,7 @@ class SellerSpecifiedLegalOrganization
             throw new \Exception('Malformed');
         }
 
-        $sellerSpecifiedLegalOrganization = new static();
+        $sellerSpecifiedLegalOrganization = new self();
 
         if (1 === $identifierElements->count()) {
             /** @var \DOMElement $identifierItem */

@@ -60,6 +60,6 @@ class BuyerOrderReferencedDocument
 
         $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
 
-        return new static(new PurchaseOrderReference($issuerAssignedIdentifier));
+        return new self(new PurchaseOrderReference($issuerAssignedIdentifier));
     }
 }

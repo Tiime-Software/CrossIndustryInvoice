@@ -404,7 +404,7 @@ class ApplicableHeaderTradeSettlement
         $invoiceReferencedDocument                       = InvoiceReferencedDocument::fromXML($xpath, $applicableHeaderTradeSettlementElement);
         $receivableSpecifiedTradeAccountingAccount       = ReceivableSpecifiedTradeAccountingAccount::fromXML($xpath, $applicableHeaderTradeSettlementElement);
 
-        $applicableHeaderTradeSettlement = new static($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
+        $applicableHeaderTradeSettlement = new self($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
 
         if (1 === $creditorReferenceIdentifierElements->count()) {
             $applicableHeaderTradeSettlement->setCreditorReferenceIdentifier(new BankAssignedCreditorIdentifier($creditorReferenceIdentifierElements->item(0)->nodeValue));

@@ -124,7 +124,7 @@ class LineSpecifiedTradeCharge
             // Look if node is well constructed, already created in the constructor
             ChargeIndicator::fromXML($xpath, $lineSpecifiedTradeChargeElement);
 
-            $lineSpecifiedTradeCharge = new static((float) $actualAmount);
+            $lineSpecifiedTradeCharge = new self((float) $actualAmount);
 
             if (1 === $reasonCodeElements->count()) {
                 $reasonCode = ChargeReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);

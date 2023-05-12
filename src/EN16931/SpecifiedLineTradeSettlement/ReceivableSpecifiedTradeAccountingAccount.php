@@ -58,6 +58,6 @@ class ReceivableSpecifiedTradeAccountingAccount
 
         $identifier = $identifierElements->item(0)->nodeValue;
 
-        return new static($identifier);
+        return new self($identifier);
     }
 }

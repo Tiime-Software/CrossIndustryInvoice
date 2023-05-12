@@ -84,7 +84,7 @@ class BillingSpecifiedPeriod
         $startDateTime = StartDateTime::fromXML($xpath, $billingSpecifiedPeriodElement);
         $endDateTime   = EndDateTime::fromXML($xpath, $billingSpecifiedPeriodElement);
 
-        $billingSpecifiedPeriod = new static();
+        $billingSpecifiedPeriod = new self();
 
         if (null !== $startDateTime) {
             $billingSpecifiedPeriod->setStartDateTime($startDateTime);

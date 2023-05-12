@@ -142,7 +142,7 @@ class DefinedTradeContact
         $telephoneUniversalCommunication = TelephoneUniversalCommunication::fromXML($xpath, $definedTradeContactElement);
         $emailURIUniversalCommunication  = EmailURIUniversalCommunication::fromXML($xpath, $definedTradeContactElement);
 
-        $definedTradeContact = new static();
+        $definedTradeContact = new self();
 
         if (1 === $personNameElements->count()) {
             $definedTradeContact->setPersonName($personNameElements->item(0)->nodeValue);

@@ -188,7 +188,7 @@ class SpecifiedTradeSettlementPaymentMeans
         $payeePartyCreditorFinancialAccount         = PayeePartyCreditorFinancialAccount::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
         $payeeSpecifiedCreditorFinancialInstitution = PayeeSpecifiedCreditorFinancialInstitution::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
 
-        $specifiedTradeSettlementPaymentMeans = new static($typeCode);
+        $specifiedTradeSettlementPaymentMeans = new self($typeCode);
 
         if (1 === $informationElements->count()) {
             $specifiedTradeSettlementPaymentMeans->setInformation($informationElements->item(0)->nodeValue);

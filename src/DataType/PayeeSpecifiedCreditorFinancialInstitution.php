@@ -57,6 +57,6 @@ class PayeeSpecifiedCreditorFinancialInstitution
 
         $bicIdentifier = $bicIdentifierElements->item(0)->nodeValue;
 
-        return new static(new PaymentServiceProviderIdentifier($bicIdentifier));
+        return new self(new PaymentServiceProviderIdentifier($bicIdentifier));
     }
 }

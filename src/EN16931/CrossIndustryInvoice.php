@@ -103,6 +103,6 @@ class CrossIndustryInvoice
         $exchangedDocument           = ExchangedDocument::fromXML($xpath, $crossIndustryInvoiceElement);
         $supplyChainTradeTransaction = SupplyChainTradeTransaction::fromXML($xpath, $crossIndustryInvoiceElement);
 
-        return new static($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
+        return new self($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
     }
 }

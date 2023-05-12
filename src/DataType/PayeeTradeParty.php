@@ -138,7 +138,7 @@ class PayeeTradeParty
         $globalIdentifier           = PayeeGlobalIdentifier::fromXML($xpath, $payeeTradePartyElement);
         $specifiedLegalOrganization = PayeeSpecifiedLegalOrganization::fromXML($xpath, $payeeTradePartyElement);
 
-        $payeeTradeParty = new static($name);
+        $payeeTradeParty = new self($name);
 
         if (1 === $identifierElements->count()) {
             $payeeTradeParty->setIdentifier($identifierElements->item(0)->nodeValue);

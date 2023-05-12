@@ -288,7 +288,7 @@ class ApplicableHeaderTradeAgreement
         $additionalReferencedDocumentInvoicedObjectIdentifier = AdditionalReferencedDocumentInvoicedObjectIdentifier::fromXML($xpath, $applicableHeaderTradeAgreementElement);
         $specifiedProcuringProject                            = SpecifiedProcuringProject::fromXML($xpath, $applicableHeaderTradeAgreementElement);
 
-        $applicableHeaderTradeAgreement = new static($sellerTradeParty, $buyerTradeParty);
+        $applicableHeaderTradeAgreement = new self($sellerTradeParty, $buyerTradeParty);
 
         if (1 === $buyerReferenceElements->count()) {
             $applicableHeaderTradeAgreement->setBuyerReference($buyerReferenceElements->item(0)->nodeValue);

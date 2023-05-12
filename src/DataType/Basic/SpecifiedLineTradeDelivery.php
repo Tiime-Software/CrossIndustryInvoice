@@ -48,6 +48,6 @@ class SpecifiedLineTradeDelivery
 
         $billedQuantity = BilledQuantity::fromXML($xpath, $specifiedLineTradeDeliveryElement);
 
-        return new static($billedQuantity);
+        return new self($billedQuantity);
     }
 }

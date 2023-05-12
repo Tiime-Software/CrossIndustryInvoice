@@ -58,6 +58,6 @@ class TelephoneUniversalCommunication
 
         $completeNumber = $completeNumberElements->item(0)->nodeValue;
 
-        return new static($completeNumber);
+        return new self($completeNumber);
     }
 }

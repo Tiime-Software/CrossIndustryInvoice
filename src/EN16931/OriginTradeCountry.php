@@ -64,7 +64,7 @@ class OriginTradeCountry
             throw new \Exception('Malformed');
         }
 
-        $originTradeCountry = new static();
+        $originTradeCountry = new self();
 
         if (1 === $identifierElements->count()) {
             $identifier = CountryAlpha2Code::tryFrom($identifierElements->item(0)->nodeValue);

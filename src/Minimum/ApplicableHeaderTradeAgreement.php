@@ -112,7 +112,7 @@ class ApplicableHeaderTradeAgreement
         $buyerTradeParty              = BuyerTradeParty::fromXML($xpath, $applicableHeaderTradeAgreementElement);
         $buyerOrderReferencedDocument = BuyerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
 
-        $applicableHeaderTradeAgreement = new static($sellerTradeParty, $buyerTradeParty);
+        $applicableHeaderTradeAgreement = new self($sellerTradeParty, $buyerTradeParty);
 
         if (1 === $buyerReferenceElements->count()) {
             $buyerReference = $buyerReferenceElements->item(0)->nodeValue;

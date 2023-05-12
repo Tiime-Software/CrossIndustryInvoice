@@ -94,7 +94,7 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
             throw new \Exception('Wrong schemeID');
         }
 
-        $specifiedLegalOrganization = new static(new LegalRegistrationIdentifier($identifier, $scheme));
+        $specifiedLegalOrganization = new self(new LegalRegistrationIdentifier($identifier, $scheme));
 
         if (1 === $tradingBusinessNameElements->count()) {
             $specifiedLegalOrganization->setTradingBusinessName($tradingBusinessNameElements->item(0)->nodeValue);

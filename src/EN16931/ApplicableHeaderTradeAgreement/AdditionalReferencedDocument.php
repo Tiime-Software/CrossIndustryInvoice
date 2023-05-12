@@ -166,7 +166,7 @@ class AdditionalReferencedDocument
                 throw new \Exception('Wrong TypeCode');
             }
 
-            $additionalReferencedDocument = new static(new SupportingDocumentReference($issuerAssignedIdentifier));
+            $additionalReferencedDocument = new self(new SupportingDocumentReference($issuerAssignedIdentifier));
 
             if (1 === $uriIdentifierElements->count()) {
                 $additionalReferencedDocument->setUriIdentifier($uriIdentifierElements->item(0)->nodeValue);

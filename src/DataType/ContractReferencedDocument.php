@@ -60,6 +60,6 @@ class ContractReferencedDocument
 
         $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
 
-        return new static(new ContractReference($issuerAssignedIdentifier));
+        return new self(new ContractReference($issuerAssignedIdentifier));
     }
 }

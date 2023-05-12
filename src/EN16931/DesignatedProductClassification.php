@@ -56,7 +56,7 @@ class DesignatedProductClassification
         foreach ($designatedProductClassificationElements as $designatedProductClassificationElement) {
             $classCode = ClassCode::fromXML($xpath, $designatedProductClassificationElement);
 
-            $designatedProductClassification = new static();
+            $designatedProductClassification = new self();
 
             if ($classCode instanceof ClassCode) {
                 $designatedProductClassification->setClassCode($classCode);

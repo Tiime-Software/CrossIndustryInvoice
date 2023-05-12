@@ -79,7 +79,7 @@ class AssociatedDocumentLineDocument
         $lineIdentifier = $lineIdentifierElements->item(0)->nodeValue;
         $includedNote   = LineIncludedNote::fromXML($xpath, $associatedDocumentLineDocumentElement);
 
-        $associatedDocumentLineDocument = new static(new InvoiceLineIdentifier($lineIdentifier));
+        $associatedDocumentLineDocument = new self(new InvoiceLineIdentifier($lineIdentifier));
 
         if ($includedNote instanceof LineIncludedNote) {
             $associatedDocumentLineDocument->setIncludedNote($includedNote);

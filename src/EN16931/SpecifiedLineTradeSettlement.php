@@ -207,7 +207,7 @@ class SpecifiedLineTradeSettlement
         $additionalReferencedDocument                  = AdditionalReferencedDocument::fromXML($xpath, $specifiedLineTradeSettlementElement);
         $receivableSpecifiedTradeAccountingAccount     = ReceivableSpecifiedTradeAccountingAccount::fromXML($xpath, $specifiedLineTradeSettlementElement);
 
-        $specifiedLineTradeSettlement = new static($applicableTradeTax, $specifiedTradeSettlementLineMonetarySummation);
+        $specifiedLineTradeSettlement = new self($applicableTradeTax, $specifiedTradeSettlementLineMonetarySummation);
 
         if ($billingSpecifiedPeriod instanceof BillingSpecifiedPeriod) {
             $specifiedLineTradeSettlement->setBillingSpecifiedPeriod($billingSpecifiedPeriod);

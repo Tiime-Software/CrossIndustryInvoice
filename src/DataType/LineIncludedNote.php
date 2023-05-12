@@ -52,6 +52,6 @@ class LineIncludedNote
 
         $content = $xpath->query('.//ram:Content', $lineIncludedNoteElement);
 
-        return new static($content);
+        return new self($content);
     }
 }

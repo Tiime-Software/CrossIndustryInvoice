@@ -85,7 +85,7 @@ class ApplicableTradeSettlementFinancialCard
 
         $identifier = $identifierElements->item(0)->nodeValue;
 
-        $applicableTradeSettlementFinancialCard = new static($identifier);
+        $applicableTradeSettlementFinancialCard = new self($identifier);
 
         if (1 === $cardholderNameElements->count()) {
             $applicableTradeSettlementFinancialCard->setCardholderName($cardholderNameElements->item(0)->nodeValue);

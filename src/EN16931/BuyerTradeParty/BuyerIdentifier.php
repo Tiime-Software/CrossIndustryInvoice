@@ -42,6 +42,6 @@ class BuyerIdentifier
 
         $value = $buyerIdentifierElements->item(0)->nodeValue;
 
-        return new static($value);
+        return new self($value);
     }
 }

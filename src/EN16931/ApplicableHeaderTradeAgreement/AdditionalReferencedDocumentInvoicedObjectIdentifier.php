@@ -198,7 +198,7 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
             throw new \Exception('Wrong TypeCode');
         }
 
-        $additionalReferencedDocumentInvoicedObjectIdentifier = new static(new ObjectIdentifier($issuerAssignedIdentifier));
+        $additionalReferencedDocumentInvoicedObjectIdentifier = new self(new ObjectIdentifier($issuerAssignedIdentifier));
 
         if (1 === $uriIdentifierElements->count()) {
             $additionalReferencedDocumentInvoicedObjectIdentifier->setUriIdentifier($uriIdentifierElements->item(0)->nodeValue);

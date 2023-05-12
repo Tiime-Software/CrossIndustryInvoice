@@ -124,7 +124,7 @@ class LineSpecifiedTradeAllowance
             // Look if node is well constructed, already created in the constructor
             AllowanceIndicator::fromXML($xpath, $lineSpecifiedTradeAllowanceElement);
 
-            $lineSpecifiedTradeAllowance = new static((float) $actualAmount);
+            $lineSpecifiedTradeAllowance = new self((float) $actualAmount);
 
             if (1 === $reasonCodeElements->count()) {
                 $reasonCode = AllowanceReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);

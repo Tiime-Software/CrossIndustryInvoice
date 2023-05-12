@@ -80,7 +80,7 @@ class NetPriceProductTradePrice
         $chargeAmount  = $chargeAmountElements->item(0)->nodeValue;
         $basisQuantity = BasisQuantity::fromXML($xpath, $netPriceProductTradePriceElement);
 
-        $netPriceProductTradePrice = new static((float) $chargeAmount);
+        $netPriceProductTradePrice = new self((float) $chargeAmount);
 
         if ($basisQuantity instanceof BasisQuantity) {
             $netPriceProductTradePrice->setBasisQuantity($basisQuantity);

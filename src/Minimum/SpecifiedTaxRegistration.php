@@ -75,7 +75,7 @@ class SpecifiedTaxRegistration
                 throw new \Exception('Wrong schemeID');
             }
 
-            $specifiedTaxRegistrations[] = new static(new VatIdentifier($identifier));
+            $specifiedTaxRegistrations[] = new self(new VatIdentifier($identifier));
         }
 
         return $specifiedTaxRegistrations;

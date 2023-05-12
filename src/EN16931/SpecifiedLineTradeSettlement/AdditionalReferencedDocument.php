@@ -109,7 +109,7 @@ class AdditionalReferencedDocument
             throw new \Exception('Wrong TypeCode');
         }
 
-        $additionalReferencedDocument = new static(new ObjectIdentifier($issuerAssignedIdentifier));
+        $additionalReferencedDocument = new self(new ObjectIdentifier($issuerAssignedIdentifier));
 
         if (1 === $referenceTypeCodeElements->count()) {
             $additionalReferencedDocument->setReferenceTypeCode($referenceTypeCodeElements->item(0)->nodeValue);

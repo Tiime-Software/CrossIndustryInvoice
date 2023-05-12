@@ -88,6 +88,6 @@ class SpecifiedTaxRegistrationVAT
             throw new \Exception('Wrong schemeID');
         }
 
-        return new static(new VatIdentifier($identifier));
+        return new self(new VatIdentifier($identifier));
     }
 }

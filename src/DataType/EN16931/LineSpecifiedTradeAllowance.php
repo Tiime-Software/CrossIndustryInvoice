@@ -124,7 +124,7 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
             // Look if node is well constructed, already created in the constructor
             AllowanceIndicator::fromXML($xpath, $lineSpecifiedTradeAllowanceElement);
 
-            $lineSpecifiedTradeAllowance = new static((float) $actualAmount);
+            $lineSpecifiedTradeAllowance = new self((float) $actualAmount);
 
             if (1 === $calculationPercentElements->count()) {
                 $lineSpecifiedTradeAllowance->setCalculationPercent((float) $calculationPercentElements->item(0)->nodeValue);

@@ -82,7 +82,7 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
             throw new \Exception('Malformed');
         }
 
-        $payeePartyCreditorFinancialAccount = new static();
+        $payeePartyCreditorFinancialAccount = new self();
 
         if (1 === $ibanIdentifierElements->count()) {
             $payeePartyCreditorFinancialAccount->setIbanIdentifier(new PaymentAccountIdentifier($ibanIdentifierElements->item(0)->nodeValue));

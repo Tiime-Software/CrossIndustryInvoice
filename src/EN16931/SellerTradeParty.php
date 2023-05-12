@@ -297,7 +297,7 @@ class SellerTradeParty
             throw new \Exception('Malformed');
         }
 
-        $sellerTradeParty = new static($name, $postalTradeAddress);
+        $sellerTradeParty = new self($name, $postalTradeAddress);
 
         $identifiers = [];
 

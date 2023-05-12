@@ -202,7 +202,7 @@ class SpecifiedTradeAllowance
 
             $categoryTradeTax = CategoryTradeTax::fromXML($xpath, $specifiedTradeAllowanceElement);
 
-            $specifiedTradeAllowance = new static((float) $actualAmount, $categoryTradeTax);
+            $specifiedTradeAllowance = new self((float) $actualAmount, $categoryTradeTax);
 
             if (1 === $calculationPercentageElements->count()) {
                 $specifiedTradeAllowance->setCalculationPercent((float) $calculationPercentageElements->item(0)->nodeValue);

@@ -223,7 +223,7 @@ class BuyerTradeParty
             throw new \Exception('Malformed');
         }
 
-        $buyerTradeParty = new static($name, $postalTradeAddress);
+        $buyerTradeParty = new self($name, $postalTradeAddress);
 
         if ($identifier instanceof BuyerIdentifier) {
             $buyerTradeParty->setIdentifier($identifier);

@@ -71,7 +71,7 @@ class ExchangedDocumentContext
         $guidelineSpecifiedDocumentContextParameter       = GuidelineSpecifiedDocumentContextParameter::fromXML($xpath, $exchangedDocumentContextElement);
         $businessProcessSpecifiedDocumentContextParameter = BusinessProcessSpecifiedDocumentContextParameter::fromXML($xpath, $exchangedDocumentContextElement);
 
-        $exchangedDocumentContext = new static($guidelineSpecifiedDocumentContextParameter);
+        $exchangedDocumentContext = new self($guidelineSpecifiedDocumentContextParameter);
 
         if (null !== $businessProcessSpecifiedDocumentContextParameter) {
             $exchangedDocumentContext->setBusinessProcessSpecifiedDocumentContextParameter($businessProcessSpecifiedDocumentContextParameter);

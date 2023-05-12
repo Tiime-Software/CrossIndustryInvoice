@@ -170,7 +170,7 @@ class AdditionalReferencedDocumentTenderOrLotReference
             throw new \Exception('Wrong TypeCode');
         }
 
-        $additionalReferencedDocumentTenderOrLotReference = new static(new TenderOrLotReference($issuerAssignedIdentifier));
+        $additionalReferencedDocumentTenderOrLotReference = new self(new TenderOrLotReference($issuerAssignedIdentifier));
 
         if (1 === $uriIdentifierElements->count()) {
             $additionalReferencedDocumentTenderOrLotReference->setUriIdentifier($uriIdentifierElements->item(0)->nodeValue);

@@ -82,6 +82,6 @@ class SpecifiedProcuringProject
             throw new \Exception('Wrong Name');
         }
 
-        return new static(new ProjectReference($identifier));
+        return new self(new ProjectReference($identifier));
     }
 }

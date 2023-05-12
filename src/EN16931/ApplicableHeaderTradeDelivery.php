@@ -130,7 +130,7 @@ class ApplicableHeaderTradeDelivery
         $despatchAdviceReferencedDocument  = DespatchAdviceReferencedDocument::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
         $receivingAdviceReferencedDocument = ReceivingAdviceReferencedDocument::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
 
-        $applicableHeaderTradeDelivery = new static();
+        $applicableHeaderTradeDelivery = new self();
 
         if ($shipToTradeParty instanceof ShipToTradeParty) {
             $applicableHeaderTradeDelivery->setShipToTradeParty($shipToTradeParty);

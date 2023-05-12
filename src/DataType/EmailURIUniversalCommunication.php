@@ -58,6 +58,6 @@ class EmailURIUniversalCommunication
 
         $uriIdentifier = $uriIdentifierElements->item(0)->nodeValue;
 
-        return new static($uriIdentifier);
+        return new self($uriIdentifier);
     }
 }

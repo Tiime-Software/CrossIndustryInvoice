@@ -83,7 +83,7 @@ class DocumentIncludedNote
 
             $content = $contentElements->item(0)->nodeValue;
 
-            $documentIncludedNote = new static($content);
+            $documentIncludedNote = new self($content);
 
             if (1 === $subjectCodeElements->count()) {
                 $subjectCode = InvoiceNoteCode::tryFrom($subjectCodeElements->item(0)->nodeValue);

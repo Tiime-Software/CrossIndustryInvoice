@@ -79,6 +79,6 @@ class BuyerSpecifiedLegalOrganization
             throw new \Exception('Wrong schemeID');
         }
 
-        return new static(new LegalRegistrationIdentifier($identifier, $scheme));
+        return new self(new LegalRegistrationIdentifier($identifier, $scheme));
     }
 }

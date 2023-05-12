@@ -110,7 +110,7 @@ class CategoryTradeTax
             throw new \Exception('Wrong TypeCode');
         }
 
-        $categoryTradeTax = new static($categoryCode);
+        $categoryTradeTax = new self($categoryCode);
 
         if (1 === $rateApplicablePercentElements->count()) {
             $categoryTradeTax->setRateApplicablePercent(new Percentage((float) $rateApplicablePercentElements->item(0)->nodeValue));

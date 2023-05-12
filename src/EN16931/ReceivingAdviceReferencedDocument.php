@@ -60,6 +60,6 @@ class ReceivingAdviceReferencedDocument
 
         $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
 
-        return new static(new ReceivingAdviceReference($issuerAssignedIdentifier));
+        return new self(new ReceivingAdviceReference($issuerAssignedIdentifier));
     }
 }

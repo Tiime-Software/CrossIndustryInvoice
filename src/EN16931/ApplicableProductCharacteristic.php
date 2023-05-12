@@ -72,7 +72,7 @@ class ApplicableProductCharacteristic
             $description = $descriptionElements->item(0)->nodeValue;
             $value       = $valueElements->item(0)->nodeValue;
 
-            $applicableProductCharacteristics[] = new static($description, $value);
+            $applicableProductCharacteristics[] = new self($description, $value);
         }
 
         return $applicableProductCharacteristics;

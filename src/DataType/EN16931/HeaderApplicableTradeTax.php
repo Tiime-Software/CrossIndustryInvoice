@@ -140,7 +140,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
 
             $taxPointDate = TaxPointDate::fromXML($xpath, $headerApplicableTradeTaxElement);
 
-            $headerApplicableTradeTax = new static((float) $calculatedAmount, (float) $basisAmount, $categoryCode);
+            $headerApplicableTradeTax = new self((float) $calculatedAmount, (float) $basisAmount, $categoryCode);
 
             if (1 === $exemptionReasonElements->count()) {
                 $headerApplicableTradeTax->setExemptionReason($exemptionReasonElements->item(0)->nodeValue);

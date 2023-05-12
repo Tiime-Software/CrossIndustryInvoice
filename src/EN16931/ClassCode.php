@@ -87,7 +87,7 @@ class ClassCode
             throw new \Exception('Wrong listID');
         }
 
-        $classCode = new static($value, $identifier);
+        $classCode = new self($value, $identifier);
 
         if ($classCodeElement->hasAttribute('listVersionID')) {
             $listVersionIdentifier = $classCodeElement->getAttribute('listVersionID');

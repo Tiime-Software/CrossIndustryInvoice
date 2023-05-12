@@ -232,7 +232,7 @@ class HeaderApplicableTradeTax
                 throw new \Exception('Wrong TypeCode');
             }
 
-            $headerApplicableTradeTax = new static((float) $calculatedAmount, (float) $basisAmount, $categoryCode);
+            $headerApplicableTradeTax = new self((float) $calculatedAmount, (float) $basisAmount, $categoryCode);
 
             if (1 === $exemptionReasonElements->count()) {
                 $headerApplicableTradeTax->setExemptionReason($exemptionReasonElements->item(0)->nodeValue);

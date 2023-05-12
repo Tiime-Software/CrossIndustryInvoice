@@ -423,7 +423,7 @@ class ApplicableHeaderTradeSettlement
         $invoiceReferencedDocument                       = InvoiceReferencedDocument::fromXML($xpath, $applicableHeaderTradeSettlementElement);
         $receivableSpecifiedTradeAccountingAccount       = ReceivableSpecifiedTradeAccountingAccount::fromXML($xpath, $applicableHeaderTradeSettlementElement);
 
-        $applicableHeaderTradeSettlement = new static($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
+        $applicableHeaderTradeSettlement = new self($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
 
         if ($creditorReferenceIdentifierElements->count() === 1) {
             $applicableHeaderTradeSettlement->setCreditorReferenceIdentifier($creditorReferenceIdentifierElements->item(0)->nodeValue);

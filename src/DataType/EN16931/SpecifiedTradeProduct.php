@@ -239,7 +239,7 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
         $designatedProductClassifications = DesignatedProductClassification::fromXML($xpath, $specifiedTradeProductElement);
         $originTradeCountry               = OriginTradeCountry::fromXML($xpath, $specifiedTradeProductElement);
 
-        $specifiedTradeProduct = new static($name);
+        $specifiedTradeProduct = new self($name);
 
         if (1 === $globalIdentifierElements->count()) {
             $globalIdentifierItem = $globalIdentifierElements->item(0);

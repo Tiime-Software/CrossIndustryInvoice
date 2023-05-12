@@ -123,7 +123,7 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
             // Look if node is well constructed, already created in the constructor
             ChargeIndicator::fromXML($xpath, $lineSpecifiedTradeChargeElement);
 
-            $lineSpecifiedTradeCharge = new static((float) $actualAmount);
+            $lineSpecifiedTradeCharge = new self((float) $actualAmount);
 
             if (1 === $calculationPercentElements->count()) {
                 $lineSpecifiedTradeCharge->setCalculationPercent((float) $calculationPercentElements->item(0)->nodeValue);

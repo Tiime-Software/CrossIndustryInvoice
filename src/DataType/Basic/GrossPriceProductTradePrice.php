@@ -107,7 +107,7 @@ class GrossPriceProductTradePrice
         $basisQuantity               = BasisQuantity::fromXML($xpath, $grossPriceProductTradePriceElement);
         $appliedTradeAllowanceCharge = AppliedTradeAllowanceCharge::fromXML($xpath, $grossPriceProductTradePriceElement);
 
-        $grossPriceProductTradePrice = new static((float) $chargeAmount);
+        $grossPriceProductTradePrice = new self((float) $chargeAmount);
 
         if ($basisQuantity instanceof BasisQuantity) {
             $grossPriceProductTradePrice->setBasisQuantity($basisQuantity);

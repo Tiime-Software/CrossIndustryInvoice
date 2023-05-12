@@ -84,6 +84,6 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\Su
         $applicableHeaderTradeDelivery     = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
         $applicableHeaderTradeSettlement   = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
 
-        return new static($includedSupplyChainTradeLineItems, $applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
+        return new self($includedSupplyChainTradeLineItems, $applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
     }
 }

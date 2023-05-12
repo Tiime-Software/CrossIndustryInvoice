@@ -76,6 +76,6 @@ class AppliedTradeAllowanceCharge
         // Look if node is well constructed, already created in the constructor
         AllowanceIndicator::fromXML($xpath, $appliedTradeAllowanceChargeElement);
 
-        return new static((float) $actualAmount);
+        return new self((float) $actualAmount);
     }
 }
