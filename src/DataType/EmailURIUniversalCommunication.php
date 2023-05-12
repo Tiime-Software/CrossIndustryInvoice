@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class EmailURIUniversalCommunication
 {
+    protected const XML_NODE = 'ram:EmailURIUniversalCommunication';
+
     /**
      * BT-43 or BT-58.
      */
@@ -26,10 +28,36 @@ class EmailURIUniversalCommunication
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:EmailURIUniversalCommunication');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:URIID', $this->uriIdentifier));
+        $currentNode->appendChild($document->createElement('ram:URIID', $this->uriIdentifier));
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $emailURIUniversalCommunicationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $emailURIUniversalCommunicationElements->count()) {
+            return null;
+        }
+
+        if ($emailURIUniversalCommunicationElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $emailURIUniversalCommunicationElement */
+        $emailURIUniversalCommunicationElement = $emailURIUniversalCommunicationElements->item(0);
+
+        $uriIdentifierElements = $xpath->query('.//ram:URIID', $emailURIUniversalCommunicationElement);
+
+        if (1 !== $uriIdentifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $uriIdentifier = $uriIdentifierElements->item(0)->nodeValue;
+
+        return new self($uriIdentifier);
     }
 }

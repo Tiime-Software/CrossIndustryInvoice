@@ -17,6 +17,8 @@ use Tiime\EN16931\Invoice;
  */
 class ApplicableHeaderTradeDelivery
 {
+    protected const XML_NODE = 'ram:ApplicableHeaderTradeDelivery';
+
     /**
      * BG-13.
      */
@@ -95,25 +97,62 @@ class ApplicableHeaderTradeDelivery
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:ApplicableHeaderTradeDelivery');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        if (null !== $this->shipToTradeParty) {
+        if ($this->shipToTradeParty instanceof ShipToTradeParty) {
             $currentNode->appendChild($this->shipToTradeParty->toXML($document));
         }
 
-        if (null !== $this->actualDeliverySupplyChainEvent) {
+        if ($this->actualDeliverySupplyChainEvent instanceof ActualDeliverySupplyChainEvent) {
             $currentNode->appendChild($this->actualDeliverySupplyChainEvent->toXML($document));
         }
 
-        if (null !== $this->despatchAdviceReferencedDocument) {
+        if ($this->despatchAdviceReferencedDocument instanceof DespatchAdviceReferencedDocument) {
             $currentNode->appendChild($this->despatchAdviceReferencedDocument->toXML($document));
         }
 
-        if (null !== $this->receivingAdviceReferencedDocument) {
+        if ($this->receivingAdviceReferencedDocument instanceof ReceivingAdviceReferencedDocument) {
             $currentNode->appendChild($this->receivingAdviceReferencedDocument->toXML($document));
         }
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $applicableHeaderTradeDeliveryElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $applicableHeaderTradeDeliveryElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $applicableHeaderTradeDeliveryElement */
+        $applicableHeaderTradeDeliveryElement = $applicableHeaderTradeDeliveryElements->item(0);
+
+        $shipToTradeParty                  = ShipToTradeParty::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
+        $actualDeliverySupplyChainEvent    = ActualDeliverySupplyChainEvent::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
+        $despatchAdviceReferencedDocument  = DespatchAdviceReferencedDocument::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
+        $receivingAdviceReferencedDocument = ReceivingAdviceReferencedDocument::fromXML($xpath, $applicableHeaderTradeDeliveryElement);
+
+        $applicableHeaderTradeDelivery = new self();
+
+        if ($shipToTradeParty instanceof ShipToTradeParty) {
+            $applicableHeaderTradeDelivery->setShipToTradeParty($shipToTradeParty);
+        }
+
+        if ($actualDeliverySupplyChainEvent instanceof ActualDeliverySupplyChainEvent) {
+            $applicableHeaderTradeDelivery->setActualDeliverySupplyChainEvent($actualDeliverySupplyChainEvent);
+        }
+
+        if ($despatchAdviceReferencedDocument instanceof DespatchAdviceReferencedDocument) {
+            $applicableHeaderTradeDelivery->setDespatchAdviceReferencedDocument($despatchAdviceReferencedDocument);
+        }
+
+        if ($receivingAdviceReferencedDocument instanceof ReceivingAdviceReferencedDocument) {
+            $applicableHeaderTradeDelivery->setReceivingAdviceReferencedDocument($receivingAdviceReferencedDocument);
+        }
+
+        return $applicableHeaderTradeDelivery;
     }
 
     public static function fromEN16931(Invoice $invoice): static

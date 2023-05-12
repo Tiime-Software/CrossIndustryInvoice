@@ -11,6 +11,8 @@ use Tiime\EN16931\DataType\Reference\ProjectReference;
  */
 class SpecifiedProcuringProject
 {
+    protected const XML_NODE = 'ram:SpecifiedProcuringProject';
+
     /**
      * BT-11.
      */
@@ -39,11 +41,47 @@ class SpecifiedProcuringProject
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedProcuringProject');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:ID', $this->identifier->value));
-        $element->appendChild($document->createElement('ram:Name', $this->name));
+        $currentNode->appendChild($document->createElement('ram:ID', $this->identifier->value));
+        $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $specifiedProcuringProjectElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $specifiedProcuringProjectElements->count()) {
+            return null;
+        }
+
+        if ($specifiedProcuringProjectElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedProcuringProjectElement */
+        $specifiedProcuringProjectElement = $specifiedProcuringProjectElements->item(0);
+
+        $identifierElements = $xpath->query('.//ram:ID', $specifiedProcuringProjectElement);
+        $nameElements       = $xpath->query('.//ram:Name', $specifiedProcuringProjectElement);
+
+        if ($identifierElements->count() !== 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($nameElements->count() !== 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $identifier = $identifierElements->item(0)->nodeValue;
+        $name = $nameElements->item(0)->nodeValue;
+
+        if ($name !== 'Project Reference') {
+            throw new \Exception('Wrong Name');
+        }
+
+        return new self(new ProjectReference($identifier));
     }
 }

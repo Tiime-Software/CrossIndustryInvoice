@@ -13,6 +13,8 @@ use Tiime\EN16931\BusinessTermsGroup\SellerContact;
  */
 class DefinedTradeContact
 {
+    protected const XML_NODE = 'ram:DefinedTradeContact';
+
     /**
      * BT-41.
      */
@@ -91,25 +93,75 @@ class DefinedTradeContact
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:DefinedTradeContact');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         if (\is_string($this->personName)) {
-            $element->appendChild($document->createElement('ram:PersonName', $this->personName));
+            $currentNode->appendChild($document->createElement('ram:PersonName', $this->personName));
         }
 
         if (\is_string($this->departmentName)) {
-            $element->appendChild($document->createElement('ram:DepartmentName', $this->departmentName));
+            $currentNode->appendChild($document->createElement('ram:DepartmentName', $this->departmentName));
         }
 
         if ($this->telephoneUniversalCommunication instanceof TelephoneUniversalCommunication) {
-            $element->appendChild($this->telephoneUniversalCommunication->toXML($document));
+            $currentNode->appendChild($this->telephoneUniversalCommunication->toXML($document));
         }
 
         if ($this->emailURIUniversalCommunication instanceof EmailURIUniversalCommunication) {
-            $element->appendChild($this->emailURIUniversalCommunication->toXML($document));
+            $currentNode->appendChild($this->emailURIUniversalCommunication->toXML($document));
         }
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $definedTradeContactElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $definedTradeContactElements->count()) {
+            return null;
+        }
+
+        if ($definedTradeContactElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $definedTradeContactElement */
+        $definedTradeContactElement = $definedTradeContactElements->item(0);
+
+        $personNameElements     = $xpath->query('.//ram:PersonName', $definedTradeContactElement);
+        $departmentNameElements = $xpath->query('.//ram:DepartmentName', $definedTradeContactElement);
+
+        if ($personNameElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($departmentNameElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $telephoneUniversalCommunication = TelephoneUniversalCommunication::fromXML($xpath, $definedTradeContactElement);
+        $emailURIUniversalCommunication  = EmailURIUniversalCommunication::fromXML($xpath, $definedTradeContactElement);
+
+        $definedTradeContact = new self();
+
+        if (1 === $personNameElements->count()) {
+            $definedTradeContact->setPersonName($personNameElements->item(0)->nodeValue);
+        }
+
+        if (1 === $departmentNameElements->count()) {
+            $definedTradeContact->setDepartmentName($departmentNameElements->item(0)->nodeValue);
+        }
+
+        if ($telephoneUniversalCommunication instanceof TelephoneUniversalCommunication) {
+            $definedTradeContact->setTelephoneUniversalCommunication($telephoneUniversalCommunication);
+        }
+
+        if ($emailURIUniversalCommunication instanceof EmailURIUniversalCommunication) {
+            $definedTradeContact->setEmailURIUniversalCommunication($emailURIUniversalCommunication);
+        }
+
+        return $definedTradeContact;
     }
 
     public static function fromEN16931(SellerContact $contact): static

@@ -17,22 +17,22 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
     /**
      * BT-109.
      */
-    private Amount $taxBasisTotalAmount;
+    protected Amount $taxBasisTotalAmount;
 
     /**
      * BT-110 & BT-110-0.
      */
-    private ?TaxTotalAmount $taxTotalAmount;
+    protected ?TaxTotalAmount $taxTotalAmount;
 
     /**
      * BT-112.
      */
-    private Amount $grandTotalAmount;
+    protected Amount $grandTotalAmount;
 
     /**
      * BT-115.
      */
-    private Amount $duePayableAmount;
+    protected Amount $duePayableAmount;
 
     public function __construct(
         float $taxBasisTotalAmount,

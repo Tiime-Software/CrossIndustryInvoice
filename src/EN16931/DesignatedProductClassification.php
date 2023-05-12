@@ -9,6 +9,8 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
  */
 class DesignatedProductClassification
 {
+    protected const XML_NODE = 'ram:DesignatedProductClassification';
+
     /**
      * BT-158 & BT-158-1 & BT-158-2.
      */
@@ -32,12 +34,37 @@ class DesignatedProductClassification
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:DesignatedProductClassification');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         if ($this->classCode instanceof ClassCode) {
-            $element->appendChild($this->classCode->toXML($document));
+            $currentNode->appendChild($this->classCode->toXML($document));
         }
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        $designatedProductClassificationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $designatedProductClassificationElements->count()) {
+            return [];
+        }
+
+        $designatedProductClassifications = [];
+
+        foreach ($designatedProductClassificationElements as $designatedProductClassificationElement) {
+            $classCode = ClassCode::fromXML($xpath, $designatedProductClassificationElement);
+
+            $designatedProductClassification = new self();
+
+            if ($classCode instanceof ClassCode) {
+                $designatedProductClassification->setClassCode($classCode);
+            }
+
+            $designatedProductClassifications[] = $designatedProductClassification;
+        }
+
+        return $designatedProductClassifications;
     }
 }

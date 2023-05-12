@@ -16,12 +16,12 @@ class PayeePartyCreditorFinancialAccount
     /**
      * BT-84.
      */
-    private ?PaymentAccountIdentifier $ibanIdentifier;
+    protected ?PaymentAccountIdentifier $ibanIdentifier;
 
     /**
      * BT-84-0.
      */
-    private ?PaymentAccountIdentifier $proprietaryIdentifier;
+    protected ?PaymentAccountIdentifier $proprietaryIdentifier;
 
     public function __construct()
     {
@@ -55,17 +55,17 @@ class PayeePartyCreditorFinancialAccount
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement(self::XML_NODE);
+        $currentNode = $document->createElement(self::XML_NODE);
 
         if ($this->ibanIdentifier instanceof PaymentAccountIdentifier) {
-            $element->appendChild($document->createElement('ram:IBANID', $this->ibanIdentifier->value));
+            $currentNode->appendChild($document->createElement('ram:IBANID', $this->ibanIdentifier->value));
         }
 
         if ($this->proprietaryIdentifier instanceof PaymentAccountIdentifier) {
-            $element->appendChild($document->createElement('ram:ProprietaryID', $this->proprietaryIdentifier->value));
+            $currentNode->appendChild($document->createElement('ram:ProprietaryID', $this->proprietaryIdentifier->value));
         }
 
-        return $element;
+        return $currentNode;
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static

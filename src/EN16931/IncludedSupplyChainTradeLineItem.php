@@ -14,6 +14,8 @@ use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
  */
 class IncludedSupplyChainTradeLineItem
 {
+    protected const XML_NODE = 'ram:IncludedSupplyChainTradeLineItem';
+
     /**
      * BT-126-00.
      */
@@ -80,15 +82,38 @@ class IncludedSupplyChainTradeLineItem
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:IncludedSupplyChainTradeLineItem');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($this->associatedDocumentLineDocument->toXML($document));
-        $element->appendChild($this->specifiedTradeProduct->toXML($document));
-        $element->appendChild($this->specifiedLineTradeAgreement->toXML($document));
-        $element->appendChild($this->specifiedLineTradeDelivery->toXML($document));
-        $element->appendChild($this->specifiedLineTradeSettlement->toXML($document));
+        $currentNode->appendChild($this->associatedDocumentLineDocument->toXML($document));
+        $currentNode->appendChild($this->specifiedTradeProduct->toXML($document));
+        $currentNode->appendChild($this->specifiedLineTradeAgreement->toXML($document));
+        $currentNode->appendChild($this->specifiedLineTradeDelivery->toXML($document));
+        $currentNode->appendChild($this->specifiedLineTradeSettlement->toXML($document));
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        $includedSupplyChainTradeLineItemElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $includedSupplyChainTradeLineItemElements->count()) {
+            return [];
+        }
+
+        $includedSupplyChainTradeLineItems = [];
+
+        foreach ($includedSupplyChainTradeLineItemElements as $includedSupplyChainTradeLineItemElement) {
+            $associatedDocumentLineDocument = AssociatedDocumentLineDocument::fromXML($xpath, $includedSupplyChainTradeLineItemElement);
+            $specifiedTradeProduct          = SpecifiedTradeProduct::fromXML($xpath, $includedSupplyChainTradeLineItemElement);
+            $specifiedLineTradeAgreement    = SpecifiedLineTradeAgreement::fromXML($xpath, $includedSupplyChainTradeLineItemElement);
+            $specifiedLineTradeDelivery     = SpecifiedLineTradeDelivery::fromXML($xpath, $includedSupplyChainTradeLineItemElement);
+            $specifiedLineTradeSettlement   = SpecifiedLineTradeSettlement::fromXML($xpath, $includedSupplyChainTradeLineItemElement);
+
+            $includedSupplyChainTradeLineItems[] = new self($associatedDocumentLineDocument, $specifiedTradeProduct, $specifiedLineTradeAgreement, $specifiedLineTradeDelivery, $specifiedLineTradeSettlement);
+        }
+
+        return $includedSupplyChainTradeLineItems;
     }
 
     public static function fromEN16931(InvoiceLine $invoiceLine): static

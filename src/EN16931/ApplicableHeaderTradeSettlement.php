@@ -23,6 +23,8 @@ use Tiime\EN16931\Invoice;
  */
 class ApplicableHeaderTradeSettlement
 {
+    protected const XML_NODE = 'ram:ApplicableHeaderTradeSettlement';
+
     /**
      * BT-90.
      */
@@ -111,7 +113,7 @@ class ApplicableHeaderTradeSettlement
             $tmpApplicableTradeTaxes[] = $applicableTradeTax;
         }
 
-        if (empty($tmpApplicableTradeTaxes)) {
+        if (0 === \count($tmpApplicableTradeTaxes)) {
             throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one HeaderApplicableTradeTax.');
         }
 
@@ -298,27 +300,27 @@ class ApplicableHeaderTradeSettlement
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:ApplicableHeaderTradeSettlement');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        if (null !== $this->creditorReferenceIdentifier) {
+        if ($this->creditorReferenceIdentifier instanceof BankAssignedCreditorIdentifier) {
             $currentNode->appendChild($document->createElement('ram:CreditorReferenceID', $this->creditorReferenceIdentifier->value));
         }
 
-        if (null !== $this->paymentReference) {
+        if (\is_string($this->paymentReference)) {
             $currentNode->appendChild($document->createElement('ram:PaymentReference', $this->paymentReference));
         }
 
-        if (null !== $this->taxCurrencyCode) {
+        if ($this->taxCurrencyCode instanceof CurrencyCode) {
             $currentNode->appendChild($document->createElement('ram:TaxCurrencyCode', $this->taxCurrencyCode->value));
         }
 
         $currentNode->appendChild($document->createElement('ram:InvoiceCurrencyCode', $this->invoiceCurrencyCode->value));
 
-        if (null !== $this->payeeTradeParty) {
+        if ($this->payeeTradeParty instanceof PayeeTradeParty) {
             $currentNode->appendChild($this->payeeTradeParty->toXML($document));
         }
 
-        if (null !== $this->specifiedTradeSettlementPaymentMeans) {
+        if ($this->specifiedTradeSettlementPaymentMeans instanceof SpecifiedTradeSettlementPaymentMeans) {
             $currentNode->appendChild($this->specifiedTradeSettlementPaymentMeans->toXML($document));
         }
 
@@ -326,7 +328,7 @@ class ApplicableHeaderTradeSettlement
             $currentNode->appendChild($applicableTradeTax->toXML($document));
         }
 
-        if (null !== $this->billingSpecifiedPeriod) {
+        if ($this->billingSpecifiedPeriod instanceof BillingSpecifiedPeriod) {
             $currentNode->appendChild($this->billingSpecifiedPeriod->toXML($document));
         }
 
@@ -338,21 +340,125 @@ class ApplicableHeaderTradeSettlement
             $currentNode->appendChild($specifiedTradeCharge->toXML($document));
         }
 
-        if (null !== $this->specifiedTradePaymentTerms) {
+        if ($this->specifiedTradePaymentTerms instanceof SpecifiedTradePaymentTerms) {
             $currentNode->appendChild($this->specifiedTradePaymentTerms->toXML($document));
         }
 
         $currentNode->appendChild($this->specifiedTradeSettlementHeaderMonetarySummation->toXML($document));
 
-        if (null !== $this->invoiceReferencedDocument) {
+        if ($this->invoiceReferencedDocument instanceof InvoiceReferencedDocument) {
             $currentNode->appendChild($this->invoiceReferencedDocument->toXML($document));
         }
 
-        if (null !== $this->receivableSpecifiedTradeAccountingAccount) {
+        if ($this->receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
             $currentNode->appendChild($this->receivableSpecifiedTradeAccountingAccount->toXML($document));
         }
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $applicableHeaderTradeSettlementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $applicableHeaderTradeSettlementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $applicableHeaderTradeSettlementElement */
+        $applicableHeaderTradeSettlementElement = $applicableHeaderTradeSettlementElements->item(0);
+
+        $creditorReferenceIdentifierElements = $xpath->query('.//ram:CreditorReferenceID', $applicableHeaderTradeSettlementElement);
+        $paymentReferenceElements            = $xpath->query('.//ram:PaymentReference', $applicableHeaderTradeSettlementElement);
+        $taxCurrencyCodeElements             = $xpath->query('.//ram:TaxCurrencyCode', $applicableHeaderTradeSettlementElement);
+        $invoiceCurrencyCodeElements         = $xpath->query('.//ram:InvoiceCurrencyCode', $applicableHeaderTradeSettlementElement);
+
+        if ($creditorReferenceIdentifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($paymentReferenceElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($taxCurrencyCodeElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $invoiceCurrencyCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $invoiceCurrencyCode = CurrencyCode::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
+
+        if (!$invoiceCurrencyCode instanceof CurrencyCode) {
+            throw new \Exception('Wrong InvoiceCurrencyCode');
+        }
+
+        $payeeTradeParty                                 = PayeeTradeParty::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $specifiedTradeSettlementPaymentMeans            = SpecifiedTradeSettlementPaymentMeans::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $applicableTradeTaxes                            = HeaderApplicableTradeTax::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $billingSpecifiedPeriod                          = BillingSpecifiedPeriod::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $specifiedTradeAllowances                        = SpecifiedTradeAllowance::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $specifiedTradeCharges                           = SpecifiedTradeCharge::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $specifiedTradePaymentTerms                      = SpecifiedTradePaymentTerms::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $specifiedTradeSettlementHeaderMonetarySummation = SpecifiedTradeSettlementHeaderMonetarySummation::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $invoiceReferencedDocument                       = InvoiceReferencedDocument::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $receivableSpecifiedTradeAccountingAccount       = ReceivableSpecifiedTradeAccountingAccount::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+
+        $applicableHeaderTradeSettlement = new self($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
+
+        if (1 === $creditorReferenceIdentifierElements->count()) {
+            $applicableHeaderTradeSettlement->setCreditorReferenceIdentifier(new BankAssignedCreditorIdentifier($creditorReferenceIdentifierElements->item(0)->nodeValue));
+        }
+
+        if (1 === $paymentReferenceElements->count()) {
+            $applicableHeaderTradeSettlement->setPaymentReference($paymentReferenceElements->item(0)->nodeValue);
+        }
+
+        if (1 === $taxCurrencyCodeElements->count()) {
+            $taxCurrencyCode = CurrencyCode::tryFrom($taxCurrencyCodeElements->item(0)->nodeValue);
+
+            if (!$taxCurrencyCode instanceof CurrencyCode) {
+                throw new \Exception('Wrong TaxCurrencyCode');
+            }
+
+            $applicableHeaderTradeSettlement->setTaxCurrencyCode($taxCurrencyCode);
+        }
+
+        if ($payeeTradeParty instanceof PayeeTradeParty) {
+            $applicableHeaderTradeSettlement->setPayeeTradeParty($payeeTradeParty);
+        }
+
+        if ($specifiedTradeSettlementPaymentMeans instanceof SpecifiedTradeSettlementPaymentMeans) {
+            $applicableHeaderTradeSettlement->setSpecifiedTradeSettlementPaymentMeans($specifiedTradeSettlementPaymentMeans);
+        }
+
+        if ($billingSpecifiedPeriod instanceof BillingSpecifiedPeriod) {
+            $applicableHeaderTradeSettlement->setBillingSpecifiedPeriod($billingSpecifiedPeriod);
+        }
+
+        if (\count($specifiedTradeAllowances) > 0) {
+            $applicableHeaderTradeSettlement->setSpecifiedTradeAllowances($specifiedTradeAllowances);
+        }
+
+        if (\count($specifiedTradeCharges) > 0) {
+            $applicableHeaderTradeSettlement->setSpecifiedTradeCharges($specifiedTradeCharges);
+        }
+
+        if ($specifiedTradePaymentTerms instanceof SpecifiedTradePaymentTerms) {
+            $applicableHeaderTradeSettlement->setSpecifiedTradePaymentTerms($specifiedTradePaymentTerms);
+        }
+
+        if ($invoiceReferencedDocument instanceof InvoiceReferencedDocument) {
+            $applicableHeaderTradeSettlement->setInvoiceReferencedDocument($invoiceReferencedDocument);
+        }
+
+        if ($receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
+            $applicableHeaderTradeSettlement->setReceivableSpecifiedTradeAccountingAccount($receivableSpecifiedTradeAccountingAccount);
+        }
+
+        return $applicableHeaderTradeSettlement;
     }
 
     public static function fromEN16931(Invoice $invoice): static

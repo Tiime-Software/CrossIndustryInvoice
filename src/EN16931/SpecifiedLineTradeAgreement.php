@@ -15,8 +15,10 @@ use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
  */
 class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\Basic\SpecifiedLineTradeAgreement
 {
+    protected const XML_NODE = 'ram:SpecifiedLineTradeAgreement';
+
     /**
-     * BT-13-00.
+     * BT-132-00.
      */
     private ?BuyerOrderReferencedDocument $buyerOrderReferencedDocument;
 
@@ -41,19 +43,47 @@ class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\Basic\Spec
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedLineTradeAgreement');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         if ($this->buyerOrderReferencedDocument instanceof BuyerOrderReferencedDocument) {
-            $element->appendChild($this->buyerOrderReferencedDocument->toXML($document));
+            $currentNode->appendChild($this->buyerOrderReferencedDocument->toXML($document));
         }
 
         if ($this->getGrossPriceProductTradePrice() instanceof GrossPriceProductTradePrice) {
-            $element->appendChild($this->getGrossPriceProductTradePrice()->toXML($document));
+            $currentNode->appendChild($this->getGrossPriceProductTradePrice()->toXML($document));
         }
 
-        $element->appendChild($this->getNetPriceProductTradePrice()->toXML($document));
+        $currentNode->appendChild($this->getNetPriceProductTradePrice()->toXML($document));
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $specifiedLineTradeAgreementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $specifiedLineTradeAgreementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedLineTradeAgreementElement */
+        $specifiedLineTradeAgreementElement = $specifiedLineTradeAgreementElements->item(0);
+
+        $buyerOrderReferencedDocument = BuyerOrderReferencedDocument::fromXML($xpath, $specifiedLineTradeAgreementElement);
+        $grossPriceProductTradePrice  = GrossPriceProductTradePrice::fromXML($xpath, $specifiedLineTradeAgreementElement);
+        $netPriceProductTradePrice    = NetPriceProductTradePrice::fromXML($xpath, $specifiedLineTradeAgreementElement);
+
+        $specifiedLineTradeAgreement = new self($netPriceProductTradePrice);
+
+        if ($buyerOrderReferencedDocument instanceof BuyerOrderReferencedDocument) {
+            $specifiedLineTradeAgreement->setBuyerOrderReferencedDocument($buyerOrderReferencedDocument);
+        }
+
+        if ($grossPriceProductTradePrice instanceof GrossPriceProductTradePrice) {
+            $specifiedLineTradeAgreement->setGrossPriceProductTradePrice($grossPriceProductTradePrice);
+        }
+
+        return $specifiedLineTradeAgreement;
     }
 
     public static function fromEN16931(InvoiceLine $invoiceLine): static
