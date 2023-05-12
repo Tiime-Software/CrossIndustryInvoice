@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
+use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 
 /**

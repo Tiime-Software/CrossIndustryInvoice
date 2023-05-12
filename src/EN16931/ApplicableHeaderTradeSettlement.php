@@ -383,7 +383,7 @@ class ApplicableHeaderTradeSettlement
             throw new \Exception('Malformed');
         }
 
-        if (1 === $invoiceCurrencyCodeElements->count()) {
+        if (1 !== $invoiceCurrencyCodeElements->count()) {
             throw new \Exception('Malformed');
         }
 

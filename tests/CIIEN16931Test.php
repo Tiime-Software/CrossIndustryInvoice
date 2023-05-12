@@ -387,4 +387,64 @@ class CIIEN16931Test extends TestCase
         $xml = $invoice->toXML();
         $this->assertIsString($xml->saveXML());
     }
+
+    /**
+     * @test
+     * @testdox Create EN16931 profile from XML mandatory data
+     */
+    public function createEN16931ProfileFromXMLMandatoryData(): void
+    {
+        $invoiceToConvert = new CrossIndustryInvoice(
+            new ExchangedDocumentContext(
+                new GuidelineSpecifiedDocumentContextParameter(
+                    new SpecificationIdentifier(SpecificationIdentifier::EN16931)
+                )
+            ),
+            new ExchangedDocument(
+                new InvoiceIdentifier('FA-1545'),
+                InvoiceTypeCode::COMMERCIAL_INVOICE,
+                new IssueDateTime(new \DateTime())
+            ),
+            new SupplyChainTradeTransaction(
+                [
+                    new IncludedSupplyChainTradeLineItem(
+                        new AssociatedDocumentLineDocument(
+                            new InvoiceLineIdentifier('InvoiceLineIdentifier')
+                        ),
+                        new SpecifiedTradeProduct('SpecifiedTradProduct'),
+                        new SpecifiedLineTradeAgreement(
+                            new NetPriceProductTradePrice(100)
+                        ),
+                        new SpecifiedLineTradeDelivery(
+                            new BilledQuantity(1, UnitOfMeasurement::ACCOUNTING_UNIT_REC20)
+                        ),
+                        new SpecifiedLineTradeSettlement(
+                            new ApplicableTradeTax(VatCategory::STANDARD),
+                            new SpecifiedTradeSettlementLineMonetarySummation(100)
+                        )
+                    )
+                ],
+                new ApplicableHeaderTradeAgreement(
+                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
+                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
+                ),
+                new ApplicableHeaderTradeDelivery(),
+                new ApplicableHeaderTradeSettlement(
+                    CurrencyCode::EURO,
+                    [
+                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD)
+                    ],
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40)
+                )
+            )
+        );
+
+        $xmlInvoice = $invoiceToConvert->toXML();
+
+        $document = new \DOMDocument();
+        $document->loadXML($xmlInvoice->saveXML());
+
+        $invoice = CrossIndustryInvoice::fromXML($document);
+        $this->assertInstanceOf(CrossIndustryInvoice::class, $invoice);
+    }
 }
