@@ -84,7 +84,7 @@ class InvoiceReferencedDocument
 
         $formattedIssueDateTime = FormattedIssueDateTime::fromXML($xpath, $invoiceReferencedDocumentElement);
 
-        $invoiceReferencedDocument = new static(new PrecedingInvoiceReference($issuerAssignedIdentifier));
+        $invoiceReferencedDocument = new self(new PrecedingInvoiceReference($issuerAssignedIdentifier));
 
         if (null !== $formattedIssueDateTime) {
             $invoiceReferencedDocument->setFormattedIssueDateTime($formattedIssueDateTime);

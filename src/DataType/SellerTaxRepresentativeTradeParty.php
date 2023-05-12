@@ -97,6 +97,6 @@ class SellerTaxRepresentativeTradeParty
             throw new \Exception('Malformed');
         }
 
-        return new static($name, $postalTradeAddress, $specifiedTaxRegistrations[0]);
+        return new self($name, $postalTradeAddress, $specifiedTaxRegistrations[0]);
     }
 }

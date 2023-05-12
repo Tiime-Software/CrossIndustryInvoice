@@ -9,6 +9,8 @@ use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 
 class CrossIndustryInvoice
 {
+    protected const XML_NODE = 'rsm:CrossIndustryInvoice';
+
     /**
      * BG-2.
      */
@@ -53,7 +55,7 @@ class CrossIndustryInvoice
     {
         $document = new \DOMDocument('1.0', 'UTF-8');
 
-        $crossIndustryInvoice = $document->createElement('rsm:CrossIndustryInvoice');
+        $crossIndustryInvoice = $document->createElement(self::XML_NODE);
         $crossIndustryInvoice->setAttribute(
             'xmlns:qdt',
             'urn:un:unece:uncefact:data:standard:QualifiedDataType:100'
@@ -82,5 +84,25 @@ class CrossIndustryInvoice
         $root->appendChild($this->supplyChainTradeTransaction->toXML($document));
 
         return $document;
+    }
+
+    public static function fromXML(\DOMDocument $document): static
+    {
+        $xpath = new \DOMXPath($document);
+
+        $crossIndustryInvoiceElements = $xpath->query(sprintf('//%s', self::XML_NODE));
+
+        if (1 !== $crossIndustryInvoiceElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $crossIndustryInvoiceElement */
+        $crossIndustryInvoiceElement = $crossIndustryInvoiceElements->item(0);
+
+        $exchangedDocumentContext    = ExchangedDocumentContext::fromXML($xpath, $crossIndustryInvoiceElement);
+        $exchangedDocument           = ExchangedDocument::fromXML($xpath, $crossIndustryInvoiceElement);
+        $supplyChainTradeTransaction = SupplyChainTradeTransaction::fromXML($xpath, $crossIndustryInvoiceElement);
+
+        return new self($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
     }
 }

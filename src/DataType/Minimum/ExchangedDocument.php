@@ -96,6 +96,6 @@ class ExchangedDocument
 
         $issueDateTime = IssueDateTime::fromXML($xpath, $exchangedDocumentElement);
 
-        return new static(new InvoiceIdentifier($identifier), $typeCode, $issueDateTime);
+        return new self(new InvoiceIdentifier($identifier), $typeCode, $issueDateTime);
     }
 }

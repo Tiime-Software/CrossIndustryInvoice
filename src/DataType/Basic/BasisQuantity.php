@@ -85,7 +85,7 @@ class BasisQuantity
             }
         }
 
-        $basisQuantity = new static((float) $value);
+        $basisQuantity = new self((float) $value);
 
         if ($unitCode instanceof UnitOfMeasurement) {
             $basisQuantity->setUnitCode($unitCode);

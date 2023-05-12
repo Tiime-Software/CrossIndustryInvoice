@@ -78,6 +78,6 @@ class SupplyChainTradeTransaction
         $applicableHeaderTradeAgreement  = ApplicableHeaderTradeAgreement::fromXML($xpath, $supplyChainTradeTransactionElement);
         $applicableHeaderTradeSettlement = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
 
-        return new static($applicableHeaderTradeAgreement, $applicableHeaderTradeSettlement);
+        return new self($applicableHeaderTradeAgreement, $applicableHeaderTradeSettlement);
     }
 }

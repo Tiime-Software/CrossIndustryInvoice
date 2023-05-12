@@ -11,32 +11,27 @@ use Tiime\EN16931\DataType\Identifier\VatIdentifier;
  */
 class SpecifiedTaxRegistrationVAT
 {
+    protected const XML_NODE = 'ram:SpecifiedTaxRegistration';
+
     /**
      * BT-31.
      */
-    private ?VatIdentifier $identifier;
+    private VatIdentifier $identifier;
 
     /**
      * BT-31-0.
      */
     private string $schemeIdentifier;
 
-    public function __construct()
+    public function __construct(VatIdentifier $identifier)
     {
+        $this->identifier       = $identifier;
         $this->schemeIdentifier = 'VA';
-        $this->identifier       = null;
     }
 
-    public function getIdentifier(): ?VatIdentifier
+    public function getIdentifier(): VatIdentifier
     {
         return $this->identifier;
-    }
-
-    public function setIdentifier(?VatIdentifier $identifier): static
-    {
-        $this->identifier = $identifier;
-
-        return $this;
     }
 
     public function getSchemeIdentifier(): string
@@ -46,15 +41,53 @@ class SpecifiedTaxRegistrationVAT
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedTaxRegistration');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        if ($this->identifier instanceof VatIdentifier) {
-            $identifierElement = $document->createElement('ram:ID', $this->identifier->getValue());
-            $identifierElement->setAttribute('schemeID', $this->schemeIdentifier);
+        $identifierElement = $document->createElement('ram:ID', $this->identifier->getValue());
+        $identifierElement->setAttribute('schemeID', $this->schemeIdentifier);
+        $currentNode->appendChild($identifierElement);
 
-            $element->appendChild($identifierElement);
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $specifiedTaxRegistrationVatElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $specifiedTaxRegistrationVatElements->count()) {
+            return null;
         }
 
-        return $element;
+        if ($specifiedTaxRegistrationVatElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedTaxRegistrationVatElement */
+        $specifiedTaxRegistrationVatElement = $specifiedTaxRegistrationVatElements->item(0);
+
+        $identifierElements = $xpath->query('.//ram:ID', $specifiedTaxRegistrationVatElement);
+
+        if (1 !== $identifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        $identifierItem = $identifierElements->item(0);
+        $identifier     = $identifierItem->nodeValue;
+
+        $schemeIdentifier = null;
+
+        if ($identifierItem->hasAttribute('schemeID')) {
+            $schemeIdentifier = $identifierItem->getAttribute('schemeID');
+        }
+
+        if (!\is_string($schemeIdentifier)) {
+            throw new \Exception('Malformed');
+        }
+
+        if ('VA' !== $schemeIdentifier) {
+            throw new \Exception('Wrong schemeID');
+        }
+
+        return new self(new VatIdentifier($identifier));
     }
 }

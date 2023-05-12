@@ -70,6 +70,6 @@ class URIUniversalCommunication
             throw new \Exception('Wrong schemeID');
         }
 
-        return new static(new ElectronicAddressIdentifier($electronicAddress, $scheme));
+        return new self(new ElectronicAddressIdentifier($electronicAddress, $scheme));
     }
 }

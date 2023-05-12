@@ -159,7 +159,7 @@ class SpecifiedLineTradeSettlement
         $specifiedTradeCharges                     = LineSpecifiedTradeCharge::fromXML($xpath, $specifiedLineTradeSettlementElement);
         $specifiedTradeSettlementMonetarySummation = SpecifiedTradeSettlementLineMonetarySummation::fromXML($xpath, $specifiedLineTradeSettlementElement);
 
-        $specifiedLineTradeSettlement = new static($applicableTradeTax, $specifiedTradeSettlementMonetarySummation);
+        $specifiedLineTradeSettlement = new self($applicableTradeTax, $specifiedTradeSettlementMonetarySummation);
 
         if ($billingSpecifiedPeriod instanceof BillingSpecifiedPeriod) {
             $specifiedLineTradeSettlement->setBillingSpecifiedPeriod($billingSpecifiedPeriod);

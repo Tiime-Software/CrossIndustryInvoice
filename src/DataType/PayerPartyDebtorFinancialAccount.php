@@ -60,6 +60,6 @@ class PayerPartyDebtorFinancialAccount
 
         $ibanIdentifier = $ibanIdentifierElements->item(0)->nodeValue;
 
-        return new static(new DebitedAccountIdentifier($ibanIdentifier));
+        return new self(new DebitedAccountIdentifier($ibanIdentifier));
     }
 }

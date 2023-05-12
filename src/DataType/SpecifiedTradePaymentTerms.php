@@ -118,7 +118,7 @@ class SpecifiedTradePaymentTerms
 
         $dueDateDateTime = DueDateDateTime::fromXML($xpath, $specifiedTradePaymentTermsElement);
 
-        $specifiedTradePaymentTerms = new static();
+        $specifiedTradePaymentTerms = new self();
 
         if (1 === $descriptionElements->count()) {
             $specifiedTradePaymentTerms->setDescription($descriptionElements->item(0)->nodeValue);

@@ -12,6 +12,8 @@ use Tiime\EN16931\DataType\ObjectSchemeCode;
  */
 class AdditionalReferencedDocument
 {
+    protected const XML_NODE = 'ram:AdditionalReferencedDocument';
+
     /**
      * BT-128.
      */
@@ -58,15 +60,61 @@ class AdditionalReferencedDocument
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:AdditionalReferencedDocument');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
-        $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
+        $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
+        $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
         if ($this->referenceTypeCode instanceof ObjectSchemeCode) {
-            $element->appendChild($document->createElement('ram:ReferenceTypeCode', $this->referenceTypeCode->value));
+            $currentNode->appendChild($document->createElement('ram:ReferenceTypeCode', $this->referenceTypeCode->value));
         }
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $additionalReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $additionalReferencedDocumentElements->count()) {
+            return null;
+        }
+
+        if ($additionalReferencedDocumentElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $additionalReferencedDocumentElement */
+        $additionalReferencedDocumentElement = $additionalReferencedDocumentElements->item(0);
+
+        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $additionalReferencedDocumentElement);
+        $typeCodeElements                 = $xpath->query('.//ram:TypeCode', $additionalReferencedDocumentElement);
+        $referenceTypeCodeElements        = $xpath->query('.//ram:ReferenceTypeCode', $additionalReferencedDocumentElement);
+
+        if (1 !== $issuerAssignedIdentifierElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if (1 !== $typeCodeElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        if ($referenceTypeCodeElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
+
+        if ('130' !== $typeCodeElements->item(0)->nodeValue) {
+            throw new \Exception('Wrong TypeCode');
+        }
+
+        $additionalReferencedDocument = new self(new ObjectIdentifier($issuerAssignedIdentifier));
+
+        if (1 === $referenceTypeCodeElements->count()) {
+            $additionalReferencedDocument->setReferenceTypeCode($referenceTypeCodeElements->item(0)->nodeValue);
+        }
+
+        return $additionalReferencedDocument;
     }
 }

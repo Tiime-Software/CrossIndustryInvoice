@@ -56,6 +56,6 @@ class GuidelineSpecifiedDocumentContextParameter
 
         $identifier = $identifierElements->item(0)->nodeValue;
 
-        return new static(new SpecificationIdentifier($identifier));
+        return new self(new SpecificationIdentifier($identifier));
     }
 }

@@ -57,6 +57,6 @@ class TaxTotalAmount
             throw new \Exception('Wrong currencyID');
         }
 
-        return new static((float) $value, $currencyIdentifier);
+        return new self((float) $value, $currencyIdentifier);
     }
 }

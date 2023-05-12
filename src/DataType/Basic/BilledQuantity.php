@@ -67,6 +67,6 @@ class BilledQuantity
             throw new \Exception('Wrong unitCode');
         }
 
-        return new static((float) $billedQuantity, $unitCode);
+        return new self((float) $billedQuantity, $unitCode);
     }
 }

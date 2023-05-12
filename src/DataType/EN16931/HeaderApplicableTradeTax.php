@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxPointDate;
+use Tiime\EN16931\DataType\DateCode2005;
 use Tiime\EN16931\DataType\VatCategory;
+use Tiime\EN16931\DataType\VatExoneration;
+use Tiime\EN16931\SemanticDataType\Percentage;
 
 /**
  * BG-23.
@@ -20,6 +23,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
     public function __construct(float $calculatedAmount, float $basisAmount, VatCategory $categoryCode)
     {
         parent::__construct($calculatedAmount, $basisAmount, $categoryCode);
+
         $this->taxPointDate = null;
     }
 
@@ -37,13 +41,13 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement('ram:ApplicableTradeTax');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($document->createElement('ram:CalculatedAmount', (string) $this->getCalculatedAmount()));
 
         $currentNode->appendChild($document->createElement('ram:TypeCode', $this->getTypeCode()));
 
-        if (null !== $this->getExemptionReason()) {
+        if (\is_string($this->getExemptionReason())) {
             $currentNode->appendChild($document->createElement('ram:ExemptionReason', $this->getExemptionReason()));
         }
 
@@ -51,22 +55,128 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
 
         $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->getCategoryCode()->value));
 
-        if (null !== $this->getExemptionReasonCode()) {
+        if ($this->getExemptionReasonCode() instanceof VatExoneration) {
             $currentNode->appendChild($document->createElement('ram:ExemptionReasonCode', $this->getExemptionReasonCode()->value));
         }
 
-        if (null !== $this->taxPointDate) {
+        if ($this->taxPointDate instanceof TaxPointDate) {
             $currentNode->appendChild($this->taxPointDate->toXML($document));
         }
 
-        if (null !== $this->getDueDateTypeCode()) {
+        if ($this->getDueDateTypeCode() instanceof DateCode2005) {
             $currentNode->appendChild($document->createElement('ram:DueDateTypeCode', $this->getDueDateTypeCode()->value));
         }
 
-        if (null !== $this->getRateApplicablePercent()) {
+        if (\is_float($this->getRateApplicablePercent())) {
             $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->getRateApplicablePercent()));
         }
 
         return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    {
+        $headerApplicableTradeTaxElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $headerApplicableTradeTaxElements->count()) {
+            return [];
+        }
+
+        $headerApplicableTradeTaxes = [];
+
+        foreach ($headerApplicableTradeTaxElements as $headerApplicableTradeTaxElement) {
+            $calculatedAmountElements      = $xpath->query('.//ram:CalculatedAmount', $headerApplicableTradeTaxElement);
+            $typeCodeElements              = $xpath->query('.//ram:TypeCode', $headerApplicableTradeTaxElement);
+            $exemptionReasonElements       = $xpath->query('.//ram:ExemptionReason', $headerApplicableTradeTaxElement);
+            $basisAmountElements           = $xpath->query('.//ram:BasisAmount', $headerApplicableTradeTaxElement);
+            $categoryCodeElements          = $xpath->query('.//ram:CategoryCode', $headerApplicableTradeTaxElement);
+            $exemptionReasonCodeElements   = $xpath->query('.//ram:ExemptionReasonCode', $headerApplicableTradeTaxElement);
+            $dueDateTypeCodeElements       = $xpath->query('.//ram:DueDateTypeCode', $headerApplicableTradeTaxElement);
+            $rateApplicablePercentElements = $xpath->query('.//ram:RateApplicablePercent', $headerApplicableTradeTaxElement);
+
+            if (1 !== $calculatedAmountElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if (1 !== $typeCodeElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($exemptionReasonElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if (1 !== $basisAmountElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if (1 !== $categoryCodeElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($exemptionReasonCodeElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($dueDateTypeCodeElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            if ($rateApplicablePercentElements->count() > 1) {
+                throw new \Exception('Malformed');
+            }
+
+            $calculatedAmount = $calculatedAmountElements->item(0)->nodeValue;
+            $basisAmount      = $basisAmountElements->item(0)->nodeValue;
+            $categoryCode     = VatCategory::tryFrom($categoryCodeElements->item(0)->nodeValue);
+
+            if (null === $categoryCode) {
+                throw new \Exception('Wrong CategoryCode');
+            }
+
+            if ('VAT' !== $typeCodeElements->item(0)->nodeValue) {
+                throw new \Exception('Wrong TypeCode');
+            }
+
+            $taxPointDate = TaxPointDate::fromXML($xpath, $headerApplicableTradeTaxElement);
+
+            $headerApplicableTradeTax = new self((float) $calculatedAmount, (float) $basisAmount, $categoryCode);
+
+            if (1 === $exemptionReasonElements->count()) {
+                $headerApplicableTradeTax->setExemptionReason($exemptionReasonElements->item(0)->nodeValue);
+            }
+
+            if (1 === $exemptionReasonCodeElements->count()) {
+                $exemptionReasonCode = VatExoneration::tryFrom($exemptionReasonCodeElements->item(0)->nodeValue);
+
+                if (null === $exemptionReasonCode) {
+                    throw new \Exception('Wrong ExemptionReasonCode');
+                }
+
+                $headerApplicableTradeTax->setExemptionReasonCode($exemptionReasonCode);
+            }
+
+            if (1 === $dueDateTypeCodeElements->count()) {
+                $dueDateTypeCode = DateCode2005::tryFrom($dueDateTypeCodeElements->item(0)->nodeValue);
+
+                if (null === $dueDateTypeCode) {
+                    throw new \Exception('Wrong DueDateTypeCode');
+                }
+
+                $headerApplicableTradeTax->setDueDateTypeCode($dueDateTypeCode);
+            }
+
+            if (1 === $rateApplicablePercentElements->count()) {
+                $headerApplicableTradeTax->setRateApplicablePercent(new Percentage((float) $rateApplicablePercentElements->item(0)->nodeValue));
+            }
+
+            if ($taxPointDate instanceof TaxPointDate) {
+                $headerApplicableTradeTax->setTaxPointDate($taxPointDate);
+            }
+
+            $headerApplicableTradeTaxes[] = $headerApplicableTradeTax;
+        }
+
+        return $headerApplicableTradeTaxes;
     }
 }

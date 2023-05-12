@@ -43,7 +43,7 @@ class SellerGlobalIdentifier extends SellerIdentifier
                 throw new \Exception('Wrong schemeID');
             }
 
-            $sellerGlobalIdentifiers[] = new static($sellerGlobalIdentifier, $scheme);
+            $sellerGlobalIdentifiers[] = new self($sellerGlobalIdentifier, $scheme);
         }
 
         return $sellerGlobalIdentifiers;

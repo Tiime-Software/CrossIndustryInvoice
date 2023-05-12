@@ -11,17 +11,17 @@ class SpecifiedTradeProduct
     /**
      * BT-157.
      */
-    private ?StandardItemIdentifier $globalIdentifier;
+    protected ?StandardItemIdentifier $globalIdentifier;
 
     /**
      * BT-153.
      */
-    private string $name;
+    protected string $name;
 
     public function __construct(string $name)
     {
-        $this->globalIdentifier = null;
         $this->name             = $name;
+        $this->globalIdentifier = null;
     }
 
     public function getName(): string
@@ -43,18 +43,17 @@ class SpecifiedTradeProduct
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement(self::XML_NODE);
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        if ($this->getGlobalIdentifier() instanceof StandardItemIdentifier) {
-            $identifierElement = $document->createElement('ram:GlobalID', $this->getGlobalIdentifier()->value);
-            $identifierElement->setAttribute('schemeID', $this->getGlobalIdentifier()->scheme->value);
-
-            $element->appendChild($identifierElement);
+        if ($this->globalIdentifier instanceof StandardItemIdentifier) {
+            $identifierElement = $document->createElement('ram:GlobalID', $this->globalIdentifier->value);
+            $identifierElement->setAttribute('schemeID', $this->globalIdentifier->scheme->value);
+            $currentNode->appendChild($identifierElement);
         }
 
-        $element->appendChild($document->createElement('ram:Name', $this->getName()));
+        $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
-        return $element;
+        return $currentNode;
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
@@ -68,20 +67,20 @@ class SpecifiedTradeProduct
         /** @var \DOMElement $specifiedTradeProductElement */
         $specifiedTradeProductElement = $specifiedTradeProductElements->item(0);
 
-        $nameElements             = $xpath->query('.//ram:Name', $specifiedTradeProductElement);
         $globalIdentifierElements = $xpath->query('.//ram:GlobalID', $specifiedTradeProductElement);
-
-        if (1 !== $nameElements->count()) {
-            throw new \Exception('Malformed');
-        }
+        $nameElements             = $xpath->query('.//ram:Name', $specifiedTradeProductElement);
 
         if ($globalIdentifierElements->count() > 1) {
             throw new \Exception('Malformed');
         }
 
+        if (1 !== $nameElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
         $name = $nameElements->item(0)->nodeValue;
 
-        $specifiedTradeProduct = new static($name);
+        $specifiedTradeProduct = new self($name);
 
         if (1 === $globalIdentifierElements->count()) {
             $specifiedTradeProduct->setGlobalIdentifier($globalIdentifierElements->item(0)->nodeValue);

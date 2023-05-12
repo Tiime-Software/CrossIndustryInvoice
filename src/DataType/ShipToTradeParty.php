@@ -146,7 +146,7 @@ class ShipToTradeParty
         $globalIdentifier   = LocationGlobalIdentifier::fromXML($xpath, $shipToTradePartyElement);
         $postalTradeAddress = PostalTradeAddress::fromXML($xpath, $shipToTradePartyElement);
 
-        $shipToTradeParty = new static();
+        $shipToTradeParty = new self();
 
         if (1 === $identifierElements->count()) {
             $shipToTradeParty->setName($identifierElements->item(0)->nodeValue);

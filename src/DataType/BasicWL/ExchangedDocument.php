@@ -93,7 +93,7 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
         $issueDateTime = IssueDateTime::fromXML($xpath, $exchangedDocumentElement);
         $includedNotes = DocumentIncludedNote::fromXML($xpath, $exchangedDocumentElement);
 
-        $exchangedDocument = new static(new InvoiceIdentifier($identifier), $typeCode, $issueDateTime);
+        $exchangedDocument = new self(new InvoiceIdentifier($identifier), $typeCode, $issueDateTime);
 
         if (\count($includedNotes) > 0) {
             $exchangedDocument->setIncludedNotes($includedNotes);

@@ -60,6 +60,6 @@ class DespatchAdviceReferencedDocument
 
         $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
 
-        return new static(new DespatchAdviceReference($issuerAssignedIdentifier));
+        return new self(new DespatchAdviceReference($issuerAssignedIdentifier));
     }
 }

@@ -7,10 +7,12 @@ namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement;
 use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
 
 /**
- * BT-13-00.
+ * BT-132-00.
  */
 class BuyerOrderReferencedDocument
 {
+    protected const XML_NODE = 'ram:BuyerOrderReferencedDocument';
+
     /**
      * BT-132.
      */
@@ -34,12 +36,42 @@ class BuyerOrderReferencedDocument
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:BuyerOrderReferencedDocument');
+        $currentNode = $document->createElement(self::XML_NODE);
 
         if ($this->lineIdentifier instanceof PurchaseOrderLineReference) {
-            $element->appendChild($document->createElement('ram:LineID', $this->lineIdentifier->value));
+            $currentNode->appendChild($document->createElement('ram:LineID', $this->lineIdentifier->value));
         }
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    {
+        $buyerOrderReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (0 === $buyerOrderReferencedDocumentElements->count()) {
+            return null;
+        }
+
+        if ($buyerOrderReferencedDocumentElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $buyerOrderReferencedDocumentElement */
+        $buyerOrderReferencedDocumentElement = $buyerOrderReferencedDocumentElements->item(0);
+
+        $lineIdentifierElements = $xpath->query('.//ram:LineID', $buyerOrderReferencedDocumentElement);
+
+        if ($lineIdentifierElements->count() > 1) {
+            throw new \Exception('Malformed');
+        }
+
+        $buyerOrderReferencedDocument = new self();
+
+        if (1 === $lineIdentifierElements->count()) {
+            $buyerOrderReferencedDocument->setLineIdentifier($lineIdentifierElements->item(0)->nodeValue);
+        }
+
+        return $buyerOrderReferencedDocument;
     }
 }

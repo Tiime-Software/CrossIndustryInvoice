@@ -145,7 +145,7 @@ class HeaderApplicableTradeTax
 
         $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
-        if (null !== $this->exemptionReason) {
+        if (\is_string($this->exemptionReason)) {
             $currentNode->appendChild($document->createElement('ram:ExemptionReason', $this->exemptionReason));
         }
 
@@ -153,15 +153,15 @@ class HeaderApplicableTradeTax
 
         $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
 
-        if (null !== $this->exemptionReasonCode) {
+        if ($this->exemptionReasonCode instanceof VatExoneration) {
             $currentNode->appendChild($document->createElement('ram:ExemptionReasonCode', $this->exemptionReasonCode->value));
         }
 
-        if (null !== $this->dueDateTypeCode) {
+        if ($this->dueDateTypeCode instanceof DateCode2005) {
             $currentNode->appendChild($document->createElement('ram:DueDateTypeCode', $this->dueDateTypeCode->value));
         }
 
-        if (null !== $this->rateApplicablePercent) {
+        if ($this->rateApplicablePercent instanceof Percentage) {
             $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->rateApplicablePercent->getValueRounded()));
         }
 
@@ -232,7 +232,7 @@ class HeaderApplicableTradeTax
                 throw new \Exception('Wrong TypeCode');
             }
 
-            $headerApplicableTradeTax = new static((float) $calculatedAmount, (float) $basisAmount, $categoryCode);
+            $headerApplicableTradeTax = new self((float) $calculatedAmount, (float) $basisAmount, $categoryCode);
 
             if (1 === $exemptionReasonElements->count()) {
                 $headerApplicableTradeTax->setExemptionReason($exemptionReasonElements->item(0)->nodeValue);

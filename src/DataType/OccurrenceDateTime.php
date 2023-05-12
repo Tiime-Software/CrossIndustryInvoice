@@ -78,6 +78,6 @@ class OccurrenceDateTime
 
         $formattedDateTime->setTime(0, 0);
 
-        return new static($formattedDateTime);
+        return new self($formattedDateTime);
     }
 }

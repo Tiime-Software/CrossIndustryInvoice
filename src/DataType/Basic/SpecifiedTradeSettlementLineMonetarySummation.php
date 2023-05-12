@@ -56,6 +56,6 @@ class SpecifiedTradeSettlementLineMonetarySummation
 
         $lineTotalAmount = $lineTotalAmountElements->item(0)->nodeValue;
 
-        return new static((float) $lineTotalAmount);
+        return new self((float) $lineTotalAmount);
     }
 }

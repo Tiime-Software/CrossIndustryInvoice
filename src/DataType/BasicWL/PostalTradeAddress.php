@@ -215,7 +215,7 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
             throw new \Exception('Wrong CountryID');
         }
 
-        $postalTradeAddress = new static($countryIdentifier);
+        $postalTradeAddress = new self($countryIdentifier);
 
         if (1 === $postcodeCodeElements->count()) {
             $postalTradeAddress->setPostcodeCode($postcodeCodeElements->item(0)->nodeValue);

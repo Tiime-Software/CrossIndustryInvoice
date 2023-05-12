@@ -17,6 +17,8 @@ use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\ReceivableSp
  */
 class SpecifiedLineTradeSettlement
 {
+    protected const XML_NODE = 'ram:SpecifiedLineTradeSettlement';
+
     /**
      * BG-30.
      */
@@ -60,11 +62,11 @@ class SpecifiedLineTradeSettlement
     {
         $this->applicableTradeTax                            = $applicableTradeTax;
         $this->specifiedTradeSettlementLineMonetarySummation = $specifiedTradeSettlementLineMonetarySummation;
-        $this->specifiedTradeAllowances                      = [];
-        $this->specifiedTradeCharges                         = [];
         $this->billingSpecifiedPeriod                        = null;
         $this->additionalReferencedDocument                  = null;
         $this->receivableSpecifiedTradeAccountingAccount     = null;
+        $this->specifiedTradeAllowances                      = [];
+        $this->specifiedTradeCharges                         = [];
     }
 
     public function getApplicableTradeTax(): ApplicableTradeTax
@@ -157,32 +159,76 @@ class SpecifiedLineTradeSettlement
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement('ram:SpecifiedLineTradeSettlement');
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($this->applicableTradeTax->toXML($document));
+        $currentNode->appendChild($this->applicableTradeTax->toXML($document));
 
-        if (null !== $this->billingSpecifiedPeriod) {
-            $element->appendChild($this->billingSpecifiedPeriod->toXML($document));
+        if ($this->billingSpecifiedPeriod instanceof BillingSpecifiedPeriod) {
+            $currentNode->appendChild($this->billingSpecifiedPeriod->toXML($document));
         }
 
         foreach ($this->specifiedTradeAllowances as $specifiedTradeAllowance) {
-            $element->appendChild($specifiedTradeAllowance->toXML($document));
+            $currentNode->appendChild($specifiedTradeAllowance->toXML($document));
         }
 
         foreach ($this->specifiedTradeCharges as $specifiedTradeCharge) {
-            $element->appendChild($specifiedTradeCharge->toXML($document));
+            $currentNode->appendChild($specifiedTradeCharge->toXML($document));
         }
 
-        $element->appendChild($this->specifiedTradeSettlementLineMonetarySummation->toXML($document));
+        $currentNode->appendChild($this->specifiedTradeSettlementLineMonetarySummation->toXML($document));
 
         if ($this->additionalReferencedDocument instanceof AdditionalReferencedDocument) {
-            $element->appendChild($this->additionalReferencedDocument->toXML($document));
+            $currentNode->appendChild($this->additionalReferencedDocument->toXML($document));
         }
 
         if ($this->receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
-            $element->appendChild($this->receivableSpecifiedTradeAccountingAccount->toXML($document));
+            $currentNode->appendChild($this->receivableSpecifiedTradeAccountingAccount->toXML($document));
         }
 
-        return $element;
+        return $currentNode;
+    }
+
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    {
+        $specifiedLineTradeSettlementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+
+        if (1 !== $specifiedLineTradeSettlementElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        /** @var \DOMElement $specifiedLineTradeSettlementElement */
+        $specifiedLineTradeSettlementElement = $specifiedLineTradeSettlementElements->item(0);
+
+        $applicableTradeTax                            = ApplicableTradeTax::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $billingSpecifiedPeriod                        = BillingSpecifiedPeriod::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $specifiedTradeAllowances                      = LineSpecifiedTradeAllowance::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $specifiedTradeCharges                         = LineSpecifiedTradeCharge::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $specifiedTradeSettlementLineMonetarySummation = SpecifiedTradeSettlementLineMonetarySummation::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $additionalReferencedDocument                  = AdditionalReferencedDocument::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $receivableSpecifiedTradeAccountingAccount     = ReceivableSpecifiedTradeAccountingAccount::fromXML($xpath, $specifiedLineTradeSettlementElement);
+
+        $specifiedLineTradeSettlement = new self($applicableTradeTax, $specifiedTradeSettlementLineMonetarySummation);
+
+        if ($billingSpecifiedPeriod instanceof BillingSpecifiedPeriod) {
+            $specifiedLineTradeSettlement->setBillingSpecifiedPeriod($billingSpecifiedPeriod);
+        }
+
+        if (\count($specifiedTradeAllowances) > 0) {
+            $specifiedLineTradeSettlement->setSpecifiedTradeAllowances($specifiedTradeAllowances);
+        }
+
+        if (\count($specifiedTradeCharges) > 0) {
+            $specifiedLineTradeSettlement->setSpecifiedTradeCharges($specifiedTradeCharges);
+        }
+
+        if ($additionalReferencedDocument instanceof AdditionalReferencedDocument) {
+            $specifiedLineTradeSettlement->setAdditionalReferencedDocument($additionalReferencedDocument);
+        }
+
+        if ($receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
+            $specifiedLineTradeSettlement->setReceivableSpecifiedTradeAccountingAccount($receivableSpecifiedTradeAccountingAccount);
+        }
+
+        return $specifiedLineTradeSettlement;
     }
 }
