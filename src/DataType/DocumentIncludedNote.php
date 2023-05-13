@@ -52,7 +52,7 @@ class DocumentIncludedNote
 
         $currentNode->appendChild($document->createElement('ram:Content', $this->content));
 
-        if (null !== $this->subjectCode) {
+        if ($this->subjectCode instanceof InvoiceNoteCode) {
             $currentNode->appendChild($document->createElement('ram:SubjectCode', $this->subjectCode->value));
         }
 

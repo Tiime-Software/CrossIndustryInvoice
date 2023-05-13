@@ -20,6 +20,7 @@ class SellerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataT
     public function __construct()
     {
         parent::__construct();
+
         $this->tradingBusinessName = null;
     }
 
@@ -39,17 +40,17 @@ class SellerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataT
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        if (null !== $this->getIdentifier()) {
-            $identifierElement = $document->createElement('ram:ID', $this->getIdentifier()->value);
+        if ($this->identifier instanceof LegalRegistrationIdentifier) {
+            $identifierElement = $document->createElement('ram:ID', $this->identifier->value);
 
-            if (null !== $this->getIdentifier()->scheme) {
-                $identifierElement->setAttribute('schemeID', $this->getIdentifier()->scheme->value);
+            if ($this->identifier->scheme instanceof InternationalCodeDesignator) {
+                $identifierElement->setAttribute('schemeID', $this->identifier->scheme->value);
             }
 
             $currentNode->appendChild($identifierElement);
         }
 
-        if (null !== $this->tradingBusinessName) {
+        if (\is_string($this->tradingBusinessName)) {
             $currentNode->appendChild($document->createElement('ram:TradingBusinessName', $this->tradingBusinessName));
         }
 
@@ -88,8 +89,16 @@ class SellerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataT
             /** @var \DOMElement $identifierItem */
             $identifierItem = $identifierElements->item(0);
             $identifier     = $identifierItem->nodeValue;
-            $scheme         = '' !== $identifierItem->getAttribute('schemeID') ?
-                InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID')) : null;
+
+            $scheme = null;
+
+            if ($identifierItem->hasAttribute('schemeID')) {
+                $scheme = InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID'));
+
+                if (!$scheme instanceof InternationalCodeDesignator) {
+                    throw new \Exception('Wrong schemeID');
+                }
+            }
 
             $sellerSpecifiedLegalOrganization->setIdentifier(new LegalRegistrationIdentifier($identifier, $scheme));
         }

@@ -86,11 +86,11 @@ class BillingSpecifiedPeriod
 
         $billingSpecifiedPeriod = new self();
 
-        if (null !== $startDateTime) {
+        if ($startDateTime instanceof StartDateTime) {
             $billingSpecifiedPeriod->setStartDateTime($startDateTime);
         }
 
-        if (null !== $endDateTime) {
+        if ($endDateTime instanceof EndDateTime) {
             $billingSpecifiedPeriod->setEndDateTime($endDateTime);
         }
 

@@ -16,22 +16,22 @@ class LineSpecifiedTradeAllowance
     /**
      * BG-27-0 & BG-27-1.
      */
-    private AllowanceIndicator $chargeIndicator;
+    protected AllowanceIndicator $chargeIndicator;
 
     /**
      * BT-136.
      */
-    private Amount $actualAmount;
+    protected Amount $actualAmount;
 
     /**
      * BT-140.
      */
-    private ?AllowanceReasonCode $reasonCode;
+    protected ?AllowanceReasonCode $reasonCode;
 
     /**
      * BT-139.
      */
-    private ?string $reason;
+    protected ?string $reason;
 
     public function __construct(float $actualAmount)
     {

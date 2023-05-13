@@ -44,6 +44,7 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
     public function __construct(CountryAlpha2Code $countryID)
     {
         parent::__construct($countryID);
+
         $this->postcodeCode           = null;
         $this->lineOne                = null;
         $this->lineTwo                = null;
@@ -128,29 +129,29 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        if (null !== $this->postcodeCode) {
+        if (\is_string($this->postcodeCode)) {
             $currentNode->appendChild($document->createElement('ram:PostcodeCode', $this->postcodeCode));
         }
 
-        if (null !== $this->lineOne) {
+        if (\is_string($this->lineOne)) {
             $currentNode->appendChild($document->createElement('ram:LineOne', $this->lineOne));
         }
 
-        if (null !== $this->lineTwo) {
+        if (\is_string($this->lineTwo)) {
             $currentNode->appendChild($document->createElement('ram:LineTwo', $this->lineTwo));
         }
 
-        if (null !== $this->lineThree) {
+        if (\is_string($this->lineThree)) {
             $currentNode->appendChild($document->createElement('ram:LineThree', $this->lineThree));
         }
 
-        if (null !== $this->cityName) {
+        if (\is_string($this->cityName)) {
             $currentNode->appendChild($document->createElement('ram:CityName', $this->cityName));
         }
 
-        $currentNode->appendChild($document->createElement('ram:CountryID', $this->getCountryIdentifier()->value));
+        $currentNode->appendChild($document->createElement('ram:CountryID', $this->countryIdentifier->value));
 
-        if (null !== $this->countrySubDivisionName) {
+        if (\is_string($this->countrySubDivisionName)) {
             $currentNode->appendChild($document->createElement('ram:CountrySubDivisionName', $this->countrySubDivisionName));
         }
 

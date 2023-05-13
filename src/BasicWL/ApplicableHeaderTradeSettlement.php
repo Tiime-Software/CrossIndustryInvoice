@@ -425,27 +425,27 @@ class ApplicableHeaderTradeSettlement
 
         $applicableHeaderTradeSettlement = new self($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
 
-        if ($creditorReferenceIdentifierElements->count() === 1) {
+        if (1 === $creditorReferenceIdentifierElements->count()) {
             $applicableHeaderTradeSettlement->setCreditorReferenceIdentifier($creditorReferenceIdentifierElements->item(0)->nodeValue);
         }
 
-        if ($paymentReferenceElements->count() === 1) {
+        if (1 === $paymentReferenceElements->count()) {
             $applicableHeaderTradeSettlement->setPaymentReference($paymentReferenceElements->item(0)->nodeValue);
         }
 
-        if (null !== $taxCurrencyCode) {
+        if ($taxCurrencyCode instanceof CurrencyCode) {
             $applicableHeaderTradeSettlement->setTaxCurrencyCode($taxCurrencyCode);
         }
 
-        if (null !== $payeeTradeParty) {
+        if ($payeeTradeParty instanceof PayeeTradeParty) {
             $applicableHeaderTradeSettlement->setPayeeTradeParty($payeeTradeParty);
         }
 
-        if (null !== $specifiedTradeSettlementPaymentMeans) {
+        if ($specifiedTradeSettlementPaymentMeans instanceof SpecifiedTradeSettlementPaymentMeans) {
             $applicableHeaderTradeSettlement->setSpecifiedTradeSettlementPaymentMeans($specifiedTradeSettlementPaymentMeans);
         }
 
-        if (null !== $billingSpecifiedPeriod) {
+        if ($billingSpecifiedPeriod instanceof BillingSpecifiedPeriod) {
             $applicableHeaderTradeSettlement->setBillingSpecifiedPeriod($billingSpecifiedPeriod);
         }
 
@@ -457,15 +457,15 @@ class ApplicableHeaderTradeSettlement
             $applicableHeaderTradeSettlement->setSpecifiedTradeCharges($specifiedTradeCharges);
         }
 
-        if (null !== $specifiedTradePaymentTerms) {
+        if ($specifiedTradePaymentTerms instanceof SpecifiedTradePaymentTerms) {
             $applicableHeaderTradeSettlement->setSpecifiedTradePaymentTerms($specifiedTradePaymentTerms);
         }
 
-        if (null !== $invoiceReferencedDocument) {
+        if ($invoiceReferencedDocument instanceof InvoiceReferencedDocument) {
             $applicableHeaderTradeSettlement->setInvoiceReferencedDocument($invoiceReferencedDocument);
         }
 
-        if (null !== $receivableSpecifiedTradeAccountingAccount) {
+        if ($receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
             $applicableHeaderTradeSettlement->setReceivableSpecifiedTradeAccountingAccount($receivableSpecifiedTradeAccountingAccount);
         }
 

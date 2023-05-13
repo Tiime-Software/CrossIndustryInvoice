@@ -133,27 +133,27 @@ class BuyerTradeParty
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        if (null !== $this->identifier) {
+        if ($this->identifier instanceof BuyerIdentifier) {
             $currentNode->appendChild($document->createElement('ram:ID', $this->identifier->value));
         }
 
-        if (null !== $this->globalIdentifier) {
+        if ($this->globalIdentifier instanceof BuyerGlobalIdentifier) {
             $currentNode->appendChild($this->globalIdentifier->toXML($document));
         }
 
         $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
-        if (null !== $this->specifiedLegalOrganization) {
+        if ($this->specifiedLegalOrganization instanceof BuyerSpecifiedLegalOrganization) {
             $currentNode->appendChild($this->specifiedLegalOrganization->toXML($document));
         }
 
         $currentNode->appendChild($this->postalTradeAddress->toXML($document));
 
-        if (null !== $this->URIUniversalCommunication) {
+        if ($this->URIUniversalCommunication instanceof URIUniversalCommunication) {
             $currentNode->appendChild($this->URIUniversalCommunication->toXML($document));
         }
 
-        if (null !== $this->specifiedTaxRegistration) {
+        if ($this->specifiedTaxRegistration instanceof SpecifiedTaxRegistration) {
             $currentNode->appendChild($this->specifiedTaxRegistration->toXML($document));
         }
 
@@ -204,15 +204,15 @@ class BuyerTradeParty
             $buyerTradeParty->setIdentifier(new BuyerIdentifier($identifierElements->item(0)->nodeValue));
         }
 
-        if (null !== $globalIdentifier) {
+        if ($globalIdentifier instanceof BuyerGlobalIdentifier) {
             $buyerTradeParty->setGlobalIdentifier($globalIdentifier);
         }
 
-        if (null !== $specifiedLegalOrganization) {
+        if ($specifiedLegalOrganization instanceof BuyerSpecifiedLegalOrganization) {
             $buyerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
         }
 
-        if (null !== $URIUniversalCommunication) {
+        if ($URIUniversalCommunication instanceof URIUniversalCommunication) {
             $buyerTradeParty->setURIUniversalCommunication($URIUniversalCommunication);
         }
 

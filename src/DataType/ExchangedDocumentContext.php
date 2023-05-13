@@ -73,7 +73,7 @@ class ExchangedDocumentContext
 
         $exchangedDocumentContext = new self($guidelineSpecifiedDocumentContextParameter);
 
-        if (null !== $businessProcessSpecifiedDocumentContextParameter) {
+        if ($businessProcessSpecifiedDocumentContextParameter instanceof BusinessProcessSpecifiedDocumentContextParameter) {
             $exchangedDocumentContext->setBusinessProcessSpecifiedDocumentContextParameter($businessProcessSpecifiedDocumentContextParameter);
         }
 

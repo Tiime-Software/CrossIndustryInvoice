@@ -86,7 +86,7 @@ class InvoiceReferencedDocument
 
         $invoiceReferencedDocument = new self(new PrecedingInvoiceReference($issuerAssignedIdentifier));
 
-        if (null !== $formattedIssueDateTime) {
+        if ($formattedIssueDateTime instanceof FormattedIssueDateTime) {
             $invoiceReferencedDocument->setFormattedIssueDateTime($formattedIssueDateTime);
         }
 

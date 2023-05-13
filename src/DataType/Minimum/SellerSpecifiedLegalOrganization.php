@@ -17,7 +17,7 @@ class SellerSpecifiedLegalOrganization
     /**
      * BT-30 & BT-30-1.
      */
-    private ?LegalRegistrationIdentifier $identifier;
+    protected ?LegalRegistrationIdentifier $identifier;
 
     public function __construct()
     {
@@ -40,9 +40,12 @@ class SellerSpecifiedLegalOrganization
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        if (null !== $this->identifier) {
+        if ($this->identifier instanceof LegalRegistrationIdentifier) {
             $identifierElement = $document->createElement('ram:ID', $this->identifier->value);
-            $identifierElement->setAttribute('schemeID', $this->identifier->scheme->value);
+
+            if ($this->identifier->scheme instanceof InternationalCodeDesignator) {
+                $identifierElement->setAttribute('schemeID', $this->identifier->scheme->value);
+            }
 
             $currentNode->appendChild($identifierElement);
         }
@@ -80,7 +83,7 @@ class SellerSpecifiedLegalOrganization
 
             $scheme = null;
 
-            if ('' !== $identifierItem->getAttribute('schemeID')) {
+            if ($identifierItem->hasAttribute('schemeID')) {
                 $scheme = InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID'));
 
                 if (!$scheme instanceof InternationalCodeDesignator) {

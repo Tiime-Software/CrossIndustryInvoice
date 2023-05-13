@@ -128,7 +128,7 @@ class SpecifiedTradePaymentTerms
             $specifiedTradePaymentTerms->setDirectDebitMandateIdentifier($directDebitMandateIdentifierElements->item(0)->nodeValue);
         }
 
-        if (null !== $dueDateDateTime) {
+        if ($dueDateDateTime instanceof DueDateDateTime) {
             $specifiedTradePaymentTerms->setDueDateDateTime($dueDateDateTime);
         }
 

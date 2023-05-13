@@ -181,13 +181,13 @@ class SellerTradeParty
 
         $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
-        if (null !== $this->specifiedLegalOrganization) {
+        if ($this->specifiedLegalOrganization instanceof SellerSpecifiedLegalOrganization) {
             $currentNode->appendChild($this->specifiedLegalOrganization->toXML($document));
         }
 
         $currentNode->appendChild($this->postalTradeAddress->toXML($document));
 
-        if (null !== $this->URIUniversalCommunication) {
+        if ($this->URIUniversalCommunication instanceof URIUniversalCommunication) {
             $currentNode->appendChild($this->URIUniversalCommunication->toXML($document));
         }
 
@@ -247,11 +247,11 @@ class SellerTradeParty
             $sellerTradeParty->setGlobalIdentifiers($globalIdentifiers);
         }
 
-        if (null !== $specifiedLegalOrganization) {
+        if ($specifiedLegalOrganization instanceof SellerSpecifiedLegalOrganization) {
             $sellerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
         }
 
-        if (null !== $URIUniversalCommunication) {
+        if ($URIUniversalCommunication instanceof URIUniversalCommunication) {
             $sellerTradeParty->setURIUniversalCommunication($URIUniversalCommunication);
         }
 

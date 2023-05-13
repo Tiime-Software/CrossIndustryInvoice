@@ -152,7 +152,7 @@ class ShipToTradeParty
             $shipToTradeParty->setName($identifierElements->item(0)->nodeValue);
         }
 
-        if (null !== $globalIdentifier) {
+        if ($globalIdentifier instanceof LocationGlobalIdentifier) {
             $shipToTradeParty->setGlobalIdentifier($globalIdentifier);
         }
 
@@ -160,7 +160,7 @@ class ShipToTradeParty
             $shipToTradeParty->setName($nameElements->item(0)->nodeValue);
         }
 
-        if (null !== $postalTradeAddress) {
+        if ($postalTradeAddress instanceof PostalTradeAddress) {
             $shipToTradeParty->setPostalTradeAddress($postalTradeAddress);
         }
     }

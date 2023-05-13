@@ -52,7 +52,7 @@ class BuyerTradeParty
 
         $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
-        if (null !== $this->specifiedLegalOrganization) {
+        if ($this->specifiedLegalOrganization instanceof BuyerSpecifiedLegalOrganization) {
             $currentNode->appendChild($this->specifiedLegalOrganization->toXML($document));
         }
 
@@ -82,7 +82,7 @@ class BuyerTradeParty
 
         $buyerTradeParty = new self($name);
 
-        if (null !== $specifiedLegalOrganization) {
+        if ($specifiedLegalOrganization instanceof BuyerSpecifiedLegalOrganization) {
             $buyerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
         }
 
