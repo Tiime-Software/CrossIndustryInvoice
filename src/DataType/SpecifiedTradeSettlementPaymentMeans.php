@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\BasicWL;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeePartyCreditorFinancialAccount;
-use Tiime\CrossIndustryInvoice\DataType\PayerPartyDebtorFinancialAccount;
 use Tiime\EN16931\DataType\PaymentMeansCode;
 
 /**

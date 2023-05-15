@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\CrossIndustryInvoice\BasicWL\SpecifiedTradeSettlementPaymentMeans;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 use Tiime\CrossIndustryInvoice\DataType\InvoiceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty;
@@ -12,6 +11,7 @@ use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccoun
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeSettlementPaymentMeans;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 

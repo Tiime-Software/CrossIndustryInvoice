@@ -1,12 +1,11 @@
 <?php
 
-namespace Tiime\CrossIndustryInvoice\Basic;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\Basic\LineSpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\Basic\LineSpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMonetarySummation;
-use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 
 /**
  * BG-30-00.

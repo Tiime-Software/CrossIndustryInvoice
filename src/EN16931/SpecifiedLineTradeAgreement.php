@@ -11,7 +11,7 @@ use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement\BuyerOrderRef
 /**
  * BG-29.
  */
-class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\Basic\SpecifiedLineTradeAgreement
+class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\SpecifiedLineTradeAgreement
 {
     protected const XML_NODE = 'ram:SpecifiedLineTradeAgreement';
 
