@@ -101,24 +101,24 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
             $tmpApplicableTradeTaxes[] = $applicableTradeTax;
         }
 
-        if (count($tmpApplicableTradeTaxes) === 0) {
+        if (0 === \count($tmpApplicableTradeTaxes)) {
             throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one HeaderApplicableTradeTax.');
         }
 
         parent::__construct($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation);
 
-        $this->applicableTradeTaxes                            = $tmpApplicableTradeTaxes;
-        $this->creditorReferenceIdentifier                     = null;
-        $this->paymentReference                                = null;
-        $this->taxCurrencyCode                                 = null;
-        $this->payeeTradeParty                                 = null;
-        $this->specifiedTradeSettlementPaymentMeans            = null;
-        $this->billingSpecifiedPeriod                          = null;
-        $this->specifiedTradePaymentTerms                      = null;
-        $this->invoiceReferencedDocument                       = null;
-        $this->receivableSpecifiedTradeAccountingAccount       = null;
-        $this->specifiedTradeAllowances                        = [];
-        $this->specifiedTradeCharges                           = [];
+        $this->applicableTradeTaxes                      = $tmpApplicableTradeTaxes;
+        $this->creditorReferenceIdentifier               = null;
+        $this->paymentReference                          = null;
+        $this->taxCurrencyCode                           = null;
+        $this->payeeTradeParty                           = null;
+        $this->specifiedTradeSettlementPaymentMeans      = null;
+        $this->billingSpecifiedPeriod                    = null;
+        $this->specifiedTradePaymentTerms                = null;
+        $this->invoiceReferencedDocument                 = null;
+        $this->receivableSpecifiedTradeAccountingAccount = null;
+        $this->specifiedTradeAllowances                  = [];
+        $this->specifiedTradeCharges                     = [];
     }
 
     public function getCreditorReferenceIdentifier(): ?BankAssignedCreditorIdentifier

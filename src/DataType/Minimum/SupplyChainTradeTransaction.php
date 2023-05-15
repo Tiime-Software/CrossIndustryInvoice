@@ -74,7 +74,7 @@ class SupplyChainTradeTransaction
         $supplyChainTradeTransactionElement = $supplyChainTradeTransactionElements->item(0);
 
         $applicableHeaderTradeAgreement  = ApplicableHeaderTradeAgreement::fromXML($xpath, $supplyChainTradeTransactionElement);
-        $applicableHeaderTradeDelivery = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
+        $applicableHeaderTradeDelivery   = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
         $applicableHeaderTradeSettlement = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
 
         return new self($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);

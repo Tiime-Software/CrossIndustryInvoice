@@ -34,7 +34,8 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
      */
     protected Amount $duePayableAmount;
 
-    public function __construct(float $taxBasisTotalAmount, float $grandTotalAmount, float $duePayableAmount) {
+    public function __construct(float $taxBasisTotalAmount, float $grandTotalAmount, float $duePayableAmount)
+    {
         $this->taxBasisTotalAmount = new Amount($taxBasisTotalAmount);
         $this->grandTotalAmount    = new Amount($grandTotalAmount);
         $this->duePayableAmount    = new Amount($duePayableAmount);

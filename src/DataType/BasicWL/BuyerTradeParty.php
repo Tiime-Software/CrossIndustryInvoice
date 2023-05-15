@@ -44,11 +44,11 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Buyer
     {
         parent::__construct($name);
 
-        $this->postalTradeAddress         = $postalTradeAddress;
-        $this->identifier                 = null;
-        $this->globalIdentifier           = null;
-        $this->URIUniversalCommunication  = null;
-        $this->specifiedTaxRegistration   = null;
+        $this->postalTradeAddress        = $postalTradeAddress;
+        $this->identifier                = null;
+        $this->globalIdentifier          = null;
+        $this->URIUniversalCommunication = null;
+        $this->specifiedTaxRegistration  = null;
     }
 
     public function getIdentifier(): ?BuyerIdentifier

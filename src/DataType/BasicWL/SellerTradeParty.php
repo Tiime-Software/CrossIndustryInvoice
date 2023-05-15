@@ -37,9 +37,9 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Sell
     {
         parent::__construct($name, $postalTradeAddress);
 
-        $this->identifiers                = [];
-        $this->globalIdentifiers          = [];
-        $this->URIUniversalCommunication  = null;
+        $this->identifiers               = [];
+        $this->globalIdentifiers         = [];
+        $this->URIUniversalCommunication = null;
     }
 
     public function getIdentifiers(): array
