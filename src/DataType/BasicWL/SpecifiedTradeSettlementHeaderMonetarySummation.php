@@ -47,7 +47,6 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         parent::__construct($taxBasisTotalAmount, $grandTotalAmount, $duePayableAmount);
 
         $this->lineTotalAmount = new Amount($lineTotalAmount);
-
         $this->chargeTotalAmount      = null;
         $this->allowanceTotalAmount   = null;
         $this->taxTotalAmountCurrency = null;

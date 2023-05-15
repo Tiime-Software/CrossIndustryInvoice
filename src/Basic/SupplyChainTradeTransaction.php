@@ -2,9 +2,9 @@
 
 namespace Tiime\CrossIndustryInvoice\Basic;
 
-use Tiime\CrossIndustryInvoice\BasicWL\ApplicableHeaderTradeAgreement;
-use Tiime\CrossIndustryInvoice\BasicWL\ApplicableHeaderTradeDelivery;
 use Tiime\CrossIndustryInvoice\BasicWL\ApplicableHeaderTradeSettlement;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeAgreement;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeDelivery;
 
 class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\SupplyChainTradeTransaction
 {

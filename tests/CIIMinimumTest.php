@@ -8,6 +8,7 @@ use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 use Tiime\CrossIndustryInvoice\DataType\GuidelineSpecifiedDocumentContextParameter;
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
+use Tiime\CrossIndustryInvoice\DataType\Minimum\ApplicableHeaderTradeAgreement;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\ExchangedDocument;
@@ -16,7 +17,6 @@ use Tiime\CrossIndustryInvoice\DataType\Minimum\SellerSpecifiedLegalOrganization
 use Tiime\CrossIndustryInvoice\DataType\Minimum\SellerTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\SpecifiedTradeSettlementHeaderMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
-use Tiime\CrossIndustryInvoice\Minimum\ApplicableHeaderTradeAgreement;
 use Tiime\CrossIndustryInvoice\Minimum\ApplicableHeaderTradeSettlement;
 use Tiime\CrossIndustryInvoice\Minimum\CrossIndustryInvoice;
 use Tiime\CrossIndustryInvoice\Minimum\SpecifiedTaxRegistration;

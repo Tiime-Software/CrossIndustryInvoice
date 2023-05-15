@@ -34,11 +34,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
      */
     protected Amount $duePayableAmount;
 
-    public function __construct(
-        float $taxBasisTotalAmount,
-        float $grandTotalAmount,
-        float $duePayableAmount,
-    ) {
+    public function __construct(float $taxBasisTotalAmount, float $grandTotalAmount, float $duePayableAmount) {
         $this->taxBasisTotalAmount = new Amount($taxBasisTotalAmount);
         $this->grandTotalAmount    = new Amount($grandTotalAmount);
         $this->duePayableAmount    = new Amount($duePayableAmount);
@@ -72,18 +68,18 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement(self::XML_NODE);
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:TaxBasisTotalAmount', (string) $this->taxBasisTotalAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:TaxBasisTotalAmount', (string) $this->taxBasisTotalAmount->getValueRounded()));
 
         if ($this->taxTotalAmount instanceof TaxTotalAmount) {
-            $element->appendChild($this->taxTotalAmount->toXML($document));
+            $currentNode->appendChild($this->taxTotalAmount->toXML($document));
         }
 
-        $element->appendChild($document->createElement('ram:GrandTotalAmount', (string) $this->grandTotalAmount->getValueRounded()));
-        $element->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->duePayableAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:GrandTotalAmount', (string) $this->grandTotalAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->duePayableAmount->getValueRounded()));
 
-        return $element;
+        return $currentNode;
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static

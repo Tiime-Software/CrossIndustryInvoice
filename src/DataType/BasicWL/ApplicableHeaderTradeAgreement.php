@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\BasicWL;
+namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\CrossIndustryInvoice\DataType\BasicWL\BuyerTradeParty;
-use Tiime\CrossIndustryInvoice\DataType\BasicWL\SellerTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ContractReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\SellerTaxRepresentativeTradeParty;
@@ -13,7 +11,7 @@ use Tiime\CrossIndustryInvoice\DataType\SellerTaxRepresentativeTradeParty;
 /**
  * BT-10-00.
  */
-class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\Minimum\ApplicableHeaderTradeAgreement
+class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\Minimum\ApplicableHeaderTradeAgreement
 {
     /**
      * BG-11.

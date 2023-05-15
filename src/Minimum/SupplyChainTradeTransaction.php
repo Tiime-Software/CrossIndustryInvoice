@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\Minimum;
 
+use Tiime\CrossIndustryInvoice\DataType\Minimum\ApplicableHeaderTradeAgreement;
+use Tiime\CrossIndustryInvoice\DataType\Minimum\ApplicableHeaderTradeDelivery;
+
 /**
  * BG-25-00.
  */
