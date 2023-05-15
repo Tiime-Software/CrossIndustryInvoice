@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\Minimum;
-
-use Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerSpecifiedLegalOrganization;
+namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
 /**
  * BG-7.
@@ -16,12 +14,12 @@ class BuyerTradeParty
     /**
      * BT-44.
      */
-    private string $name;
+    protected string $name;
 
     /**
      * BT-47-00.
      */
-    private ?BuyerSpecifiedLegalOrganization $specifiedLegalOrganization;
+    protected ?BuyerSpecifiedLegalOrganization $specifiedLegalOrganization;
 
     public function __construct(string $name)
     {

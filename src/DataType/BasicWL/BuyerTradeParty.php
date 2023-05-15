@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\BasicWL;
+namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
 use Tiime\CrossIndustryInvoice\DataType\BuyerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
@@ -14,10 +13,8 @@ use Tiime\EN16931\DataType\Identifier\BuyerIdentifier;
 /**
  * BG-7.
  */
-class BuyerTradeParty
+class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerTradeParty
 {
-    protected const XML_NODE = 'ram:BuyerTradeParty';
-
     /**
      * BT-46.
      */
@@ -27,16 +24,6 @@ class BuyerTradeParty
      * BT-46-0 & BT-46-1.
      */
     private ?BuyerGlobalIdentifier $globalIdentifier;
-
-    /**
-     * BT-44.
-     */
-    private string $name;
-
-    /**
-     * BT-47-00.
-     */
-    private ?BuyerSpecifiedLegalOrganization $specifiedLegalOrganization;
 
     /**
      * BG-8.
@@ -55,11 +42,11 @@ class BuyerTradeParty
 
     public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
     {
-        $this->name                       = $name;
+        parent::__construct($name);
+
         $this->postalTradeAddress         = $postalTradeAddress;
         $this->identifier                 = null;
         $this->globalIdentifier           = null;
-        $this->specifiedLegalOrganization = null;
         $this->URIUniversalCommunication  = null;
         $this->specifiedTaxRegistration   = null;
     }
@@ -84,18 +71,6 @@ class BuyerTradeParty
     public function setGlobalIdentifier(?BuyerGlobalIdentifier $globalIdentifier): static
     {
         $this->globalIdentifier = $globalIdentifier;
-
-        return $this;
-    }
-
-    public function getSpecifiedLegalOrganization(): ?BuyerSpecifiedLegalOrganization
-    {
-        return $this->specifiedLegalOrganization;
-    }
-
-    public function setSpecifiedLegalOrganization(?BuyerSpecifiedLegalOrganization $specifiedLegalOrganization): static
-    {
-        $this->specifiedLegalOrganization = $specifiedLegalOrganization;
 
         return $this;
     }
