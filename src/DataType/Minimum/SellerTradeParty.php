@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
-use Tiime\CrossIndustryInvoice\Minimum\SpecifiedTaxRegistration;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
 
 /**
  * BG-4.

@@ -2,11 +2,11 @@
 
 namespace Tiime\CrossIndustryInvoice\Basic;
 
-use Tiime\CrossIndustryInvoice\BasicWL\ApplicableHeaderTradeSettlement;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeAgreement;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeDelivery;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeSettlement;
 
-class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\SupplyChainTradeTransaction
+class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\SupplyChainTradeTransaction
 {
     protected const XML_NODE = 'rsm:SupplyChainTradeTransaction';
 

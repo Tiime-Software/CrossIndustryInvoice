@@ -9,6 +9,8 @@ use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 use Tiime\CrossIndustryInvoice\DataType\GuidelineSpecifiedDocumentContextParameter;
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\ApplicableHeaderTradeAgreement;
+use Tiime\CrossIndustryInvoice\DataType\Minimum\ApplicableHeaderTradeDelivery;
+use Tiime\CrossIndustryInvoice\DataType\Minimum\ApplicableHeaderTradeSettlement;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\ExchangedDocument;
@@ -16,11 +18,10 @@ use Tiime\CrossIndustryInvoice\DataType\Minimum\PostalTradeAddress;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\SellerSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\SellerTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\SpecifiedTradeSettlementHeaderMonetarySummation;
+use Tiime\CrossIndustryInvoice\DataType\Minimum\SupplyChainTradeTransaction;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
-use Tiime\CrossIndustryInvoice\Minimum\ApplicableHeaderTradeSettlement;
 use Tiime\CrossIndustryInvoice\Minimum\CrossIndustryInvoice;
-use Tiime\CrossIndustryInvoice\Minimum\SpecifiedTaxRegistration;
-use Tiime\CrossIndustryInvoice\Minimum\SupplyChainTradeTransaction;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
@@ -54,8 +55,8 @@ class CIIMinimumTest extends TestCase
                 new ApplicableHeaderTradeAgreement(
                     new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
                     new BuyerTradeParty('BuyerTradePartyName'),
-                    new BuyerOrderReferencedDocument(new PurchaseOrderReference('A380'))
                 ),
+                new ApplicableHeaderTradeDelivery(),
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(12, 13, 14)
@@ -76,13 +77,13 @@ class CIIMinimumTest extends TestCase
     public function createMinimumProfileWithMandatoryAndOptionalFields(): void
     {
         /** ExchangedDocumentContext part */
-        $exchangedDocumentContext = new ExchangedDocumentContext(
+        $exchangedDocumentContext = (new ExchangedDocumentContext(
             new GuidelineSpecifiedDocumentContextParameter(
                 new SpecificationIdentifier(SpecificationIdentifier::MINIMUM)
             )
+        ))->setBusinessProcessSpecifiedDocumentContextParameter(
+            new BusinessProcessSpecifiedDocumentContextParameter('BusinessProcess1')
         );
-        $businessProcessSpecifiedDocumentContextParameter = new BusinessProcessSpecifiedDocumentContextParameter('BusinessProcess1');
-        $exchangedDocumentContext->setBusinessProcessSpecifiedDocumentContextParameter($businessProcessSpecifiedDocumentContextParameter);
 
         /** BuyerTradeParty part */
         $buyerTradeParty                 = new BuyerTradeParty('BuyerTradePartyName');
@@ -114,8 +115,7 @@ class CIIMinimumTest extends TestCase
         $specifiedTradeSettlementHeaderMonetarySummation = new SpecifiedTradeSettlementHeaderMonetarySummation(
             12,
             13,
-            14,
-            new TaxTotalAmount('24.5', CurrencyCode::EURO)
+            14
         );
 
         $invoice = new CrossIndustryInvoice(
@@ -126,11 +126,8 @@ class CIIMinimumTest extends TestCase
                 new IssueDateTime(new \DateTime())
             ),
             new SupplyChainTradeTransaction(
-                new ApplicableHeaderTradeAgreement(
-                    $sellerTradeParty,
-                    $buyerTradeParty,
-                    new BuyerOrderReferencedDocument(new PurchaseOrderReference('A380'))
-                ),
+                new ApplicableHeaderTradeAgreement($sellerTradeParty, $buyerTradeParty),
+                new ApplicableHeaderTradeDelivery(),
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
                     $specifiedTradeSettlementHeaderMonetarySummation
@@ -165,8 +162,8 @@ class CIIMinimumTest extends TestCase
                 new ApplicableHeaderTradeAgreement(
                     new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
                     new BuyerTradeParty('BuyerTradePartyName'),
-                    new BuyerOrderReferencedDocument(new PurchaseOrderReference('A380'))
                 ),
+                new ApplicableHeaderTradeDelivery(),
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(12, 13, 14)
@@ -190,13 +187,13 @@ class CIIMinimumTest extends TestCase
     public function createMinimumProfileFromXMLMandatoryAndOptionalData(): void
     {
         /** ExchangedDocumentContext part */
-        $exchangedDocumentContext = new ExchangedDocumentContext(
+        $exchangedDocumentContext = (new ExchangedDocumentContext(
             new GuidelineSpecifiedDocumentContextParameter(
                 new SpecificationIdentifier(SpecificationIdentifier::MINIMUM)
             )
+        ))->setBusinessProcessSpecifiedDocumentContextParameter(
+            new BusinessProcessSpecifiedDocumentContextParameter('BusinessProcess1')
         );
-        $businessProcessSpecifiedDocumentContextParameter = new BusinessProcessSpecifiedDocumentContextParameter('BusinessProcess1');
-        $exchangedDocumentContext->setBusinessProcessSpecifiedDocumentContextParameter($businessProcessSpecifiedDocumentContextParameter);
 
         /** BuyerTradeParty part */
         $buyerTradeParty                 = new BuyerTradeParty('BuyerTradePartyName');
@@ -228,8 +225,7 @@ class CIIMinimumTest extends TestCase
         $specifiedTradeSettlementHeaderMonetarySummation = new SpecifiedTradeSettlementHeaderMonetarySummation(
             12,
             13,
-            14,
-            new TaxTotalAmount('24.5', CurrencyCode::EURO)
+            14
         );
 
         $invoiceToConvert = new CrossIndustryInvoice(
@@ -240,11 +236,8 @@ class CIIMinimumTest extends TestCase
                 new IssueDateTime(new \DateTime())
             ),
             new SupplyChainTradeTransaction(
-                new ApplicableHeaderTradeAgreement(
-                    $sellerTradeParty,
-                    $buyerTradeParty,
-                    new BuyerOrderReferencedDocument(new PurchaseOrderReference('A380'))
-                ),
+                new ApplicableHeaderTradeAgreement($sellerTradeParty, $buyerTradeParty),
+                new ApplicableHeaderTradeDelivery(),
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
                     $specifiedTradeSettlementHeaderMonetarySummation

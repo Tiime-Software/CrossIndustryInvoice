@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\Minimum;
+namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
-use Tiime\CrossIndustryInvoice\DataType\Minimum\SpecifiedTradeSettlementHeaderMonetarySummation;
 use Tiime\EN16931\DataType\CurrencyCode;
 
 /**
@@ -17,12 +16,12 @@ class ApplicableHeaderTradeSettlement
     /**
      * BT-5.
      */
-    private CurrencyCode $invoiceCurrencyCode;
+    protected CurrencyCode $invoiceCurrencyCode;
 
     /**
      * BG-22.
      */
-    private SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation;
+    protected SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation;
 
     public function __construct(
         CurrencyCode $invoiceCurrencyCode,
@@ -44,13 +43,12 @@ class ApplicableHeaderTradeSettlement
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement(self::XML_NODE);
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:InvoiceCurrencyCode', $this->invoiceCurrencyCode->value));
+        $currentNode->appendChild($document->createElement('ram:InvoiceCurrencyCode', $this->invoiceCurrencyCode->value));
+        $currentNode->appendChild($this->specifiedTradeSettlementHeaderMonetarySummation->toXML($document));
 
-        $element->appendChild($this->specifiedTradeSettlementHeaderMonetarySummation->toXML($document));
-
-        return $element;
+        return $currentNode;
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
