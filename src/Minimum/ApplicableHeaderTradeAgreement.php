@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\Minimum;
 
 use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
+use Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerTradeParty;
+use Tiime\CrossIndustryInvoice\DataType\Minimum\SellerTradeParty;
 
 /**
  * BT-10-00.
@@ -16,22 +18,22 @@ class ApplicableHeaderTradeAgreement
     /**
      * BT-10.
      */
-    private ?string $buyerReference;
+    protected ?string $buyerReference;
 
     /**
      * BG-4.
      */
-    private SellerTradeParty $sellerTradeParty;
+    protected SellerTradeParty $sellerTradeParty;
 
     /**
      * BG-7.
      */
-    private BuyerTradeParty $buyerTradeParty;
+    protected BuyerTradeParty $buyerTradeParty;
 
     /**
      * BT-13-00.
      */
-    private ?BuyerOrderReferencedDocument $buyerOrderReferencedDocument;
+    protected ?BuyerOrderReferencedDocument $buyerOrderReferencedDocument;
 
     public function __construct(SellerTradeParty $sellerTradeParty, BuyerTradeParty $buyerTradeParty)
     {
