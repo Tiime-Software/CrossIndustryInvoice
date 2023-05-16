@@ -48,7 +48,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
     /**
      * BG-23.
      *
-     * @var HeaderApplicableTradeTax
+     * @var non-empty-array<int, HeaderApplicableTradeTax>
      */
     private array $applicableTradeTaxes;
 
