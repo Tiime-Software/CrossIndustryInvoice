@@ -6,7 +6,6 @@ use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeAgreement;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeDelivery;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeSettlement;
 use Tiime\CrossIndustryInvoice\DataType\IncludedSupplyChainTradeLineItem;
-use Tiime\CrossIndustryInvoice\DataType\IncludedSupplyChainTradeLineItem as non;
 
 class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\SupplyChainTradeTransaction
 {
@@ -33,7 +32,7 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
         $tmpIncludedSupplyChainTradeLineItems = [];
 
         foreach ($includedSupplyChainTradeLineItems as $includedSupplyChainTradeLineItem) {
-            if (!$includedSupplyChainTradeLineItem instanceof non) {
+            if (!$includedSupplyChainTradeLineItem instanceof IncludedSupplyChainTradeLineItem) {
                 throw new \TypeError();
             }
 
