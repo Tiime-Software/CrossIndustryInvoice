@@ -1,9 +1,8 @@
 <?php
 
-namespace Tiime\CrossIndustryInvoice\Basic;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\DataType\Basic\GrossPriceProductTradePrice;
-use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
 
 class SpecifiedLineTradeAgreement
 {

@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\BasicWL;
+namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
-use Tiime\CrossIndustryInvoice\DataType\BasicWL\SellerSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\SellerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
@@ -14,10 +12,8 @@ use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
 /**
  * BG-4.
  */
-class SellerTradeParty
+class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\SellerTradeParty
 {
-    protected const XML_NODE = 'ram:SellerTradeParty';
-
     /**
      * BT-29.
      *
@@ -33,41 +29,17 @@ class SellerTradeParty
     private array $globalIdentifiers;
 
     /**
-     * BT-27.
-     */
-    private string $name;
-
-    /**
-     * BT-30-00.
-     */
-    private ?SellerSpecifiedLegalOrganization $specifiedLegalOrganization;
-
-    /**
-     * BG-5.
-     */
-    private PostalTradeAddress $postalTradeAddress;
-
-    /**
      * BT-34-00.
      */
     private ?URIUniversalCommunication $URIUniversalCommunication;
 
-    /**
-     * BT-31-00.
-     *
-     * @var array<int, SpecifiedTaxRegistration>
-     */
-    private array $specifiedTaxRegistrations;
-
     public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
     {
-        $this->name                       = $name;
-        $this->postalTradeAddress         = $postalTradeAddress;
-        $this->identifiers                = [];
-        $this->globalIdentifiers          = [];
-        $this->specifiedTaxRegistrations  = [];
-        $this->specifiedLegalOrganization = null;
-        $this->URIUniversalCommunication  = null;
+        parent::__construct($name, $postalTradeAddress);
+
+        $this->identifiers               = [];
+        $this->globalIdentifiers         = [];
+        $this->URIUniversalCommunication = null;
     }
 
     public function getIdentifiers(): array
@@ -114,53 +86,9 @@ class SellerTradeParty
         return $this;
     }
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getSpecifiedLegalOrganization(): ?SellerSpecifiedLegalOrganization
-    {
-        return $this->specifiedLegalOrganization;
-    }
-
-    public function setSpecifiedLegalOrganization(?SellerSpecifiedLegalOrganization $specifiedLegalOrganization): static
-    {
-        $this->specifiedLegalOrganization = $specifiedLegalOrganization;
-
-        return $this;
-    }
-
-    public function getPostalTradeAddress(): PostalTradeAddress
-    {
-        return $this->postalTradeAddress;
-    }
-
     public function setURIUniversalCommunication(?URIUniversalCommunication $URIUniversalCommunication): static
     {
         $this->URIUniversalCommunication = $URIUniversalCommunication;
-
-        return $this;
-    }
-
-    public function getSpecifiedTaxRegistrations(): array
-    {
-        return $this->specifiedTaxRegistrations;
-    }
-
-    public function setSpecifiedTaxRegistrations(array $specifiedTaxRegistrations): static
-    {
-        $tmpSpecifiedTaxRegistrations = [];
-
-        foreach ($specifiedTaxRegistrations as $specifiedTaxRegistration) {
-            if (!$specifiedTaxRegistration instanceof SpecifiedTaxRegistration) {
-                throw new \TypeError();
-            }
-
-            $tmpSpecifiedTaxRegistrations[] = $specifiedTaxRegistration;
-        }
-
-        $this->specifiedTaxRegistrations = $tmpSpecifiedTaxRegistrations;
 
         return $this;
     }

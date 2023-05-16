@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 
 class CrossIndustryInvoice

@@ -13,7 +13,7 @@ use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
 /**
  * BG-29.
  */
-class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\Basic\SpecifiedLineTradeAgreement
+class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\SpecifiedLineTradeAgreement
 {
     protected const XML_NODE = 'ram:SpecifiedLineTradeAgreement';
 

@@ -41,8 +41,11 @@ class SpecifiedTaxRegistration
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $currentNode = $document->createElement(self::XML_NODE, $this->identifier->getValue());
-        $currentNode->setAttribute('schemeID', $this->schemeIdentifier);
+        $currentNode = $document->createElement(self::XML_NODE);
+
+        $identifierNode = $document->createElement('ram:ID', $this->identifier->getValue());
+        $identifierNode->setAttribute('schemeID', $this->schemeIdentifier);
+        $currentNode->appendChild($identifierNode);
 
         return $currentNode;
     }
@@ -58,9 +61,17 @@ class SpecifiedTaxRegistration
         $specifiedTaxRegistrations = [];
 
         foreach ($specifiedTaxRegistrationElements as $specifiedTaxRegistrationElement) {
-            $identifier = $specifiedTaxRegistrationElement->nodeValue;
+            $identifierElements = $xpath->query('.//ram:ID', $specifiedTaxRegistrationElement);
 
-            if ('VA' !== $specifiedTaxRegistrationElement->getAttribute('schemeID')) {
+            if (1 !== $identifierElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            /** @var \DOMElement $identifierItem */
+            $identifierItem = $identifierElements->item(0);
+            $identifier     = $identifierItem->nodeValue;
+
+            if ('VA' !== $identifierItem->getAttribute('schemeID')) {
                 throw new \Exception('Wrong schemeID');
             }
 

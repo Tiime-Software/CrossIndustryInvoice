@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\Minimum;
+namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
-use Tiime\CrossIndustryInvoice\DataType\Minimum\PostalTradeAddress;
-use Tiime\CrossIndustryInvoice\DataType\Minimum\SellerSpecifiedLegalOrganization;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
 
 /**
  * BG-4.
@@ -17,24 +16,24 @@ class SellerTradeParty
     /**
      * BT-27.
      */
-    private string $name;
+    protected string $name;
 
     /**
      * BT-30-00.
      */
-    private ?SellerSpecifiedLegalOrganization $specifiedLegalOrganization;
+    protected ?SellerSpecifiedLegalOrganization $specifiedLegalOrganization;
 
     /**
      * BG-5.
      */
-    private PostalTradeAddress $postalTradeAddress;
+    protected PostalTradeAddress $postalTradeAddress;
 
     /**
      * BT-31-00.
      *
      * @var array<int, SpecifiedTaxRegistration>
      */
-    private array $specifiedTaxRegistrations;
+    protected array $specifiedTaxRegistrations;
 
     public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
     {

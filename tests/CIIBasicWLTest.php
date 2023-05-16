@@ -3,19 +3,19 @@
 namespace Tiime\CrossIndustryInvoice\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tiime\CrossIndustryInvoice\BasicWL\ApplicableHeaderTradeAgreement;
-use Tiime\CrossIndustryInvoice\BasicWL\ApplicableHeaderTradeDelivery;
-use Tiime\CrossIndustryInvoice\BasicWL\ApplicableHeaderTradeSettlement;
-use Tiime\CrossIndustryInvoice\BasicWL\BuyerTradeParty;
 use Tiime\CrossIndustryInvoice\BasicWL\CrossIndustryInvoice;
-use Tiime\CrossIndustryInvoice\BasicWL\SellerTradeParty;
-use Tiime\CrossIndustryInvoice\BasicWL\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeAgreement;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeDelivery;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeSettlement;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\BuyerTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\HeaderApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\SellerSpecifiedLegalOrganization;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\SellerTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\SpecifiedTradeSettlementHeaderMonetarySummation;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\BusinessProcessSpecifiedDocumentContextParameter;
 use Tiime\CrossIndustryInvoice\DataType\DespatchAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\DocumentIncludedNote;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\Minimum;
+namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
 /**
  * BG-25-00.
@@ -14,24 +14,25 @@ class SupplyChainTradeTransaction
     /**
      * BG-10-00.
      */
-    private ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement;
+    protected ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement;
 
     /**
      * BG-13-00.
      */
-    private ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery;
+    protected ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery;
 
     /**
      * BG-19.
      */
-    private ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement;
+    protected ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement;
 
     public function __construct(
         ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement,
+        ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery,
         ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement
     ) {
-        $this->applicableHeaderTradeDelivery   = new ApplicableHeaderTradeDelivery();
         $this->applicableHeaderTradeAgreement  = $applicableHeaderTradeAgreement;
+        $this->applicableHeaderTradeDelivery   = $applicableHeaderTradeDelivery;
         $this->applicableHeaderTradeSettlement = $applicableHeaderTradeSettlement;
     }
 
@@ -72,12 +73,10 @@ class SupplyChainTradeTransaction
         /** @var \DOMElement $supplyChainTradeTransactionElement */
         $supplyChainTradeTransactionElement = $supplyChainTradeTransactionElements->item(0);
 
-        // The "ApplicableHeaderTradeDelivery" element is checked to make sure it is present, because it's not in the
-        // constructor (empty object for Minimum profile), we will do nothing with it
-        ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
         $applicableHeaderTradeAgreement  = ApplicableHeaderTradeAgreement::fromXML($xpath, $supplyChainTradeTransactionElement);
+        $applicableHeaderTradeDelivery   = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
         $applicableHeaderTradeSettlement = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
 
-        return new self($applicableHeaderTradeAgreement, $applicableHeaderTradeSettlement);
+        return new self($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
     }
 }

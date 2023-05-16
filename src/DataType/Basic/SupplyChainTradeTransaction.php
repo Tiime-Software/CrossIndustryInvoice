@@ -1,15 +1,14 @@
 <?php
 
-namespace Tiime\CrossIndustryInvoice\Basic;
+namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
-use Tiime\CrossIndustryInvoice\BasicWL\ApplicableHeaderTradeAgreement;
-use Tiime\CrossIndustryInvoice\BasicWL\ApplicableHeaderTradeDelivery;
-use Tiime\CrossIndustryInvoice\BasicWL\ApplicableHeaderTradeSettlement;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeAgreement;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeDelivery;
+use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeSettlement;
+use Tiime\CrossIndustryInvoice\DataType\IncludedSupplyChainTradeLineItem;
 
-class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\SupplyChainTradeTransaction
+class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\SupplyChainTradeTransaction
 {
-    protected const XML_NODE = 'rsm:SupplyChainTradeTransaction';
-
     /**
      * BG-25.
      *
@@ -26,8 +25,6 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\Su
         ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery,
         ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement
     ) {
-        parent::__construct($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
-
         if (0 === \count($includedSupplyChainTradeLineItems)) {
             throw new \Exception('Malformed');
         }
@@ -42,6 +39,8 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\Su
             $tmpIncludedSupplyChainTradeLineItems[] = $includedSupplyChainTradeLineItem;
         }
 
+        parent::__construct($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
+
         $this->includedSupplyChainTradeLineItems = $tmpIncludedSupplyChainTradeLineItems;
     }
 
@@ -55,17 +54,17 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\BasicWL\Su
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement(self::XML_NODE);
+        $currentNode = $document->createElement(self::XML_NODE);
 
         foreach ($this->includedSupplyChainTradeLineItems as $includedSupplyChainTradeLineItem) {
-            $element->appendChild($includedSupplyChainTradeLineItem->toXML($document));
+            $currentNode->appendChild($includedSupplyChainTradeLineItem->toXML($document));
         }
 
-        $element->appendChild($this->getApplicableHeaderTradeAgreement()->toXML($document));
-        $element->appendChild($this->getApplicableHeaderTradeDelivery()->toXML($document));
-        $element->appendChild($this->getApplicableHeaderTradeSettlement()->toXML($document));
+        $currentNode->appendChild($this->applicableHeaderTradeAgreement->toXML($document));
+        $currentNode->appendChild($this->applicableHeaderTradeDelivery->toXML($document));
+        $currentNode->appendChild($this->applicableHeaderTradeSettlement->toXML($document));
 
-        return $element;
+        return $currentNode;
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static

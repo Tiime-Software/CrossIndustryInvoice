@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\BasicWL;
+namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\CrossIndustryInvoice\DataType\BasicWL\HeaderApplicableTradeTax;
-use Tiime\CrossIndustryInvoice\DataType\BasicWL\SpecifiedTradeSettlementHeaderMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 use Tiime\CrossIndustryInvoice\DataType\InvoiceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty;
@@ -13,16 +11,15 @@ use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccoun
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeSettlementPaymentMeans;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 
 /**
  * BG-19.
  */
-class ApplicableHeaderTradeSettlement
+class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\Minimum\ApplicableHeaderTradeSettlement
 {
-    protected const XML_NODE = 'ram:ApplicableHeaderTradeSettlement';
-
     /**
      * BT-90.
      */
@@ -37,11 +34,6 @@ class ApplicableHeaderTradeSettlement
      * BT-6.
      */
     private ?CurrencyCode $taxCurrencyCode;
-
-    /**
-     * BT-5.
-     */
-    private CurrencyCode $invoiceCurrencyCode;
 
     /**
      * BG-10.
@@ -85,11 +77,6 @@ class ApplicableHeaderTradeSettlement
     private ?SpecifiedTradePaymentTerms $specifiedTradePaymentTerms;
 
     /**
-     * BG-22.
-     */
-    private SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation;
-
-    /**
      * BG-3.
      */
     private ?InvoiceReferencedDocument $invoiceReferencedDocument;
@@ -99,8 +86,11 @@ class ApplicableHeaderTradeSettlement
      */
     private ?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount;
 
-    public function __construct(CurrencyCode $invoiceCurrencyCode, array $applicableTradeTaxes, SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation)
-    {
+    public function __construct(
+        CurrencyCode $invoiceCurrencyCode,
+        array $applicableTradeTaxes,
+        SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation
+    ) {
         $tmpApplicableTradeTaxes = [];
 
         foreach ($applicableTradeTaxes as $applicableTradeTax) {
@@ -111,24 +101,24 @@ class ApplicableHeaderTradeSettlement
             $tmpApplicableTradeTaxes[] = $applicableTradeTax;
         }
 
-        if (empty($tmpApplicableTradeTaxes)) {
+        if (0 === \count($tmpApplicableTradeTaxes)) {
             throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one HeaderApplicableTradeTax.');
         }
 
-        $this->invoiceCurrencyCode                             = $invoiceCurrencyCode;
-        $this->applicableTradeTaxes                            = $tmpApplicableTradeTaxes;
-        $this->specifiedTradeSettlementHeaderMonetarySummation = $specifiedTradeSettlementHeaderMonetarySummation;
-        $this->creditorReferenceIdentifier                     = null;
-        $this->paymentReference                                = null;
-        $this->taxCurrencyCode                                 = null;
-        $this->payeeTradeParty                                 = null;
-        $this->specifiedTradeSettlementPaymentMeans            = null;
-        $this->billingSpecifiedPeriod                          = null;
-        $this->specifiedTradePaymentTerms                      = null;
-        $this->invoiceReferencedDocument                       = null;
-        $this->receivableSpecifiedTradeAccountingAccount       = null;
-        $this->specifiedTradeAllowances                        = [];
-        $this->specifiedTradeCharges                           = [];
+        parent::__construct($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation);
+
+        $this->applicableTradeTaxes                      = $tmpApplicableTradeTaxes;
+        $this->creditorReferenceIdentifier               = null;
+        $this->paymentReference                          = null;
+        $this->taxCurrencyCode                           = null;
+        $this->payeeTradeParty                           = null;
+        $this->specifiedTradeSettlementPaymentMeans      = null;
+        $this->billingSpecifiedPeriod                    = null;
+        $this->specifiedTradePaymentTerms                = null;
+        $this->invoiceReferencedDocument                 = null;
+        $this->receivableSpecifiedTradeAccountingAccount = null;
+        $this->specifiedTradeAllowances                  = [];
+        $this->specifiedTradeCharges                     = [];
     }
 
     public function getCreditorReferenceIdentifier(): ?BankAssignedCreditorIdentifier
@@ -165,11 +155,6 @@ class ApplicableHeaderTradeSettlement
         $this->taxCurrencyCode = $taxCurrencyCode;
 
         return $this;
-    }
-
-    public function getInvoiceCurrencyCode(): CurrencyCode
-    {
-        return $this->invoiceCurrencyCode;
     }
 
     public function getPayeeTradeParty(): ?PayeeTradeParty
@@ -265,18 +250,6 @@ class ApplicableHeaderTradeSettlement
     public function setSpecifiedTradePaymentTerms(?SpecifiedTradePaymentTerms $specifiedTradePaymentTerms): static
     {
         $this->specifiedTradePaymentTerms = $specifiedTradePaymentTerms;
-
-        return $this;
-    }
-
-    public function getSpecifiedTradeSettlementHeaderMonetarySummation(): SpecifiedTradeSettlementHeaderMonetarySummation
-    {
-        return $this->specifiedTradeSettlementHeaderMonetarySummation;
-    }
-
-    public function setSpecifiedTradeSettlementHeaderMonetarySummation(SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation): static
-    {
-        $this->specifiedTradeSettlementHeaderMonetarySummation = $specifiedTradeSettlementHeaderMonetarySummation;
 
         return $this;
     }

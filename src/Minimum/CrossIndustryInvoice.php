@@ -6,6 +6,7 @@ namespace Tiime\CrossIndustryInvoice\Minimum;
 
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\ExchangedDocument;
+use Tiime\CrossIndustryInvoice\DataType\Minimum\SupplyChainTradeTransaction;
 
 class CrossIndustryInvoice
 {

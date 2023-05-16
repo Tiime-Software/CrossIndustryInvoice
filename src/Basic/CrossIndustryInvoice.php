@@ -2,6 +2,7 @@
 
 namespace Tiime\CrossIndustryInvoice\Basic;
 
+use Tiime\CrossIndustryInvoice\DataType\Basic\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 
