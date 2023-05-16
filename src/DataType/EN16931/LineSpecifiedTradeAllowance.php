@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\EN16931\BusinessTermsGroup\InvoiceLineAllowance;
 use Tiime\CrossIndustryInvoice\DataType\AllowanceIndicator;
 use Tiime\EN16931\DataType\AllowanceReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
@@ -152,5 +153,14 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
         }
 
         return $lineSpecifiedTradeAllowances;
+    }
+
+    public static function fromEN16931(InvoiceLineAllowance $invoiceLineAllowance): static
+    {
+        return (new self($invoiceLineAllowance->getAmount()))
+            ->setCalculationPercent($invoiceLineAllowance->getPercentage())
+            ->setBasisAmount($invoiceLineAllowance->getBaseAmount())
+            ->setReasonCode($invoiceLineAllowance->getReasonCode())
+            ->setReason($invoiceLineAllowance->getReason());
     }
 }

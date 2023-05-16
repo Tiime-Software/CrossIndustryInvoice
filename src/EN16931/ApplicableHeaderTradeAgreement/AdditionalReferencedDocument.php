@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement;
 
+use Tiime\EN16931\BusinessTermsGroup\AdditionalSupportingDocument;
 use Tiime\EN16931\DataType\BinaryObject;
 use Tiime\EN16931\DataType\MimeCode;
 use Tiime\EN16931\DataType\Reference\SupportingDocumentReference;
@@ -195,5 +196,13 @@ class AdditionalReferencedDocument
         }
 
         return $additionalReferencedDocuments;
+    }
+
+    public static function fromEN16931(AdditionalSupportingDocument $additionalSupportingDocument): static
+    {
+        return (new self($additionalSupportingDocument->getReference()))
+            ->setName($additionalSupportingDocument->getDescription())
+            ->setUriIdentifier($additionalSupportingDocument->getExternalDocumentLocation())
+            ->setAttachmentBinaryObject($additionalSupportingDocument->getAttachedDocument());
     }
 }

@@ -6,6 +6,7 @@ namespace Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty;
 
 use Tiime\CrossIndustryInvoice\DataType\EmailURIUniversalCommunication;
 use Tiime\CrossIndustryInvoice\EN16931\TelephoneUniversalCommunication;
+use Tiime\EN16931\BusinessTermsGroup\SellerContact;
 
 /**
  * BG-6.
@@ -161,5 +162,14 @@ class DefinedTradeContact
         }
 
         return $definedTradeContact;
+    }
+
+    public static function fromEN16931(SellerContact $contact): static
+    {
+        return (new self())
+            ->setPersonName($contact->getPoint())
+            ->setDepartmentName($contact->getPoint())
+            ->setTelephoneUniversalCommunication(new TelephoneUniversalCommunication($contact->getPhoneNumber()))
+            ->setEmailURIUniversalCommunication(new EmailURIUniversalCommunication($contact->getEmail()));
     }
 }

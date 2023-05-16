@@ -34,9 +34,11 @@ class PayeePartyCreditorFinancialAccount
         return $this->ibanIdentifier;
     }
 
-    public function setIbanIdentifier(?PaymentAccountIdentifier $ibanIdentifier): void
+    public function setIbanIdentifier(?PaymentAccountIdentifier $ibanIdentifier): static
     {
         $this->ibanIdentifier = $ibanIdentifier;
+
+        return $this;
     }
 
     public function getProprietaryIdentifier(): ?PaymentAccountIdentifier
@@ -44,9 +46,11 @@ class PayeePartyCreditorFinancialAccount
         return $this->proprietaryIdentifier;
     }
 
-    public function setProprietaryIdentifier(?PaymentAccountIdentifier $proprietaryIdentifier): void
+    public function setProprietaryIdentifier(?PaymentAccountIdentifier $proprietaryIdentifier): static
     {
         $this->proprietaryIdentifier = $proprietaryIdentifier;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

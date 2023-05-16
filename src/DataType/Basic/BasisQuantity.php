@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
+use Tiime\EN16931\BusinessTermsGroup\PriceDetails;
 use Tiime\EN16931\DataType\UnitOfMeasurement;
 use Tiime\EN16931\SemanticDataType\Quantity;
 
@@ -92,5 +93,11 @@ class BasisQuantity
         }
 
         return $basisQuantity;
+    }
+
+    public static function fromEN16931(PriceDetails $priceDetails): static
+    {
+        return (new self($priceDetails->getItemPriceBaseQuantity()))
+            ->setUnitCode($priceDetails->getItemPriceBaseQuantityUnitOfMeasureCode());
     }
 }

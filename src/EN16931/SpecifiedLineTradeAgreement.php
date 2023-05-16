@@ -7,6 +7,8 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 use Tiime\CrossIndustryInvoice\DataType\Basic\GrossPriceProductTradePrice;
 use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement\BuyerOrderReferencedDocument;
+use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
+use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
 
 /**
  * BG-29.
@@ -82,5 +84,20 @@ class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\Basic\Spec
         }
 
         return $specifiedLineTradeAgreement;
+    }
+
+    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    {
+        $buyerOrderReferencedDocument = $invoiceLine->getReferencedPurchaseOrderLineReference() instanceof PurchaseOrderLineReference
+            ? BuyerOrderReferencedDocument::fromEN16931($invoiceLine)
+            : null;
+
+        return (new self(NetPriceProductTradePrice::fromEN16931($invoiceLine->getPriceDetails())))
+            ->setGrossPriceProductTradePrice(
+                \is_float($invoiceLine->getPriceDetails()->getItemGrossPrice())
+                    ? GrossPriceProductTradePrice::fromEN16931($invoiceLine->getPriceDetails())
+                    : null
+            )
+            ->setBuyerOrderReferencedDocument($buyerOrderReferencedDocument);
     }
 }

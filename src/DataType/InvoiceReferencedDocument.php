@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\DataType\Reference\PrecedingInvoiceReference;
+use Tiime\EN16931\Invoice;
 
 /**
  * BG-3.
@@ -91,5 +92,19 @@ class InvoiceReferencedDocument
         }
 
         return $invoiceReferencedDocument;
+    }
+
+    public static function fromEN16931(Invoice $invoice): static
+    {
+        $precedingInvoices = $invoice->getPrecedingInvoices();
+
+        if (\count($precedingInvoices) > 1) {
+            throw new \Exception("Found multiple PrecedingInvoices but CII's cardinalities only allow a maximum of 1 occurrence.");
+        }
+
+        $precedingInvoice = array_pop($precedingInvoices);
+
+        return (new self($precedingInvoice->getReference()))
+            ->setFormattedIssueDateTime(new FormattedIssueDateTime($precedingInvoice->getIssueDate()));
     }
 }

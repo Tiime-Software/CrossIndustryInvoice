@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\Invoice;
+
 /**
  * BG-2.
  */
@@ -75,6 +77,23 @@ class ExchangedDocumentContext
 
         if ($businessProcessSpecifiedDocumentContextParameter instanceof BusinessProcessSpecifiedDocumentContextParameter) {
             $exchangedDocumentContext->setBusinessProcessSpecifiedDocumentContextParameter($businessProcessSpecifiedDocumentContextParameter);
+        }
+
+        return $exchangedDocumentContext;
+    }
+
+    public static function fromEN16931(Invoice $invoice): static
+    {
+        $processControl = $invoice->getProcessControl();
+
+        $guidelineSpecifiedDocumentContextParameter = new GuidelineSpecifiedDocumentContextParameter($invoice->getProcessControl()->getSpecificationIdentifier());
+
+        $exchangedDocumentContext = new self($guidelineSpecifiedDocumentContextParameter);
+
+        if (\is_string($processControl->getBusinessProcessType())) {
+            $exchangedDocumentContext->setBusinessProcessSpecifiedDocumentContextParameter(
+                new BusinessProcessSpecifiedDocumentContextParameter($processControl->getBusinessProcessType())
+            );
         }
 
         return $exchangedDocumentContext;

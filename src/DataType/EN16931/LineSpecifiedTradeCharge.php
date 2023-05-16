@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\EN16931\BusinessTermsGroup\InvoiceLineCharge;
 use Tiime\CrossIndustryInvoice\DataType\ChargeIndicator;
 use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
@@ -151,5 +152,14 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
         }
 
         return $lineSpecifiedTradeCharges;
+    }
+
+    public static function fromEN16931(InvoiceLineCharge $charge): static
+    {
+        return (new self($charge->getAmount()))
+            ->setCalculationPercent($charge->getPercentage())
+            ->setBasisAmount($charge->getBaseAmount())
+            ->setReasonCode($charge->getReasonCode())
+            ->setReason($charge->getReason());
     }
 }

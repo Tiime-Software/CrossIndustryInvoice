@@ -6,6 +6,7 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
+use Tiime\EN16931\Invoice;
 
 class CrossIndustryInvoice
 {
@@ -104,5 +105,14 @@ class CrossIndustryInvoice
         $supplyChainTradeTransaction = SupplyChainTradeTransaction::fromXML($xpath, $crossIndustryInvoiceElement);
 
         return new self($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
+    }
+  
+    public static function fromEN16931(Invoice $invoice): self
+    {
+        return new self(
+            ExchangedDocumentContext::fromEN16931($invoice),
+            ExchangedDocument::fromEN16931($invoice),
+            SupplyChainTradeTransaction::fromEN16931($invoice),
+        );
     }
 }

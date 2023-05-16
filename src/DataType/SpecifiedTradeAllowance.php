@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\BusinessTermsGroup\DocumentLevelAllowance;
 use Tiime\EN16931\DataType\AllowanceReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
@@ -230,5 +231,20 @@ class SpecifiedTradeAllowance
         }
 
         return $specifiedTradeAllowances;
+    }
+
+    public static function fromEN16931(DocumentLevelAllowance $allowance): static
+    {
+        $specifiedTradeAllowance = new self(
+            $allowance->getAmount(),
+            (new CategoryTradeTax($allowance->getVatCategoryCode()))->setRateApplicablePercent($allowance->getVatRate())
+        );
+
+        $specifiedTradeAllowance->setCalculationPercent($allowance->getPercentage())
+            ->setBasisAmount($allowance->getBaseAmount())
+            ->setReasonCode($allowance->getReasonCode())
+            ->setReason($allowance->getReason());
+
+        return $specifiedTradeAllowance;
     }
 }

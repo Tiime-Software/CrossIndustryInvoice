@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\BusinessTermsGroup\InvoiceLinePeriod;
+use Tiime\EN16931\BusinessTermsGroup\InvoicingPeriod;
+
 /**
  * BG-14.
  */
@@ -95,5 +98,15 @@ class BillingSpecifiedPeriod
         }
 
         return $billingSpecifiedPeriod;
+    }
+
+    public static function fromEN16931(InvoicingPeriod|InvoiceLinePeriod $period): static
+    {
+        $startDateTime = $period->getStartDate() instanceof \DateTimeInterface ? new StartDateTime($period->getStartDate()) : null;
+        $endDateTime   = $period->getEndDate() instanceof \DateTimeInterface ? new EndDateTime($period->getEndDate()) : null;
+
+        return (new self())
+            ->setStartDateTime($startDateTime)
+            ->setEndDateTime($endDateTime);
     }
 }

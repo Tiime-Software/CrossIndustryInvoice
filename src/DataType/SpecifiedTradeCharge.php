@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\BusinessTermsGroup\DocumentLevelCharge;
 use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
@@ -230,5 +231,20 @@ class SpecifiedTradeCharge
         }
 
         return $specifiedTradeCharges;
+    }
+
+    public static function fromEN16931(DocumentLevelCharge $charge): static
+    {
+        $specifiedTradeCharge = new self(
+            $charge->getAmount(),
+            (new CategoryTradeTax($charge->getVatCategoryCode()))->setRateApplicablePercent($charge->getVatRate())
+        );
+
+        $specifiedTradeCharge->setCalculationPercent($charge->getPercentage())
+            ->setBasisAmount($charge->getBaseAmount())
+            ->setReasonCode($charge->getReasonCode())
+            ->setReason($charge->getReason());
+
+        return $specifiedTradeCharge;
     }
 }

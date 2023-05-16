@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
+use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
+
 /**
  * BT-129-00.
  */
@@ -49,5 +51,13 @@ class SpecifiedLineTradeDelivery
         $billedQuantity = BilledQuantity::fromXML($xpath, $specifiedLineTradeDeliveryElement);
 
         return new self($billedQuantity);
+    }
+
+    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    {
+        return new self(new BilledQuantity(
+            $invoiceLine->getInvoicedQuantity(),
+            $invoiceLine->getInvoicedQuantityUnitOfMeasureCode()
+        ));
     }
 }

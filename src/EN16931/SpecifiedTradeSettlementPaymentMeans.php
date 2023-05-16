@@ -8,6 +8,11 @@ use Tiime\CrossIndustryInvoice\DataType\ApplicableTradeSettlementFinancialCard;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\PayeePartyCreditorFinancialAccount;
 use Tiime\CrossIndustryInvoice\DataType\PayeeSpecifiedCreditorFinancialInstitution;
 use Tiime\CrossIndustryInvoice\DataType\PayerPartyDebtorFinancialAccount;
+use Tiime\EN16931\BusinessTermsGroup\CreditTransfer;
+use Tiime\EN16931\BusinessTermsGroup\PaymentCardInformation;
+use Tiime\EN16931\BusinessTermsGroup\PaymentInstructions;
+use Tiime\EN16931\DataType\Identifier\DebitedAccountIdentifier;
+use Tiime\EN16931\DataType\Identifier\PaymentServiceProviderIdentifier;
 use Tiime\EN16931\DataType\PaymentMeansCode;
 
 /**
@@ -211,5 +216,39 @@ class SpecifiedTradeSettlementPaymentMeans
         }
 
         return $specifiedTradeSettlementPaymentMeans;
+    }
+  
+    public static function fromEN16931(PaymentInstructions $paymentInstructions): static
+    {
+        $creditTransfers = $paymentInstructions->getCreditTransfers();
+
+        if (\count($creditTransfers) > 1) {
+            throw new \Exception("Found multiple CreditTransfers but CII's cardinalities only allow a maximum of 1 occurrence.");
+        }
+
+        $creditTransfer = array_pop($creditTransfers);
+
+        return (new self($paymentInstructions->getPaymentMeansTypeCode()))
+            ->setInformation($paymentInstructions->getPaymentMeansText())
+            ->setApplicableTradeSettlementFinancialCard(
+                $paymentInstructions->getPaymentCardInformation() instanceof PaymentCardInformation
+                    ? ApplicableTradeSettlementFinancialCard::fromEN16931($paymentInstructions->getPaymentCardInformation())
+                    : null
+            )
+            ->setPayerPartyDebtorFinancialAccount(
+                $paymentInstructions->getDirectDebit()->getDebitedAccountIdentifier() instanceof DebitedAccountIdentifier
+                    ? new PayerPartyDebtorFinancialAccount($paymentInstructions->getDirectDebit()->getDebitedAccountIdentifier())
+                    : null
+            )
+            ->setPayeePartyCreditorFinancialAccount(
+                $creditTransfer instanceof CreditTransfer
+                    ? PayeePartyCreditorFinancialAccount::fromEN16931($creditTransfer)
+                    : null
+            )
+            ->setPayeeSpecifiedCreditorFinancialInstitution(
+                $creditTransfer?->getPaymentServiceProviderIdentifier() instanceof PaymentServiceProviderIdentifier
+                    ? new PayeeSpecifiedCreditorFinancialInstitution($creditTransfer->getPaymentServiceProviderIdentifier())
+                    : null
+            );
     }
 }

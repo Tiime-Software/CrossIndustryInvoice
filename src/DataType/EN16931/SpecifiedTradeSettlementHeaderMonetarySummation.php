@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
+use Tiime\EN16931\BusinessTermsGroup\DocumentTotals;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 
@@ -220,6 +221,25 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
                 }
             }
         }
+
+        return $specifiedTradeSettlementHeaderMonetarySummation;
+    }
+
+    public static function fromEN16931(DocumentTotals $documentTotals): static
+    {
+        $specifiedTradeSettlementHeaderMonetarySummation = new self(
+            $documentTotals->getInvoiceTotalAmountWithoutVat(),
+            $documentTotals->getSumOfInvoiceLineNetAmount(),
+            $documentTotals->getInvoiceTotalAmountWithVat(),
+            $documentTotals->getAmountDueForPayment()
+        );
+
+        $specifiedTradeSettlementHeaderMonetarySummation
+            ->setChargeTotalAmount($documentTotals->getSumOfChargesOnDocumentLevel())
+            ->setAllowanceTotalAmount($documentTotals->getSumOfAllowancesOnDocumentLevel())
+            ->setTaxTotalAmountCurrency($documentTotals->getInvoiceTotalVatAmount())
+            ->setTotalPrepaidAmount($documentTotals->getPaidAmount())
+            ->setRoundingAmount($documentTotals->getRoundingAmount());
 
         return $specifiedTradeSettlementHeaderMonetarySummation;
     }

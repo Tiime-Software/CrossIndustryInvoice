@@ -7,6 +7,7 @@ namespace Tiime\CrossIndustryInvoice\EN16931;
 use Tiime\CrossIndustryInvoice\DataType\AssociatedDocumentLineDocument;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedLineTradeDelivery;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeProduct;
+use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
 
 /**
  * BG-25.
@@ -113,5 +114,16 @@ class IncludedSupplyChainTradeLineItem
         }
 
         return $includedSupplyChainTradeLineItems;
+    }
+
+    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    {
+        return new self(
+            AssociatedDocumentLineDocument::fromEN16931($invoiceLine),
+            SpecifiedTradeProduct::fromEN16931($invoiceLine->getItemInformation()),
+            SpecifiedLineTradeAgreement::fromEN16931($invoiceLine),
+            SpecifiedLineTradeDelivery::fromEN16931($invoiceLine),
+            SpecifiedLineTradeSettlement::fromEN16931($invoiceLine),
+        );
     }
 }

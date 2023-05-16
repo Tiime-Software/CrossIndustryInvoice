@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeeSpecifiedLegalOrganization;
+use Tiime\EN16931\BusinessTermsGroup\Payee;
+use Tiime\EN16931\DataType\Identifier\LegalRegistrationIdentifier;
 use Tiime\EN16931\DataType\Identifier\PayeeIdentifier;
+use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BG-10.
@@ -152,5 +155,26 @@ class PayeeTradeParty
         }
 
         return $payeeTradeParty;
+    }
+
+    public static function fromEN16931(Payee $payee): static
+    {
+        $identifier       = null;
+        $globalIdentifier = null;
+
+        if ($payee->getIdentifier()->scheme instanceof InternationalCodeDesignator) {
+            $globalIdentifier = new PayeeGlobalIdentifier($payee->getIdentifier()->value, $payee->getIdentifier()->scheme);
+        } else {
+            $identifier = $payee->getIdentifier();
+        }
+
+        return (new self($payee->getName()))
+            ->setIdentifier($identifier)
+            ->setGlobalIdentifier($globalIdentifier)
+            ->setSpecifiedLegalOrganization(
+                $payee->getLegalRegistrationIdentifier() instanceof LegalRegistrationIdentifier
+                    ? new PayeeSpecifiedLegalOrganization($payee->getLegalRegistrationIdentifier())
+                    : null
+            );
     }
 }

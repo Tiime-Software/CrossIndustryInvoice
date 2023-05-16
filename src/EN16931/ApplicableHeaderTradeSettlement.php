@@ -13,8 +13,10 @@ use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccoun
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
+use Tiime\EN16931\BusinessTermsGroup\InvoicingPeriod;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
+use Tiime\EN16931\Invoice;
 
 /**
  * BG-19.
@@ -455,6 +457,61 @@ class ApplicableHeaderTradeSettlement
         if ($receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
             $applicableHeaderTradeSettlement->setReceivableSpecifiedTradeAccountingAccount($receivableSpecifiedTradeAccountingAccount);
         }
+
+        return $applicableHeaderTradeSettlement;
+    }
+
+    public static function fromEN16931(Invoice $invoice): static
+    {
+        $applicableTradeTaxes     = [];
+        $specifiedTradeAllowances = [];
+        $specifiedTradeCharges    = [];
+
+        foreach ($invoice->getVatBreakdowns() as $vatBreakdown) {
+            $applicableTradeTaxes[] = HeaderApplicableTradeTax::fromEN16931(
+                $vatBreakdown,
+                $invoice->getValueAddedTaxPointDateCode()
+            );
+        }
+
+        foreach ($invoice->getDocumentLevelAllowances() as $allowance) {
+            $specifiedTradeAllowances[] = SpecifiedTradeAllowance::fromEN16931($allowance);
+        }
+
+        foreach ($invoice->getDocumentLevelCharges() as $charge) {
+            $specifiedTradeCharges[] = SpecifiedTradeCharge::fromEN16931($charge);
+        }
+
+        $applicableHeaderTradeSettlement = new self(
+            $invoice->getCurrencyCode(),
+            $applicableTradeTaxes,
+            SpecifiedTradeSettlementHeaderMonetarySummation::fromEN16931($invoice->getDocumentTotals())
+        );
+
+        $applicableHeaderTradeSettlement
+            ->setCreditorReferenceIdentifier($invoice->getPaymentInstructions()?->getDirectDebit()?->getBankAssignedCreditorIdentifier())
+            ->setPaymentReference($invoice->getPaymentInstructions()?->getRemittanceInformation())
+            ->setTaxCurrencyCode($invoice->getVatAccountingCurrencyCode())
+            ->setPayeeTradeParty(PayeeTradeParty::fromEN16931($invoice->getPayee()))
+            ->setSpecifiedTradeSettlementPaymentMeans(SpecifiedTradeSettlementPaymentMeans::fromEN16931($invoice->getPaymentInstructions()))
+            ->setBillingSpecifiedPeriod(
+                $invoice->getDeliveryInformation()?->getInvoicingPeriod() instanceof InvoicingPeriod
+                    ? BillingSpecifiedPeriod::fromEN16931($invoice->getDeliveryInformation()->getInvoicingPeriod())
+                    : null
+            )
+            ->setSpecifiedTradeAllowances($specifiedTradeAllowances)
+            ->setSpecifiedTradeCharges($specifiedTradeCharges)
+            ->setSpecifiedTradePaymentTerms(SpecifiedTradePaymentTerms::fromEN16931($invoice))
+            ->setInvoiceReferencedDocument(
+                \count($invoice->getPrecedingInvoices()) > 0
+                    ? InvoiceReferencedDocument::fromEN16931($invoice)
+                    : null
+            )
+            ->setReceivableSpecifiedTradeAccountingAccount(
+                \is_string($invoice->getBuyerAccountingReference())
+                    ? ReceivableSpecifiedTradeAccountingAccount::fromEN16931($invoice)
+                    : null
+            );
 
         return $applicableHeaderTradeSettlement;
     }

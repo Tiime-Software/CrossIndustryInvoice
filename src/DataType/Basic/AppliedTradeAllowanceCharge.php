@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\CrossIndustryInvoice\DataType\AllowanceIndicator;
+use Tiime\EN16931\BusinessTermsGroup\PriceDetails;
 use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
 
 /**
@@ -77,5 +78,10 @@ class AppliedTradeAllowanceCharge
         AllowanceIndicator::fromXML($xpath, $appliedTradeAllowanceChargeElement);
 
         return new self((float) $actualAmount);
+    }
+
+    public static function fromEN16931(PriceDetails $priceDetails): static
+    {
+        return new self($priceDetails->getItemPriceDiscount());
     }
 }
