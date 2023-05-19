@@ -164,7 +164,7 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
      * BasicWL\PostalTradeAddress have to return ?static
      * Because of the heritage, Minimum\PostalTradeAddress have to return ?static too.
      */
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $postalTradeAddressElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

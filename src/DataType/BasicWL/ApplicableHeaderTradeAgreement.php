@@ -81,7 +81,7 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $applicableHeaderTradeAgreementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

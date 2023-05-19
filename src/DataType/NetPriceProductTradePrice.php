@@ -61,7 +61,7 @@ class NetPriceProductTradePrice
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $netPriceProductTradePriceElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

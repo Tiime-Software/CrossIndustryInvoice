@@ -27,7 +27,7 @@ class BuyerGlobalIdentifier extends BuyerIdentifier
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $buyerGlobalIdentifierElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

@@ -16,7 +16,7 @@ class ApplicableHeaderTradeDelivery
         return $document->createElement(self::XML_NODE);
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $applicableHeaderTradeDeliveryElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

@@ -16,7 +16,7 @@ class CrossIndustryInvoice extends \Tiime\CrossIndustryInvoice\BasicWL\CrossIndu
         parent::__construct($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMDocument $document): self
     {
         $xpath = new \DOMXPath($document);
 

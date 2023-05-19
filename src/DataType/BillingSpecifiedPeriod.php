@@ -69,7 +69,7 @@ class BillingSpecifiedPeriod
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $billingSpecifiedPeriodElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

@@ -46,7 +46,7 @@ class IssueDateTime
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $issueDateTimeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

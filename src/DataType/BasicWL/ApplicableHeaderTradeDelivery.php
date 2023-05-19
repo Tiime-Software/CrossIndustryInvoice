@@ -90,7 +90,7 @@ class ApplicableHeaderTradeDelivery extends \Tiime\CrossIndustryInvoice\DataType
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $applicableHeaderTradeDeliveryElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

@@ -337,7 +337,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $applicableHeaderTradeSettlementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

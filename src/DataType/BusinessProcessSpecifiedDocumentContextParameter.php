@@ -35,7 +35,7 @@ class BusinessProcessSpecifiedDocumentContextParameter
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $businessProcessSpecifiedDocumentContextParameterElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
