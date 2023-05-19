@@ -132,7 +132,7 @@ class HeaderApplicableTradeTax
 
     public function setRateApplicablePercent(?float $rateApplicablePercent): static
     {
-        $this->rateApplicablePercent = $rateApplicablePercent;
+        $this->rateApplicablePercent = \is_float($rateApplicablePercent) ? new Percentage($rateApplicablePercent) : null;
 
         return $this;
     }
