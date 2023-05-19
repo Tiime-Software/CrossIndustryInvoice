@@ -4,6 +4,7 @@ namespace Tiime\CrossIndustryInvoice\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
+use Tiime\CrossIndustryInvoice\DataType\AdditionalReferencedDocumentInvoiceLineObjectIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\ApplicableTradeSettlementFinancialCard;
 use Tiime\CrossIndustryInvoice\DataType\AssociatedDocumentLineDocument;
 use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
@@ -62,7 +63,6 @@ use Tiime\CrossIndustryInvoice\DataType\StartDateTime;
 use Tiime\CrossIndustryInvoice\DataType\TaxPointDate;
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
 use Tiime\CrossIndustryInvoice\EN16931\CrossIndustryInvoice;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\AdditionalReferencedDocument;
 use Tiime\EN16931\DataType\AllowanceReasonCode;
 use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
@@ -222,7 +222,7 @@ class CIIEN16931Test extends TestCase
                             ])
                             ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount('ReceivableSpecifiedTradeAccountingAccount'))
                             ->setAdditionalReferencedDocument(
-                                (new AdditionalReferencedDocument(
+                                (new AdditionalReferencedDocumentInvoiceLineObjectIdentifier(
                                     new ObjectIdentifier('AdditionalReferencedDocument', ObjectSchemeCode::ACCOUNT_NUMBER)
                                 ))->setReferenceTypeCode(ObjectSchemeCode::ACCOUNT_NUMBER)
                             )
