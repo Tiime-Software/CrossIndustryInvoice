@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\AdditionalReferencedDocumentAdditionalSupportingDocument;
+use Tiime\CrossIndustryInvoice\DataType\AdditionalReferencedDocumentInvoicedObjectIdentifier;
+use Tiime\CrossIndustryInvoice\DataType\AdditionalReferencedDocumentTenderOrLotReference;
 use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ContractReferencedDocument;
+use Tiime\CrossIndustryInvoice\DataType\SellerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\SellerTaxRepresentativeTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedProcuringProject;
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\AdditionalReferencedDocument;
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\AdditionalReferencedDocumentInvoicedObjectIdentifier;
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\AdditionalReferencedDocumentTenderOrLotReference;
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement\SellerOrderReferencedDocument;
 use Tiime\EN16931\DataType\Reference\ContractReference;
 use Tiime\EN16931\DataType\Reference\ProjectReference;
 use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
@@ -31,7 +31,7 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
     /**
      * BG-24.
      *
-     * @var array<int, AdditionalReferencedDocument>
+     * @var array<int, AdditionalReferencedDocumentAdditionalSupportingDocument>
      */
     private array $additionalReferencedDocuments;
 
@@ -83,7 +83,7 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
         $tmpAdditionalReferencedDocuments = [];
 
         foreach ($additionalReferencedDocuments as $additionalReferencedDocument) {
-            if (!$additionalReferencedDocument instanceof AdditionalReferencedDocument) {
+            if (!$additionalReferencedDocument instanceof AdditionalReferencedDocumentAdditionalSupportingDocument) {
                 throw new \TypeError();
             }
             $tmpAdditionalReferencedDocuments[] = $additionalReferencedDocument;
@@ -195,7 +195,7 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
         $sellerOrderReferencedDocument                        = SellerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
         $buyerOrderReferencedDocument                         = BuyerOrderReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
         $contractReferencedDocument                           = ContractReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
-        $additionalReferencedDocuments                        = AdditionalReferencedDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
+        $additionalReferencedDocuments                        = AdditionalReferencedDocumentAdditionalSupportingDocument::fromXML($xpath, $applicableHeaderTradeAgreementElement);
         $additionalReferencedDocumentTenderOrLotReference     = AdditionalReferencedDocumentTenderOrLotReference::fromXML($xpath, $applicableHeaderTradeAgreementElement);
         $additionalReferencedDocumentInvoicedObjectIdentifier = AdditionalReferencedDocumentInvoicedObjectIdentifier::fromXML($xpath, $applicableHeaderTradeAgreementElement);
         $specifiedProcuringProject                            = SpecifiedProcuringProject::fromXML($xpath, $applicableHeaderTradeAgreementElement);
@@ -246,7 +246,7 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
         $additionalReferencedDocuments = [];
 
         foreach ($invoice->getAdditionalSupportingDocuments() as $additionalSupportingDocument) {
-            $additionalReferencedDocuments[] = AdditionalReferencedDocument::fromEN16931($additionalSupportingDocument);
+            $additionalReferencedDocuments[] = AdditionalReferencedDocumentAdditionalSupportingDocument::fromEN16931($additionalSupportingDocument);
         }
 
         $applicableHeaderTradeAgreement = new self(

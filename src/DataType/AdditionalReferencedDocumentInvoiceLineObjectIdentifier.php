@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
 use Tiime\EN16931\DataType\ObjectSchemeCode;
@@ -10,7 +10,7 @@ use Tiime\EN16931\DataType\ObjectSchemeCode;
 /**
  * BT-128-00.
  */
-class AdditionalReferencedDocument
+class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
 {
     protected const XML_NODE = 'ram:AdditionalReferencedDocument';
 

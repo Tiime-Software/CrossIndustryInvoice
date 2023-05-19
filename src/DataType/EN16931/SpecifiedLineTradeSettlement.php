@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\CrossIndustryInvoice\DataType\AdditionalReferencedDocumentInvoiceLineObjectIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\AdditionalReferencedDocument;
 use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
 
 /**
@@ -19,7 +19,7 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
     /**
      * BT-128-00.
      */
-    private ?AdditionalReferencedDocument $additionalReferencedDocument;
+    private ?AdditionalReferencedDocumentInvoiceLineObjectIdentifier $additionalReferencedDocument;
 
     /**
      * BT-133-00.
@@ -70,12 +70,12 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
         return $this;
     }
 
-    public function getAdditionalReferencedDocument(): ?AdditionalReferencedDocument
+    public function getAdditionalReferencedDocument(): ?AdditionalReferencedDocumentInvoiceLineObjectIdentifier
     {
         return $this->additionalReferencedDocument;
     }
 
-    public function setAdditionalReferencedDocument(?AdditionalReferencedDocument $additionalReferencedDocument): static
+    public function setAdditionalReferencedDocument(?AdditionalReferencedDocumentInvoiceLineObjectIdentifier $additionalReferencedDocument): static
     {
         $this->additionalReferencedDocument = $additionalReferencedDocument;
 
@@ -114,7 +114,7 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
 
         $currentNode->appendChild($this->specifiedTradeSettlementMonetarySummation->toXML($document));
 
-        if ($this->additionalReferencedDocument instanceof AdditionalReferencedDocument) {
+        if ($this->additionalReferencedDocument instanceof AdditionalReferencedDocumentInvoiceLineObjectIdentifier) {
             $currentNode->appendChild($this->additionalReferencedDocument->toXML($document));
         }
 
@@ -141,7 +141,7 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
         $specifiedTradeAllowances                      = LineSpecifiedTradeAllowance::fromXML($xpath, $specifiedLineTradeSettlementElement);
         $specifiedTradeCharges                         = LineSpecifiedTradeCharge::fromXML($xpath, $specifiedLineTradeSettlementElement);
         $specifiedTradeSettlementLineMonetarySummation = SpecifiedTradeSettlementLineMonetarySummation::fromXML($xpath, $specifiedLineTradeSettlementElement);
-        $additionalReferencedDocument                  = AdditionalReferencedDocument::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $additionalReferencedDocument                  = AdditionalReferencedDocumentInvoiceLineObjectIdentifier::fromXML($xpath, $specifiedLineTradeSettlementElement);
         $receivableSpecifiedTradeAccountingAccount     = ReceivableSpecifiedTradeAccountingAccount::fromXML($xpath, $specifiedLineTradeSettlementElement);
 
         $specifiedLineTradeSettlement = new self($applicableTradeTax, $specifiedTradeSettlementLineMonetarySummation);
@@ -158,7 +158,7 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
             $specifiedLineTradeSettlement->setSpecifiedTradeCharges($specifiedTradeCharges);
         }
 
-        if ($additionalReferencedDocument instanceof AdditionalReferencedDocument) {
+        if ($additionalReferencedDocument instanceof AdditionalReferencedDocumentInvoiceLineObjectIdentifier) {
             $specifiedLineTradeSettlement->setAdditionalReferencedDocument($additionalReferencedDocument);
         }
 
@@ -194,7 +194,7 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
             ->setBillingSpecifiedPeriod(BillingSpecifiedPeriod::fromEN16931($invoiceLine->getPeriod()))
             ->setSpecifiedTradeAllowances($specifiedTradeAllowances)
             ->setSpecifiedTradeCharges($specifiedTradeCharges)
-            ->setAdditionalReferencedDocument(new AdditionalReferencedDocument($invoiceLine->getObjectIdentifier()))
+            ->setAdditionalReferencedDocument(new AdditionalReferencedDocumentInvoiceLineObjectIdentifier($invoiceLine->getObjectIdentifier()))
             ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount($invoiceLine->getBuyerAccountingReference()));
 
         return $specifiedLineTradeSettlement;

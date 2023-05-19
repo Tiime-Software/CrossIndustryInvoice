@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\BusinessTermsGroup\AdditionalSupportingDocument;
 use Tiime\EN16931\DataType\BinaryObject;
@@ -12,7 +12,7 @@ use Tiime\EN16931\DataType\Reference\SupportingDocumentReference;
 /**
  * BG-24.
  */
-class AdditionalReferencedDocument
+class AdditionalReferencedDocumentAdditionalSupportingDocument
 {
     protected const XML_NODE = 'ram:AdditionalReferencedDocument';
 
