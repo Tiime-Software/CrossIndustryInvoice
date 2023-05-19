@@ -68,9 +68,11 @@ class ApplicableHeaderTradeAgreement
         return $this->buyerOrderReferencedDocument;
     }
 
-    public function setBuyerOrderReferencedDocument(?BuyerOrderReferencedDocument $buyerOrderReferencedDocument): void
+    public function setBuyerOrderReferencedDocument(?BuyerOrderReferencedDocument $buyerOrderReferencedDocument): static
     {
         $this->buyerOrderReferencedDocument = $buyerOrderReferencedDocument;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

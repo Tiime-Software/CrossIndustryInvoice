@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\ApplicableTradeSettlementFinancialCard;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\PayeePartyCreditorFinancialAccount;
 use Tiime\CrossIndustryInvoice\DataType\PayeeSpecifiedCreditorFinancialInstitution;
 use Tiime\CrossIndustryInvoice\DataType\PayerPartyDebtorFinancialAccount;
 use Tiime\EN16931\BusinessTermsGroup\CreditTransfer;
@@ -18,15 +17,8 @@ use Tiime\EN16931\DataType\PaymentMeansCode;
 /**
  * BG-16.
  */
-class SpecifiedTradeSettlementPaymentMeans
+class SpecifiedTradeSettlementPaymentMeans extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\SpecifiedTradeSettlementPaymentMeans
 {
-    protected const XML_NODE = 'ram:SpecifiedTradeSettlementPaymentMeans';
-
-    /**
-     * BT-81.
-     */
-    private PaymentMeansCode $typeCode;
-
     /**
      * BT-82.
      */
@@ -38,33 +30,17 @@ class SpecifiedTradeSettlementPaymentMeans
     private ?ApplicableTradeSettlementFinancialCard $applicableTradeSettlementFinancialCard;
 
     /**
-     * BT-91-00.
-     */
-    private ?PayerPartyDebtorFinancialAccount $payerPartyDebtorFinancialAccount;
-
-    /**
-     * BG-17.
-     */
-    private ?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount;
-
-    /**
      * BT-86-00.
      */
     private ?PayeeSpecifiedCreditorFinancialInstitution $payeeSpecifiedCreditorFinancialInstitution;
 
     public function __construct(PaymentMeansCode $typeCode)
     {
-        $this->typeCode                                   = $typeCode;
+        parent::__construct($typeCode);
+
         $this->information                                = null;
         $this->applicableTradeSettlementFinancialCard     = null;
-        $this->payerPartyDebtorFinancialAccount           = null;
-        $this->payeePartyCreditorFinancialAccount         = null;
         $this->payeeSpecifiedCreditorFinancialInstitution = null;
-    }
-
-    public function getTypeCode(): PaymentMeansCode
-    {
-        return $this->typeCode;
     }
 
     public function getInformation(): ?string
@@ -91,26 +67,15 @@ class SpecifiedTradeSettlementPaymentMeans
         return $this;
     }
 
-    public function getPayerPartyDebtorFinancialAccount(): ?PayerPartyDebtorFinancialAccount
+    // @todo : Ask feedback
+    // public function setPayeePartyCreditorFinancialAccount(?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount): static
+    public function setPayeePartyCreditorFinancialAccount(PayeePartyCreditorFinancialAccount|\Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeePartyCreditorFinancialAccount|null $payeePartyCreditorFinancialAccount): static
     {
-        return $this->payerPartyDebtorFinancialAccount;
-    }
+        if (null !== $payeePartyCreditorFinancialAccount && !$payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
+            throw new \TypeError();
+        }
 
-    public function setPayerPartyDebtorFinancialAccount(?PayerPartyDebtorFinancialAccount $payerPartyDebtorFinancialAccount): static
-    {
-        $this->payerPartyDebtorFinancialAccount = $payerPartyDebtorFinancialAccount;
-
-        return $this;
-    }
-
-    public function getPayeePartyCreditorFinancialAccount(): ?PayeePartyCreditorFinancialAccount
-    {
-        return $this->payeePartyCreditorFinancialAccount;
-    }
-
-    public function setPayeePartyCreditorFinancialAccount(?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount): static
-    {
-        $this->payeePartyCreditorFinancialAccount = $payeePartyCreditorFinancialAccount;
+        parent::setPayeePartyCreditorFinancialAccount($payeePartyCreditorFinancialAccount);
 
         return $this;
     }
@@ -217,8 +182,8 @@ class SpecifiedTradeSettlementPaymentMeans
 
         return $specifiedTradeSettlementPaymentMeans;
     }
-  
-    public static function fromEN16931(PaymentInstructions $paymentInstructions): static
+
+    public static function fromEN16931(PaymentInstructions $paymentInstructions): self
     {
         $creditTransfers = $paymentInstructions->getCreditTransfers();
 

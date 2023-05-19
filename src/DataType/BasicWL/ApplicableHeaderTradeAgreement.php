@@ -16,12 +16,12 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
     /**
      * BG-11.
      */
-    private ?SellerTaxRepresentativeTradeParty $sellerTaxRepresentativeTradeParty;
+    protected ?SellerTaxRepresentativeTradeParty $sellerTaxRepresentativeTradeParty;
 
     /**
      * BT-12-00.
      */
-    private ?ContractReferencedDocument $contractReferencedDocument;
+    protected ?ContractReferencedDocument $contractReferencedDocument;
 
     public function __construct(SellerTradeParty $sellerTradeParty, BuyerTradeParty $buyerTradeParty)
     {

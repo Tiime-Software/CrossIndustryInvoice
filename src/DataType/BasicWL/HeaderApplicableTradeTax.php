@@ -20,42 +20,42 @@ class HeaderApplicableTradeTax
     /**
      * BT-117.
      */
-    private Amount $calculatedAmount;
+    protected Amount $calculatedAmount;
 
     /**
      * BT-118-0.
      */
-    private string $typeCode;
+    protected string $typeCode;
 
     /**
      * BT-120.
      */
-    private ?string $exemptionReason;
+    protected ?string $exemptionReason;
 
     /**
      * BT-116.
      */
-    private Amount $basisAmount;
+    protected Amount $basisAmount;
 
     /**
      * BT-118.
      */
-    private VatCategory $categoryCode;
+    protected VatCategory $categoryCode;
 
     /**
      * BT-121.
      */
-    private ?VatExoneration $exemptionReasonCode;
+    protected ?VatExoneration $exemptionReasonCode;
 
     /**
      * BT-8.
      */
-    private ?DateCode2005 $dueDateTypeCode;
+    protected ?DateCode2005 $dueDateTypeCode;
 
     /**
      * BT-119.
      */
-    private ?Percentage $rateApplicablePercent;
+    protected ?Percentage $rateApplicablePercent;
 
     public function __construct(float $calculatedAmount, float $basisAmount, VatCategory $categoryCode)
     {
@@ -130,7 +130,7 @@ class HeaderApplicableTradeTax
         return $this->rateApplicablePercent?->getValueRounded();
     }
 
-    public function setRateApplicablePercent(?Percentage $rateApplicablePercent): static
+    public function setRateApplicablePercent(?float $rateApplicablePercent): static
     {
         $this->rateApplicablePercent = $rateApplicablePercent;
 
@@ -142,7 +142,6 @@ class HeaderApplicableTradeTax
         $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($document->createElement('ram:CalculatedAmount', (string) $this->calculatedAmount->getValueRounded()));
-
         $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
         if (\is_string($this->exemptionReason)) {
@@ -150,7 +149,6 @@ class HeaderApplicableTradeTax
         }
 
         $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
-
         $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
 
         if ($this->exemptionReasonCode instanceof VatExoneration) {
@@ -259,7 +257,7 @@ class HeaderApplicableTradeTax
             }
 
             if (1 === $rateApplicablePercentElements->count()) {
-                $headerApplicableTradeTax->setRateApplicablePercent(new Percentage((float) $rateApplicablePercentElements->item(0)->nodeValue));
+                $headerApplicableTradeTax->setRateApplicablePercent((float) $rateApplicablePercentElements->item(0)->nodeValue);
             }
 
             $headerApplicableTradeTaxes[] = $headerApplicableTradeTax;

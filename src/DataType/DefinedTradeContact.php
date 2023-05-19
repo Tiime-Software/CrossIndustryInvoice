@@ -2,36 +2,35 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\CrossIndustryInvoice\DataType\EmailURIUniversalCommunication;
-use Tiime\CrossIndustryInvoice\EN16931\TelephoneUniversalCommunication;
+use Tiime\EN16931\BusinessTermsGroup\BuyerContact;
 use Tiime\EN16931\BusinessTermsGroup\SellerContact;
 
 /**
- * BG-6.
+ * BG-9 or BG-6.
  */
 class DefinedTradeContact
 {
     protected const XML_NODE = 'ram:DefinedTradeContact';
 
     /**
-     * BT-41.
+     * BT-56 or BT-41.
      */
     private ?string $personName;
 
     /**
-     * BT-41-0.
+     * BT-56-0 or BT-41-0.
      */
     private ?string $departmentName;
 
     /**
-     * BT-42-00.
+     * BT-57-00 or BT-42-00.
      */
     private ?TelephoneUniversalCommunication $telephoneUniversalCommunication;
 
     /**
-     * BT-43-00.
+     * BT-58-00 or BT-43-00.
      */
     private ?EmailURIUniversalCommunication $emailURIUniversalCommunication;
 
@@ -164,7 +163,7 @@ class DefinedTradeContact
         return $definedTradeContact;
     }
 
-    public static function fromEN16931(SellerContact $contact): static
+    public static function fromEN16931(BuyerContact|SellerContact $contact): self
     {
         return (new self())
             ->setPersonName($contact->getPoint())

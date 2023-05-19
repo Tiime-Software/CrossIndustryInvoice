@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\HeaderApplicableTradeTax;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeSettlementHeaderMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\InvoiceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount;
@@ -21,88 +19,13 @@ use Tiime\EN16931\Invoice;
 /**
  * BG-19.
  */
-class ApplicableHeaderTradeSettlement
+class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeSettlement
 {
-    protected const XML_NODE = 'ram:ApplicableHeaderTradeSettlement';
-
-    /**
-     * BT-90.
-     */
-    private ?BankAssignedCreditorIdentifier $creditorReferenceIdentifier;
-
-    /**
-     * BT-83.
-     */
-    private ?string $paymentReference;
-
-    /**
-     * BT-6.
-     */
-    private ?CurrencyCode $taxCurrencyCode;
-
-    /**
-     * BT-5.
-     */
-    private CurrencyCode $invoiceCurrencyCode;
-
-    /**
-     * BG-10.
-     */
-    private ?PayeeTradeParty $payeeTradeParty;
-
-    /**
-     * BG-16.
-     */
-    private ?SpecifiedTradeSettlementPaymentMeans $specifiedTradeSettlementPaymentMeans;
-
-    /**
-     * BG-23.
-     *
-     * @var non-empty-array<int, HeaderApplicableTradeTax>
-     */
-    private array $applicableTradeTaxes;
-
-    /**
-     * BG-14.
-     */
-    private ?BillingSpecifiedPeriod $billingSpecifiedPeriod;
-
-    /**
-     * BG-20.
-     *
-     * @var array<int, SpecifiedTradeAllowance>
-     */
-    private array $specifiedTradeAllowances;
-
-    /**
-     * BG-21.
-     *
-     * @var array<int, SpecifiedTradeCharge>
-     */
-    private array $specifiedTradeCharges;
-
-    /**
-     * BT-20-00.
-     */
-    private ?SpecifiedTradePaymentTerms $specifiedTradePaymentTerms;
-
-    /**
-     * BG-22.
-     */
-    private SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation;
-
-    /**
-     * BG-3.
-     */
-    private ?InvoiceReferencedDocument $invoiceReferencedDocument;
-
-    /**
-     * BT-19-00.
-     */
-    private ?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount;
-
-    public function __construct(CurrencyCode $invoiceCurrencyCode, array $applicableTradeTaxes, SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation)
-    {
+    public function __construct(
+        CurrencyCode $invoiceCurrencyCode,
+        array $applicableTradeTaxes,
+        SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation
+    ) {
         $tmpApplicableTradeTaxes = [];
 
         foreach ($applicableTradeTaxes as $applicableTradeTax) {
@@ -117,183 +40,18 @@ class ApplicableHeaderTradeSettlement
             throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one HeaderApplicableTradeTax.');
         }
 
-        $this->invoiceCurrencyCode                             = $invoiceCurrencyCode;
-        $this->applicableTradeTaxes                            = $tmpApplicableTradeTaxes;
-        $this->specifiedTradeSettlementHeaderMonetarySummation = $specifiedTradeSettlementHeaderMonetarySummation;
-        $this->creditorReferenceIdentifier                     = null;
-        $this->paymentReference                                = null;
-        $this->taxCurrencyCode                                 = null;
-        $this->payeeTradeParty                                 = null;
-        $this->specifiedTradeSettlementPaymentMeans            = null;
-        $this->billingSpecifiedPeriod                          = null;
-        $this->specifiedTradePaymentTerms                      = null;
-        $this->invoiceReferencedDocument                       = null;
-        $this->receivableSpecifiedTradeAccountingAccount       = null;
-        $this->specifiedTradeAllowances                        = [];
-        $this->specifiedTradeCharges                           = [];
+        parent::__construct($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
     }
 
-    public function getCreditorReferenceIdentifier(): ?BankAssignedCreditorIdentifier
+    // @todo : Ask feedback
+    // public function setSpecifiedTradeSettlementPaymentMeans(?SpecifiedTradeSettlementPaymentMeans $specifiedTradeSettlementPaymentMeans): static
+    public function setSpecifiedTradeSettlementPaymentMeans(SpecifiedTradeSettlementPaymentMeans|\Tiime\CrossIndustryInvoice\DataType\BasicWL\SpecifiedTradeSettlementPaymentMeans|null $specifiedTradeSettlementPaymentMeans): static
     {
-        return $this->creditorReferenceIdentifier;
-    }
-
-    public function setCreditorReferenceIdentifier(?BankAssignedCreditorIdentifier $creditorReferenceIdentifier): static
-    {
-        $this->creditorReferenceIdentifier = $creditorReferenceIdentifier;
-
-        return $this;
-    }
-
-    public function getPaymentReference(): ?string
-    {
-        return $this->paymentReference;
-    }
-
-    public function setPaymentReference(?string $paymentReference): static
-    {
-        $this->paymentReference = $paymentReference;
-
-        return $this;
-    }
-
-    public function getTaxCurrencyCode(): ?CurrencyCode
-    {
-        return $this->taxCurrencyCode;
-    }
-
-    public function setTaxCurrencyCode(?CurrencyCode $taxCurrencyCode): static
-    {
-        $this->taxCurrencyCode = $taxCurrencyCode;
-
-        return $this;
-    }
-
-    public function getInvoiceCurrencyCode(): CurrencyCode
-    {
-        return $this->invoiceCurrencyCode;
-    }
-
-    public function getPayeeTradeParty(): ?PayeeTradeParty
-    {
-        return $this->payeeTradeParty;
-    }
-
-    public function setPayeeTradeParty(?PayeeTradeParty $payeeTradeParty): static
-    {
-        $this->payeeTradeParty = $payeeTradeParty;
-
-        return $this;
-    }
-
-    public function getSpecifiedTradeSettlementPaymentMeans(): ?SpecifiedTradeSettlementPaymentMeans
-    {
-        return $this->specifiedTradeSettlementPaymentMeans;
-    }
-
-    public function setSpecifiedTradeSettlementPaymentMeans(?SpecifiedTradeSettlementPaymentMeans $specifiedTradeSettlementPaymentMeans): static
-    {
-        $this->specifiedTradeSettlementPaymentMeans = $specifiedTradeSettlementPaymentMeans;
-
-        return $this;
-    }
-
-    public function getApplicableTradeTaxes(): array
-    {
-        return $this->applicableTradeTaxes;
-    }
-
-    public function getBillingSpecifiedPeriod(): ?BillingSpecifiedPeriod
-    {
-        return $this->billingSpecifiedPeriod;
-    }
-
-    public function setBillingSpecifiedPeriod(?BillingSpecifiedPeriod $billingSpecifiedPeriod): static
-    {
-        $this->billingSpecifiedPeriod = $billingSpecifiedPeriod;
-
-        return $this;
-    }
-
-    public function getSpecifiedTradeAllowances(): array
-    {
-        return $this->specifiedTradeAllowances;
-    }
-
-    public function setSpecifiedTradeAllowances(array $specifiedTradeAllowances): static
-    {
-        $tmpSpecifiedTradeAllowances = [];
-
-        foreach ($specifiedTradeAllowances as $specifiedTradeAllowance) {
-            if (!$specifiedTradeAllowance instanceof SpecifiedTradeAllowance) {
-                throw new \TypeError();
-            }
-            $tmpSpecifiedTradeAllowances[] = $specifiedTradeAllowance;
+        if (null !== $specifiedTradeSettlementPaymentMeans && !$specifiedTradeSettlementPaymentMeans instanceof SpecifiedTradeSettlementPaymentMeans) {
+            throw new \TypeError();
         }
 
-        $this->specifiedTradeAllowances = $tmpSpecifiedTradeAllowances;
-
-        return $this;
-    }
-
-    public function getSpecifiedTradeCharges(): array
-    {
-        return $this->specifiedTradeCharges;
-    }
-
-    public function setSpecifiedTradeCharges(array $specifiedTradeCharges): static
-    {
-        $tmpSpecifiedTradeCharges = [];
-
-        foreach ($specifiedTradeCharges as $specifiedTradeCharge) {
-            if (!$specifiedTradeCharge instanceof SpecifiedTradeCharge) {
-                throw new \TypeError();
-            }
-            $tmpSpecifiedTradeCharges[] = $specifiedTradeCharge;
-        }
-
-        $this->specifiedTradeCharges = $tmpSpecifiedTradeCharges;
-
-        return $this;
-    }
-
-    public function getSpecifiedTradePaymentTerms(): ?SpecifiedTradePaymentTerms
-    {
-        return $this->specifiedTradePaymentTerms;
-    }
-
-    public function setSpecifiedTradePaymentTerms(?SpecifiedTradePaymentTerms $specifiedTradePaymentTerms): static
-    {
-        $this->specifiedTradePaymentTerms = $specifiedTradePaymentTerms;
-
-        return $this;
-    }
-
-    public function getSpecifiedTradeSettlementHeaderMonetarySummation(): SpecifiedTradeSettlementHeaderMonetarySummation
-    {
-        return $this->specifiedTradeSettlementHeaderMonetarySummation;
-    }
-
-    public function getInvoiceReferencedDocument(): ?InvoiceReferencedDocument
-    {
-        return $this->invoiceReferencedDocument;
-    }
-
-    public function setInvoiceReferencedDocument(?InvoiceReferencedDocument $invoiceReferencedDocument): static
-    {
-        $this->invoiceReferencedDocument = $invoiceReferencedDocument;
-
-        return $this;
-    }
-
-    public function getReceivableSpecifiedTradeAccountingAccount(): ?ReceivableSpecifiedTradeAccountingAccount
-    {
-        return $this->receivableSpecifiedTradeAccountingAccount;
-    }
-
-    public function setReceivableSpecifiedTradeAccountingAccount(?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount): static
-    {
-        $this->receivableSpecifiedTradeAccountingAccount = $receivableSpecifiedTradeAccountingAccount;
+        parent::setSpecifiedTradeSettlementPaymentMeans($specifiedTradeSettlementPaymentMeans);
 
         return $this;
     }
@@ -461,7 +219,7 @@ class ApplicableHeaderTradeSettlement
         return $applicableHeaderTradeSettlement;
     }
 
-    public static function fromEN16931(Invoice $invoice): static
+    public static function fromEN16931(Invoice $invoice): self
     {
         $applicableTradeTaxes     = [];
         $specifiedTradeAllowances = [];

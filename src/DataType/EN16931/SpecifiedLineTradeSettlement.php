@@ -2,53 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\LineSpecifiedTradeAllowance;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\LineSpecifiedTradeCharge;
+use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount;
 use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\AdditionalReferencedDocument;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\ReceivableSpecifiedTradeAccountingAccount;
 use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
 
 /**
  * BG-30-00.
  */
-class SpecifiedLineTradeSettlement
+class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedLineTradeSettlement
 {
-    protected const XML_NODE = 'ram:SpecifiedLineTradeSettlement';
-
-    /**
-     * BG-30.
-     */
-    private ApplicableTradeTax $applicableTradeTax;
-
-    /**
-     * BG-26.
-     */
-    private ?BillingSpecifiedPeriod $billingSpecifiedPeriod;
-
-    /**
-     * BG-27.
-     *
-     * @var array<int, LineSpecifiedTradeAllowance>
-     */
-    private array $specifiedTradeAllowances;
-
-    /**
-     * BG-28.
-     *
-     * @var array<int, LineSpecifiedTradeCharge>
-     */
-    private array $specifiedTradeCharges;
-
-    /**
-     * BT-131-00.
-     */
-    private SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation;
-
     /**
      * BT-128-00.
      */
@@ -59,39 +26,17 @@ class SpecifiedLineTradeSettlement
      */
     private ?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount;
 
-    public function __construct(ApplicableTradeTax $applicableTradeTax, SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation)
-    {
-        $this->applicableTradeTax                            = $applicableTradeTax;
-        $this->specifiedTradeSettlementLineMonetarySummation = $specifiedTradeSettlementLineMonetarySummation;
-        $this->billingSpecifiedPeriod                        = null;
-        $this->additionalReferencedDocument                  = null;
-        $this->receivableSpecifiedTradeAccountingAccount     = null;
-        $this->specifiedTradeAllowances                      = [];
-        $this->specifiedTradeCharges                         = [];
+    public function __construct(
+        ApplicableTradeTax $applicableTradeTax,
+        SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementMonetarySummation
+    ) {
+        parent::__construct($applicableTradeTax, $specifiedTradeSettlementMonetarySummation);
+
+        $this->additionalReferencedDocument              = null;
+        $this->receivableSpecifiedTradeAccountingAccount = null;
     }
 
-    public function getApplicableTradeTax(): ApplicableTradeTax
-    {
-        return $this->applicableTradeTax;
-    }
-
-    public function getBillingSpecifiedPeriod(): ?BillingSpecifiedPeriod
-    {
-        return $this->billingSpecifiedPeriod;
-    }
-
-    public function setBillingSpecifiedPeriod(?BillingSpecifiedPeriod $billingSpecifiedPeriod): static
-    {
-        $this->billingSpecifiedPeriod = $billingSpecifiedPeriod;
-
-        return $this;
-    }
-
-    public function getSpecifiedTradeAllowances(): array
-    {
-        return $this->specifiedTradeAllowances;
-    }
-
+    // @todo Feedback : keep this to override extends method and keep the check for LineSpecifiedTradeAllowance (EN16931)
     public function setSpecifiedTradeAllowances(array $specifiedTradeAllowances): static
     {
         $tmpSpecifiedTradeAllowances = [];
@@ -108,11 +53,7 @@ class SpecifiedLineTradeSettlement
         return $this;
     }
 
-    public function getSpecifiedTradeCharges(): array
-    {
-        return $this->specifiedTradeCharges;
-    }
-
+    // @todo Feedback : keep this to override extends method and keep the check for LineSpecifiedTradeCharge (EN16931)
     public function setSpecifiedTradeCharges(array $specifiedTradeCharges): static
     {
         $tmpSpecifiedTradeCharges = [];
@@ -127,11 +68,6 @@ class SpecifiedLineTradeSettlement
         $this->specifiedTradeCharges = $tmpSpecifiedTradeCharges;
 
         return $this;
-    }
-
-    public function getSpecifiedTradeSettlementLineMonetarySummation(): SpecifiedTradeSettlementLineMonetarySummation
-    {
-        return $this->specifiedTradeSettlementLineMonetarySummation;
     }
 
     public function getAdditionalReferencedDocument(): ?AdditionalReferencedDocument
@@ -176,7 +112,7 @@ class SpecifiedLineTradeSettlement
             $currentNode->appendChild($specifiedTradeCharge->toXML($document));
         }
 
-        $currentNode->appendChild($this->specifiedTradeSettlementLineMonetarySummation->toXML($document));
+        $currentNode->appendChild($this->specifiedTradeSettlementMonetarySummation->toXML($document));
 
         if ($this->additionalReferencedDocument instanceof AdditionalReferencedDocument) {
             $currentNode->appendChild($this->additionalReferencedDocument->toXML($document));
@@ -233,7 +169,7 @@ class SpecifiedLineTradeSettlement
         return $specifiedLineTradeSettlement;
     }
 
-    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    public static function fromEN16931(InvoiceLine $invoiceLine): self
     {
         $applicableTradeTax = (new ApplicableTradeTax($invoiceLine->getLineVatInformation()->getInvoicedItemVatCategoryCode()))
             ->setRateApplicablePercent($invoiceLine->getLineVatInformation()->getInvoicedItemVatRate());

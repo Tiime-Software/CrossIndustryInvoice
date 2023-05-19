@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\DataType\Reference\ReceivingAdviceReference;
 
@@ -58,8 +58,6 @@ class ReceivingAdviceReferencedDocument
             throw new \Exception('Malformed');
         }
 
-        $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
-
-        return new self(new ReceivingAdviceReference($issuerAssignedIdentifier));
+        return new self(new ReceivingAdviceReference($issuerAssignedIdentifierElements->item(0)->nodeValue));
     }
 }

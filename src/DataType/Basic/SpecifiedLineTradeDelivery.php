@@ -53,7 +53,7 @@ class SpecifiedLineTradeDelivery
         return new self($billedQuantity);
     }
 
-    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    public static function fromEN16931(InvoiceLine $invoiceLine): self
     {
         return new self(new BilledQuantity(
             $invoiceLine->getInvoicedQuantity(),

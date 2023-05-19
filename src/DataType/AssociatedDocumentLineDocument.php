@@ -89,7 +89,7 @@ class AssociatedDocumentLineDocument
         return $associatedDocumentLineDocument;
     }
 
-    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    public static function fromEN16931(InvoiceLine $invoiceLine): self
     {
         return (new self($invoiceLine->getIdentifier()))
             ->setIncludedNote(\is_string($invoiceLine->getNote()) ? new LineIncludedNote($invoiceLine->getNote()) : null);

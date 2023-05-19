@@ -2,25 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\Basic\GrossPriceProductTradePrice;
+use Tiime\CrossIndustryInvoice\DataType\LineBuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement\BuyerOrderReferencedDocument;
 use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
 use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
 
 /**
  * BG-29.
  */
-class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\SpecifiedLineTradeAgreement
+class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedLineTradeAgreement
 {
-    protected const XML_NODE = 'ram:SpecifiedLineTradeAgreement';
-
     /**
      * BT-132-00.
      */
-    private ?BuyerOrderReferencedDocument $buyerOrderReferencedDocument;
+    private ?LineBuyerOrderReferencedDocument $buyerOrderReferencedDocument;
 
     public function __construct(NetPriceProductTradePrice $netPriceProductTradePrice)
     {
@@ -29,12 +27,12 @@ class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\S
         $this->buyerOrderReferencedDocument = null;
     }
 
-    public function getBuyerOrderReferencedDocument(): ?BuyerOrderReferencedDocument
+    public function getBuyerOrderReferencedDocument(): ?LineBuyerOrderReferencedDocument
     {
         return $this->buyerOrderReferencedDocument;
     }
 
-    public function setBuyerOrderReferencedDocument(?BuyerOrderReferencedDocument $buyerOrderReferencedDocument): static
+    public function setBuyerOrderReferencedDocument(?LineBuyerOrderReferencedDocument $buyerOrderReferencedDocument): static
     {
         $this->buyerOrderReferencedDocument = $buyerOrderReferencedDocument;
 
@@ -45,11 +43,11 @@ class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\S
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        if ($this->buyerOrderReferencedDocument instanceof BuyerOrderReferencedDocument) {
+        if ($this->buyerOrderReferencedDocument instanceof LineBuyerOrderReferencedDocument) {
             $currentNode->appendChild($this->buyerOrderReferencedDocument->toXML($document));
         }
 
-        if ($this->getGrossPriceProductTradePrice() instanceof GrossPriceProductTradePrice) {
+        if ($this->grossPriceProductTradePrice instanceof GrossPriceProductTradePrice) {
             $currentNode->appendChild($this->getGrossPriceProductTradePrice()->toXML($document));
         }
 
@@ -69,13 +67,13 @@ class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\S
         /** @var \DOMElement $specifiedLineTradeAgreementElement */
         $specifiedLineTradeAgreementElement = $specifiedLineTradeAgreementElements->item(0);
 
-        $buyerOrderReferencedDocument = BuyerOrderReferencedDocument::fromXML($xpath, $specifiedLineTradeAgreementElement);
+        $buyerOrderReferencedDocument = LineBuyerOrderReferencedDocument::fromXML($xpath, $specifiedLineTradeAgreementElement);
         $grossPriceProductTradePrice  = GrossPriceProductTradePrice::fromXML($xpath, $specifiedLineTradeAgreementElement);
         $netPriceProductTradePrice    = NetPriceProductTradePrice::fromXML($xpath, $specifiedLineTradeAgreementElement);
 
         $specifiedLineTradeAgreement = new self($netPriceProductTradePrice);
 
-        if ($buyerOrderReferencedDocument instanceof BuyerOrderReferencedDocument) {
+        if ($buyerOrderReferencedDocument instanceof LineBuyerOrderReferencedDocument) {
             $specifiedLineTradeAgreement->setBuyerOrderReferencedDocument($buyerOrderReferencedDocument);
         }
 
@@ -86,10 +84,10 @@ class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\S
         return $specifiedLineTradeAgreement;
     }
 
-    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    public static function fromEN16931(InvoiceLine $invoiceLine): self
     {
         $buyerOrderReferencedDocument = $invoiceLine->getReferencedPurchaseOrderLineReference() instanceof PurchaseOrderLineReference
-            ? BuyerOrderReferencedDocument::fromEN16931($invoiceLine)
+            ? LineBuyerOrderReferencedDocument::fromEN16931($invoiceLine)
             : null;
 
         return (new self(NetPriceProductTradePrice::fromEN16931($invoiceLine->getPriceDetails())))

@@ -82,7 +82,7 @@ class ExchangedDocumentContext
         return $exchangedDocumentContext;
     }
 
-    public static function fromEN16931(Invoice $invoice): static
+    public static function fromEN16931(Invoice $invoice): self
     {
         $processControl = $invoice->getProcessControl();
 

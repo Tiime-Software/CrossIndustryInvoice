@@ -233,7 +233,7 @@ class SpecifiedTradeCharge
         return $specifiedTradeCharges;
     }
 
-    public static function fromEN16931(DocumentLevelCharge $charge): static
+    public static function fromEN16931(DocumentLevelCharge $charge): self
     {
         $specifiedTradeCharge = new self(
             $charge->getAmount(),

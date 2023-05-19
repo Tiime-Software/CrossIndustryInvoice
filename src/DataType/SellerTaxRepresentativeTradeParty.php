@@ -27,13 +27,13 @@ class SellerTaxRepresentativeTradeParty
     /**
      * BT-63-00.
      */
-    private SpecifiedTaxRegistration $specifiedTaxRegistration;
+    private SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA;
 
-    public function __construct(string $name, PostalTradeAddress $postalTradeAddress, SpecifiedTaxRegistration $specifiedTaxRegistration)
+    public function __construct(string $name, PostalTradeAddress $postalTradeAddress, SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA)
     {
-        $this->name                     = $name;
-        $this->postalTradeAddress       = $postalTradeAddress;
-        $this->specifiedTaxRegistration = $specifiedTaxRegistration;
+        $this->name                       = $name;
+        $this->postalTradeAddress         = $postalTradeAddress;
+        $this->specifiedTaxRegistrationVA = $specifiedTaxRegistrationVA;
     }
 
     public function getName(): string
@@ -46,9 +46,9 @@ class SellerTaxRepresentativeTradeParty
         return $this->postalTradeAddress;
     }
 
-    public function getSpecifiedTaxRegistration(): SpecifiedTaxRegistration
+    public function getSpecifiedTaxRegistrationVA(): SpecifiedTaxRegistrationVA
     {
-        return $this->specifiedTaxRegistration;
+        return $this->specifiedTaxRegistrationVA;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
@@ -56,10 +56,8 @@ class SellerTaxRepresentativeTradeParty
         $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($document->createElement('ram:Name', $this->name));
-
         $currentNode->appendChild($this->postalTradeAddress->toXML($document));
-
-        $currentNode->appendChild($this->specifiedTaxRegistration->toXML($document));
+        $currentNode->appendChild($this->specifiedTaxRegistrationVA->toXML($document));
 
         return $currentNode;
     }
@@ -87,26 +85,26 @@ class SellerTaxRepresentativeTradeParty
 
         $name = $nameElements->item(0)->nodeValue;
 
-        $postalTradeAddress        = PostalTradeAddress::fromXML($xpath, $sellerTaxRepresentativeTradePartyElement);
-        $specifiedTaxRegistrations = SpecifiedTaxRegistration::fromXML($xpath, $sellerTaxRepresentativeTradePartyElement);
+        $postalTradeAddress         = PostalTradeAddress::fromXML($xpath, $sellerTaxRepresentativeTradePartyElement);
+        $specifiedTaxRegistrationVA = SpecifiedTaxRegistrationVA::fromXML($xpath, $sellerTaxRepresentativeTradePartyElement);
 
         if (null === $postalTradeAddress) {
             throw new \Exception('Malformed');
         }
 
-        if (1 !== \count($specifiedTaxRegistrations)) {
+        if (!$specifiedTaxRegistrationVA instanceof SpecifiedTaxRegistrationVA) {
             throw new \Exception('Malformed');
         }
 
-        return new self($name, $postalTradeAddress, $specifiedTaxRegistrations[0]);
+        return new self($name, $postalTradeAddress, $specifiedTaxRegistrationVA);
     }
 
-    public static function fromEN16931(SellerTaxRepresentativeParty $sellerTaxRepresentativeParty): static
+    public static function fromEN16931(SellerTaxRepresentativeParty $sellerTaxRepresentativeParty): self
     {
         return new self(
             $sellerTaxRepresentativeParty->getName(),
             PostalTradeAddress::fromEN16931($sellerTaxRepresentativeParty->getAddress()),
-            new SpecifiedTaxRegistration($sellerTaxRepresentativeParty->getVatIdentifier())
+            new SpecifiedTaxRegistrationVA($sellerTaxRepresentativeParty->getVatIdentifier())
         );
     }
 }

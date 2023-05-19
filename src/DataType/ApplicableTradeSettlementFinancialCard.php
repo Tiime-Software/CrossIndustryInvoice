@@ -96,7 +96,7 @@ class ApplicableTradeSettlementFinancialCard
         return $applicableTradeSettlementFinancialCard;
     }
 
-    public static function fromEN16931(PaymentCardInformation $paymentCardInformation): static
+    public static function fromEN16931(PaymentCardInformation $paymentCardInformation): self
     {
         return (new self($paymentCardInformation->getPrimaryAccountNumber()))
             ->setCardholderName($paymentCardInformation->getHolderName());

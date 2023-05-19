@@ -94,7 +94,7 @@ class InvoiceReferencedDocument
         return $invoiceReferencedDocument;
     }
 
-    public static function fromEN16931(Invoice $invoice): static
+    public static function fromEN16931(Invoice $invoice): self
     {
         $precedingInvoices = $invoice->getPrecedingInvoices();
 

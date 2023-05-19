@@ -1,6 +1,6 @@
 <?php
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\DataType\ItemTypeCode;
 
@@ -64,7 +64,7 @@ class ClassCode
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $classCodeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

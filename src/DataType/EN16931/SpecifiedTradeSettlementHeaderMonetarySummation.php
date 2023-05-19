@@ -225,7 +225,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $specifiedTradeSettlementHeaderMonetarySummation;
     }
 
-    public static function fromEN16931(DocumentTotals $documentTotals): static
+    public static function fromEN16931(DocumentTotals $documentTotals): self
     {
         $specifiedTradeSettlementHeaderMonetarySummation = new self(
             $documentTotals->getInvoiceTotalAmountWithoutVat(),

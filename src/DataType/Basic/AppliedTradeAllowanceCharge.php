@@ -80,7 +80,7 @@ class AppliedTradeAllowanceCharge
         return new self((float) $actualAmount);
     }
 
-    public static function fromEN16931(PriceDetails $priceDetails): static
+    public static function fromEN16931(PriceDetails $priceDetails): self
     {
         return new self($priceDetails->getItemPriceDiscount());
     }

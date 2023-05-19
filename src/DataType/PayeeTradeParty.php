@@ -157,7 +157,7 @@ class PayeeTradeParty
         return $payeeTradeParty;
     }
 
-    public static function fromEN16931(Payee $payee): static
+    public static function fromEN16931(Payee $payee): self
     {
         $identifier       = null;
         $globalIdentifier = null;

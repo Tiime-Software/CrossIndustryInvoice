@@ -106,7 +106,7 @@ class CrossIndustryInvoice
 
         return new self($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
     }
-  
+
     public static function fromEN16931(Invoice $invoice): self
     {
         return new self(

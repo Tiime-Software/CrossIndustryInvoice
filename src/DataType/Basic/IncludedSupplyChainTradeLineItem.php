@@ -1,13 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\CrossIndustryInvoice\DataType\AssociatedDocumentLineDocument;
-use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedLineTradeDelivery;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeProduct;
-use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
 
 /**
  * BG-25.
@@ -19,27 +14,27 @@ class IncludedSupplyChainTradeLineItem
     /**
      * BT-126-00.
      */
-    private AssociatedDocumentLineDocument $associatedDocumentLineDocument;
+    protected AssociatedDocumentLineDocument $associatedDocumentLineDocument;
 
     /**
      * BG-31.
      */
-    private SpecifiedTradeProduct $specifiedTradeProduct;
+    protected SpecifiedTradeProduct $specifiedTradeProduct;
 
     /**
      * BG-29.
      */
-    private SpecifiedLineTradeAgreement $specifiedLineTradeAgreement;
+    protected SpecifiedLineTradeAgreement $specifiedLineTradeAgreement;
 
     /**
      * BT-129-00.
      */
-    private SpecifiedLineTradeDelivery $specifiedLineTradeDelivery;
+    protected SpecifiedLineTradeDelivery $specifiedLineTradeDelivery;
 
     /**
      * BG-30-00.
      */
-    private SpecifiedLineTradeSettlement $specifiedLineTradeSettlement;
+    protected SpecifiedLineTradeSettlement $specifiedLineTradeSettlement;
 
     public function __construct(
         AssociatedDocumentLineDocument $associatedDocumentLineDocument,
@@ -114,16 +109,5 @@ class IncludedSupplyChainTradeLineItem
         }
 
         return $includedSupplyChainTradeLineItems;
-    }
-
-    public static function fromEN16931(InvoiceLine $invoiceLine): static
-    {
-        return new self(
-            AssociatedDocumentLineDocument::fromEN16931($invoiceLine),
-            SpecifiedTradeProduct::fromEN16931($invoiceLine->getItemInformation()),
-            SpecifiedLineTradeAgreement::fromEN16931($invoiceLine),
-            SpecifiedLineTradeDelivery::fromEN16931($invoiceLine),
-            SpecifiedLineTradeSettlement::fromEN16931($invoiceLine),
-        );
     }
 }

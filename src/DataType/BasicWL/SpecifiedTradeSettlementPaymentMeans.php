@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\DataType;
+namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeePartyCreditorFinancialAccount;
+use Tiime\CrossIndustryInvoice\DataType\PayerPartyDebtorFinancialAccount;
 use Tiime\EN16931\DataType\PaymentMeansCode;
 
 /**
@@ -17,17 +17,17 @@ class SpecifiedTradeSettlementPaymentMeans
     /**
      * BT-81.
      */
-    private PaymentMeansCode $typeCode;
+    protected PaymentMeansCode $typeCode;
 
     /**
      * BT-91-00.
      */
-    private ?PayerPartyDebtorFinancialAccount $payerPartyDebtorFinancialAccount;
+    protected ?PayerPartyDebtorFinancialAccount $payerPartyDebtorFinancialAccount;
 
     /**
      * BG-17.
      */
-    private ?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount;
+    protected ?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount;
 
     public function __construct(PaymentMeansCode $typeCode)
     {

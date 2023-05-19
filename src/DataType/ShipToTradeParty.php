@@ -170,7 +170,7 @@ class ShipToTradeParty
         return $shipToTradeParty;
     }
 
-    public static function fromEN16931(DeliveryInformation $deliveryInformation): static
+    public static function fromEN16931(DeliveryInformation $deliveryInformation): self
     {
         $identifier       = null;
         $globalIdentifier = null;

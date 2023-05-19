@@ -246,7 +246,7 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
         return $postalTradeAddress;
     }
 
-    public static function fromEN16931(Address $address): static
+    public static function fromEN16931(Address $address): self
     {
         return (new self($address->getCountryCode()))
             ->setPostcodeCode($address->getPostCode())

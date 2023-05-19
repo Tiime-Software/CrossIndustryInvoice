@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 /**
- * BT-42-00.
+ * BT-42-00 or BT-57-00.
  */
 class TelephoneUniversalCommunication
 {
@@ -56,8 +56,6 @@ class TelephoneUniversalCommunication
             throw new \Exception('Malformed');
         }
 
-        $completeNumber = $completeNumberElements->item(0)->nodeValue;
-
-        return new self($completeNumber);
+        return new self($completeNumberElements->item(0)->nodeValue);
     }
 }

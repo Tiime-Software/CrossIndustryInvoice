@@ -121,7 +121,7 @@ class GrossPriceProductTradePrice
         return $grossPriceProductTradePrice;
     }
 
-    public static function fromEN16931(PriceDetails $priceDetails): static
+    public static function fromEN16931(PriceDetails $priceDetails): self
     {
         $appliedTradeAllowanceCharge = \is_float($priceDetails->getItemPriceDiscount())
             ? AppliedTradeAllowanceCharge::fromEN16931($priceDetails)

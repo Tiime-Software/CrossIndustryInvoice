@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 
 /**
- * BT-31-00.
+ * BT-48-00 or BT-63-00 or BT-31-00.
  */
-class SpecifiedTaxRegistrationVAT
+class SpecifiedTaxRegistrationVA
 {
     protected const XML_NODE = 'ram:SpecifiedTaxRegistration';
 
     /**
-     * BT-31.
+     * BT-48 or BT-63 or BT-31.
      */
     private VatIdentifier $identifier;
 
     /**
-     * BT-31-0.
+     * BT-48-0 or BT-63-0 or BT-31-0.
      */
     private string $schemeIdentifier;
 

@@ -16,17 +16,17 @@ class ApplicableHeaderTradeDelivery extends \Tiime\CrossIndustryInvoice\DataType
     /**
      * BG-13.
      */
-    private ?ShipToTradeParty $shipToTradeParty;
+    protected ?ShipToTradeParty $shipToTradeParty;
 
     /**
      * BT-72-00.
      */
-    private ?ActualDeliverySupplyChainEvent $actualDeliverySupplyChainEvent;
+    protected ?ActualDeliverySupplyChainEvent $actualDeliverySupplyChainEvent;
 
     /**
      * BT-16-00.
      */
-    private ?DespatchAdviceReferencedDocument $despatchAdviceReferencedDocument;
+    protected ?DespatchAdviceReferencedDocument $despatchAdviceReferencedDocument;
 
     public function __construct()
     {

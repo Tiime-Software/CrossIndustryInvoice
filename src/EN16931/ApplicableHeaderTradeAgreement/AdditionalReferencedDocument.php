@@ -198,7 +198,7 @@ class AdditionalReferencedDocument
         return $additionalReferencedDocuments;
     }
 
-    public static function fromEN16931(AdditionalSupportingDocument $additionalSupportingDocument): static
+    public static function fromEN16931(AdditionalSupportingDocument $additionalSupportingDocument): self
     {
         return (new self($additionalSupportingDocument->getReference()))
             ->setName($additionalSupportingDocument->getDescription())

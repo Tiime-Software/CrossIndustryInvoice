@@ -2,58 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\SellerSpecifiedLegalOrganization;
+use Tiime\CrossIndustryInvoice\DataType\DefinedTradeContact;
 use Tiime\CrossIndustryInvoice\DataType\SellerGlobalIdentifier;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationFC;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
-use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\DefinedTradeContact;
-use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\SpecifiedTaxRegistration;
-use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\SpecifiedTaxRegistration as SellerSpecifiedTaxRegistration;
-use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty\SpecifiedTaxRegistrationVAT;
 use Tiime\EN16931\BusinessTermsGroup\Seller;
 use Tiime\EN16931\BusinessTermsGroup\SellerContact;
 use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
-use Tiime\EN16931\DataType\Identifier\TaxRegistrationIdentifier;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BG-4.
  */
-class SellerTradeParty
+class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\SellerTradeParty
 {
-    protected const XML_NODE = 'ram:SellerTradeParty';
-
-    /**
-     * BT-29.
-     *
-     * @var array<int, SellerIdentifier>
-     */
-    private array $identifiers;
-
-    /**
-     * BT-29-0 & BT-29-1.
-     *
-     * @var array<int, SellerGlobalIdentifier>
-     */
-    private array $globalIdentifiers;
-
-    /**
-     * BT-27.
-     */
-    private string $name;
-
     /**
      * BT-33.
      */
     private ?string $description;
-
-    /**
-     * BT-30-00.
-     */
-    private ?SellerSpecifiedLegalOrganization $specifiedLegalOrganization;
 
     /**
      * BG-6.
@@ -61,86 +33,17 @@ class SellerTradeParty
     private ?DefinedTradeContact $definedTradeContact;
 
     /**
-     * BG-5.
-     */
-    private PostalTradeAddress $postalTradeAddress;
-
-    /**
-     * BT-34-00.
-     */
-    private ?URIUniversalCommunication $uriUniversalCommunication;
-
-    /**
-     * BT-31-00.
-     */
-    private ?SpecifiedTaxRegistrationVAT $specifiedTaxRegistrationVAT;
-
-    /**
      * BT-32-00.
      */
-    private ?SpecifiedTaxRegistration $specifiedTaxRegistration;
+    private ?SpecifiedTaxRegistrationFC $specifiedTaxRegistrationFC;
 
     public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
     {
-        $this->name                        = $name;
-        $this->postalTradeAddress          = $postalTradeAddress;
-        $this->identifiers                 = [];
-        $this->globalIdentifiers           = [];
-        $this->description                 = null;
-        $this->specifiedLegalOrganization  = null;
-        $this->definedTradeContact         = null;
-        $this->uriUniversalCommunication   = null;
-        $this->specifiedTaxRegistrationVAT = null;
-        $this->specifiedTaxRegistration    = null;
-    }
+        parent::__construct($name, $postalTradeAddress);
 
-    public function getIdentifiers(): array
-    {
-        return $this->identifiers;
-    }
-
-    public function setIdentifiers(array $identifiers): static
-    {
-        $tmpIdentifiers = [];
-
-        foreach ($identifiers as $identifier) {
-            if (!$identifier instanceof SellerIdentifier) {
-                throw new \TypeError();
-            }
-
-            $tmpIdentifiers[] = $identifier;
-        }
-
-        $this->identifiers = $tmpIdentifiers;
-
-        return $this;
-    }
-
-    public function getGlobalIdentifiers(): array
-    {
-        return $this->globalIdentifiers;
-    }
-
-    public function setGlobalIdentifiers(array $globalIdentifiers): static
-    {
-        $tmpGlobalIdentifiers = [];
-
-        foreach ($globalIdentifiers as $globalIdentifier) {
-            if (!$globalIdentifier instanceof SellerGlobalIdentifier) {
-                throw new \TypeError();
-            }
-
-            $tmpGlobalIdentifiers[] = $globalIdentifier;
-        }
-
-        $this->globalIdentifiers = $tmpGlobalIdentifiers;
-
-        return $this;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
+        $this->description                = null;
+        $this->definedTradeContact        = null;
+        $this->specifiedTaxRegistrationFC = null;
     }
 
     public function getDescription(): ?string
@@ -151,18 +54,6 @@ class SellerTradeParty
     public function setDescription(?string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getSpecifiedLegalOrganization(): ?SellerSpecifiedLegalOrganization
-    {
-        return $this->specifiedLegalOrganization;
-    }
-
-    public function setSpecifiedLegalOrganization(?SellerSpecifiedLegalOrganization $specifiedLegalOrganization): static
-    {
-        $this->specifiedLegalOrganization = $specifiedLegalOrganization;
 
         return $this;
     }
@@ -179,43 +70,14 @@ class SellerTradeParty
         return $this;
     }
 
-    public function getPostalTradeAddress(): PostalTradeAddress
+    public function getSpecifiedTaxRegistrationFC(): ?SpecifiedTaxRegistrationFC
     {
-        return $this->postalTradeAddress;
+        return $this->specifiedTaxRegistrationFC;
     }
 
-    public function getUriUniversalCommunication(): ?URIUniversalCommunication
+    public function setSpecifiedTaxRegistrationFC(?SpecifiedTaxRegistrationFC $specifiedTaxRegistrationFC): static
     {
-        return $this->uriUniversalCommunication;
-    }
-
-    public function setUriUniversalCommunication(?URIUniversalCommunication $uriUniversalCommunication): static
-    {
-        $this->uriUniversalCommunication = $uriUniversalCommunication;
-
-        return $this;
-    }
-
-    public function getSpecifiedTaxRegistrationVAT(): ?SpecifiedTaxRegistrationVAT
-    {
-        return $this->specifiedTaxRegistrationVAT;
-    }
-
-    public function setSpecifiedTaxRegistrationVAT(?SpecifiedTaxRegistrationVAT $specifiedTaxRegistrationVAT): static
-    {
-        $this->specifiedTaxRegistrationVAT = $specifiedTaxRegistrationVAT;
-
-        return $this;
-    }
-
-    public function getSpecifiedTaxRegistration(): ?SpecifiedTaxRegistration
-    {
-        return $this->specifiedTaxRegistration;
-    }
-
-    public function setSpecifiedTaxRegistration(?SpecifiedTaxRegistration $specifiedTaxRegistration): static
-    {
-        $this->specifiedTaxRegistration = $specifiedTaxRegistration;
+        $this->specifiedTaxRegistrationFC = $specifiedTaxRegistrationFC;
 
         return $this;
     }
@@ -231,7 +93,6 @@ class SellerTradeParty
         foreach ($this->globalIdentifiers as $globalIdentifier) {
             $globalIdentifierElement = $document->createElement('ram:GlobalID', $globalIdentifier->value);
             $globalIdentifierElement->setAttribute('schemeID', $globalIdentifier->scheme->value);
-
             $currentNode->appendChild($globalIdentifierElement);
         }
 
@@ -251,16 +112,16 @@ class SellerTradeParty
 
         $currentNode->appendChild($this->postalTradeAddress->toXML($document));
 
-        if ($this->uriUniversalCommunication instanceof URIUniversalCommunication) {
-            $currentNode->appendChild($this->uriUniversalCommunication->toXML($document));
+        if ($this->URIUniversalCommunication instanceof URIUniversalCommunication) {
+            $currentNode->appendChild($this->URIUniversalCommunication->toXML($document));
         }
 
-        if ($this->specifiedTaxRegistrationVAT instanceof SpecifiedTaxRegistrationVAT) {
-            $currentNode->appendChild($this->specifiedTaxRegistrationVAT->toXML($document));
+        if ($this->specifiedTaxRegistrationVA instanceof SpecifiedTaxRegistrationVA) {
+            $currentNode->appendChild($this->specifiedTaxRegistrationVA->toXML($document));
         }
 
-        if ($this->specifiedTaxRegistration instanceof SpecifiedTaxRegistration) {
-            $currentNode->appendChild($this->specifiedTaxRegistration->toXML($document));
+        if ($this->specifiedTaxRegistrationFC instanceof SpecifiedTaxRegistrationFC) {
+            $currentNode->appendChild($this->specifiedTaxRegistrationFC->toXML($document));
         }
 
         return $currentNode;
@@ -291,13 +152,13 @@ class SellerTradeParty
 
         $name = $nameElements->item(0)->nodeValue;
 
-        $globalIdentifiers           = SellerGlobalIdentifier::fromXML($xpath, $sellerTradePartyElement);
-        $specifiedLegalOrganization  = SellerSpecifiedLegalOrganization::fromXML($xpath, $sellerTradePartyElement);
-        $definedTradeContact         = DefinedTradeContact::fromXML($xpath, $sellerTradePartyElement);
-        $postalTradeAddress          = PostalTradeAddress::fromXML($xpath, $sellerTradePartyElement);
-        $uriUniversalCommunication   = URIUniversalCommunication::fromXML($xpath, $sellerTradePartyElement);
-        $specifiedTaxRegistrationVAT = SpecifiedTaxRegistrationVAT::fromXML($xpath, $sellerTradePartyElement);
-        $specifiedTaxRegistration    = SpecifiedTaxRegistration::fromXML($xpath, $sellerTradePartyElement);
+        $globalIdentifiers          = SellerGlobalIdentifier::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedLegalOrganization = SellerSpecifiedLegalOrganization::fromXML($xpath, $sellerTradePartyElement);
+        $definedTradeContact        = DefinedTradeContact::fromXML($xpath, $sellerTradePartyElement);
+        $postalTradeAddress         = PostalTradeAddress::fromXML($xpath, $sellerTradePartyElement);
+        $uriUniversalCommunication  = URIUniversalCommunication::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedTaxRegistrationVA = SpecifiedTaxRegistrationVA::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedTaxRegistrationFC = SpecifiedTaxRegistrationFC::fromXML($xpath, $sellerTradePartyElement);
 
         if (!$postalTradeAddress instanceof PostalTradeAddress) {
             throw new \Exception('Malformed');
@@ -336,18 +197,18 @@ class SellerTradeParty
             $sellerTradeParty->setUriUniversalCommunication($uriUniversalCommunication);
         }
 
-        if ($specifiedTaxRegistrationVAT instanceof SpecifiedTaxRegistrationVAT) {
-            $sellerTradeParty->setSpecifiedTaxRegistrationVATs($specifiedTaxRegistrationVAT);
+        if ($specifiedTaxRegistrationVA instanceof SpecifiedTaxRegistrationVA) {
+            $sellerTradeParty->setSpecifiedTaxRegistrationVA($specifiedTaxRegistrationVA);
         }
 
-        if ($specifiedTaxRegistration instanceof SpecifiedTaxRegistration) {
-            $sellerTradeParty->setSpecifiedTaxRegistrations($specifiedTaxRegistration);
+        if ($specifiedTaxRegistrationFC instanceof SpecifiedTaxRegistrationFC) {
+            $sellerTradeParty->setSpecifiedTaxRegistrationFC($specifiedTaxRegistrationFC);
         }
 
         return $sellerTradeParty;
     }
 
-    public static function fromEN16931(Seller $seller): static
+    public static function fromEN16931(Seller $seller): self
     {
         $identifiers       = [];
         $globalIdentifiers = [];
@@ -375,15 +236,16 @@ class SellerTradeParty
                     : null
             )
             ->setUriUniversalCommunication($seller->getElectronicAddress())
-            ->setSpecifiedTaxRegistrationVAT(
+            ->setSpecifiedTaxRegistrationVA(
                 $seller->getVatIdentifier() instanceof VatIdentifier
-                    ? (new SpecifiedTaxRegistrationVAT())->setIdentifier($seller->getVatIdentifier())
-                    : null
-            )
-            ->setSpecifiedTaxRegistration(
-                $seller->getTaxRegistrationIdentifier() instanceof TaxRegistrationIdentifier
-                    ? (new SellerSpecifiedTaxRegistration())->setIdentifier($seller->getTaxRegistrationIdentifier())
+                    ? new SpecifiedTaxRegistrationVA($seller->getVatIdentifier())
                     : null
             );
+        // @todo : Verify what wanted to be done
+        // ->setSpecifiedTaxRegistrationFC(
+        //      $seller->getTaxRegistrationIdentifier() instanceof TaxRegistrationIdentifier
+        //          ? (new SellerSpecifiedTaxRegistration())->setIdentifier($seller->getTaxRegistrationIdentifier())
+        //          : null
+        // );
     }
 }

@@ -90,7 +90,7 @@ class NetPriceProductTradePrice
         return $netPriceProductTradePrice;
     }
 
-    public static function fromEN16931(PriceDetails $priceDetails): static
+    public static function fromEN16931(PriceDetails $priceDetails): self
     {
         $basisQuantity = \is_float($priceDetails->getItemPriceBaseQuantity())
             ? BasisQuantity::fromEN16931($priceDetails)

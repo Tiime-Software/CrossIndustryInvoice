@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement;
+namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
 use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
@@ -10,7 +10,7 @@ use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
 /**
  * BT-132-00.
  */
-class BuyerOrderReferencedDocument
+class LineBuyerOrderReferencedDocument
 {
     protected const XML_NODE = 'ram:BuyerOrderReferencedDocument';
 
@@ -76,7 +76,7 @@ class BuyerOrderReferencedDocument
         return $buyerOrderReferencedDocument;
     }
 
-    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    public static function fromEN16931(InvoiceLine $invoiceLine): self
     {
         return (new self())->setLineIdentifier($invoiceLine->getReferencedPurchaseOrderLineReference());
     }

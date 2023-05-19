@@ -136,7 +136,7 @@ class SpecifiedTradePaymentTerms
         return $specifiedTradePaymentTerms;
     }
 
-    public static function fromEN16931(Invoice $invoice): static
+    public static function fromEN16931(Invoice $invoice): self
     {
         return (new self())
             ->setDescription($invoice->getPaymentTerms())

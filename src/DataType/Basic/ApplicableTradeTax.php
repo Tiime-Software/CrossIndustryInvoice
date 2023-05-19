@@ -60,16 +60,16 @@ class ApplicableTradeTax
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement(self::XML_NODE);
+        $currentNode = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
-        $element->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
+        $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
+        $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
 
         if ($this->rateApplicablePercent instanceof Percentage) {
-            $element->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->rateApplicablePercent->getValueRounded()));
+            $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->rateApplicablePercent->getValueRounded()));
         }
 
-        return $element;
+        return $currentNode;
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
-use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 
 /**
  * BG-4.
@@ -30,17 +30,15 @@ class SellerTradeParty
 
     /**
      * BT-31-00.
-     *
-     * @var array<int, SpecifiedTaxRegistration>
      */
-    protected array $specifiedTaxRegistrations;
+    protected ?SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA;
 
     public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
     {
         $this->name                       = $name;
         $this->postalTradeAddress         = $postalTradeAddress;
         $this->specifiedLegalOrganization = null;
-        $this->specifiedTaxRegistrations  = [];
+        $this->specifiedTaxRegistrationVA = null;
     }
 
     public function getName(): string
@@ -65,14 +63,14 @@ class SellerTradeParty
         return $this->postalTradeAddress;
     }
 
-    public function getSpecifiedTaxRegistrations(): array
+    public function getSpecifiedTaxRegistrationVA(): ?SpecifiedTaxRegistrationVA
     {
-        return $this->specifiedTaxRegistrations;
+        return $this->specifiedTaxRegistrationVA;
     }
 
-    public function setSpecifiedTaxRegistrations(array $specifiedTaxRegistrations): static
+    public function setSpecifiedTaxRegistrationVA(?SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA): static
     {
-        $this->specifiedTaxRegistrations = $specifiedTaxRegistrations;
+        $this->specifiedTaxRegistrationVA = $specifiedTaxRegistrationVA;
 
         return $this;
     }
@@ -89,9 +87,8 @@ class SellerTradeParty
 
         $currentNode->appendChild($this->postalTradeAddress->toXML($document));
 
-        /** @var SpecifiedTaxRegistration $specifiedTaxRegistration */
-        foreach ($this->specifiedTaxRegistrations as $specifiedTaxRegistration) {
-            $currentNode->appendChild($specifiedTaxRegistration->toXML($document));
+        if ($this->specifiedTaxRegistrationVA instanceof SpecifiedTaxRegistrationVA) {
+            $currentNode->appendChild($this->specifiedTaxRegistrationVA->toXML($document));
         }
 
         return $currentNode;
@@ -118,7 +115,7 @@ class SellerTradeParty
 
         $postalTradeAddress         = PostalTradeAddress::fromXML($xpath, $sellerTradePartyElement);
         $specifiedLegalOrganization = SellerSpecifiedLegalOrganization::fromXML($xpath, $sellerTradePartyElement);
-        $specifiedTaxRegistrations  = SpecifiedTaxRegistration::fromXML($xpath, $sellerTradePartyElement);
+        $specifiedTaxRegistrationVA = SpecifiedTaxRegistrationVA::fromXML($xpath, $sellerTradePartyElement);
 
         if (null === $postalTradeAddress) {
             throw new \Exception('Malformed');
@@ -130,8 +127,8 @@ class SellerTradeParty
             $sellerTradeParty->setSpecifiedLegalOrganization($specifiedLegalOrganization);
         }
 
-        if (\count($specifiedTaxRegistrations) > 0) {
-            $sellerTradeParty->setSpecifiedTaxRegistrations($specifiedTaxRegistrations);
+        if ($specifiedTaxRegistrationVA instanceof SpecifiedTaxRegistrationVA) {
+            $sellerTradeParty->setSpecifiedTaxRegistrationVA($specifiedTaxRegistrationVA);
         }
 
         return $sellerTradeParty;

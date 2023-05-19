@@ -2,39 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\EN16931;
+namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\EN16931\Invoice;
 
 /**
  * BG-25-00.
  */
-class SupplyChainTradeTransaction
+class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\Basic\SupplyChainTradeTransaction
 {
-    protected const XML_NODE = 'ram:SupplyChainTradeTransaction';
-
-    /**
-     * BG-1.
-     *
-     * @var array<int, IncludedSupplyChainTradeLineItem>
-     */
-    private array $includedSupplyChainTradeLineItems;
-
-    /**
-     * BT-10-00.
-     */
-    private ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement;
-
-    /**
-     * BT-13-00.
-     */
-    private ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery;
-
-    /**
-     * BG-19.
-     */
-    private ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement;
-
     public function __construct(
         array $includedSupplyChainTradeLineItems,
         ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement,
@@ -55,49 +31,26 @@ class SupplyChainTradeTransaction
             $tmpIncludedSupplyChainTradeLineItems[] = $includedSupplyChainTradeLineItem;
         }
 
-        if (empty($tmpIncludedSupplyChainTradeLineItems)) {
+        if (0 === \count($tmpIncludedSupplyChainTradeLineItems)) {
             throw new \Exception('SupplyChainTradeTransaction should contain at least one IncludedSupplyChainTradeLineItem.');
         }
 
-        $this->includedSupplyChainTradeLineItems = $tmpIncludedSupplyChainTradeLineItems;
-        $this->applicableHeaderTradeAgreement    = $applicableHeaderTradeAgreement;
-        $this->applicableHeaderTradeDelivery     = $applicableHeaderTradeDelivery;
-        $this->applicableHeaderTradeSettlement   = $applicableHeaderTradeSettlement;
-    }
-
-    public function getIncludedSupplyChainTradeLineItems(): array
-    {
-        return $this->includedSupplyChainTradeLineItems;
-    }
-
-    public function getApplicableHeaderTradeAgreement(): ApplicableHeaderTradeAgreement
-    {
-        return $this->applicableHeaderTradeAgreement;
-    }
-
-    public function getApplicableHeaderTradeDelivery(): ApplicableHeaderTradeDelivery
-    {
-        return $this->applicableHeaderTradeDelivery;
-    }
-
-    public function getApplicableHeaderTradeSettlement(): ApplicableHeaderTradeSettlement
-    {
-        return $this->applicableHeaderTradeSettlement;
+        parent::__construct($includedSupplyChainTradeLineItems, $applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement(self::XML_NODE);
+        $currentNode = $document->createElement(self::XML_NODE);
 
         foreach ($this->includedSupplyChainTradeLineItems as $includedSupplyChainTradeLineItem) {
-            $element->appendChild($includedSupplyChainTradeLineItem->toXML($document));
+            $currentNode->appendChild($includedSupplyChainTradeLineItem->toXML($document));
         }
 
-        $element->appendChild($this->applicableHeaderTradeAgreement->toXML($document));
-        $element->appendChild($this->applicableHeaderTradeDelivery->toXML($document));
-        $element->appendChild($this->applicableHeaderTradeSettlement->toXML($document));
+        $currentNode->appendChild($this->applicableHeaderTradeAgreement->toXML($document));
+        $currentNode->appendChild($this->applicableHeaderTradeDelivery->toXML($document));
+        $currentNode->appendChild($this->applicableHeaderTradeSettlement->toXML($document));
 
-        return $element;
+        return $currentNode;
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
@@ -118,8 +71,8 @@ class SupplyChainTradeTransaction
 
         return new self($includedSupplyChainTradeLineItems, $applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
     }
-  
-    public static function fromEN16931(Invoice $invoice): static
+
+    public static function fromEN16931(Invoice $invoice): self
     {
         $items = [];
 

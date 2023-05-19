@@ -1,9 +1,12 @@
 <?php
 
-namespace Tiime\CrossIndustryInvoice\DataType;
+namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
-use Tiime\CrossIndustryInvoice\DataType\Basic\GrossPriceProductTradePrice;
+use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
 
+/**
+ * BG-29.
+ */
 class SpecifiedLineTradeAgreement
 {
     protected const XML_NODE = 'ram:SpecifiedLineTradeAgreement';
@@ -11,12 +14,12 @@ class SpecifiedLineTradeAgreement
     /**
      * BT-148-00.
      */
-    private ?GrossPriceProductTradePrice $grossPriceProductTradePrice;
+    protected ?GrossPriceProductTradePrice $grossPriceProductTradePrice;
 
     /**
      * BT-146-00.
      */
-    private NetPriceProductTradePrice $netPriceProductTradePrice;
+    protected NetPriceProductTradePrice $netPriceProductTradePrice;
 
     public function __construct(NetPriceProductTradePrice $netPriceProductTradePrice)
     {

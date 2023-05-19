@@ -104,7 +104,7 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
         return $exchangedDocument;
     }
 
-    public static function fromEN16931(Invoice $invoice): static
+    public static function fromEN16931(Invoice $invoice): self
     {
         $documentNotes     = [];
         $exchangedDocument = new self(

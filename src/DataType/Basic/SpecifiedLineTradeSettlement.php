@@ -1,11 +1,8 @@
 <?php
 
-namespace Tiime\CrossIndustryInvoice\DataType;
+namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
-use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
-use Tiime\CrossIndustryInvoice\DataType\Basic\LineSpecifiedTradeAllowance;
-use Tiime\CrossIndustryInvoice\DataType\Basic\LineSpecifiedTradeCharge;
-use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMonetarySummation;
+use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 
 /**
  * BG-30-00.
@@ -17,31 +14,31 @@ class SpecifiedLineTradeSettlement
     /**
      * BG-30.
      */
-    private ApplicableTradeTax $applicableTradeTax;
+    protected ApplicableTradeTax $applicableTradeTax;
 
     /**
      * BG-26.
      */
-    private ?BillingSpecifiedPeriod $billingSpecifiedPeriod;
+    protected ?BillingSpecifiedPeriod $billingSpecifiedPeriod;
 
     /**
      * BG-27.
      *
      * @var array<int, LineSpecifiedTradeAllowance>
      */
-    private array $specifiedTradeAllowances;
+    protected array $specifiedTradeAllowances;
 
     /**
      * BG-28.
      *
      * @var array<int, LineSpecifiedTradeCharge>
      */
-    private array $specifiedTradeCharges;
+    protected array $specifiedTradeCharges;
 
     /**
      * BT-131-00.
      */
-    private SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementMonetarySummation;
+    protected SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementMonetarySummation;
 
     public function __construct(
         ApplicableTradeTax $applicableTradeTax,
@@ -64,9 +61,11 @@ class SpecifiedLineTradeSettlement
         return $this->billingSpecifiedPeriod;
     }
 
-    public function setBillingSpecifiedPeriod(?BillingSpecifiedPeriod $billingSpecifiedPeriod): void
+    public function setBillingSpecifiedPeriod(?BillingSpecifiedPeriod $billingSpecifiedPeriod): static
     {
         $this->billingSpecifiedPeriod = $billingSpecifiedPeriod;
+
+        return $this;
     }
 
     public function getSpecifiedTradeAllowances(): array

@@ -11,7 +11,6 @@ use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccoun
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
-use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeSettlementPaymentMeans;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 
@@ -23,68 +22,68 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
     /**
      * BT-90.
      */
-    private ?BankAssignedCreditorIdentifier $creditorReferenceIdentifier;
+    protected ?BankAssignedCreditorIdentifier $creditorReferenceIdentifier;
 
     /**
      * BT-83.
      */
-    private ?string $paymentReference;
+    protected ?string $paymentReference;
 
     /**
      * BT-6.
      */
-    private ?CurrencyCode $taxCurrencyCode;
+    protected ?CurrencyCode $taxCurrencyCode;
 
     /**
      * BG-10.
      */
-    private ?PayeeTradeParty $payeeTradeParty;
+    protected ?PayeeTradeParty $payeeTradeParty;
 
     /**
      * BG-16.
      */
-    private ?SpecifiedTradeSettlementPaymentMeans $specifiedTradeSettlementPaymentMeans;
+    protected ?SpecifiedTradeSettlementPaymentMeans $specifiedTradeSettlementPaymentMeans;
 
     /**
      * BG-23.
      *
      * @var non-empty-array<int, HeaderApplicableTradeTax>
      */
-    private array $applicableTradeTaxes;
+    protected array $applicableTradeTaxes;
 
     /**
      * BG-14.
      */
-    private ?BillingSpecifiedPeriod $billingSpecifiedPeriod;
+    protected ?BillingSpecifiedPeriod $billingSpecifiedPeriod;
 
     /**
      * BG-20.
      *
      * @var array<int, SpecifiedTradeAllowance>
      */
-    private array $specifiedTradeAllowances;
+    protected array $specifiedTradeAllowances;
 
     /**
      * BG-21.
      *
      * @var array<int, SpecifiedTradeCharge>
      */
-    private array $specifiedTradeCharges;
+    protected array $specifiedTradeCharges;
 
     /**
      * BT-20-00.
      */
-    private ?SpecifiedTradePaymentTerms $specifiedTradePaymentTerms;
+    protected ?SpecifiedTradePaymentTerms $specifiedTradePaymentTerms;
 
     /**
      * BG-3.
      */
-    private ?InvoiceReferencedDocument $invoiceReferencedDocument;
+    protected ?InvoiceReferencedDocument $invoiceReferencedDocument;
 
     /**
      * BT-19-00.
      */
-    private ?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount;
+    protected ?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount;
 
     public function __construct(
         CurrencyCode $invoiceCurrencyCode,

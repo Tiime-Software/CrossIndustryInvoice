@@ -95,7 +95,7 @@ class BasisQuantity
         return $basisQuantity;
     }
 
-    public static function fromEN16931(PriceDetails $priceDetails): static
+    public static function fromEN16931(PriceDetails $priceDetails): self
     {
         return (new self($priceDetails->getItemPriceBaseQuantity()))
             ->setUnitCode($priceDetails->getItemPriceBaseQuantityUnitOfMeasureCode());

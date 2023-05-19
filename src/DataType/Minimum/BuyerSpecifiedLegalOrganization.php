@@ -17,7 +17,7 @@ class BuyerSpecifiedLegalOrganization
     /**
      * BT-47 & BT-47-1.
      */
-    private LegalRegistrationIdentifier $identifier;
+    protected LegalRegistrationIdentifier $identifier;
 
     public function __construct(LegalRegistrationIdentifier $identifier)
     {
