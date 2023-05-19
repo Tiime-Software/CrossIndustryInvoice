@@ -4,7 +4,6 @@ namespace Tiime\CrossIndustryInvoice\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Tiime\CrossIndustryInvoice\DataType\BusinessProcessSpecifiedDocumentContextParameter;
-use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 use Tiime\CrossIndustryInvoice\DataType\GuidelineSpecifiedDocumentContextParameter;
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
@@ -19,8 +18,7 @@ use Tiime\CrossIndustryInvoice\DataType\Minimum\SellerSpecifiedLegalOrganization
 use Tiime\CrossIndustryInvoice\DataType\Minimum\SellerTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\SpecifiedTradeSettlementHeaderMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\SupplyChainTradeTransaction;
-use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
-use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\Minimum\CrossIndustryInvoice;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 use Tiime\EN16931\DataType\CurrencyCode;
@@ -30,15 +28,13 @@ use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 use Tiime\EN16931\DataType\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\InvoiceTypeCode;
-use Tiime\EN16931\DataType\Reference\PurchaseOrderReference;
 
 class CIIMinimumTest extends TestCase
 {
     /**
-     * @test
      * @testdox Create Minimum profile with mandatory fields
      */
-    public function createMinimumProfileWithMandatoryFields(): void
+    public function testCreateMinimumProfileWithMandatoryFields(): void
     {
         $invoice = new CrossIndustryInvoice(
             new ExchangedDocumentContext(
@@ -71,10 +67,9 @@ class CIIMinimumTest extends TestCase
     }
 
     /**
-     * @test
      * @testdox Create Minimum profile with mandatory and optional fields
      */
-    public function createMinimumProfileWithMandatoryAndOptionalFields(): void
+    public function testCreateMinimumProfileWithMandatoryAndOptionalFields(): void
     {
         /** ExchangedDocumentContext part */
         $exchangedDocumentContext = (new ExchangedDocumentContext(
@@ -103,9 +98,7 @@ class CIIMinimumTest extends TestCase
             InternationalCodeDesignator::FRANCE_TELECOM_ATM_END_SYSTEM_ADDRESS_PLAN
         );
         $sellerSpecifiedLegalOrganization->setIdentifier($legalRegistrationIdentifier);
-        $vatTaxId1 = new SpecifiedTaxRegistration(new VatIdentifier('FRVatId1'));
-        $vatTaxId2 = new SpecifiedTaxRegistration(new VatIdentifier('FRVatId2'));
-        $sellerTradeParty->setSpecifiedTaxRegistrations([$vatTaxId1, $vatTaxId2]);
+        $sellerTradeParty->setSpecifiedTaxRegistrationVA(new SpecifiedTaxRegistrationVA(new VatIdentifier('FRVatId1')));
         $sellerTradeParty->setSpecifiedLegalOrganization(
             (new SellerSpecifiedLegalOrganization())
                 ->setIdentifier(new LegalRegistrationIdentifier('SellerLegalRegistrationIdentifier', InternationalCodeDesignator::FRANCE_TELECOM_ATM_END_SYSTEM_ADDRESS_PLAN))
@@ -142,10 +135,9 @@ class CIIMinimumTest extends TestCase
     }
 
     /**
-     * @test
      * @testdox Create Minimum profile from XML mandatory data
      */
-    public function createMinimumProfileFromXMLMandatoryData(): void
+    public function testCreateMinimumProfileFromXMLMandatoryData(): void
     {
         $invoiceToConvert = new CrossIndustryInvoice(
             new ExchangedDocumentContext(
@@ -181,10 +173,9 @@ class CIIMinimumTest extends TestCase
     }
 
     /**
-     * @test
      * @testdox Create Minimum profile from XML mandatory and optional data
      */
-    public function createMinimumProfileFromXMLMandatoryAndOptionalData(): void
+    public function testCreateMinimumProfileFromXMLMandatoryAndOptionalData(): void
     {
         /** ExchangedDocumentContext part */
         $exchangedDocumentContext = (new ExchangedDocumentContext(
@@ -213,9 +204,7 @@ class CIIMinimumTest extends TestCase
             InternationalCodeDesignator::FRANCE_TELECOM_ATM_END_SYSTEM_ADDRESS_PLAN
         );
         $sellerSpecifiedLegalOrganization->setIdentifier($legalRegistrationIdentifier);
-        $vatTaxId1 = new SpecifiedTaxRegistration(new VatIdentifier('FRVatId1'));
-        $vatTaxId2 = new SpecifiedTaxRegistration(new VatIdentifier('FRVatId2'));
-        $sellerTradeParty->setSpecifiedTaxRegistrations([$vatTaxId1, $vatTaxId2]);
+        $sellerTradeParty->setSpecifiedTaxRegistrationVA(new SpecifiedTaxRegistrationVA(new VatIdentifier('FRVatId1')));
         $sellerTradeParty->setSpecifiedLegalOrganization(
             (new SellerSpecifiedLegalOrganization())
                 ->setIdentifier(new LegalRegistrationIdentifier('SellerLegalRegistrationIdentifier', InternationalCodeDesignator::FRANCE_TELECOM_ATM_END_SYSTEM_ADDRESS_PLAN))
