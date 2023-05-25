@@ -43,15 +43,13 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         parent::__construct($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
     }
 
-    // @todo : Ask feedback
-    // public function setSpecifiedTradeSettlementPaymentMeans(?SpecifiedTradeSettlementPaymentMeans $specifiedTradeSettlementPaymentMeans): static
     public function setSpecifiedTradeSettlementPaymentMeans(SpecifiedTradeSettlementPaymentMeans|\Tiime\CrossIndustryInvoice\DataType\BasicWL\SpecifiedTradeSettlementPaymentMeans|null $specifiedTradeSettlementPaymentMeans): static
     {
         if (null !== $specifiedTradeSettlementPaymentMeans && !$specifiedTradeSettlementPaymentMeans instanceof SpecifiedTradeSettlementPaymentMeans) {
             throw new \TypeError();
         }
 
-        parent::setSpecifiedTradeSettlementPaymentMeans($specifiedTradeSettlementPaymentMeans);
+        $this->specifiedTradeSettlementPaymentMeans = $specifiedTradeSettlementPaymentMeans;
 
         return $this;
     }

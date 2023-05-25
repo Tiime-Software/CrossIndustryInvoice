@@ -41,15 +41,13 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Buyer
         return $this->specifiedLegalOrganization;
     }
 
-    // @todo : Ask feedback
-    // public function setSpecifiedLegalOrganization(?BuyerSpecifiedLegalOrganization $specifiedLegalOrganization): static
     public function setSpecifiedLegalOrganization(BuyerSpecifiedLegalOrganization|\Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerSpecifiedLegalOrganization|null $specifiedLegalOrganization): static
     {
         if (null !== $specifiedLegalOrganization && !$specifiedLegalOrganization instanceof BuyerSpecifiedLegalOrganization) {
             throw new \TypeError();
         }
 
-        parent::setSpecifiedLegalOrganization($specifiedLegalOrganization);
+        $this->specifiedLegalOrganization = $specifiedLegalOrganization;
 
         return $this;
     }

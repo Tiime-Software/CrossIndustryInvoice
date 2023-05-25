@@ -67,15 +67,13 @@ class SpecifiedTradeSettlementPaymentMeans extends \Tiime\CrossIndustryInvoice\D
         return $this;
     }
 
-    // @todo : Ask feedback
-    // public function setPayeePartyCreditorFinancialAccount(?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount): static
     public function setPayeePartyCreditorFinancialAccount(PayeePartyCreditorFinancialAccount|\Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeePartyCreditorFinancialAccount|null $payeePartyCreditorFinancialAccount): static
     {
         if (null !== $payeePartyCreditorFinancialAccount && !$payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
             throw new \TypeError();
         }
 
-        parent::setPayeePartyCreditorFinancialAccount($payeePartyCreditorFinancialAccount);
+        $this->payeePartyCreditorFinancialAccount = $payeePartyCreditorFinancialAccount;
 
         return $this;
     }

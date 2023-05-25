@@ -36,7 +36,6 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
         $this->receivableSpecifiedTradeAccountingAccount = null;
     }
 
-    // @todo Feedback : keep this to override extends method and keep the check for LineSpecifiedTradeAllowance (EN16931)
     public function setSpecifiedTradeAllowances(array $specifiedTradeAllowances): static
     {
         $tmpSpecifiedTradeAllowances = [];
@@ -53,7 +52,6 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
         return $this;
     }
 
-    // @todo Feedback : keep this to override extends method and keep the check for LineSpecifiedTradeCharge (EN16931)
     public function setSpecifiedTradeCharges(array $specifiedTradeCharges): static
     {
         $tmpSpecifiedTradeCharges = [];

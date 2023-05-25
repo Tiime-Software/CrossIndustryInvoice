@@ -14,6 +14,7 @@ use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\EN16931\BusinessTermsGroup\Seller;
 use Tiime\EN16931\BusinessTermsGroup\SellerContact;
 use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
+use Tiime\EN16931\DataType\Identifier\TaxRegistrationIdentifier;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
@@ -240,12 +241,11 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Sell
                 $seller->getVatIdentifier() instanceof VatIdentifier
                     ? new SpecifiedTaxRegistrationVA($seller->getVatIdentifier())
                     : null
+            )
+            ->setSpecifiedTaxRegistrationFC(
+                $seller->getTaxRegistrationIdentifier() instanceof TaxRegistrationIdentifier
+                    ? new SpecifiedTaxRegistrationFC(new VatIdentifier($seller->getTaxRegistrationIdentifier()->value))
+                    : null
             );
-        // @todo : Verify what wanted to be done
-        // ->setSpecifiedTaxRegistrationFC(
-        //      $seller->getTaxRegistrationIdentifier() instanceof TaxRegistrationIdentifier
-        //          ? (new SellerSpecifiedTaxRegistration())->setIdentifier($seller->getTaxRegistrationIdentifier())
-        //          : null
-        // );
     }
 }
