@@ -37,7 +37,7 @@ class SpecifiedLineTradeDelivery
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $specifiedLineTradeDeliveryElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -53,7 +53,7 @@ class SpecifiedLineTradeDelivery
         return new self($billedQuantity);
     }
 
-    public static function fromEN16931(InvoiceLine $invoiceLine): static
+    public static function fromEN16931(InvoiceLine $invoiceLine): self
     {
         return new self(new BilledQuantity(
             $invoiceLine->getInvoicedQuantity(),

@@ -47,7 +47,7 @@ class TaxTotalAmount
     }
 
     /** Doesn't take DOMXPath as an argument like other classes to fit the use of this method for Minumum and BasicWL profiles */
-    public static function fromXML(\DOMElement $currentElement): static
+    public static function fromXML(\DOMElement $currentElement): self
     {
         $value              = $currentElement->nodeValue;
         $currencyIdentifier = '' !== $currentElement->getAttribute('currencyID') ?

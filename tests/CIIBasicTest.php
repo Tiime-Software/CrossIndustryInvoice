@@ -8,7 +8,10 @@ use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
 use Tiime\CrossIndustryInvoice\DataType\AssociatedDocumentLineDocument;
 use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\Basic\BilledQuantity;
+use Tiime\CrossIndustryInvoice\DataType\Basic\IncludedSupplyChainTradeLineItem;
+use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedLineTradeAgreement;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedLineTradeDelivery;
+use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedLineTradeSettlement;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeProduct;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SupplyChainTradeTransaction;
@@ -27,16 +30,13 @@ use Tiime\CrossIndustryInvoice\DataType\DespatchAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\DocumentIncludedNote;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 use Tiime\CrossIndustryInvoice\DataType\GuidelineSpecifiedDocumentContextParameter;
-use Tiime\CrossIndustryInvoice\DataType\IncludedSupplyChainTradeLineItem;
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
 use Tiime\CrossIndustryInvoice\DataType\LocationGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
 use Tiime\CrossIndustryInvoice\DataType\OccurrenceDateTime;
 use Tiime\CrossIndustryInvoice\DataType\SellerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
-use Tiime\CrossIndustryInvoice\DataType\SpecifiedLineTradeAgreement;
-use Tiime\CrossIndustryInvoice\DataType\SpecifiedLineTradeSettlement;
-use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 use Tiime\EN16931\DataType\CurrencyCode;
@@ -59,10 +59,9 @@ use Tiime\EN16931\DataType\VatCategory;
 class CIIBasicTest extends TestCase
 {
     /**
-     * @test
      * @testdox Create Basic profile with mandatory fields
      */
-    public function createBasicProfileWithMandatoryFields(): void
+    public function testCreateBasicProfileWithMandatoryFields(): void
     {
         $invoice = new CrossIndustryInvoice(
             new ExchangedDocumentContext(
@@ -86,7 +85,7 @@ class CIIBasicTest extends TestCase
                             new ApplicableTradeTax(VatCategory::STANDARD),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
-                    )
+                    ),
                 ],
                 new ApplicableHeaderTradeAgreement(
                     new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
@@ -96,7 +95,7 @@ class CIIBasicTest extends TestCase
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
                     [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD)
+                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
                     ],
                     new SpecifiedTradeSettlementHeaderMonetarySummation(50, 0, 50, 50)
                 )
@@ -110,10 +109,9 @@ class CIIBasicTest extends TestCase
     }
 
     /**
-     * @test
      * @testdox Create BasicWL profile with mandatory fields but empty array for (ApplicableHeaderTradeSettlement) $applicableTradeTaxes
      */
-    public function createBasicWLProfileWithMandatoryFieldsButEmptyArrayApplicableTradeTaxes(): void
+    public function testCreateBasicWLProfileWithMandatoryFieldsButEmptyArrayApplicableTradeTaxes(): void
     {
         $this->expectException(\Exception::class);
 
@@ -139,7 +137,7 @@ class CIIBasicTest extends TestCase
                             new ApplicableTradeTax(VatCategory::STANDARD),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
-                    )
+                    ),
                 ],
                 new ApplicableHeaderTradeAgreement(
                     new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
@@ -156,10 +154,9 @@ class CIIBasicTest extends TestCase
     }
 
     /**
-     * @test
      * @testdox Create BasicWL profile with mandatory and optional fields
      */
-    public function createBasicWLProfileWithMandatoryAndOptionalFields(): void
+    public function testCreateBasicWLProfileWithMandatoryAndOptionalFields(): void
     {
         $invoice = new CrossIndustryInvoice(
             (new ExchangedDocumentContext(
@@ -173,7 +170,7 @@ class CIIBasicTest extends TestCase
                 new IssueDateTime(new \DateTime())
             ))->setIncludedNotes(
                 [
-                    (new DocumentIncludedNote('DocumentIncludedNote1'))->setSubjectCode(InvoiceNoteCode::ADDITIONAL_CONDITIONS)
+                    (new DocumentIncludedNote('DocumentIncludedNote1'))->setSubjectCode(InvoiceNoteCode::ADDITIONAL_CONDITIONS),
                 ]
             ),
             new SupplyChainTradeTransaction(
@@ -187,7 +184,7 @@ class CIIBasicTest extends TestCase
                             new ApplicableTradeTax(VatCategory::STANDARD),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
-                    )
+                    ),
                 ],
                 new ApplicableHeaderTradeAgreement(
                     (new SellerTradeParty(
@@ -202,7 +199,7 @@ class CIIBasicTest extends TestCase
                     ))
                         ->setIdentifiers([new SellerIdentifier('SellerIdentifier')])
                         ->setGlobalIdentifiers([new SellerGlobalIdentifier('SellerGlobalIdentifier', InternationalCodeDesignator::FRANCE_TELECOM_ATM_END_SYSTEM_ADDRESS_PLAN)])
-                        ->setSpecifiedTaxRegistrations([new SpecifiedTaxRegistration(new VatIdentifier('FRSellerVatIdentifier'))])
+                        ->setSpecifiedTaxRegistrationVA(new SpecifiedTaxRegistrationVA(new VatIdentifier('FRSellerVatIdentifier')))
                         ->setSpecifiedLegalOrganization(
                             (new SellerSpecifiedLegalOrganization())
                                 ->setTradingBusinessName('SellerTradingBusinessName')
@@ -212,8 +209,7 @@ class CIIBasicTest extends TestCase
                             new URIUniversalCommunication(
                                 new ElectronicAddressIdentifier('ElectronicAddressIdentifier', ElectronicAddressScheme::FRENCH_VAT_NUMBER)
                             )
-                        )
-                    ,
+                        ),
                     new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
                 ),
                 (new ApplicableHeaderTradeDelivery())
@@ -239,12 +235,11 @@ class CIIBasicTest extends TestCase
                     )
                     ->setDespatchAdviceReferencedDocument(
                         new DespatchAdviceReferencedDocument(new DespatchAdviceReference('DespatchAdviceReference'))
-                    )
-                ,
+                    ),
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
                     [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD)
+                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
                     ],
                     new SpecifiedTradeSettlementHeaderMonetarySummation(50, 0, 50, 50)
                 )
@@ -258,10 +253,9 @@ class CIIBasicTest extends TestCase
     }
 
     /**
-     * @test
      * @testdox Create BasicWL profile from XML mandatory data
      */
-    public function createBasicWLProfileFromXMLMandatoryData(): void
+    public function testCreateBasicWLProfileFromXMLMandatoryData(): void
     {
         $invoiceToConvert = new CrossIndustryInvoice(
             new ExchangedDocumentContext(
@@ -285,7 +279,7 @@ class CIIBasicTest extends TestCase
                             new ApplicableTradeTax(VatCategory::STANDARD),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
-                    )
+                    ),
                 ],
                 new ApplicableHeaderTradeAgreement(
                     new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
@@ -295,7 +289,7 @@ class CIIBasicTest extends TestCase
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
                     [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD)
+                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
                     ],
                     new SpecifiedTradeSettlementHeaderMonetarySummation(50, 0, 50, 50)
                 )
@@ -312,10 +306,9 @@ class CIIBasicTest extends TestCase
     }
 
     /**
-     * @test
      * @testdox Create BasicWL profile from XML mandatory and optional data
      */
-    public function createBasicWLProfileFromXMLMandatoryAndOptionalData(): void
+    public function testCreateBasicWLProfileFromXMLMandatoryAndOptionalData(): void
     {
         $this->markTestSkipped('@todo');
     }

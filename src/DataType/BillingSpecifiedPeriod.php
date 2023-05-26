@@ -69,7 +69,7 @@ class BillingSpecifiedPeriod
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $billingSpecifiedPeriodElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -100,7 +100,7 @@ class BillingSpecifiedPeriod
         return $billingSpecifiedPeriod;
     }
 
-    public static function fromEN16931(InvoicingPeriod|InvoiceLinePeriod $period): static
+    public static function fromEN16931(InvoicingPeriod|InvoiceLinePeriod $period): self
     {
         $startDateTime = $period->getStartDate() instanceof \DateTimeInterface ? new StartDateTime($period->getStartDate()) : null;
         $endDateTime   = $period->getEndDate() instanceof \DateTimeInterface ? new EndDateTime($period->getEndDate()) : null;

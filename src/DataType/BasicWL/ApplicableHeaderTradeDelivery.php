@@ -16,17 +16,17 @@ class ApplicableHeaderTradeDelivery extends \Tiime\CrossIndustryInvoice\DataType
     /**
      * BG-13.
      */
-    private ?ShipToTradeParty $shipToTradeParty;
+    protected ?ShipToTradeParty $shipToTradeParty;
 
     /**
      * BT-72-00.
      */
-    private ?ActualDeliverySupplyChainEvent $actualDeliverySupplyChainEvent;
+    protected ?ActualDeliverySupplyChainEvent $actualDeliverySupplyChainEvent;
 
     /**
      * BT-16-00.
      */
-    private ?DespatchAdviceReferencedDocument $despatchAdviceReferencedDocument;
+    protected ?DespatchAdviceReferencedDocument $despatchAdviceReferencedDocument;
 
     public function __construct()
     {
@@ -90,7 +90,7 @@ class ApplicableHeaderTradeDelivery extends \Tiime\CrossIndustryInvoice\DataType
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $applicableHeaderTradeDeliveryElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

@@ -19,7 +19,7 @@ class PayeeGlobalIdentifier extends PayeeIdentifier
         parent::__construct($value, $scheme);
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $payeeGlobalIdentifierElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

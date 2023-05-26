@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableProductCharacteristic;
-use Tiime\CrossIndustryInvoice\EN16931\ClassCode;
-use Tiime\CrossIndustryInvoice\EN16931\DesignatedProductClassification;
-use Tiime\CrossIndustryInvoice\EN16931\OriginTradeCountry;
+use Tiime\CrossIndustryInvoice\DataType\ApplicableProductCharacteristic;
+use Tiime\CrossIndustryInvoice\DataType\ClassCode;
+use Tiime\CrossIndustryInvoice\DataType\DesignatedProductClassification;
+use Tiime\CrossIndustryInvoice\DataType\OriginTradeCountry;
 use Tiime\EN16931\BusinessTermsGroup\ItemInformation;
 use Tiime\EN16931\DataType\Identifier\BuyerItemIdentifier;
 use Tiime\EN16931\DataType\Identifier\SellerItemIdentifier;
@@ -19,8 +19,6 @@ use Tiime\EN16931\DataType\InternationalCodeDesignator;
  */
 class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeProduct
 {
-    protected const XML_NODE = 'ram:SpecifiedTradeProduct';
-
     /**
      * BT-155.
      */
@@ -198,7 +196,7 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $specifiedTradeProductElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -289,7 +287,7 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
         return $specifiedTradeProduct;
     }
 
-    public static function fromEN16931(ItemInformation $itemInformation): static
+    public static function fromEN16931(ItemInformation $itemInformation): self
     {
         $characteristics = [];
         $classifications = [];

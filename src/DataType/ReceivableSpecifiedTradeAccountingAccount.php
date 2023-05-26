@@ -37,7 +37,7 @@ class ReceivableSpecifiedTradeAccountingAccount
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $receivableSpecifiedTradeAccountingAccountElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -45,7 +45,7 @@ class ReceivableSpecifiedTradeAccountingAccount
             return null;
         }
 
-        if (1 !== $receivableSpecifiedTradeAccountingAccountElements->count()) {
+        if ($receivableSpecifiedTradeAccountingAccountElements->count() > 1) {
             throw new \Exception('Malformed');
         }
 
@@ -61,7 +61,7 @@ class ReceivableSpecifiedTradeAccountingAccount
         return new self($identifierElements->item(0)->nodeValue);
     }
 
-    public static function fromEN16931(Invoice $invoice): static
+    public static function fromEN16931(Invoice $invoice): self
     {
         return new self($invoice->getBuyerAccountingReference());
     }

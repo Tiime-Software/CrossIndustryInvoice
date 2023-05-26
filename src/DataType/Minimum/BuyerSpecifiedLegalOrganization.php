@@ -17,7 +17,7 @@ class BuyerSpecifiedLegalOrganization
     /**
      * BT-47 & BT-47-1.
      */
-    private LegalRegistrationIdentifier $identifier;
+    protected LegalRegistrationIdentifier $identifier;
 
     public function __construct(LegalRegistrationIdentifier $identifier)
     {
@@ -44,7 +44,7 @@ class BuyerSpecifiedLegalOrganization
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $specifiedLegalOrganizationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

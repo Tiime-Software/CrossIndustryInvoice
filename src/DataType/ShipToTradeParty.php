@@ -120,7 +120,7 @@ class ShipToTradeParty
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $shipToTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -170,7 +170,7 @@ class ShipToTradeParty
         return $shipToTradeParty;
     }
 
-    public static function fromEN16931(DeliveryInformation $deliveryInformation): static
+    public static function fromEN16931(DeliveryInformation $deliveryInformation): self
     {
         $identifier       = null;
         $globalIdentifier = null;

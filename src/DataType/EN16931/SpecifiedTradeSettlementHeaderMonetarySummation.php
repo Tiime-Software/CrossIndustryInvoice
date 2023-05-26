@@ -81,7 +81,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -225,7 +225,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $specifiedTradeSettlementHeaderMonetarySummation;
     }
 
-    public static function fromEN16931(DocumentTotals $documentTotals): static
+    public static function fromEN16931(DocumentTotals $documentTotals): self
     {
         $specifiedTradeSettlementHeaderMonetarySummation = new self(
             $documentTotals->getInvoiceTotalAmountWithoutVat(),

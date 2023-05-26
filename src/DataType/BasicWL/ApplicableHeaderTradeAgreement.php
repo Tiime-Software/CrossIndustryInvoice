@@ -16,12 +16,12 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
     /**
      * BG-11.
      */
-    private ?SellerTaxRepresentativeTradeParty $sellerTaxRepresentativeTradeParty;
+    protected ?SellerTaxRepresentativeTradeParty $sellerTaxRepresentativeTradeParty;
 
     /**
      * BT-12-00.
      */
-    private ?ContractReferencedDocument $contractReferencedDocument;
+    protected ?ContractReferencedDocument $contractReferencedDocument;
 
     public function __construct(SellerTradeParty $sellerTradeParty, BuyerTradeParty $buyerTradeParty)
     {
@@ -81,7 +81,7 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $applicableHeaderTradeAgreementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

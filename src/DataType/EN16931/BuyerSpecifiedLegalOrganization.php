@@ -20,6 +20,7 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
     public function __construct(LegalRegistrationIdentifier $identifier)
     {
         parent::__construct($identifier);
+
         $this->tradingBusinessName = null;
     }
 
@@ -41,8 +42,8 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
 
         $identifierNode = $document->createElement('ram:ID', $this->getIdentifier()->value);
 
-        if ($this->getIdentifier()->scheme instanceof InternationalCodeDesignator) {
-            $identifierNode->setAttribute('schemeID', $this->getIdentifier()->scheme->value);
+        if ($this->identifier->scheme instanceof InternationalCodeDesignator) {
+            $identifierNode->setAttribute('schemeID', $this->identifier->scheme->value);
         }
 
         $currentNode->appendChild($identifierNode);
@@ -54,7 +55,7 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $specifiedLegalOrganizationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

@@ -6,7 +6,7 @@ namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
 use Tiime\CrossIndustryInvoice\DataType\BuyerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\Minimum\BuyerSpecifiedLegalOrganization;
-use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistration;
+use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\EN16931\DataType\Identifier\BuyerIdentifier;
 
@@ -18,37 +18,37 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Buyer
     /**
      * BT-46.
      */
-    private ?BuyerIdentifier $identifier;
+    protected ?BuyerIdentifier $identifier;
 
     /**
      * BT-46-0 & BT-46-1.
      */
-    private ?BuyerGlobalIdentifier $globalIdentifier;
+    protected ?BuyerGlobalIdentifier $globalIdentifier;
 
     /**
      * BG-8.
      */
-    private PostalTradeAddress $postalTradeAddress;
+    protected PostalTradeAddress $postalTradeAddress;
 
     /**
      * BT-49-00.
      */
-    private ?URIUniversalCommunication $URIUniversalCommunication;
+    protected ?URIUniversalCommunication $URIUniversalCommunication;
 
     /**
      * BT-48-00.
      */
-    private ?SpecifiedTaxRegistration $specifiedTaxRegistration;
+    protected ?SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA;
 
     public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
     {
         parent::__construct($name);
 
-        $this->postalTradeAddress        = $postalTradeAddress;
-        $this->identifier                = null;
-        $this->globalIdentifier          = null;
-        $this->URIUniversalCommunication = null;
-        $this->specifiedTaxRegistration  = null;
+        $this->postalTradeAddress         = $postalTradeAddress;
+        $this->identifier                 = null;
+        $this->globalIdentifier           = null;
+        $this->URIUniversalCommunication  = null;
+        $this->specifiedTaxRegistrationVA = null;
     }
 
     public function getIdentifier(): ?BuyerIdentifier
@@ -92,14 +92,14 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Buyer
         return $this;
     }
 
-    public function getSpecifiedTaxRegistration(): ?SpecifiedTaxRegistration
+    public function getSpecifiedTaxRegistrationVA(): ?SpecifiedTaxRegistrationVA
     {
-        return $this->specifiedTaxRegistration;
+        return $this->specifiedTaxRegistrationVA;
     }
 
-    public function setSpecifiedTaxRegistration(?SpecifiedTaxRegistration $specifiedTaxRegistration): static
+    public function setSpecifiedTaxRegistrationVA(?SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA): static
     {
-        $this->specifiedTaxRegistration = $specifiedTaxRegistration;
+        $this->specifiedTaxRegistrationVA = $specifiedTaxRegistrationVA;
 
         return $this;
     }
@@ -128,14 +128,14 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Buyer
             $currentNode->appendChild($this->URIUniversalCommunication->toXML($document));
         }
 
-        if ($this->specifiedTaxRegistration instanceof SpecifiedTaxRegistration) {
-            $currentNode->appendChild($this->specifiedTaxRegistration->toXML($document));
+        if ($this->specifiedTaxRegistrationVA instanceof SpecifiedTaxRegistrationVA) {
+            $currentNode->appendChild($this->specifiedTaxRegistrationVA->toXML($document));
         }
 
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $buyerTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -163,13 +163,9 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Buyer
         $specifiedLegalOrganization = BuyerSpecifiedLegalOrganization::fromXML($xpath, $buyerTradePartyElement);
         $postalTradeAddress         = PostalTradeAddress::fromXML($xpath, $buyerTradePartyElement);
         $URIUniversalCommunication  = URIUniversalCommunication::fromXML($xpath, $buyerTradePartyElement);
-        $specifiedTaxRegistration   = SpecifiedTaxRegistration::fromXML($xpath, $buyerTradePartyElement);
+        $specifiedTaxRegistrationVA = SpecifiedTaxRegistrationVA::fromXML($xpath, $buyerTradePartyElement);
 
         if (null === $postalTradeAddress) {
-            throw new \Exception('Malformed');
-        }
-
-        if (\count($specifiedTaxRegistration) > 1) {
             throw new \Exception('Malformed');
         }
 
@@ -191,8 +187,8 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Buyer
             $buyerTradeParty->setURIUniversalCommunication($URIUniversalCommunication);
         }
 
-        if (1 === \count($specifiedTaxRegistration)) {
-            $buyerTradeParty->setSpecifiedTaxRegistration($specifiedTaxRegistration[0]);
+        if ($specifiedTaxRegistrationVA instanceof SpecifiedTaxRegistrationVA) {
+            $buyerTradeParty->setSpecifiedTaxRegistrationVA($specifiedTaxRegistrationVA);
         }
 
         return $buyerTradeParty;

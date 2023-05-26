@@ -5,7 +5,6 @@ namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeAgreement;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeDelivery;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ApplicableHeaderTradeSettlement;
-use Tiime\CrossIndustryInvoice\DataType\IncludedSupplyChainTradeLineItem;
 
 class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\SupplyChainTradeTransaction
 {
@@ -14,7 +13,7 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
      *
      * @var non-empty-array<int, IncludedSupplyChainTradeLineItem>
      */
-    private array $includedSupplyChainTradeLineItems;
+    protected array $includedSupplyChainTradeLineItems;
 
     /**
      * @param non-empty-array<int, IncludedSupplyChainTradeLineItem> $includedSupplyChainTradeLineItems
@@ -67,7 +66,7 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $supplyChainTradeTransactionElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

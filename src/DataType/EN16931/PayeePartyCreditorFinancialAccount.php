@@ -52,7 +52,7 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $payeePartyCreditorFinancialAccountElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -100,7 +100,7 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
         return $payeePartyCreditorFinancialAccount;
     }
 
-    public static function fromEN16931(CreditTransfer $creditTransfer): static
+    public static function fromEN16931(CreditTransfer $creditTransfer): self
     {
         return (new self())
             ->setIbanIdentifier($creditTransfer->getPaymentAccountIdentifier()) // @todo : Should only be set if the identifier's value is a valid IBAN

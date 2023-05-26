@@ -61,7 +61,7 @@ class NetPriceProductTradePrice
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $netPriceProductTradePriceElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -90,7 +90,7 @@ class NetPriceProductTradePrice
         return $netPriceProductTradePrice;
     }
 
-    public static function fromEN16931(PriceDetails $priceDetails): static
+    public static function fromEN16931(PriceDetails $priceDetails): self
     {
         $basisQuantity = \is_float($priceDetails->getItemPriceBaseQuantity())
             ? BasisQuantity::fromEN16931($priceDetails)

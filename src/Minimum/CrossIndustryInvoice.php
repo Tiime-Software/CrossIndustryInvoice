@@ -87,7 +87,7 @@ class CrossIndustryInvoice
         return $document;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMDocument $document): self
     {
         $xpath = new \DOMXPath($document);
 

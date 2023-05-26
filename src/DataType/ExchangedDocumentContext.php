@@ -59,7 +59,7 @@ class ExchangedDocumentContext
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $exchangedDocumentContextElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -82,7 +82,7 @@ class ExchangedDocumentContext
         return $exchangedDocumentContext;
     }
 
-    public static function fromEN16931(Invoice $invoice): static
+    public static function fromEN16931(Invoice $invoice): self
     {
         $processControl = $invoice->getProcessControl();
 

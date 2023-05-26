@@ -59,7 +59,7 @@ class ApplicableTradeSettlementFinancialCard
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $applicableTradeSettlementFinancialCardElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -96,7 +96,7 @@ class ApplicableTradeSettlementFinancialCard
         return $applicableTradeSettlementFinancialCard;
     }
 
-    public static function fromEN16931(PaymentCardInformation $paymentCardInformation): static
+    public static function fromEN16931(PaymentCardInformation $paymentCardInformation): self
     {
         return (new self($paymentCardInformation->getPrimaryAccountNumber()))
             ->setCardholderName($paymentCardInformation->getHolderName());

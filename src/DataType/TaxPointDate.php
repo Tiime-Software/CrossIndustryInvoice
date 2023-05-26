@@ -48,7 +48,7 @@ class TaxPointDate
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $taxPointDateElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

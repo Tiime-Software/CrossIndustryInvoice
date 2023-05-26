@@ -4,6 +4,7 @@ namespace Tiime\CrossIndustryInvoice\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
+use Tiime\CrossIndustryInvoice\DataType\AdditionalReferencedDocumentInvoiceLineObjectIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\ApplicableTradeSettlementFinancialCard;
 use Tiime\CrossIndustryInvoice\DataType\AssociatedDocumentLineDocument;
 use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
@@ -22,18 +23,29 @@ use Tiime\CrossIndustryInvoice\DataType\CategoryTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\DespatchAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\DocumentIncludedNote;
 use Tiime\CrossIndustryInvoice\DataType\DueDateDateTime;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\ApplicableHeaderTradeAgreement;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\ApplicableHeaderTradeDelivery;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\ApplicableHeaderTradeSettlement;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\BuyerTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\HeaderApplicableTradeTax;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\IncludedSupplyChainTradeLineItem;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\LineSpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\LineSpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\PayeePartyCreditorFinancialAccount;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\SellerTradeParty;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedLineTradeAgreement;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedLineTradeSettlement;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeProduct;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeSettlementHeaderMonetarySummation;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\SpecifiedTradeSettlementPaymentMeans;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\EndDateTime;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 use Tiime\CrossIndustryInvoice\DataType\FormattedIssueDateTime;
 use Tiime\CrossIndustryInvoice\DataType\GuidelineSpecifiedDocumentContextParameter;
 use Tiime\CrossIndustryInvoice\DataType\InvoiceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
+use Tiime\CrossIndustryInvoice\DataType\LineBuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\LocationGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
 use Tiime\CrossIndustryInvoice\DataType\OccurrenceDateTime;
@@ -41,6 +53,8 @@ use Tiime\CrossIndustryInvoice\DataType\PayeeGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\PayeeSpecifiedCreditorFinancialInstitution;
 use Tiime\CrossIndustryInvoice\DataType\PayeeTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\PayerPartyDebtorFinancialAccount;
+use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount;
+use Tiime\CrossIndustryInvoice\DataType\ReceivingAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeCharge;
@@ -48,21 +62,7 @@ use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
 use Tiime\CrossIndustryInvoice\DataType\StartDateTime;
 use Tiime\CrossIndustryInvoice\DataType\TaxPointDate;
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeAgreement;
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeDelivery;
-use Tiime\CrossIndustryInvoice\EN16931\ApplicableHeaderTradeSettlement;
-use Tiime\CrossIndustryInvoice\EN16931\BuyerTradeParty;
 use Tiime\CrossIndustryInvoice\EN16931\CrossIndustryInvoice;
-use Tiime\CrossIndustryInvoice\EN16931\IncludedSupplyChainTradeLineItem;
-use Tiime\CrossIndustryInvoice\EN16931\ReceivingAdviceReferencedDocument;
-use Tiime\CrossIndustryInvoice\EN16931\SellerTradeParty;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeAgreement\BuyerOrderReferencedDocument;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\AdditionalReferencedDocument;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedLineTradeSettlement\ReceivableSpecifiedTradeAccountingAccount;
-use Tiime\CrossIndustryInvoice\EN16931\SpecifiedTradeSettlementPaymentMeans;
-use Tiime\CrossIndustryInvoice\EN16931\SupplyChainTradeTransaction;
 use Tiime\EN16931\DataType\AllowanceReasonCode;
 use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
@@ -97,10 +97,9 @@ use Tiime\EN16931\SemanticDataType\Percentage;
 class CIIEN16931Test extends TestCase
 {
     /**
-     * @test
      * @testdox Create EN-16931 profile with mandatory fields
      */
-    public function createEN16931ProfileWithMandatoryFields(): void
+    public function testCreateEN16931ProfileWithMandatoryFields(): void
     {
         $invoice = new CrossIndustryInvoice(
             new ExchangedDocumentContext(
@@ -130,7 +129,7 @@ class CIIEN16931Test extends TestCase
                             new ApplicableTradeTax(VatCategory::STANDARD),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
-                    )
+                    ),
                 ],
                 new ApplicableHeaderTradeAgreement(
                     new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
@@ -140,7 +139,7 @@ class CIIEN16931Test extends TestCase
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
                     [
-                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD)
+                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD),
                     ],
                     new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40)
                 )
@@ -154,10 +153,9 @@ class CIIEN16931Test extends TestCase
     }
 
     /**
-     * @test
      * @testdox Create EN16931 profile with mandatory and optional fields
      */
-    public function createEN16931ProfileWithMandatoryAndOptionalFields(): void
+    public function testCreateEN16931ProfileWithMandatoryAndOptionalFields(): void
     {
         $invoice = new CrossIndustryInvoice(
             (new ExchangedDocumentContext(
@@ -172,7 +170,7 @@ class CIIEN16931Test extends TestCase
                 new IssueDateTime(new \DateTime())
             ))
                 ->setIncludedNotes([
-                    (new DocumentIncludedNote('DocumentIncludedNote'))->setSubjectCode(InvoiceNoteCode::NOTE)
+                    (new DocumentIncludedNote('DocumentIncludedNote'))->setSubjectCode(InvoiceNoteCode::NOTE),
                 ]),
             new SupplyChainTradeTransaction(
                 [
@@ -192,7 +190,7 @@ class CIIEN16931Test extends TestCase
                                 ->setAppliedTradeAllowanceCharge(new AppliedTradeAllowanceCharge(100))
                         )
                             ->setBuyerOrderReferencedDocument(
-                                (new BuyerOrderReferencedDocument())
+                                (new LineBuyerOrderReferencedDocument())
                                     ->setLineIdentifier(new PurchaseOrderLineReference('PurchaseOrderLineReference'))
                             ),
                         new SpecifiedLineTradeDelivery(
@@ -213,22 +211,22 @@ class CIIEN16931Test extends TestCase
                                     ->setReason('Reason')
                                     ->setReasonCode(AllowanceReasonCode::STANDARD)
                                     ->setBasisAmount(50)
-                                    ->setCalculationPercent(100)
+                                    ->setCalculationPercent(100),
                             ])
                             ->setSpecifiedTradeCharges([
                                 (new LineSpecifiedTradeCharge(50))
                                     ->setReason('Reason')
                                     ->setReasonCode(ChargeReasonCode::ACCEPTANCE)
                                     ->setBasisAmount(50)
-                                    ->setCalculationPercent(100)
+                                    ->setCalculationPercent(100),
                             ])
                             ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount('ReceivableSpecifiedTradeAccountingAccount'))
                             ->setAdditionalReferencedDocument(
-                                (new AdditionalReferencedDocument(
+                                (new AdditionalReferencedDocumentInvoiceLineObjectIdentifier(
                                     new ObjectIdentifier('AdditionalReferencedDocument', ObjectSchemeCode::ACCOUNT_NUMBER)
                                 ))->setReferenceTypeCode(ObjectSchemeCode::ACCOUNT_NUMBER)
                             )
-                    )
+                    ),
                 ],
                 new ApplicableHeaderTradeAgreement(
                     new SellerTradeParty(
@@ -292,7 +290,7 @@ class CIIEN16931Test extends TestCase
                             ->setExemptionReason('ExemptionReason')
                             ->setExemptionReasonCode(VatExoneration::NOT_SUBJECT_TO_VAT)
                             ->setDueDateTypeCode(DateCode2005::INVOICE_DATE_TIME)
-                            ->setRateApplicablePercent(new Percentage(50))
+                            ->setRateApplicablePercent(50),
                     ],
                     (new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40))
                         ->setRoundingAmount(40)
@@ -316,28 +314,28 @@ class CIIEN16931Test extends TestCase
                     )
                     ->setSpecifiedTradeSettlementPaymentMeans(
                         (new SpecifiedTradeSettlementPaymentMeans(PaymentMeansCode::ACCEPTED_BILL_OF_EXCHANGE))
-                        ->setInformation('Information')
-                        ->setApplicableTradeSettlementFinancialCard(
-                            (new ApplicableTradeSettlementFinancialCard('ApplicableTradeSettlementFinancialCardIdentifier'))
-                                ->setCardholderName('CardholderName')
-                        )
-                        ->setPayerPartyDebtorFinancialAccount(
-                            new PayerPartyDebtorFinancialAccount(
-                                new DebitedAccountIdentifier('DebitedAccountIdentifier')
+                            ->setInformation('Information')
+                            ->setApplicableTradeSettlementFinancialCard(
+                                (new ApplicableTradeSettlementFinancialCard('ApplicableTradeSettlementFinancialCardIdentifier'))
+                                    ->setCardholderName('CardholderName')
                             )
-                        )
-                        ->setPayeePartyCreditorFinancialAccount(
-                            new PayeePartyCreditorFinancialAccount(
-                                new PaymentAccountIdentifier('PaymentAccountIdentifier'),
-                                'accountName',
-                                new PaymentAccountIdentifier('PaymentAccountIdentifier (proprietary)')
+                            ->setPayerPartyDebtorFinancialAccount(
+                                new PayerPartyDebtorFinancialAccount(
+                                    new DebitedAccountIdentifier('DebitedAccountIdentifier')
+                                )
                             )
-                        )
-                        ->setPayeeSpecifiedCreditorFinancialInstitution(
-                            new PayeeSpecifiedCreditorFinancialInstitution(
-                                new PaymentServiceProviderIdentifier('PaymentServiceProviderIdentifier')
+                            ->setPayeePartyCreditorFinancialAccount(
+                                new PayeePartyCreditorFinancialAccount(
+                                    new PaymentAccountIdentifier('PaymentAccountIdentifier'),
+                                    'accountName',
+                                    new PaymentAccountIdentifier('PaymentAccountIdentifier (proprietary)')
+                                )
                             )
-                        )
+                            ->setPayeeSpecifiedCreditorFinancialInstitution(
+                                new PayeeSpecifiedCreditorFinancialInstitution(
+                                    new PaymentServiceProviderIdentifier('PaymentServiceProviderIdentifier')
+                                )
+                            )
                     )
                     ->setBillingSpecifiedPeriod(
                         (new BillingSpecifiedPeriod())
@@ -353,7 +351,7 @@ class CIIEN16931Test extends TestCase
                             ->setBasisAmount(100)
                             ->setReason('Reason')
                             ->setReasonCode(AllowanceReasonCode::DISCOUNT)
-                            ->setCalculationPercent(50)
+                            ->setCalculationPercent(50),
                     ])
                     ->setSpecifiedTradeCharges([
                         (new SpecifiedTradeCharge(
@@ -364,7 +362,7 @@ class CIIEN16931Test extends TestCase
                             ->setBasisAmount(50)
                             ->setReason('Reason')
                             ->setReasonCode(ChargeReasonCode::ACCEPTANCE)
-                            ->setCalculationPercent(20)
+                            ->setCalculationPercent(20),
                     ])
                     ->setSpecifiedTradePaymentTerms(
                         (new SpecifiedTradePaymentTerms())
@@ -389,10 +387,9 @@ class CIIEN16931Test extends TestCase
     }
 
     /**
-     * @test
      * @testdox Create EN16931 profile from XML mandatory data
      */
-    public function createEN16931ProfileFromXMLMandatoryData(): void
+    public function testCreateEN16931ProfileFromXMLMandatoryData(): void
     {
         $invoiceToConvert = new CrossIndustryInvoice(
             new ExchangedDocumentContext(
@@ -422,7 +419,7 @@ class CIIEN16931Test extends TestCase
                             new ApplicableTradeTax(VatCategory::STANDARD),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
-                    )
+                    ),
                 ],
                 new ApplicableHeaderTradeAgreement(
                     new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
@@ -432,7 +429,7 @@ class CIIEN16931Test extends TestCase
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
                     [
-                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD)
+                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD),
                     ],
                     new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40)
                 )

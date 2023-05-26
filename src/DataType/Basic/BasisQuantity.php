@@ -59,7 +59,7 @@ class BasisQuantity
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $basisQuantityElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -95,7 +95,7 @@ class BasisQuantity
         return $basisQuantity;
     }
 
-    public static function fromEN16931(PriceDetails $priceDetails): static
+    public static function fromEN16931(PriceDetails $priceDetails): self
     {
         return (new self($priceDetails->getItemPriceBaseQuantity()))
             ->setUnitCode($priceDetails->getItemPriceBaseQuantityUnitOfMeasureCode());

@@ -4,6 +4,9 @@ namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
 
+/**
+ * BG-31.
+ */
 class SpecifiedTradeProduct
 {
     protected const XML_NODE = 'ram:SpecifiedTradeProduct';
@@ -56,7 +59,7 @@ class SpecifiedTradeProduct
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
         $specifiedTradeProductElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 

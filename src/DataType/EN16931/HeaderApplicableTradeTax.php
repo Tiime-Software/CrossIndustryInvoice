@@ -44,32 +44,30 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        $currentNode->appendChild($document->createElement('ram:CalculatedAmount', (string) $this->getCalculatedAmount()));
+        $currentNode->appendChild($document->createElement('ram:CalculatedAmount', (string) $this->calculatedAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
-        $currentNode->appendChild($document->createElement('ram:TypeCode', $this->getTypeCode()));
-
-        if (\is_string($this->getExemptionReason())) {
-            $currentNode->appendChild($document->createElement('ram:ExemptionReason', $this->getExemptionReason()));
+        if (\is_string($this->exemptionReason)) {
+            $currentNode->appendChild($document->createElement('ram:ExemptionReason', $this->exemptionReason));
         }
 
-        $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->getBasisAmount()));
+        $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
 
-        $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->getCategoryCode()->value));
-
-        if ($this->getExemptionReasonCode() instanceof VatExoneration) {
-            $currentNode->appendChild($document->createElement('ram:ExemptionReasonCode', $this->getExemptionReasonCode()->value));
+        if ($this->exemptionReasonCode instanceof VatExoneration) {
+            $currentNode->appendChild($document->createElement('ram:ExemptionReasonCode', $this->exemptionReasonCode->value));
         }
 
         if ($this->taxPointDate instanceof TaxPointDate) {
             $currentNode->appendChild($this->taxPointDate->toXML($document));
         }
 
-        if ($this->getDueDateTypeCode() instanceof DateCode2005) {
-            $currentNode->appendChild($document->createElement('ram:DueDateTypeCode', $this->getDueDateTypeCode()->value));
+        if ($this->dueDateTypeCode instanceof DateCode2005) {
+            $currentNode->appendChild($document->createElement('ram:DueDateTypeCode', $this->dueDateTypeCode->value));
         }
 
-        if (\is_float($this->getRateApplicablePercent())) {
-            $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->getRateApplicablePercent()));
+        if ($this->rateApplicablePercent instanceof Percentage) {
+            $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->rateApplicablePercent->getValueRounded()));
         }
 
         return $currentNode;
@@ -168,7 +166,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
             }
 
             if (1 === $rateApplicablePercentElements->count()) {
-                $headerApplicableTradeTax->setRateApplicablePercent(new Percentage((float) $rateApplicablePercentElements->item(0)->nodeValue));
+                $headerApplicableTradeTax->setRateApplicablePercent((float) $rateApplicablePercentElements->item(0)->nodeValue);
             }
 
             if ($taxPointDate instanceof TaxPointDate) {
@@ -181,7 +179,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
         return $headerApplicableTradeTaxes;
     }
 
-    public static function fromEN16931(VatBreakdown $vatBreakdown, ?DateCode2005 $taxPointDateCode): static
+    public static function fromEN16931(VatBreakdown $vatBreakdown, ?DateCode2005 $taxPointDateCode): self
     {
         $headerApplicableTradeTax = new self(
             $vatBreakdown->getVatCategoryTaxAmount(),

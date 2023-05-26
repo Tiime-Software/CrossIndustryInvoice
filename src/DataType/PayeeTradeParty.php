@@ -109,7 +109,7 @@ class PayeeTradeParty
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $payeeTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -157,7 +157,7 @@ class PayeeTradeParty
         return $payeeTradeParty;
     }
 
-    public static function fromEN16931(Payee $payee): static
+    public static function fromEN16931(Payee $payee): self
     {
         $identifier       = null;
         $globalIdentifier = null;

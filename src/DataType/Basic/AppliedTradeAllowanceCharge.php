@@ -51,7 +51,7 @@ class AppliedTradeAllowanceCharge
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?static
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $appliedTradeAllowanceChargeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
 
@@ -80,7 +80,7 @@ class AppliedTradeAllowanceCharge
         return new self((float) $actualAmount);
     }
 
-    public static function fromEN16931(PriceDetails $priceDetails): static
+    public static function fromEN16931(PriceDetails $priceDetails): self
     {
         return new self($priceDetails->getItemPriceDiscount());
     }

@@ -233,7 +233,7 @@ class SpecifiedTradeAllowance
         return $specifiedTradeAllowances;
     }
 
-    public static function fromEN16931(DocumentLevelAllowance $allowance): static
+    public static function fromEN16931(DocumentLevelAllowance $allowance): self
     {
         $specifiedTradeAllowance = new self(
             $allowance->getAmount(),

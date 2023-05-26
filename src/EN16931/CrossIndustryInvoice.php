@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
+use Tiime\CrossIndustryInvoice\DataType\EN16931\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 use Tiime\EN16931\Invoice;
 
@@ -87,7 +88,7 @@ class CrossIndustryInvoice
         return $document;
     }
 
-    public static function fromXML(\DOMDocument $document): static
+    public static function fromXML(\DOMDocument $document): self
     {
         $xpath = new \DOMXPath($document);
 
@@ -106,7 +107,7 @@ class CrossIndustryInvoice
 
         return new self($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
     }
-  
+
     public static function fromEN16931(Invoice $invoice): self
     {
         return new self(
