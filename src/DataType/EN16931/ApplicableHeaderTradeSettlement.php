@@ -12,6 +12,8 @@ use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
 use Tiime\EN16931\BusinessTermsGroup\InvoicingPeriod;
+use Tiime\EN16931\BusinessTermsGroup\Payee;
+use Tiime\EN16931\BusinessTermsGroup\PaymentInstructions;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 use Tiime\EN16931\Invoice;
@@ -248,8 +250,16 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
             ->setCreditorReferenceIdentifier($invoice->getPaymentInstructions()?->getDirectDebit()?->getBankAssignedCreditorIdentifier())
             ->setPaymentReference($invoice->getPaymentInstructions()?->getRemittanceInformation())
             ->setTaxCurrencyCode($invoice->getVatAccountingCurrencyCode())
-            ->setPayeeTradeParty(PayeeTradeParty::fromEN16931($invoice->getPayee()))
-            ->setSpecifiedTradeSettlementPaymentMeans(SpecifiedTradeSettlementPaymentMeans::fromEN16931($invoice->getPaymentInstructions()))
+            ->setPayeeTradeParty(
+                $invoice->getPayee() instanceof Payee
+                    ? PayeeTradeParty::fromEN16931($invoice->getPayee())
+                    : null
+            )
+            ->setSpecifiedTradeSettlementPaymentMeans(
+                $invoice->getPaymentInstructions() instanceof PaymentInstructions
+                    ? SpecifiedTradeSettlementPaymentMeans::fromEN16931($invoice->getPaymentInstructions())
+                    : null
+            )
             ->setBillingSpecifiedPeriod(
                 $invoice->getDeliveryInformation()?->getInvoicingPeriod() instanceof InvoicingPeriod
                     ? BillingSpecifiedPeriod::fromEN16931($invoice->getDeliveryInformation()->getInvoicingPeriod())
