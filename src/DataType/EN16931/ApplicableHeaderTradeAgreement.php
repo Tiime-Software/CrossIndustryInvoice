@@ -12,6 +12,7 @@ use Tiime\CrossIndustryInvoice\DataType\ContractReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\SellerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\SellerTaxRepresentativeTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedProcuringProject;
+use Tiime\EN16931\BusinessTermsGroup\SellerTaxRepresentativeParty;
 use Tiime\EN16931\DataType\Reference\ContractReference;
 use Tiime\EN16931\DataType\Reference\ProjectReference;
 use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
@@ -267,7 +268,11 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
                     ? new ContractReferencedDocument($invoice->getContractReference())
                     : null
             )
-            ->setSellerTaxRepresentativeTradeParty(SellerTaxRepresentativeTradeParty::fromEN16931($invoice->getSellerTaxRepresentativeParty()))
+            ->setSellerTaxRepresentativeTradeParty(
+                $invoice->getSellerTaxRepresentativeParty() instanceof SellerTaxRepresentativeParty
+                    ? SellerTaxRepresentativeTradeParty::fromEN16931($invoice->getSellerTaxRepresentativeParty())
+                    : null
+            )
             ->setSellerOrderReferencedDocument(
                 $invoice->getSalesOrderReference() instanceof SalesOrderReference
                     ? new SellerOrderReferencedDocument($invoice->getSalesOrderReference())

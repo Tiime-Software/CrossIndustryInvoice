@@ -9,6 +9,7 @@ use Tiime\CrossIndustryInvoice\DataType\DespatchAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\OccurrenceDateTime;
 use Tiime\CrossIndustryInvoice\DataType\ReceivingAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
+use Tiime\EN16931\BusinessTermsGroup\DeliveryInformation;
 use Tiime\EN16931\DataType\Reference\DespatchAdviceReference;
 use Tiime\EN16931\DataType\Reference\ReceivingAdviceReference;
 use Tiime\EN16931\Invoice;
@@ -105,9 +106,13 @@ class ApplicableHeaderTradeDelivery extends \Tiime\CrossIndustryInvoice\DataType
     public static function fromEN16931(Invoice $invoice): self
     {
         return (new self())
-            ->setShipToTradeParty(ShipToTradeParty::fromEN16931($invoice->getDeliveryInformation()))
+            ->setShipToTradeParty(
+                $invoice->getDeliveryInformation() instanceof DeliveryInformation
+                    ? ShipToTradeParty::fromEN16931($invoice->getDeliveryInformation())
+                    : null
+            )
             ->setActualDeliverySupplyChainEvent(
-                $invoice->getDeliveryInformation()->getActualDeliveryDate() instanceof \DateTimeInterface
+                $invoice->getDeliveryInformation()?->getActualDeliveryDate() instanceof \DateTimeInterface
                     ? new ActualDeliverySupplyChainEvent(new OccurrenceDateTime($invoice->getDeliveryInformation()->getActualDeliveryDate()))
                     : null
             )
