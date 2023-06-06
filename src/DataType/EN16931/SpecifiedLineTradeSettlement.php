@@ -10,6 +10,8 @@ use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMoneta
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount;
 use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
+use Tiime\EN16931\BusinessTermsGroup\InvoiceLinePeriod;
+use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
 
 /**
  * BG-30-00.
@@ -189,11 +191,23 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
         );
 
         $specifiedLineTradeSettlement
-            ->setBillingSpecifiedPeriod(BillingSpecifiedPeriod::fromEN16931($invoiceLine->getPeriod()))
+            ->setBillingSpecifiedPeriod(
+                $invoiceLine->getPeriod() instanceof InvoiceLinePeriod
+                    ? BillingSpecifiedPeriod::fromEN16931($invoiceLine->getPeriod())
+                    : null
+            )
             ->setSpecifiedTradeAllowances($specifiedTradeAllowances)
             ->setSpecifiedTradeCharges($specifiedTradeCharges)
-            ->setAdditionalReferencedDocument(new AdditionalReferencedDocumentInvoiceLineObjectIdentifier($invoiceLine->getObjectIdentifier()))
-            ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount($invoiceLine->getBuyerAccountingReference()));
+            ->setAdditionalReferencedDocument(
+                $invoiceLine->getObjectIdentifier() instanceof ObjectIdentifier
+                    ? new AdditionalReferencedDocumentInvoiceLineObjectIdentifier($invoiceLine->getObjectIdentifier())
+                    : null
+            )
+            ->setReceivableSpecifiedTradeAccountingAccount(
+                is_string($invoiceLine->getBuyerAccountingReference())
+                    ? new ReceivableSpecifiedTradeAccountingAccount($invoiceLine->getBuyerAccountingReference())
+                    : null
+            );
 
         return $specifiedLineTradeSettlement;
     }
