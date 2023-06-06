@@ -12,6 +12,7 @@ use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\EN16931\BusinessTermsGroup\Buyer;
 use Tiime\EN16931\BusinessTermsGroup\BuyerContact;
 use Tiime\EN16931\DataType\Identifier\BuyerIdentifier;
+use Tiime\EN16931\DataType\Identifier\ElectronicAddressIdentifier;
 use Tiime\EN16931\DataType\Identifier\LegalRegistrationIdentifier;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 use Tiime\EN16931\DataType\InternationalCodeDesignator;
@@ -189,7 +190,11 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Buyer
                     ? DefinedTradeContact::fromEN16931($buyer->getContact())
                     : null
             )
-            ->setURIUniversalCommunication(new URIUniversalCommunication($buyer->getElectronicAddress()))
+            ->setURIUniversalCommunication(
+                $buyer->getElectronicAddress() instanceof ElectronicAddressIdentifier
+                ? new URIUniversalCommunication($buyer->getElectronicAddress())
+                : null
+            )
             ->setSpecifiedTaxRegistrationVA(
                 $buyer->getVatIdentifier() instanceof VatIdentifier
                     ? new SpecifiedTaxRegistrationVA($buyer->getVatIdentifier())
