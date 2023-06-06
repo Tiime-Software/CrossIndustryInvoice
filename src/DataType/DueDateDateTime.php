@@ -87,4 +87,9 @@ class DueDateDateTime
 
         return new self($formattedDateTime);
     }
+
+    public static function fromEN16931(\DateTimeInterface $dateTimeString): self
+    {
+        return new self($dateTimeString);
+    }
 }
