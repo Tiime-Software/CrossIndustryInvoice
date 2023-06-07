@@ -100,9 +100,11 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
         return $this->additionalReferencedDocumentTenderOrLotReference;
     }
 
-    public function setAdditionalReferencedDocumentTenderOrLotReference(?AdditionalReferencedDocumentTenderOrLotReference $additionalReferencedDocumentTenderOrLotReference): void
+    public function setAdditionalReferencedDocumentTenderOrLotReference(?AdditionalReferencedDocumentTenderOrLotReference $additionalReferencedDocumentTenderOrLotReference): static
     {
         $this->additionalReferencedDocumentTenderOrLotReference = $additionalReferencedDocumentTenderOrLotReference;
+
+        return $this;
     }
 
     public function getAdditionalReferencedDocumentInvoicedObjectIdentifier(): ?AdditionalReferencedDocumentInvoicedObjectIdentifier
@@ -110,9 +112,11 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
         return $this->additionalReferencedDocumentInvoicedObjectIdentifier;
     }
 
-    public function setAdditionalReferencedDocumentInvoicedObjectIdentifier(?AdditionalReferencedDocumentInvoicedObjectIdentifier $additionalReferencedDocumentInvoicedObjectIdentifier): void
+    public function setAdditionalReferencedDocumentInvoicedObjectIdentifier(?AdditionalReferencedDocumentInvoicedObjectIdentifier $additionalReferencedDocumentInvoicedObjectIdentifier): static
     {
         $this->additionalReferencedDocumentInvoicedObjectIdentifier = $additionalReferencedDocumentInvoicedObjectIdentifier;
+
+        return $this;
     }
 
     public function getSpecifiedProcuringProject(): ?SpecifiedProcuringProject
