@@ -52,9 +52,11 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         return $this->taxTotalAmount;
     }
 
-    public function setTaxTotalAmount(?TaxTotalAmount $taxTotalAmount): void
+    public function setTaxTotalAmount(?TaxTotalAmount $taxTotalAmount): static
     {
         $this->taxTotalAmount = $taxTotalAmount;
+
+        return $this;
     }
 
     public function getGrandTotalAmount(): float
