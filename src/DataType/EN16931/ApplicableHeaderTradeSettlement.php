@@ -243,7 +243,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         $applicableHeaderTradeSettlement = new self(
             $invoice->getCurrencyCode(),
             $applicableTradeTaxes,
-            SpecifiedTradeSettlementHeaderMonetarySummation::fromEN16931($invoice->getDocumentTotals())
+            SpecifiedTradeSettlementHeaderMonetarySummation::fromEN16931($invoice)
         );
 
         $applicableHeaderTradeSettlement
