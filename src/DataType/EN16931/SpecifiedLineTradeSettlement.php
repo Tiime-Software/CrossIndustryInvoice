@@ -204,7 +204,7 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
                     : null
             )
             ->setReceivableSpecifiedTradeAccountingAccount(
-                is_string($invoiceLine->getBuyerAccountingReference())
+                \is_string($invoiceLine->getBuyerAccountingReference())
                     ? new ReceivableSpecifiedTradeAccountingAccount($invoiceLine->getBuyerAccountingReference())
                     : null
             );
