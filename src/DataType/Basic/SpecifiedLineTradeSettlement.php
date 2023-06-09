@@ -38,17 +38,17 @@ class SpecifiedLineTradeSettlement
     /**
      * BT-131-00.
      */
-    protected SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementMonetarySummation;
+    protected SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation;
 
     public function __construct(
         ApplicableTradeTax $applicableTradeTax,
-        SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementMonetarySummation
+        SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation
     ) {
-        $this->applicableTradeTax                        = $applicableTradeTax;
-        $this->specifiedTradeSettlementMonetarySummation = $specifiedTradeSettlementMonetarySummation;
-        $this->specifiedTradeAllowances                  = [];
-        $this->specifiedTradeCharges                     = [];
-        $this->billingSpecifiedPeriod                    = null;
+        $this->applicableTradeTax                            = $applicableTradeTax;
+        $this->specifiedTradeSettlementLineMonetarySummation = $specifiedTradeSettlementLineMonetarySummation;
+        $this->specifiedTradeAllowances                      = [];
+        $this->specifiedTradeCharges                         = [];
+        $this->billingSpecifiedPeriod                        = null;
     }
 
     public function getApplicableTradeTax(): ApplicableTradeTax
@@ -112,9 +112,9 @@ class SpecifiedLineTradeSettlement
         return $this;
     }
 
-    public function getSpecifiedTradeSettlementMonetarySummation(): SpecifiedTradeSettlementLineMonetarySummation
+    public function getSpecifiedTradeSettlementLineMonetarySummation(): SpecifiedTradeSettlementLineMonetarySummation
     {
-        return $this->specifiedTradeSettlementMonetarySummation;
+        return $this->specifiedTradeSettlementLineMonetarySummation;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
@@ -135,7 +135,7 @@ class SpecifiedLineTradeSettlement
             $currentNode->appendChild($specifiedTradeCharge->toXML($document));
         }
 
-        $currentNode->appendChild($this->specifiedTradeSettlementMonetarySummation->toXML($document));
+        $currentNode->appendChild($this->specifiedTradeSettlementLineMonetarySummation->toXML($document));
 
         return $currentNode;
     }
