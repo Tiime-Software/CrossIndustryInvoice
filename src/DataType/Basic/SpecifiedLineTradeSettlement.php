@@ -38,17 +38,17 @@ class SpecifiedLineTradeSettlement
     /**
      * BT-131-00.
      */
-    protected SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementMonetarySummation;
+    protected SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation;
 
     public function __construct(
         ApplicableTradeTax $applicableTradeTax,
-        SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementMonetarySummation
+        SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation
     ) {
-        $this->applicableTradeTax                        = $applicableTradeTax;
-        $this->specifiedTradeSettlementMonetarySummation = $specifiedTradeSettlementMonetarySummation;
-        $this->specifiedTradeAllowances                  = [];
-        $this->specifiedTradeCharges                     = [];
-        $this->billingSpecifiedPeriod                    = null;
+        $this->applicableTradeTax                            = $applicableTradeTax;
+        $this->specifiedTradeSettlementLineMonetarySummation = $specifiedTradeSettlementLineMonetarySummation;
+        $this->specifiedTradeAllowances                      = [];
+        $this->specifiedTradeCharges                         = [];
+        $this->billingSpecifiedPeriod                        = null;
     }
 
     public function getApplicableTradeTax(): ApplicableTradeTax
@@ -112,9 +112,9 @@ class SpecifiedLineTradeSettlement
         return $this;
     }
 
-    public function getSpecifiedTradeSettlementMonetarySummation(): SpecifiedTradeSettlementLineMonetarySummation
+    public function getSpecifiedTradeSettlementLineMonetarySummation(): SpecifiedTradeSettlementLineMonetarySummation
     {
-        return $this->specifiedTradeSettlementMonetarySummation;
+        return $this->specifiedTradeSettlementLineMonetarySummation;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
@@ -135,7 +135,7 @@ class SpecifiedLineTradeSettlement
             $currentNode->appendChild($specifiedTradeCharge->toXML($document));
         }
 
-        $currentNode->appendChild($this->specifiedTradeSettlementMonetarySummation->toXML($document));
+        $currentNode->appendChild($this->specifiedTradeSettlementLineMonetarySummation->toXML($document));
 
         return $currentNode;
     }
@@ -151,13 +151,13 @@ class SpecifiedLineTradeSettlement
         /** @var \DOMElement $specifiedLineTradeSettlementElement */
         $specifiedLineTradeSettlementElement = $specifiedLineTradeSettlementElements->item(0);
 
-        $applicableTradeTax                        = ApplicableTradeTax::fromXML($xpath, $specifiedLineTradeSettlementElement);
-        $billingSpecifiedPeriod                    = BillingSpecifiedPeriod::fromXML($xpath, $specifiedLineTradeSettlementElement);
-        $specifiedTradeAllowances                  = LineSpecifiedTradeAllowance::fromXML($xpath, $specifiedLineTradeSettlementElement);
-        $specifiedTradeCharges                     = LineSpecifiedTradeCharge::fromXML($xpath, $specifiedLineTradeSettlementElement);
-        $specifiedTradeSettlementMonetarySummation = SpecifiedTradeSettlementLineMonetarySummation::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $applicableTradeTax                            = ApplicableTradeTax::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $billingSpecifiedPeriod                        = BillingSpecifiedPeriod::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $specifiedTradeAllowances                      = LineSpecifiedTradeAllowance::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $specifiedTradeCharges                         = LineSpecifiedTradeCharge::fromXML($xpath, $specifiedLineTradeSettlementElement);
+        $specifiedTradeSettlementLineMonetarySummation = SpecifiedTradeSettlementLineMonetarySummation::fromXML($xpath, $specifiedLineTradeSettlementElement);
 
-        $specifiedLineTradeSettlement = new self($applicableTradeTax, $specifiedTradeSettlementMonetarySummation);
+        $specifiedLineTradeSettlement = new self($applicableTradeTax, $specifiedTradeSettlementLineMonetarySummation);
 
         if ($billingSpecifiedPeriod instanceof BillingSpecifiedPeriod) {
             $specifiedLineTradeSettlement->setBillingSpecifiedPeriod($billingSpecifiedPeriod);

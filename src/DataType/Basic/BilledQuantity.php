@@ -17,22 +17,22 @@ class BilledQuantity
     /**
      * BT-129.
      */
-    private Quantity $value;
+    private Quantity $quantity;
 
     /**
      * BT-130.
      */
     private UnitOfMeasurement $unitCode;
 
-    public function __construct(float $value, UnitOfMeasurement $unitCode)
+    public function __construct(float $quantity, UnitOfMeasurement $unitCode)
     {
-        $this->value    = new Quantity($value);
+        $this->quantity = new Quantity($quantity);
         $this->unitCode = $unitCode;
     }
 
-    public function getValue(): Quantity
+    public function getQuantity(): float
     {
-        return $this->value;
+        return $this->quantity->getValueRounded();
     }
 
     public function getUnitCode(): UnitOfMeasurement
@@ -42,7 +42,7 @@ class BilledQuantity
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement(self::XML_NODE, (string) $this->value->getValueRounded());
+        $element = $document->createElement(self::XML_NODE, (string) $this->quantity->getValueRounded());
         $element->setAttribute('unitCode', $this->unitCode->value);
 
         return $element;

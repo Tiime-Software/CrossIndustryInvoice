@@ -30,9 +30,9 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
 
     public function __construct(
         ApplicableTradeTax $applicableTradeTax,
-        SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementMonetarySummation
+        SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation
     ) {
-        parent::__construct($applicableTradeTax, $specifiedTradeSettlementMonetarySummation);
+        parent::__construct($applicableTradeTax, $specifiedTradeSettlementLineMonetarySummation);
 
         $this->additionalReferencedDocument              = null;
         $this->receivableSpecifiedTradeAccountingAccount = null;
@@ -112,7 +112,7 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
             $currentNode->appendChild($specifiedTradeCharge->toXML($document));
         }
 
-        $currentNode->appendChild($this->specifiedTradeSettlementMonetarySummation->toXML($document));
+        $currentNode->appendChild($this->specifiedTradeSettlementLineMonetarySummation->toXML($document));
 
         if ($this->additionalReferencedDocument instanceof AdditionalReferencedDocumentInvoiceLineObjectIdentifier) {
             $currentNode->appendChild($this->additionalReferencedDocument->toXML($document));
@@ -204,7 +204,7 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
                     : null
             )
             ->setReceivableSpecifiedTradeAccountingAccount(
-                is_string($invoiceLine->getBuyerAccountingReference())
+                \is_string($invoiceLine->getBuyerAccountingReference())
                     ? new ReceivableSpecifiedTradeAccountingAccount($invoiceLine->getBuyerAccountingReference())
                     : null
             );

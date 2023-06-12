@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
-use Tiime\EN16931\BusinessTermsGroup\DocumentTotals;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\Invoice;
 use Tiime\EN16931\SemanticDataType\Amount;
@@ -241,12 +240,12 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
             ->setChargeTotalAmount($documentTotals->getSumOfChargesOnDocumentLevel())
             ->setAllowanceTotalAmount($documentTotals->getSumOfAllowancesOnDocumentLevel())
             ->setTaxTotalAmount(
-                is_float($documentTotals->getInvoiceTotalVatAmount())
+                \is_float($documentTotals->getInvoiceTotalVatAmount())
                     ? new TaxTotalAmount($documentTotals->getInvoiceTotalVatAmount(), $invoice->getCurrencyCode())
                     : null
             )
             ->setTaxTotalAmountCurrency(
-                is_float($documentTotals->getInvoiceTotalVatAmountInAccountingCurrency())
+                \is_float($documentTotals->getInvoiceTotalVatAmountInAccountingCurrency())
                     ? new TaxTotalAmount($documentTotals->getInvoiceTotalVatAmountInAccountingCurrency(), $invoice->getVatAccountingCurrencyCode())
                     : null
             )
