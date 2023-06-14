@@ -31,9 +31,9 @@ class NetPriceProductTradePrice
         $this->basisQuantity = null;
     }
 
-    public function getChargeAmount(): UnitPriceAmount
+    public function getChargeAmount(): float
     {
-        return $this->chargeAmount;
+        return $this->chargeAmount->getValueRounded();
     }
 
     public function getBasisQuantity(): ?BasisQuantity
