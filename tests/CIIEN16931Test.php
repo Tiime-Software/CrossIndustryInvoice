@@ -580,7 +580,7 @@ class CIIEN16931Test extends TestCase
                             (new DefinedTradeContact())
                                 ->setPersonName('Alexandre Payet')
                                 ->setTelephoneUniversalCommunication(new TelephoneUniversalCommunication('+33 4 72 07 08 67'))
-                                ->setEmailURIUniversalCommunication(new EmailURIUniversalCommunication('alexandre.payet@majolieboutique.net')) //Missing schemeID
+                                ->setEmailURIUniversalCommunication(new EmailURIUniversalCommunication('alexandre.payet@majolieboutique.net'))
                         )
                         ->setSpecifiedLegalOrganization(
                             new BuyerSpecifiedLegalOrganization(
