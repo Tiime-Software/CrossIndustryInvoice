@@ -7,14 +7,14 @@ namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 
 /**
- * BG-5.
+ * BG-5 or BG-8 or BG-15.
  */
 class PostalTradeAddress
 {
     protected const XML_NODE = 'ram:PostalTradeAddress';
 
     /**
-     * BT-40.
+     * BT-40 or BT-55 or BT-80.
      */
     protected CountryAlpha2Code $countryIdentifier;
 

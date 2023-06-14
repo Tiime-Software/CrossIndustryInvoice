@@ -4,7 +4,9 @@
     "require": {
         "php": "^8.1",
         "ext-dom": "*",
-        "tiime/en-16931": "dev-main"
+        "tiime/en-16931": "dev-main",
+        "twig/twig": "^3.6",
+        "twig/intl-extra": "^3.6"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",

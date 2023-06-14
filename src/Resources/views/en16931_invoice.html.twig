@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap" rel="stylesheet">
+        <title></title>
+        <style>
+            html {
+                height: 100%;
+            }
+            body {
+                margin: 0;
+                min-height: 100%;
+                padding: 0 45px;
+                width: 1130px;
+                color: #003d3d;
+                font-family: 'Nunito', sans-serif;
+                font-weight: 400;
+                letter-spacing: 0.9px;
+                font-size: 20px;
+                justify-content: space-between;
+                box-sizing: border-box;
+            }
+            #logo_container {
+                width: 100%;
+                display: block;
+            }
+            #invoicing_table thead {
+                margin-bottom: 10px;
+                display: table-row-group;
+            }
+            #invoicing_table thead tr th {
+                color: #FFF;
+                padding: 5px 9px;
+                font-weight: 700;
+                text-align: center;
+                font-size: 17px;
+                background-color: #ff5e62;
+            }
+            #invoicing_table thead tr th:first-child {
+                border-radius: 100px 0 0 100px;
+                text-align: left;
+            }
+            #invoicing_table thead tr th:last-child {
+                border-radius: 0 100px 100px 0;
+            }
+            #invoicing_table tbody tr {
+                page-break-inside: avoid;
+            }
+            #invoicing_table tbody tr td{
+                font-size: 20px;
+                padding: 0 9px 20px 9px;
+                line-height: 20px;
+                text-align: right;
+                vertical-align: top;
+            }
+            #invoicing_table tbody tr:first-child td{
+                padding: 10px 9px 20px 9px;
+            }
+            #invoicing_table tbody tr td:first-child{
+                text-align: left;
+            }
+            #invoicing_total_amounts {
+                page-break-inside: avoid !important;
+            }
+            #invoicing_total_amounts table {
+                float: right;
+                width: 545px;
+                margin-right: -10px;
+                page-break-inside: avoid !important;
+            }
+            #invoicing_total_amounts table tr {
+                page-break-inside: avoid;
+            }
+            #invoicing_total_amounts table tr td {
+                text-align: right;
+                width: 51%;
+            }
+            #invoicing_total_amounts table tr td:first-child {
+                text-align: left;
+            }
+            #invoicing_total_amounts table .vat_line {
+                word-break: break-all;
+            }
+            #invoicing_total_amounts table .vat_line span {
+                white-space: nowrap
+            }
+            #invoicing_total_amounts table tr td span.total_value {
+                border-radius: 15px;
+                padding: 0 9px;
+                font-weight: 700;
+            }
+            .clearfix {
+                float: none;
+                clear: both;
+            }
+            #invoicing_total_amounts table tr:last-child {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        {%- set invoiceCurrency = invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.invoiceCurrencyCode.value -%}
+
+        <div id="main_header" style="white-space: nowrap;overflow: hidden;height: fit-content;">
+            <div id="header-left" style="display: inline-block;width: 45%;height: fit-content;vertical-align:top;">
+                {%- if invoice_logo is defined and invoice_logo is not null -%}
+                    <div id="logo_container" style="height: 100%;width: auto;">
+                        <img id="logo" style="height: 100%;width: auto;max-height: 132px;" src="{{- invoice_logo -}}" alt="Logo"/>
+                    </div>
+                {%- endif -%}
+
+                <div id="sender_address" style="width: 100%;display: block;margin-top: 20px;white-space: initial;">
+                    <div class="client_line">{{- invoice.supplyChainTradeTransaction.applicableHeaderTradeAgreement.sellerTradeParty.name -}}</div>
+
+                    {%- set sellerPostalTradeAddress = invoice.supplyChainTradeTransaction.applicableHeaderTradeAgreement.sellerTradeParty.postalTradeAddress -%}
+                    {%- if sellerPostalTradeAddress.lineOne is defined and sellerPostalTradeAddress.lineOne is not null -%}
+                        <div class="client_line">{{- sellerPostalTradeAddress.lineOne -}}</div>
+                    {%- endif -%}
+
+                    {%- if sellerPostalTradeAddress.lineTwo is defined and sellerPostalTradeAddress.lineTwo is not null -%}
+                        <div class="client_line">{{- sellerPostalTradeAddress.lineTwo -}}</div>
+                    {%- endif -%}
+
+                    {%- if sellerPostalTradeAddress.lineThree is defined and sellerPostalTradeAddress.lineThree is not null -%}
+                        <div class="client_line">{{- sellerPostalTradeAddress.lineThree -}}</div>
+                    {%- endif -%}
+
+                    {%- set BT38_37_39_40 = '' -%}
+                    {%- if sellerPostalTradeAddress.postcodeCode is defined and sellerPostalTradeAddress.postcodeCode is not null -%}
+                        {% set BT38_37_39_40 = sellerPostalTradeAddress.postcodeCode -%}
+                    {%- endif -%}
+                    {%- if sellerPostalTradeAddress.cityName is defined and sellerPostalTradeAddress.cityName is not null -%}
+                        {%- set BT38_37_39_40 = BT38_37_39_40 ~ ' ' ~ sellerPostalTradeAddress.cityName -%}
+                    {%- endif -%}
+
+                    {%- if sellerPostalTradeAddress.countrySubDivisionName is defined and sellerPostalTradeAddress.countrySubDivisionName is not null -%}
+                        {%- if BT38_37_39_40 is empty -%}
+                            {% set BT38_37_39_40 = sellerPostalTradeAddress.countrySubDivisionName -%}
+                        {%- else -%}
+                            {%- set BT38_37_39_40 = BT38_37_39_40 ~ ' - ' ~ sellerPostalTradeAddress.countrySubDivisionName -%}
+                        {%- endif -%}
+                    {%- endif -%}
+
+                    {%- set sellerCountryName = sellerPostalTradeAddress.countryIdentifier.value|country_name -%}
+                    {%- if BT38_37_39_40 is empty -%}
+                        {%- set BT38_37_39_40 = sellerCountryName -%}
+                    {%- else -%}
+                        {%- set BT38_37_39_40 = BT38_37_39_40 ~ ' - ' ~ sellerCountryName -%}
+                    {%- endif -%}
+
+                    <div class="client_line">{{- BT38_37_39_40|trim -}}</div>
+
+                    {%- set sellerDefinedTradeContact = invoice.supplyChainTradeTransaction.applicableHeaderTradeAgreement.sellerTradeParty.definedTradeContact -%}
+                    {%- if sellerDefinedTradeContact is defined and sellerDefinedTradeContact is not null -%}
+                        {%- if sellerDefinedTradeContact.emailURIUniversalCommunication is defined and sellerDefinedTradeContact.emailURIUniversalCommunication is not null -%}
+                            <div class="client_line">{{- sellerDefinedTradeContact.emailURIUniversalCommunication.uriIdentifier -}}</div>
+                        {%- endif -%}
+
+                        {%- if sellerDefinedTradeContact.telephoneUniversalCommunication is defined and sellerDefinedTradeContact.telephoneUniversalCommunication is not null -%}
+                            <div class="client_line">{{- sellerDefinedTradeContact.telephoneUniversalCommunication.completeNumber -}}</div>
+                        {%- endif -%}
+                    {%- endif -%}
+
+                    {%- set sellerSpecifiedLegalOrganization = invoice.supplyChainTradeTransaction.applicableHeaderTradeAgreement.sellerTradeParty.specifiedLegalOrganization -%}
+                    {%-
+                        if sellerSpecifiedLegalOrganization is defined and sellerSpecifiedLegalOrganization is not null
+                        and sellerSpecifiedLegalOrganization.identifier is defined and sellerSpecifiedLegalOrganization.identifier is not null
+                        and sellerSpecifiedLegalOrganization.identifier.scheme is defined and sellerSpecifiedLegalOrganization.identifier.scheme is not null
+                        and sellerSpecifiedLegalOrganization.identifier.scheme is same as(constant('Tiime\\EN16931\\DataType\\InternationalCodeDesignator::SYSTEM_INFORMATION_ET_REPERTOIRE_DES_ENTREPRISE_ET_DES_ETABLISSEMENTS_SIRENE'))
+                    -%}
+                        <div>{{- 'N° SIRET ' ~ sellerSpecifiedLegalOrganization.identifier.value -}}</div>
+                    {%- endif -%}
+
+                    {%- set sellerSpecifiedTaxRegistrationVA = invoice.supplyChainTradeTransaction.applicableHeaderTradeAgreement.sellerTradeParty.specifiedTaxRegistrationVA -%}
+                    {%-
+                        if sellerSpecifiedTaxRegistrationVA is defined
+                        and sellerSpecifiedTaxRegistrationVA is not null
+                    -%}
+                        <div>{{- 'N° de TVA ' ~ sellerSpecifiedTaxRegistrationVA.identifier.value -}}</div>
+                    {%- endif -%}
+                </div>
+            </div>
+            <div id="header-right" style="display: inline-block;width: 45%;margin-left: 96px;height: fit-content;vertical-align:top;">
+                <div id="client_address" style="width: 100%;display: block;white-space: initial;">
+                    <div class="client_line" style="margin-bottom: 8px;"><b>Client :</b></div>
+                    <div class="client_line">{{- invoice.supplyChainTradeTransaction.applicableHeaderTradeAgreement.buyerTradeParty.name -}}</div>
+
+                    {%- set buyerPostalTradeAddress = invoice.supplyChainTradeTransaction.applicableHeaderTradeAgreement.buyerTradeParty.postalTradeAddress -%}
+                    {%- if buyerPostalTradeAddress.lineOne is defined and buyerPostalTradeAddress.lineOne is not null -%}
+                        <div class="client_line">{{- buyerPostalTradeAddress.lineOne -}}</div>
+                    {%- endif -%}
+
+                    {%- if buyerPostalTradeAddress.lineTwo is defined and buyerPostalTradeAddress.lineTwo is not null -%}
+                        <div class="client_line">{{- buyerPostalTradeAddress.lineTwo -}}</div>
+                    {%- endif -%}
+
+                    {%- if buyerPostalTradeAddress.lineThree is defined and buyerPostalTradeAddress.lineThree is not null -%}
+                        <div class="client_line">{{- buyerPostalTradeAddress.lineThree -}}</div>
+                    {%- endif -%}
+
+                    {%- set BT53_52_54_55 = '' -%}
+                    {%- if buyerPostalTradeAddress.postcodeCode is defined and buyerPostalTradeAddress.postcodeCode is not null -%}
+                        {%- set BT53_52_54_55 = buyerPostalTradeAddress.postcodeCode -%}
+                    {%- endif -%}
+
+                    {%- if buyerPostalTradeAddress.cityName is defined and buyerPostalTradeAddress.cityName is not null -%}
+                        {%- set BT53_52_54_55 = BT53_52_54_55 ~ ' ' ~ buyerPostalTradeAddress.cityName -%}
+                    {%- endif -%}
+
+                    {%- if buyerPostalTradeAddress.countrySubDivisionName is defined and buyerPostalTradeAddress.countrySubDivisionName is not null -%}
+                        {%- if BT53_52_54_55 is empty -%}
+                            {% set BT53_52_54_55 = buyerPostalTradeAddress.countrySubDivisionName -%}
+                        {%- else -%}
+                            {%- set BT53_52_54_55 = BT53_52_54_55 ~ ' - ' ~ buyerPostalTradeAddress.countrySubDivisionName -%}
+                        {%- endif -%}
+                    {%- endif -%}
+
+                    {%- set buyerCountryName = buyerPostalTradeAddress.countryIdentifier.value|country_name -%}
+                    {%- if BT53_52_54_55 is empty -%}
+                        {%- set BT53_52_54_55 = buyerCountryName -%}
+                    {%- else -%}
+                        {%- set BT53_52_54_55 = BT53_52_54_55 ~ ' - ' ~ buyerCountryName -%}
+                    {%- endif -%}
+
+                    <div class="client_line">{{- BT53_52_54_55|trim -}}</div>
+
+                    {%- set buyerDefinedTradeContact = invoice.supplyChainTradeTransaction.applicableHeaderTradeAgreement.buyerTradeParty.definedTradeContact -%}
+                    {%- if buyerDefinedTradeContact is defined and buyerDefinedTradeContact is not null -%}
+                        {%- if buyerDefinedTradeContact.emailURIUniversalCommunication is defined and buyerDefinedTradeContact.emailURIUniversalCommunication is not null -%}
+                            <div class="client_line">{{- buyerDefinedTradeContact.emailURIUniversalCommunication.uriIdentifier -}}</div>
+                        {%- endif -%}
+
+                        {%- if buyerDefinedTradeContact.telephoneUniversalCommunication is defined and buyerDefinedTradeContact.telephoneUniversalCommunication is not null -%}
+                            <div class="client_line">{{- buyerDefinedTradeContact.telephoneUniversalCommunication.completeNumber -}}</div>
+                        {%- endif -%}
+                    {%- endif -%}
+
+                    {%- set buyerSpecifiedLegalOrganization = invoice.supplyChainTradeTransaction.applicableHeaderTradeAgreement.buyerTradeParty.specifiedLegalOrganization -%}
+                    {%-
+                        if buyerSpecifiedLegalOrganization is defined and buyerSpecifiedLegalOrganization is not null
+                        and buyerSpecifiedLegalOrganization.identifier is defined and buyerSpecifiedLegalOrganization.identifier is not null
+                        and buyerSpecifiedLegalOrganization.identifier.scheme is defined and buyerSpecifiedLegalOrganization.identifier.scheme is not null
+                        and buyerSpecifiedLegalOrganization.identifier.scheme is same as(constant('Tiime\\EN16931\\DataType\\InternationalCodeDesignator::SYSTEM_INFORMATION_ET_REPERTOIRE_DES_ENTREPRISE_ET_DES_ETABLISSEMENTS_SIRENE'))
+                    -%}
+                        <div>{{- 'N° SIRET ' ~ buyerSpecifiedLegalOrganization.identifier.value -}}</div>
+                    {%- endif -%}
+
+                    {%- set buyerSpecifiedTaxRegistrationVA = invoice.supplyChainTradeTransaction.applicableHeaderTradeAgreement.sellerTradeParty.specifiedTaxRegistrationVA -%}
+                    {%- if buyerSpecifiedTaxRegistrationVA is defined and buyerSpecifiedTaxRegistrationVA is not null -%}
+                        <div>{{- 'N° de TVA ' ~ buyerSpecifiedTaxRegistrationVA.identifier.value -}}</div>
+                    {%- endif -%}
+                </div>
+
+                {%- set shipToTradeParty = invoice.supplyChainTradeTransaction.applicableHeaderTradeDelivery.shipToTradeParty -%}
+                {%-
+                    if shipToTradeParty is defined and shipToTradeParty is not null
+                    and shipToTradeParty.postalTradeAddress is defined and shipToTradeParty.postalTradeAddress is not null
+                -%}
+                    <div id="delivery_address" style="width: 100%;margin-top: 34px;display: block;white-space: initial;">
+                        <div class="client_line" style="margin-bottom: 8px;"><b>Adresse de livraison :</b></div>
+                        {%- if shipToTradeParty.name is defined and shipToTradeParty.name is not null -%}
+                            <div class="client_line">{{- shipToTradeParty.name -}}</div>
+                        {%- else -%}
+                            <div class="client_line">{{- invoice.supplyChainTradeTransaction.applicableHeaderTradeAgreement.buyerTradeParty.name -}}</div>
+                        {%- endif -%}
+
+                        {%- set shipToTradePartyPostalTradeAddress = shipToTradeParty.postalTradeAddress -%}
+                        {%- if shipToTradePartyPostalTradeAddress.lineOne is defined and shipToTradePartyPostalTradeAddress.lineOne is not null -%}
+                            <div class="client_line">{{- shipToTradePartyPostalTradeAddress.lineOne -}}</div>
+                        {%- endif -%}
+
+                        {%- if shipToTradePartyPostalTradeAddress.lineTwo is defined and shipToTradePartyPostalTradeAddress.lineTwo is not null -%}
+                            <div class="client_line">{{- shipToTradePartyPostalTradeAddress.lineTwo -}}</div>
+                        {%- endif -%}
+
+                        {%- if shipToTradePartyPostalTradeAddress.lineThree is defined and shipToTradePartyPostalTradeAddress.lineThree is not null -%}
+                            <div class="client_line">{{- shipToTradePartyPostalTradeAddress.lineThree -}}</div>
+                        {%- endif -%}
+
+                        {%- set BT78_77_79_80 = '' -%}
+                        {%- if shipToTradePartyPostalTradeAddress.postcodeCode is defined and shipToTradePartyPostalTradeAddress.postcodeCode is not null -%}
+                            {%- set BT78_77_79_80 = shipToTradePartyPostalTradeAddress.postcodeCode -%}
+                        {%- endif -%}
+
+                        {%- if shipToTradePartyPostalTradeAddress.cityName is defined and shipToTradePartyPostalTradeAddress.cityName is not null -%}
+                            {%- set BT78_77_79_80 = BT78_77_79_80 ~ ' ' ~ shipToTradePartyPostalTradeAddress.cityName -%}
+                        {%- endif -%}
+
+                        {%- if shipToTradePartyPostalTradeAddress.countrySubDivisionName is defined and shipToTradePartyPostalTradeAddress.countrySubDivisionName is not null -%}
+                            {%- if BT78_77_79_80 is empty -%}
+                                {% set BT78_77_79_80 = shipToTradePartyPostalTradeAddress.countrySubDivisionName -%}
+                            {%- else -%}
+                                {%- set BT78_77_79_80 = BT78_77_79_80 ~ ' - ' ~ shipToTradePartyPostalTradeAddress.countrySubDivisionName -%}
+                            {%- endif -%}
+                        {%- endif -%}
+
+                        {%- set shipToTradePartyCountryName = shipToTradePartyPostalTradeAddress.countryIdentifier.value|country_name -%}
+                        {%- if BT78_77_79_80 is empty -%}
+                            {%- set BT78_77_79_80 = shipToTradePartyCountryName -%}
+                        {%- else -%}
+                            {%- set BT78_77_79_80 = BT78_77_79_80 ~ ' - ' ~ shipToTradePartyCountryName -%}
+                        {%- endif -%}
+
+                        <div class="client_line">{{- BT78_77_79_80|trim -}}</div>
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+
+        {%- if invoice.exchangedDocument.typeCode is same as(constant('Tiime\\EN16931\\DataType\\InvoiceTypeCode::COMMERCIAL_INVOICE')) -%}
+            <div style="margin-top: 28px;font-weight: bold;">{{- 'Facture ' ~ invoice.exchangedDocument.identifier.value -}}</div>
+        {%- endif -%}
+
+        <div>
+            <div style="display: inline-block;width: 45%;height: fit-content;vertical-align: top;">
+                <div>{{- 'Date d\'émission : ' ~ invoice.exchangedDocument.issueDateTime.dateTimeString | date("d/m/Y") -}}</div>
+            </div>
+
+            {%- set specifiedTradePaymentTerms = invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradePaymentTerms -%}
+            {%-
+                if specifiedTradePaymentTerms is defined
+                and specifiedTradePaymentTerms is not null
+                and specifiedTradePaymentTerms.dueDateDateTime is defined
+                and specifiedTradePaymentTerms.dueDateDateTime is not null
+            -%}
+                <div style="display: inline-block;width: 45%;margin-left: 96px;height: fit-content;vertical-align: top;">
+                    <div>{{- 'Date d\'échéance : ' ~ invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradePaymentTerms.dueDateDateTime.dateTimeString | date("d/m/Y") -}}</div>
+                </div>
+            {%- endif -%}
+        </div>
+
+        {%- set hasDiscountItem = false -%}
+        {%- for includedSupplyChainTradeLineItem in invoice.supplyChainTradeTransaction.includedSupplyChainTradeLineItems -%}
+            {%- set currentItemGrossPriceProductTradePrice = includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.grossPriceProductTradePrice -%}
+            {%-
+                if currentItemGrossPriceProductTradePrice is defined and currentItemGrossPriceProductTradePrice is not null
+                and currentItemGrossPriceProductTradePrice.chargeAmount|number_format(4) != includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount|number_format(4)
+            -%}
+                {%- set hasDiscountItem = true -%}
+            {%- endif  -%}
+        {%- endfor -%}
+
+        <table id="invoicing_table" style="margin-left: -10px;margin-right: -10px;">
+            <thead>
+            <tr>
+                <th style="width: 100%;white-space: nowrap;">Produit</th>
+                <th style="min-width: 30px;white-space: nowrap;">Quantité</th>
+                <th style="min-width: 80px;white-space: nowrap;">Prix Unitaire HT</th>
+                {%- if hasDiscountItem -%}
+                    <th style="min-width: 50px;white-space: nowrap;">Prix remisé HT</th>
+                {%- endif -%}
+                <th style="min-width: 50px;white-space: nowrap;">TVA</th>
+                <th style="min-width: 75px;white-space: nowrap;">Total HT</th>
+            </tr>
+            </thead>
+            <tbody>
+                {%- for includedSupplyChainTradeLineItem in invoice.supplyChainTradeTransaction.includedSupplyChainTradeLineItems -%}
+                    <tr>
+                        <td style="">
+                            {{- includedSupplyChainTradeLineItem.specifiedTradeProduct.name -}}
+                            {%- set currentItemDescription = includedSupplyChainTradeLineItem.specifiedTradeProduct.description -%}
+                            {%- if currentItemDescription is defined and currentItemDescription is not null -%}
+                                <br/>{{- currentItemDescription | nl2br -}}
+                            {%- endif -%}
+                        </td>
+
+                        <td style="text-align: right;white-space: nowrap;">
+                            {%- set currentItemQuantity = includedSupplyChainTradeLineItem.specifiedLineTradeDelivery.billedQuantity.quantity -%}
+
+                            {%- if includedSupplyChainTradeLineItem.specifiedLineTradeDelivery.billedQuantity.unitCode is same as(constant('Tiime\\EN16931\\DataType\\UnitOfMeasurement::ONE_REC20')) -%}
+                                {%- set currentItemQuantity = currentItemQuantity ~ ' Unité(s)' -%}
+                            {%- elseif includedSupplyChainTradeLineItem.specifiedLineTradeDelivery.billedQuantity.unitCode is same as(constant('Tiime\\EN16931\\DataType\\UnitOfMeasurement::LITRE_REC20')) -%}
+                                {%- set currentItemQuantity = currentItemQuantity ~ ' Litre(s)' -%}
+                            {%- endif -%}
+
+                            {{- currentItemQuantity -}}
+                        </td>
+
+                        {%- set hasCurrentItemGrossPriceProductTradePrice = null -%}
+                        {%- set currentItemGrossPriceProductTradePrice = includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.grossPriceProductTradePrice -%}
+
+                        {%-
+                            if currentItemGrossPriceProductTradePrice is defined and currentItemGrossPriceProductTradePrice is not null
+                            and currentItemGrossPriceProductTradePrice.chargeAmount|number_format(4) != includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount|number_format(4)
+                        -%}
+                            {%- set hasCurrentItemGrossPriceProductTradePrice = true -%}
+                        {%- endif -%}
+
+                        <td style="text-align: right;white-space: nowrap;">
+                            {%- if hasCurrentItemGrossPriceProductTradePrice -%}
+                                {{- currentItemGrossPriceProductTradePrice.chargeAmount|format_currency(invoiceCurrency) -}}
+                            {%- else -%}
+                                {{- includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount|format_currency(invoiceCurrency) -}}
+                            {%- endif -%}
+                        </td>
+
+                        {%- if hasDiscountItem -%}
+                            <td style="text-align: right;white-space: nowrap;">
+                                {%- if hasCurrentItemGrossPriceProductTradePrice -%}
+                                    {{- includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount|format_currency(invoiceCurrency) -}}
+                                {%- endif -%}
+                            </td>
+                        {%- endif -%}
+
+                        <td style="text-align: right;white-space: nowrap;">
+                            {%- set currentItemRateApplicablePercent = includedSupplyChainTradeLineItem.specifiedLineTradeSettlement.applicableTradeTax.rateApplicablePercent -%}
+                            {%- if currentItemRateApplicablePercent is defined and currentItemRateApplicablePercent is not null -%}
+                                {{- currentItemRateApplicablePercent ~ '%' -}}
+                            {%- endif -%}
+                        </td>
+
+                        <td style="font-weight: bold;text-align: right;white-space: nowrap;">
+                            {{- includedSupplyChainTradeLineItem.specifiedLineTradeSettlement.specifiedTradeSettlementLineMonetarySummation.lineTotalAmount|format_currency(invoiceCurrency) -}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div id="invoicing_total_amounts">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Total HT</td>
+                        <td><span class="total_value">{{- invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementHeaderMonetarySummation.taxBasisTotalAmount|format_currency(invoiceCurrency) -}}</span></td>
+                    </tr>
+
+                    {%- set invoiceTaxTotalAmount = invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementHeaderMonetarySummation.taxTotalAmount -%}
+                    {%- if invoiceTaxTotalAmount is defined and invoiceTaxTotalAmount is not null -%}
+                        <tr>
+                            <td>Taxes</td>
+                            <td><span class="total_value">{{- invoiceTaxTotalAmount.value|format_currency(invoiceTaxTotalAmount.currencyIdentifier.value) -}}</span></td>
+                        </tr>
+                    {%- endif -%}
+
+                    {%- for invoiceApplicableTradeTaxes in invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.applicableTradeTaxes -%}
+                        {%- if invoiceApplicableTradeTaxes.rateApplicablePercent -%}
+                            <tr>
+                                <td class="vat_line">{{- 'TVA ' ~ invoiceApplicableTradeTaxes.rateApplicablePercent ~ ' %' -}}</td>
+                                <td>
+                                    <span class="total_value">{{- invoiceApplicableTradeTaxes.calculatedAmount|format_currency(invoiceCurrency) -}}</span>
+                                </td>
+                            </tr>
+                        {%- endif -%}
+                    {%- endfor -%}
+
+                    <tr>
+                        <td style="font-weight: 700;">Total TTC</td>
+                        <td>
+                            <span class="total_value" style="background: #ffeff0;">
+                                {{- invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementHeaderMonetarySummation.grandTotalAmount|format_currency(invoiceCurrency) -}}
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="font-weight: 700;">Solde à payer</td>
+                        <td>
+                            <span class="total_value">
+                                {{- invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementHeaderMonetarySummation.duePayableAmount|format_currency(invoiceCurrency) -}}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="clearfix"></div>
+        </div>
+
+        {%- if invoice.exchangedDocument.includedNotes|length > 0 -%}
+            <div style="margin-bottom: 16px">
+                <div style="font-weight: bold;">Commentaires :</div>
+                {%- for notes in invoice.exchangedDocument.includedNotes -%}
+                    <div>{{-  notes.content -}}</div>
+                {%- endfor -%}
+            </div>
+        {%- endif -%}
+
+        {%-
+            if specifiedTradePaymentTerms is defined
+            and specifiedTradePaymentTerms is not null
+            and specifiedTradePaymentTerms.description is defined
+            and specifiedTradePaymentTerms.description is not null
+        -%}
+            <div style="margin-bottom: 16px">
+                <span style="font-weight: bold;">Conditions de règlement : </span>
+                <span>{{- invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradePaymentTerms.description -}}</span>
+            </div>
+        {%- endif -%}
+
+        {%- set ibanIdentifier = null -%}
+        {%- set bicIdentifier = null -%}
+
+        {%- set specifiedTradeSettlementPaymentMeans = invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementPaymentMeans -%}
+        {%- if specifiedTradeSettlementPaymentMeans is defined and specifiedTradeSettlementPaymentMeans is not null -%}
+            {%- set payeePartyCreditorFinancialAccount = specifiedTradeSettlementPaymentMeans.payeePartyCreditorFinancialAccount -%}
+            {%- if payeePartyCreditorFinancialAccount is defined and payeePartyCreditorFinancialAccount is not null -%}
+                {%- set ibanIdentifier = payeePartyCreditorFinancialAccount.ibanIdentifier.value -%}
+            {%- endif -%}
+
+            {%- set payeeSpecifiedCreditorFinancialInstitution = specifiedTradeSettlementPaymentMeans.payeeSpecifiedCreditorFinancialInstitution -%}
+            {%- if payeeSpecifiedCreditorFinancialInstitution is defined and payeeSpecifiedCreditorFinancialInstitution is not null -%}
+                {%- set bicIdentifier = payeeSpecifiedCreditorFinancialInstitution.bicIdentifier.value -%}
+            {%- endif -%}
+        {%- endif -%}
+
+        {%- if ibanIdentifier is not null and bicIdentifier is not null -%}
+            <div style="margin-bottom: 16px">
+                <div style="font-weight: bold;">Informations de paiement :</div>
+                <div>
+                    <span style="font-weight: bold;">IBAN : </span>
+                    <span>{{- payeePartyCreditorFinancialAccount.ibanIdentifier.value -}}</span>
+                </div>
+                <div>
+                    <span style="font-weight: bold;">BIC : </span>
+                    <span>{{- payeeSpecifiedCreditorFinancialInstitution.bicIdentifier.value -}}</span>
+                </div>
+            </div>
+        {%- endif -%}
+    </body>
+</html>
