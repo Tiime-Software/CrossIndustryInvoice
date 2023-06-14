@@ -8,37 +8,37 @@ use Tiime\EN16931\DataType\Address;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 
 /**
- * BG-5.
+ * BG-5 or BG-8 or BG-15.
  */
 class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\PostalTradeAddress
 {
     /**
-     * BT-38.
+     * BT-38 or BT-53 or BT-78.
      */
     private ?string $postcodeCode;
 
     /**
-     * BT-35.
+     * BT-35 or BT-50 or BT-75.
      */
     private ?string $lineOne;
 
     /**
-     * BT-36.
+     * BT-36 or BT-51 or BT-76.
      */
     private ?string $lineTwo;
 
     /**
-     * BT-162.
+     * BT-162 or BT-163 or BT-165.
      */
     private ?string $lineThree;
 
     /**
-     * BT-37.
+     * BT-37 or BT-52 or BT-77.
      */
     private ?string $cityName;
 
     /**
-     * BT-39.
+     * BT-39 or BT-54 or BT-79.
      */
     private ?string $countrySubDivisionName;
 
