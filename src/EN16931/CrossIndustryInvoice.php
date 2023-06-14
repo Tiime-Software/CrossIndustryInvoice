@@ -8,6 +8,9 @@ use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 use Tiime\EN16931\Invoice;
+use Twig\Environment;
+use Twig\Extra\Intl\IntlExtension;
+use Twig\Loader\FilesystemLoader;
 
 class CrossIndustryInvoice
 {
@@ -115,5 +118,14 @@ class CrossIndustryInvoice
             ExchangedDocument::fromEN16931($invoice),
             SupplyChainTradeTransaction::fromEN16931($invoice),
         );
+    }
+
+    public function toHTML(string $template = null, array $context = []): string
+    {
+        $loader = new FilesystemLoader(__DIR__ . '/../Resources/views');
+        $twig   = new Environment($loader);
+        $twig->addExtension(new IntlExtension());
+
+        return $twig->render($template ?? 'en16931_invoice.html.twig', ['invoice' => $this, ...$context]);
     }
 }
