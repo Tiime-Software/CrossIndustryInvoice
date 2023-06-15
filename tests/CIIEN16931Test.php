@@ -222,14 +222,14 @@ class CIIEN16931Test extends TestCase
                             )
                             ->setSpecifiedTradeAllowances([
                                 (new LineSpecifiedTradeAllowance(50))
-                                    ->setReason('Reason')
+                                    ->setReason('ReasonAllowance1')
                                     ->setReasonCode(AllowanceReasonCode::STANDARD)
                                     ->setBasisAmount(50)
                                     ->setCalculationPercent(100),
                             ])
                             ->setSpecifiedTradeCharges([
                                 (new LineSpecifiedTradeCharge(50))
-                                    ->setReason('Reason')
+                                    ->setReason('ReasonCharge1')
                                     ->setReasonCode(ChargeReasonCode::ACCEPTANCE)
                                     ->setBasisAmount(50)
                                     ->setCalculationPercent(100),
@@ -362,7 +362,7 @@ class CIIEN16931Test extends TestCase
                                 ->setRateApplicablePercent(new Percentage(50))
                         ))
                             ->setBasisAmount(100)
-                            ->setReason('Reason')
+                            ->setReason('ReasonAllowanceHeader1')
                             ->setReasonCode(AllowanceReasonCode::DISCOUNT)
                             ->setCalculationPercent(50),
                     ])
@@ -373,7 +373,7 @@ class CIIEN16931Test extends TestCase
                                 ->setRateApplicablePercent(new Percentage(20))
                         ))
                             ->setBasisAmount(50)
-                            ->setReason('Reason')
+                            ->setReason('ReasonChargeHeader1')
                             ->setReasonCode(ChargeReasonCode::ACCEPTANCE)
                             ->setCalculationPercent(20),
                     ])
@@ -389,7 +389,7 @@ class CIIEN16931Test extends TestCase
                         )
                             ->setFormattedIssueDateTime(new FormattedIssueDateTime(new \DateTime()))
                     )
-                    ->setReceivableSpecifiedTradeAccountingAccount(new \Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount('ReceivableSpecifiedTradeAccountingAccount'))
+                    ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount('ReceivableSpecifiedTradeAccountingAccount'))
             )
         );
 
@@ -459,9 +459,9 @@ class CIIEN16931Test extends TestCase
     }
 
     /**
-     * @testdox Generate CII PDF with EN-16931 invoice
+     * @testdox Generate CII HTML with EN-16931 CII
      */
-    public function testGeneratePdfWithEN16931Invoice(): void
+    public function testGenerateHTMLWithEN16931CII(): void
     {
         $invoice = new CrossIndustryInvoice(
             new ExchangedDocumentContext(
