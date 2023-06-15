@@ -6,7 +6,7 @@ namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxPointDate;
 use Tiime\EN16931\BusinessTermsGroup\VatBreakdown;
-use Tiime\EN16931\DataType\DateCode2005;
+use Tiime\EN16931\DataType\DateCode2475;
 use Tiime\EN16931\DataType\VatCategory;
 use Tiime\EN16931\DataType\VatExoneration;
 use Tiime\EN16931\SemanticDataType\Percentage;
@@ -62,7 +62,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
             $currentNode->appendChild($this->taxPointDate->toXML($document));
         }
 
-        if ($this->dueDateTypeCode instanceof DateCode2005) {
+        if ($this->dueDateTypeCode instanceof DateCode2475) {
             $currentNode->appendChild($document->createElement('ram:DueDateTypeCode', $this->dueDateTypeCode->value));
         }
 
@@ -156,7 +156,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
             }
 
             if (1 === $dueDateTypeCodeElements->count()) {
-                $dueDateTypeCode = DateCode2005::tryFrom($dueDateTypeCodeElements->item(0)->nodeValue);
+                $dueDateTypeCode = DateCode2475::tryFrom($dueDateTypeCodeElements->item(0)->nodeValue);
 
                 if (null === $dueDateTypeCode) {
                     throw new \Exception('Wrong DueDateTypeCode');
@@ -179,7 +179,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
         return $headerApplicableTradeTaxes;
     }
 
-    public static function fromEN16931(VatBreakdown $vatBreakdown, ?DateCode2005 $taxPointDateCode): self
+    public static function fromEN16931(VatBreakdown $vatBreakdown, ?DateCode2475 $taxPointDateCode): self
     {
         $headerApplicableTradeTax = new self(
             $vatBreakdown->getVatCategoryTaxAmount(),

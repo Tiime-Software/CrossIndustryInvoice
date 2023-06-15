@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\EN16931\DataType\DateCode2005;
+use Tiime\EN16931\DataType\DateCode2475;
 use Tiime\EN16931\DataType\VatCategory;
 use Tiime\EN16931\DataType\VatExoneration;
 use Tiime\EN16931\SemanticDataType\Amount;
@@ -50,7 +50,7 @@ class HeaderApplicableTradeTax
     /**
      * BT-8.
      */
-    protected ?DateCode2005 $dueDateTypeCode;
+    protected ?DateCode2475 $dueDateTypeCode;
 
     /**
      * BT-119.
@@ -113,12 +113,12 @@ class HeaderApplicableTradeTax
         return $this;
     }
 
-    public function getDueDateTypeCode(): ?DateCode2005
+    public function getDueDateTypeCode(): ?DateCode2475
     {
         return $this->dueDateTypeCode;
     }
 
-    public function setDueDateTypeCode(?DateCode2005 $dueDateTypeCode): static
+    public function setDueDateTypeCode(?DateCode2475 $dueDateTypeCode): static
     {
         $this->dueDateTypeCode = $dueDateTypeCode;
 
@@ -155,7 +155,7 @@ class HeaderApplicableTradeTax
             $currentNode->appendChild($document->createElement('ram:ExemptionReasonCode', $this->exemptionReasonCode->value));
         }
 
-        if ($this->dueDateTypeCode instanceof DateCode2005) {
+        if ($this->dueDateTypeCode instanceof DateCode2475) {
             $currentNode->appendChild($document->createElement('ram:DueDateTypeCode', $this->dueDateTypeCode->value));
         }
 
@@ -247,7 +247,7 @@ class HeaderApplicableTradeTax
             }
 
             if (1 === $dueDateTypeCodeElements->count()) {
-                $dueDateTypeCode = DateCode2005::tryFrom($dueDateTypeCodeElements->item(0)->nodeValue);
+                $dueDateTypeCode = DateCode2475::tryFrom($dueDateTypeCodeElements->item(0)->nodeValue);
 
                 if (null === $dueDateTypeCode) {
                     throw new \Exception('Wrong DueDateTypeCode');
