@@ -51,7 +51,7 @@ class FormattedIssueDateTime
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $formattedIssueDateTimelements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $formattedIssueDateTimelements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $formattedIssueDateTimelements->count()) {
             return null;
@@ -64,7 +64,7 @@ class FormattedIssueDateTime
         /** @var \DOMElement $formattedIssueDateTimelement */
         $formattedIssueDateTimelement = $formattedIssueDateTimelements->item(0);
 
-        $dateTimeStringElements = $xpath->query('.//qdt:DateTimeString', $formattedIssueDateTimelement);
+        $dateTimeStringElements = $xpath->query('./qdt:DateTimeString', $formattedIssueDateTimelement);
 
         if (1 !== $dateTimeStringElements->count()) {
             throw new \Exception('Malformed');

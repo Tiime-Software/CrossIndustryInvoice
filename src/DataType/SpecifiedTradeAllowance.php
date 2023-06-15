@@ -156,28 +156,21 @@ class SpecifiedTradeAllowance
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $specifiedTradeAllowanceFalseIndicatorElements = $xpath->query(sprintf('.//%s/ram:ChargeIndicator/udt:Indicator[text() = \'false\']', self::XML_NODE), $currentElement);
+        $specifiedTradeAllowanceElements = $xpath->query(sprintf('./%s[ram:ChargeIndicator/udt:Indicator[text() = \'false\']]', self::XML_NODE), $currentElement);
 
-        if (0 === $specifiedTradeAllowanceFalseIndicatorElements->count()) {
+        if (0 === $specifiedTradeAllowanceElements->count()) {
             return [];
-        }
-
-        $specifiedTradeAllowanceElements = [];
-
-        foreach ($specifiedTradeAllowanceFalseIndicatorElements as $specifiedTradeAllowanceFalseIndicatorElement) {
-            $specifiedTradeAllowanceElement = $xpath->query('.//../..', $specifiedTradeAllowanceFalseIndicatorElement);
-
-            $specifiedTradeAllowanceElements[] = $specifiedTradeAllowanceElement->item(0);
         }
 
         $specifiedTradeAllowances = [];
 
+        /** @var \DOMElement $specifiedTradeAllowanceElement */
         foreach ($specifiedTradeAllowanceElements as $specifiedTradeAllowanceElement) {
-            $calculationPercentageElements = $xpath->query('.//ram:CalculationPercent', $specifiedTradeAllowanceElement);
-            $basisAmountElements           = $xpath->query('.//ram:BasisAmount', $specifiedTradeAllowanceElement);
-            $actualAmountElements          = $xpath->query('.//ram:ActualAmount', $specifiedTradeAllowanceElement);
-            $reasonCodeElements            = $xpath->query('.//ram:ReasonCode', $specifiedTradeAllowanceElement);
-            $reasonElements                = $xpath->query('.//ram:Reason', $specifiedTradeAllowanceElement);
+            $calculationPercentageElements = $xpath->query('./ram:CalculationPercent', $specifiedTradeAllowanceElement);
+            $basisAmountElements           = $xpath->query('./ram:BasisAmount', $specifiedTradeAllowanceElement);
+            $actualAmountElements          = $xpath->query('./ram:ActualAmount', $specifiedTradeAllowanceElement);
+            $reasonCodeElements            = $xpath->query('./ram:ReasonCode', $specifiedTradeAllowanceElement);
+            $reasonElements                = $xpath->query('./ram:Reason', $specifiedTradeAllowanceElement);
 
             if ($calculationPercentageElements->count() > 1) {
                 throw new \Exception('Malformed');

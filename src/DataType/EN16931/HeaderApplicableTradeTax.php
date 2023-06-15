@@ -75,7 +75,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $headerApplicableTradeTaxElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $headerApplicableTradeTaxElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $headerApplicableTradeTaxElements->count()) {
             return [];
@@ -84,14 +84,14 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
         $headerApplicableTradeTaxes = [];
 
         foreach ($headerApplicableTradeTaxElements as $headerApplicableTradeTaxElement) {
-            $calculatedAmountElements      = $xpath->query('.//ram:CalculatedAmount', $headerApplicableTradeTaxElement);
-            $typeCodeElements              = $xpath->query('.//ram:TypeCode', $headerApplicableTradeTaxElement);
-            $exemptionReasonElements       = $xpath->query('.//ram:ExemptionReason', $headerApplicableTradeTaxElement);
-            $basisAmountElements           = $xpath->query('.//ram:BasisAmount', $headerApplicableTradeTaxElement);
-            $categoryCodeElements          = $xpath->query('.//ram:CategoryCode', $headerApplicableTradeTaxElement);
-            $exemptionReasonCodeElements   = $xpath->query('.//ram:ExemptionReasonCode', $headerApplicableTradeTaxElement);
-            $dueDateTypeCodeElements       = $xpath->query('.//ram:DueDateTypeCode', $headerApplicableTradeTaxElement);
-            $rateApplicablePercentElements = $xpath->query('.//ram:RateApplicablePercent', $headerApplicableTradeTaxElement);
+            $calculatedAmountElements      = $xpath->query('./ram:CalculatedAmount', $headerApplicableTradeTaxElement);
+            $typeCodeElements              = $xpath->query('./ram:TypeCode', $headerApplicableTradeTaxElement);
+            $exemptionReasonElements       = $xpath->query('./ram:ExemptionReason', $headerApplicableTradeTaxElement);
+            $basisAmountElements           = $xpath->query('./ram:BasisAmount', $headerApplicableTradeTaxElement);
+            $categoryCodeElements          = $xpath->query('./ram:CategoryCode', $headerApplicableTradeTaxElement);
+            $exemptionReasonCodeElements   = $xpath->query('./ram:ExemptionReasonCode', $headerApplicableTradeTaxElement);
+            $dueDateTypeCodeElements       = $xpath->query('./ram:DueDateTypeCode', $headerApplicableTradeTaxElement);
+            $rateApplicablePercentElements = $xpath->query('./ram:RateApplicablePercent', $headerApplicableTradeTaxElement);
 
             if (1 !== $calculatedAmountElements->count()) {
                 throw new \Exception('Malformed');

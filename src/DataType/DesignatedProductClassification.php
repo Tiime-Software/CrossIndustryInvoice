@@ -45,7 +45,7 @@ class DesignatedProductClassification
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $designatedProductClassificationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $designatedProductClassificationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $designatedProductClassificationElements->count()) {
             return [];

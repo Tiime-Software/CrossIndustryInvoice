@@ -44,7 +44,7 @@ class PostalTradeAddress
      */
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $postalTradeAddressElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $postalTradeAddressElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $postalTradeAddressElements->count()) {
             throw new \Exception('Malformed');
@@ -53,7 +53,7 @@ class PostalTradeAddress
         /** @var \DOMElement $postalTradeAddressElement */
         $postalTradeAddressElement = $postalTradeAddressElements->item(0);
 
-        $countryIdentifierElements = $xpath->query('.//ram:CountryID', $postalTradeAddressElement);
+        $countryIdentifierElements = $xpath->query('./ram:CountryID', $postalTradeAddressElement);
 
         if (1 !== $countryIdentifierElements->count()) {
             throw new \Exception('Malformed');

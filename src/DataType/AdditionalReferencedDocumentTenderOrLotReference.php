@@ -124,7 +124,7 @@ class AdditionalReferencedDocumentTenderOrLotReference
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $additionalReferencedDocumentTenderOrLotReferenceElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $additionalReferencedDocumentTenderOrLotReferenceElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $additionalReferencedDocumentTenderOrLotReferenceElements->count()) {
             return null;
@@ -137,11 +137,11 @@ class AdditionalReferencedDocumentTenderOrLotReference
         /** @var \DOMElement $additionalReferencedDocumentTenderOrLotReferenceElement */
         $additionalReferencedDocumentTenderOrLotReferenceElement = $additionalReferencedDocumentTenderOrLotReferenceElements->item(0);
 
-        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $additionalReferencedDocumentTenderOrLotReferenceElement);
-        $uriIdentifierElements            = $xpath->query('.//ram:URIID', $additionalReferencedDocumentTenderOrLotReferenceElement);
-        $typeCodeElements                 = $xpath->query('.//ram:TypeCode', $additionalReferencedDocumentTenderOrLotReferenceElement);
-        $nameElements                     = $xpath->query('.//ram:Name', $additionalReferencedDocumentTenderOrLotReferenceElement);
-        $attachmentBinaryObjectElements   = $xpath->query('.//ram:AttachmentBinaryObject', $additionalReferencedDocumentTenderOrLotReferenceElement);
+        $issuerAssignedIdentifierElements = $xpath->query('./ram:IssuerAssignedID', $additionalReferencedDocumentTenderOrLotReferenceElement);
+        $uriIdentifierElements            = $xpath->query('./ram:URIID', $additionalReferencedDocumentTenderOrLotReferenceElement);
+        $typeCodeElements                 = $xpath->query('./ram:TypeCode', $additionalReferencedDocumentTenderOrLotReferenceElement);
+        $nameElements                     = $xpath->query('./ram:Name', $additionalReferencedDocumentTenderOrLotReferenceElement);
+        $attachmentBinaryObjectElements   = $xpath->query('./ram:AttachmentBinaryObject', $additionalReferencedDocumentTenderOrLotReferenceElement);
 
         if (1 !== $issuerAssignedIdentifierElements->count()) {
             throw new \Exception('Malformed');

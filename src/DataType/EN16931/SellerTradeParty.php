@@ -130,7 +130,7 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Sell
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $sellerTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $sellerTradePartyElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $sellerTradePartyElements->count()) {
             throw new \Exception('Malformed');
@@ -139,9 +139,9 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Sell
         /** @var \DOMElement $sellerTradePartyElement */
         $sellerTradePartyElement = $sellerTradePartyElements->item(0);
 
-        $identifierElements  = $xpath->query('.//ram:ID', $sellerTradePartyElement);
-        $nameElements        = $xpath->query('.//ram:Name', $sellerTradePartyElement);
-        $descriptionElements = $xpath->query('.//ram:Description', $sellerTradePartyElement);
+        $identifierElements  = $xpath->query('./ram:ID', $sellerTradePartyElement);
+        $nameElements        = $xpath->query('./ram:Name', $sellerTradePartyElement);
+        $descriptionElements = $xpath->query('./ram:Description', $sellerTradePartyElement);
 
         if (1 !== $nameElements->count()) {
             throw new \Exception('Malformed');

@@ -64,7 +64,7 @@ class SellerTaxRepresentativeTradeParty
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $sellerTaxRepresentativeTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $sellerTaxRepresentativeTradePartyElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $sellerTaxRepresentativeTradePartyElements->count()) {
             return null;
@@ -77,7 +77,7 @@ class SellerTaxRepresentativeTradeParty
         /** @var \DOMElement $sellerTaxRepresentativeTradePartyElement */
         $sellerTaxRepresentativeTradePartyElement = $sellerTaxRepresentativeTradePartyElements->item(0);
 
-        $nameElements = $xpath->query('.//ram:Name', $sellerTaxRepresentativeTradePartyElement);
+        $nameElements = $xpath->query('./ram:Name', $sellerTaxRepresentativeTradePartyElement);
 
         if (1 !== $nameElements->count()) {
             throw new \Exception('Malformed');

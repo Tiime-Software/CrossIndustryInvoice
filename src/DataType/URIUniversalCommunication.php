@@ -42,7 +42,7 @@ class URIUniversalCommunication
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $uriUniversalCommunicationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $uriUniversalCommunicationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $uriUniversalCommunicationElements->count()) {
             return null;
@@ -55,7 +55,7 @@ class URIUniversalCommunication
         /** @var \DOMElement $uriUniversalCommunicationElement */
         $uriUniversalCommunicationElement = $uriUniversalCommunicationElements->item(0);
 
-        $electronicAddressElements = $xpath->query('.//ram:URIID', $uriUniversalCommunicationElement);
+        $electronicAddressElements = $xpath->query('./ram:URIID', $uriUniversalCommunicationElement);
 
         if (1 !== $electronicAddressElements->count()) {
             throw new \Exception('Malformed');

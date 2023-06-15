@@ -37,7 +37,7 @@ class AllowanceIndicator
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $allowanceIndicatorElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $allowanceIndicatorElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $allowanceIndicatorElements->count()) {
             throw new \Exception('Malformed');
@@ -46,7 +46,7 @@ class AllowanceIndicator
         /** @var \DOMElement $allowanceIndicatorElement */
         $allowanceIndicatorElement = $allowanceIndicatorElements->item(0);
 
-        $indicatorElements = $xpath->query('.//udt:Indicator', $allowanceIndicatorElement);
+        $indicatorElements = $xpath->query('./udt:Indicator', $allowanceIndicatorElement);
 
         if (1 !== $indicatorElements->count()) {
             throw new \Exception('Malformed');

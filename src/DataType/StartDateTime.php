@@ -51,7 +51,7 @@ class StartDateTime
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $startDateTimeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $startDateTimeElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $startDateTimeElements->count()) {
             return null;
@@ -64,7 +64,7 @@ class StartDateTime
         /** @var \DOMElement $startDateTimeElement */
         $startDateTimeElement = $startDateTimeElements->item(0);
 
-        $dateTimeStringElements = $xpath->query('.//udt:DateTimeString', $startDateTimeElement);
+        $dateTimeStringElements = $xpath->query('./udt:DateTimeString', $startDateTimeElement);
 
         if (1 !== $dateTimeStringElements->count()) {
             throw new \Exception('Malformed');

@@ -74,7 +74,7 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $additionalReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $additionalReferencedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $additionalReferencedDocumentElements->count()) {
             return null;
@@ -87,9 +87,9 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
         /** @var \DOMElement $additionalReferencedDocumentElement */
         $additionalReferencedDocumentElement = $additionalReferencedDocumentElements->item(0);
 
-        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $additionalReferencedDocumentElement);
-        $typeCodeElements                 = $xpath->query('.//ram:TypeCode', $additionalReferencedDocumentElement);
-        $referenceTypeCodeElements        = $xpath->query('.//ram:ReferenceTypeCode', $additionalReferencedDocumentElement);
+        $issuerAssignedIdentifierElements = $xpath->query('./ram:IssuerAssignedID', $additionalReferencedDocumentElement);
+        $typeCodeElements                 = $xpath->query('./ram:TypeCode', $additionalReferencedDocumentElement);
+        $referenceTypeCodeElements        = $xpath->query('./ram:ReferenceTypeCode', $additionalReferencedDocumentElement);
 
         if (1 !== $issuerAssignedIdentifierElements->count()) {
             throw new \Exception('Malformed');
@@ -112,7 +112,13 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
         $additionalReferencedDocument = new self(new ObjectIdentifier($issuerAssignedIdentifier));
 
         if (1 === $referenceTypeCodeElements->count()) {
-            $additionalReferencedDocument->setReferenceTypeCode($referenceTypeCodeElements->item(0)->nodeValue);
+            $referenceTypeCode = ObjectSchemeCode::tryFrom($referenceTypeCodeElements->item(0)->nodeValue);
+
+            if (!$referenceTypeCode instanceof ObjectSchemeCode) {
+                throw new \Exception('Wrong ReferenceTypeCode');
+            }
+
+            $additionalReferencedDocument->setReferenceTypeCode($referenceTypeCode);
         }
 
         return $additionalReferencedDocument;

@@ -63,7 +63,7 @@ class NetPriceProductTradePrice
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $netPriceProductTradePriceElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $netPriceProductTradePriceElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $netPriceProductTradePriceElements->count()) {
             throw new \Exception('Malformed');
@@ -72,7 +72,7 @@ class NetPriceProductTradePrice
         /** @var \DOMElement $netPriceProductTradePriceElement */
         $netPriceProductTradePriceElement = $netPriceProductTradePriceElements->item(0);
 
-        $chargeAmountElements = $xpath->query('.//ram:ChargeAmount', $netPriceProductTradePriceElement);
+        $chargeAmountElements = $xpath->query('./ram:ChargeAmount', $netPriceProductTradePriceElement);
 
         if (1 !== $chargeAmountElements->count()) {
             throw new \Exception('Malformed');

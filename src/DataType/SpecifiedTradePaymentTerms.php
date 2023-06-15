@@ -93,7 +93,7 @@ class SpecifiedTradePaymentTerms
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $specifiedTradePaymentTermsElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $specifiedTradePaymentTermsElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedTradePaymentTermsElements->count()) {
             return null;
@@ -106,8 +106,8 @@ class SpecifiedTradePaymentTerms
         /** @var \DOMElement $specifiedTradePaymentTermsElement */
         $specifiedTradePaymentTermsElement = $specifiedTradePaymentTermsElements->item(0);
 
-        $descriptionElements                  = $xpath->query('.//ram:Description', $specifiedTradePaymentTermsElement);
-        $directDebitMandateIdentifierElements = $xpath->query('.//ram:DirectDebitMandateID', $specifiedTradePaymentTermsElement);
+        $descriptionElements                  = $xpath->query('./ram:Description', $specifiedTradePaymentTermsElement);
+        $directDebitMandateIdentifierElements = $xpath->query('./ram:DirectDebitMandateID', $specifiedTradePaymentTermsElement);
 
         if ($descriptionElements->count() > 1) {
             throw new \Exception('Malformed');
@@ -126,7 +126,7 @@ class SpecifiedTradePaymentTerms
         }
 
         if (1 === $directDebitMandateIdentifierElements->count()) {
-            $specifiedTradePaymentTerms->setDirectDebitMandateIdentifier($directDebitMandateIdentifierElements->item(0)->nodeValue);
+            $specifiedTradePaymentTerms->setDirectDebitMandateIdentifier(new MandateReferenceIdentifier($directDebitMandateIdentifierElements->item(0)->nodeValue));
         }
 
         if ($dueDateDateTime instanceof DueDateDateTime) {

@@ -51,7 +51,7 @@ class DueDateDateTime
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $dueDateDateTimeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $dueDateDateTimeElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $dueDateDateTimeElements->count()) {
             return null;
@@ -64,7 +64,7 @@ class DueDateDateTime
         /** @var \DOMElement $dueDateDateTimeElement */
         $dueDateDateTimeElement = $dueDateDateTimeElements->item(0);
 
-        $dateTimeStringElements = $xpath->query('.//udt:DateTimeString', $dueDateDateTimeElement);
+        $dateTimeStringElements = $xpath->query('./udt:DateTimeString', $dueDateDateTimeElement);
 
         if (1 !== $dateTimeStringElements->count()) {
             throw new \Exception('Malformed');

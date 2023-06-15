@@ -85,7 +85,7 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $lineSpecifiedTradeChargeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $lineSpecifiedTradeChargeElements = $xpath->query(sprintf('./%s[ram:ChargeIndicator/udt:Indicator[text() = \'true\']]', self::XML_NODE), $currentElement);
 
         if (0 === $lineSpecifiedTradeChargeElements->count()) {
             return [];
@@ -94,11 +94,11 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
         $lineSpecifiedTradeCharges = [];
 
         foreach ($lineSpecifiedTradeChargeElements as $lineSpecifiedTradeChargeElement) {
-            $calculationPercentElements = $xpath->query('.//ram:CalculationPercent', $lineSpecifiedTradeChargeElement);
-            $basisAmountElements        = $xpath->query('.//ram:BasisAmount', $lineSpecifiedTradeChargeElement);
-            $actualAmountElements       = $xpath->query('.//ram:ActualAmount', $lineSpecifiedTradeChargeElement);
-            $reasonCodeElements         = $xpath->query('.//ram:ReasonCode', $lineSpecifiedTradeChargeElement);
-            $reasonElements             = $xpath->query('.//ram:Reason', $lineSpecifiedTradeChargeElement);
+            $calculationPercentElements = $xpath->query('./ram:CalculationPercent', $lineSpecifiedTradeChargeElement);
+            $basisAmountElements        = $xpath->query('./ram:BasisAmount', $lineSpecifiedTradeChargeElement);
+            $actualAmountElements       = $xpath->query('./ram:ActualAmount', $lineSpecifiedTradeChargeElement);
+            $reasonCodeElements         = $xpath->query('./ram:ReasonCode', $lineSpecifiedTradeChargeElement);
+            $reasonElements             = $xpath->query('./ram:Reason', $lineSpecifiedTradeChargeElement);
 
             if ($calculationPercentElements->count() > 1) {
                 throw new \Exception('Malformed');

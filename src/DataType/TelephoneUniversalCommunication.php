@@ -37,7 +37,7 @@ class TelephoneUniversalCommunication
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $telephoneUniversalCommunicationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $telephoneUniversalCommunicationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $telephoneUniversalCommunicationElements->count()) {
             return null;
@@ -50,7 +50,7 @@ class TelephoneUniversalCommunication
         /** @var \DOMElement $telephoneUniversalCommunicationElement */
         $telephoneUniversalCommunicationElement = $telephoneUniversalCommunicationElements->item(0);
 
-        $completeNumberElements = $xpath->query('.//ram:CompleteNumber', $telephoneUniversalCommunicationElement);
+        $completeNumberElements = $xpath->query('./ram:CompleteNumber', $telephoneUniversalCommunicationElement);
 
         if (1 !== $completeNumberElements->count()) {
             throw new \Exception('Malformed');

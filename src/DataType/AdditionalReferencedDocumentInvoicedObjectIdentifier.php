@@ -147,7 +147,7 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $additionalReferencedDocumentInvoicedObjectIdentifierElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $additionalReferencedDocumentInvoicedObjectIdentifierElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $additionalReferencedDocumentInvoicedObjectIdentifierElements->count()) {
             return null;
@@ -160,12 +160,12 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
         /** @var \DOMElement $additionalReferencedDocumentInvoicedObjectIdentifierElement */
         $additionalReferencedDocumentInvoicedObjectIdentifierElement = $additionalReferencedDocumentInvoicedObjectIdentifierElements->item(0);
 
-        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
-        $uriIdentifierElements            = $xpath->query('.//ram:URIID', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
-        $typeCodeElements                 = $xpath->query('.//ram:TypeCode', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
-        $referenceTypeCodeElements        = $xpath->query('.//ram:ReferenceTypeCode', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
-        $nameElements                     = $xpath->query('.//ram:Name', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
-        $attachmentBinaryObjectElements   = $xpath->query('.//ram:AttachmentBinaryObject', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+        $issuerAssignedIdentifierElements = $xpath->query('./ram:IssuerAssignedID', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+        $uriIdentifierElements            = $xpath->query('./ram:URIID', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+        $typeCodeElements                 = $xpath->query('./ram:TypeCode', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+        $referenceTypeCodeElements        = $xpath->query('./ram:ReferenceTypeCode', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+        $nameElements                     = $xpath->query('./ram:Name', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
+        $attachmentBinaryObjectElements   = $xpath->query('./ram:AttachmentBinaryObject', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
 
         if (1 !== $issuerAssignedIdentifierElements->count()) {
             throw new \Exception('Malformed');

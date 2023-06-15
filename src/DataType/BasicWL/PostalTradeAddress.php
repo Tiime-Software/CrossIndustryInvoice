@@ -166,7 +166,7 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
      */
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $postalTradeAddressElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $postalTradeAddressElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $postalTradeAddressElements->count()) {
             throw new \Exception('Malformed');
@@ -175,13 +175,13 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
         /** @var \DOMElement $postalTradeAddressElement */
         $postalTradeAddressElement = $postalTradeAddressElements->item(0);
 
-        $postcodeCodeElements           = $xpath->query('.//ram:PostcodeCode', $postalTradeAddressElement);
-        $lineOneElements                = $xpath->query('.//ram:LineOne', $postalTradeAddressElement);
-        $lineTwoElements                = $xpath->query('.//ram:LineTwo', $postalTradeAddressElement);
-        $lineThreeElements              = $xpath->query('.//ram:LineThree', $postalTradeAddressElement);
-        $cityNameElements               = $xpath->query('.//ram:CityName', $postalTradeAddressElement);
-        $countryIdentifierElements      = $xpath->query('.//ram:CountryID', $postalTradeAddressElement);
-        $countrySubDivisionNameElements = $xpath->query('.//ram:CountrySubDivisionName', $postalTradeAddressElement);
+        $postcodeCodeElements           = $xpath->query('./ram:PostcodeCode', $postalTradeAddressElement);
+        $lineOneElements                = $xpath->query('./ram:LineOne', $postalTradeAddressElement);
+        $lineTwoElements                = $xpath->query('./ram:LineTwo', $postalTradeAddressElement);
+        $lineThreeElements              = $xpath->query('./ram:LineThree', $postalTradeAddressElement);
+        $cityNameElements               = $xpath->query('./ram:CityName', $postalTradeAddressElement);
+        $countryIdentifierElements      = $xpath->query('./ram:CountryID', $postalTradeAddressElement);
+        $countrySubDivisionNameElements = $xpath->query('./ram:CountrySubDivisionName', $postalTradeAddressElement);
 
         if ($postcodeCodeElements->count() > 1) {
             throw new \Exception('Malformed');

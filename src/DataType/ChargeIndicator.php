@@ -37,7 +37,7 @@ class ChargeIndicator
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $chargeIndicatorElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $chargeIndicatorElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $chargeIndicatorElements->count()) {
             throw new \Exception('Malformed');
@@ -46,7 +46,7 @@ class ChargeIndicator
         /** @var \DOMElement $chargeIndicatorElement */
         $chargeIndicatorElement = $chargeIndicatorElements->item(0);
 
-        $indicatorElements = $xpath->query('.//udt:Indicator', $chargeIndicatorElement);
+        $indicatorElements = $xpath->query('./udt:Indicator', $chargeIndicatorElement);
 
         if (1 !== $indicatorElements->count()) {
             throw new \Exception('Malformed');

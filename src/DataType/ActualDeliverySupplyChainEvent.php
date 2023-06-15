@@ -37,7 +37,7 @@ class ActualDeliverySupplyChainEvent
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $actualDeliverySupplyChainEventElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $actualDeliverySupplyChainEventElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $actualDeliverySupplyChainEventElements->count()) {
             return null;

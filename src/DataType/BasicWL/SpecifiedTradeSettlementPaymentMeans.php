@@ -84,7 +84,7 @@ class SpecifiedTradeSettlementPaymentMeans
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $specifiedTradeSettlementPaymentMeansElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $specifiedTradeSettlementPaymentMeansElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedTradeSettlementPaymentMeansElements->count()) {
             return null;
@@ -97,7 +97,7 @@ class SpecifiedTradeSettlementPaymentMeans
         /** @var \DOMElement $specifiedTradeSettlementPaymentMeansElement */
         $specifiedTradeSettlementPaymentMeansElement = $specifiedTradeSettlementPaymentMeansElements->item(0);
 
-        $typeCodeElements = $xpath->query('.//ram:TypeCode', $specifiedTradeSettlementPaymentMeansElement);
+        $typeCodeElements = $xpath->query('./ram:TypeCode', $specifiedTradeSettlementPaymentMeansElement);
 
         if (1 !== $typeCodeElements->count()) {
             throw new \Exception('Malformed');

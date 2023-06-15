@@ -87,7 +87,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $specifiedTradeSettlementHeaderMonetarySummationElements->count()) {
             throw new \Exception('Malformed');
@@ -96,9 +96,9 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         /** @var \DOMElement $specifiedTradeSettlementHeaderMonetarySummationElement */
         $specifiedTradeSettlementHeaderMonetarySummationElement = $specifiedTradeSettlementHeaderMonetarySummationElements->item(0);
 
-        $taxBasisTotalAmountElements = $xpath->query('.//ram:TaxBasisTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
-        $grandTotalAmountElements    = $xpath->query('.//ram:GrandTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
-        $duePayableAmountElements    = $xpath->query('.//ram:DuePayableAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $taxBasisTotalAmountElements = $xpath->query('./ram:TaxBasisTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $grandTotalAmountElements    = $xpath->query('./ram:GrandTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $duePayableAmountElements    = $xpath->query('./ram:DuePayableAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
 
         if (1 !== $taxBasisTotalAmountElements->count()) {
             throw new \Exception('Malformed');
@@ -116,7 +116,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         $grandTotalAmount    = $grandTotalAmountElements->item(0)->nodeValue;
         $duePayableAmount    = $duePayableAmountElements->item(0)->nodeValue;
 
-        $taxTotalAmountElements = $xpath->query('.//ram:TaxTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $taxTotalAmountElements = $xpath->query('./ram:TaxTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
 
         if ($taxTotalAmountElements->count() > 1) {
             throw new \Exception('Malformed');

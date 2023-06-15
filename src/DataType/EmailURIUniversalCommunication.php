@@ -37,7 +37,7 @@ class EmailURIUniversalCommunication
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $emailURIUniversalCommunicationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $emailURIUniversalCommunicationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $emailURIUniversalCommunicationElements->count()) {
             return null;
@@ -50,7 +50,7 @@ class EmailURIUniversalCommunication
         /** @var \DOMElement $emailURIUniversalCommunicationElement */
         $emailURIUniversalCommunicationElement = $emailURIUniversalCommunicationElements->item(0);
 
-        $uriIdentifierElements = $xpath->query('.//ram:URIID', $emailURIUniversalCommunicationElement);
+        $uriIdentifierElements = $xpath->query('./ram:URIID', $emailURIUniversalCommunicationElement);
 
         if (1 !== $uriIdentifierElements->count()) {
             throw new \Exception('Malformed');

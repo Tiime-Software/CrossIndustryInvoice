@@ -51,7 +51,7 @@ class EndDateTime
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $endDateTimeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $endDateTimeElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $endDateTimeElements->count()) {
             return null;
@@ -64,7 +64,7 @@ class EndDateTime
         /** @var \DOMElement $endDateTimeElement */
         $endDateTimeElement = $endDateTimeElements->item(0);
 
-        $dateTimeStringElements = $xpath->query('.//udt:DateTimeString', $endDateTimeElement);
+        $dateTimeStringElements = $xpath->query('./udt:DateTimeString', $endDateTimeElement);
 
         if (1 !== $dateTimeStringElements->count()) {
             throw new \Exception('Malformed');

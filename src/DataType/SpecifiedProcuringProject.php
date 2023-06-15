@@ -51,7 +51,7 @@ class SpecifiedProcuringProject
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $specifiedProcuringProjectElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $specifiedProcuringProjectElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedProcuringProjectElements->count()) {
             return null;
@@ -64,8 +64,8 @@ class SpecifiedProcuringProject
         /** @var \DOMElement $specifiedProcuringProjectElement */
         $specifiedProcuringProjectElement = $specifiedProcuringProjectElements->item(0);
 
-        $identifierElements = $xpath->query('.//ram:ID', $specifiedProcuringProjectElement);
-        $nameElements       = $xpath->query('.//ram:Name', $specifiedProcuringProjectElement);
+        $identifierElements = $xpath->query('./ram:ID', $specifiedProcuringProjectElement);
+        $nameElements       = $xpath->query('./ram:Name', $specifiedProcuringProjectElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');

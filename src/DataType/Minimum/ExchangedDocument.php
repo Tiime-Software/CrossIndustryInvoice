@@ -66,7 +66,7 @@ class ExchangedDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $exchangedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $exchangedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $exchangedDocumentElements->count()) {
             throw new \Exception('Malformed');
@@ -75,8 +75,8 @@ class ExchangedDocument
         /** @var \DOMElement $exchangedDocumentElement */
         $exchangedDocumentElement = $exchangedDocumentElements->item(0);
 
-        $identifierElements = $xpath->query('.//ram:ID', $exchangedDocumentElement);
-        $typeCodeElements   = $xpath->query('.//ram:TypeCode', $exchangedDocumentElement);
+        $identifierElements = $xpath->query('./ram:ID', $exchangedDocumentElement);
+        $typeCodeElements   = $xpath->query('./ram:TypeCode', $exchangedDocumentElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');

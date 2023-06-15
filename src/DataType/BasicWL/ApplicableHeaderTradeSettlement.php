@@ -338,7 +338,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $applicableHeaderTradeSettlementElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $applicableHeaderTradeSettlementElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $applicableHeaderTradeSettlementElements->count()) {
             throw new \Exception('Malformed');
@@ -347,10 +347,10 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         /** @var \DOMElement $applicableHeaderTradeSettlementElement */
         $applicableHeaderTradeSettlementElement = $applicableHeaderTradeSettlementElements->item(0);
 
-        $creditorReferenceIdentifierElements = $xpath->query('.//ram:CreditorReferenceID', $applicableHeaderTradeSettlementElement);
-        $paymentReferenceElements            = $xpath->query('.//ram:PaymentReference', $applicableHeaderTradeSettlementElement);
-        $taxCurrencyCodeElements             = $xpath->query('.//ram:TaxCurrencyCode', $applicableHeaderTradeSettlementElement);
-        $invoiceCurrencyCodeElements         = $xpath->query('.//ram:InvoiceCurrencyCode', $applicableHeaderTradeSettlementElement);
+        $creditorReferenceIdentifierElements = $xpath->query('./ram:CreditorReferenceID', $applicableHeaderTradeSettlementElement);
+        $paymentReferenceElements            = $xpath->query('./ram:PaymentReference', $applicableHeaderTradeSettlementElement);
+        $taxCurrencyCodeElements             = $xpath->query('./ram:TaxCurrencyCode', $applicableHeaderTradeSettlementElement);
+        $invoiceCurrencyCodeElements         = $xpath->query('./ram:InvoiceCurrencyCode', $applicableHeaderTradeSettlementElement);
 
         if ($creditorReferenceIdentifierElements->count() > 1) {
             throw new \Exception('Malformed');

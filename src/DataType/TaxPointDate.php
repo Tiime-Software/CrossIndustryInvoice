@@ -50,7 +50,7 @@ class TaxPointDate
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $taxPointDateElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $taxPointDateElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $taxPointDateElements->count()) {
             return null;
@@ -63,7 +63,7 @@ class TaxPointDate
         /** @var \DOMElement $taxPointDateElement */
         $taxPointDateElement = $taxPointDateElements->item(0);
 
-        $dateStringElements = $xpath->query('.//udt:DateString', $taxPointDateElement);
+        $dateStringElements = $xpath->query('./udt:DateString', $taxPointDateElement);
 
         if (1 !== $dateStringElements->count()) {
             throw new \Exception('Malformed');

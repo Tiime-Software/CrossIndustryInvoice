@@ -48,7 +48,7 @@ class LineBuyerOrderReferencedDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $buyerOrderReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $buyerOrderReferencedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $buyerOrderReferencedDocumentElements->count()) {
             return null;
@@ -61,7 +61,7 @@ class LineBuyerOrderReferencedDocument
         /** @var \DOMElement $buyerOrderReferencedDocumentElement */
         $buyerOrderReferencedDocumentElement = $buyerOrderReferencedDocumentElements->item(0);
 
-        $lineIdentifierElements = $xpath->query('.//ram:LineID', $buyerOrderReferencedDocumentElement);
+        $lineIdentifierElements = $xpath->query('./ram:LineID', $buyerOrderReferencedDocumentElement);
 
         if ($lineIdentifierElements->count() > 1) {
             throw new \Exception('Malformed');
@@ -70,7 +70,7 @@ class LineBuyerOrderReferencedDocument
         $buyerOrderReferencedDocument = new self();
 
         if (1 === $lineIdentifierElements->count()) {
-            $buyerOrderReferencedDocument->setLineIdentifier($lineIdentifierElements->item(0)->nodeValue);
+            $buyerOrderReferencedDocument->setLineIdentifier(new PurchaseOrderLineReference($lineIdentifierElements->item(0)->nodeValue));
         }
 
         return $buyerOrderReferencedDocument;

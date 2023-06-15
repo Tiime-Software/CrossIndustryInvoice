@@ -49,7 +49,7 @@ class ApplicableProductCharacteristic
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $applicableProductCharacteristicElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $applicableProductCharacteristicElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $applicableProductCharacteristicElements->count()) {
             return [];
@@ -58,8 +58,8 @@ class ApplicableProductCharacteristic
         $applicableProductCharacteristics = [];
 
         foreach ($applicableProductCharacteristicElements as $applicableProductCharacteristicElement) {
-            $descriptionElements = $xpath->query('.//ram:Description', $applicableProductCharacteristicElement);
-            $valueElements       = $xpath->query('.//ram:Value', $applicableProductCharacteristicElement);
+            $descriptionElements = $xpath->query('./ram:Description', $applicableProductCharacteristicElement);
+            $valueElements       = $xpath->query('./ram:Value', $applicableProductCharacteristicElement);
 
             if (1 !== $descriptionElements->count()) {
                 throw new \Exception('Malformed');

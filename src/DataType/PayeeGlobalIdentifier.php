@@ -21,7 +21,7 @@ class PayeeGlobalIdentifier extends PayeeIdentifier
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $payeeGlobalIdentifierElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $payeeGlobalIdentifierElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $payeeGlobalIdentifierElements->count()) {
             return null;
