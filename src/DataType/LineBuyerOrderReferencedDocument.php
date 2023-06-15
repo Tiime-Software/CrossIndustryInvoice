@@ -70,7 +70,7 @@ class LineBuyerOrderReferencedDocument
         $buyerOrderReferencedDocument = new self();
 
         if (1 === $lineIdentifierElements->count()) {
-            $buyerOrderReferencedDocument->setLineIdentifier($lineIdentifierElements->item(0)->nodeValue);
+            $buyerOrderReferencedDocument->setLineIdentifier(new PurchaseOrderLineReference($lineIdentifierElements->item(0)->nodeValue));
         }
 
         return $buyerOrderReferencedDocument;

@@ -339,11 +339,10 @@ class CIIEN16931Test extends TestCase
                                 )
                             )
                             ->setPayeePartyCreditorFinancialAccount(
-                                new PayeePartyCreditorFinancialAccount(
-                                    new PaymentAccountIdentifier('PaymentAccountIdentifier'),
-                                    'accountName',
-                                    new PaymentAccountIdentifier('PaymentAccountIdentifier (proprietary)')
-                                )
+                                (new PayeePartyCreditorFinancialAccount())
+                                    ->setIbanIdentifier(new PaymentAccountIdentifier('PaymentAccountIdentifier'))
+                                    ->setAccountName('accountName')
+                                    ->setProprietaryIdentifier(new PaymentAccountIdentifier('PaymentAccountIdentifier (proprietary)'))
                             )
                             ->setPayeeSpecifiedCreditorFinancialInstitution(
                                 new PayeeSpecifiedCreditorFinancialInstitution(

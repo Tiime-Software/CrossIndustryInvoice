@@ -143,7 +143,7 @@ class PayeeTradeParty
         $payeeTradeParty = new self($name);
 
         if (1 === $identifierElements->count()) {
-            $payeeTradeParty->setIdentifier($identifierElements->item(0)->nodeValue);
+            $payeeTradeParty->setIdentifier(new PayeeIdentifier($identifierElements->item(0)->nodeValue));
         }
 
         if ($globalIdentifier instanceof PayeeGlobalIdentifier) {

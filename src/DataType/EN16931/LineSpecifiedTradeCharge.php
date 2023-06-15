@@ -85,7 +85,7 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $lineSpecifiedTradeChargeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $lineSpecifiedTradeChargeElements = $xpath->query(sprintf('.//%s[ram:ChargeIndicator/udt:Indicator[text() = \'true\']]', self::XML_NODE), $currentElement);
 
         if (0 === $lineSpecifiedTradeChargeElements->count()) {
             return [];

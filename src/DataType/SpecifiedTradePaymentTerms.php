@@ -126,7 +126,7 @@ class SpecifiedTradePaymentTerms
         }
 
         if (1 === $directDebitMandateIdentifierElements->count()) {
-            $specifiedTradePaymentTerms->setDirectDebitMandateIdentifier($directDebitMandateIdentifierElements->item(0)->nodeValue);
+            $specifiedTradePaymentTerms->setDirectDebitMandateIdentifier(new MandateReferenceIdentifier($directDebitMandateIdentifierElements->item(0)->nodeValue));
         }
 
         if ($dueDateDateTime instanceof DueDateDateTime) {

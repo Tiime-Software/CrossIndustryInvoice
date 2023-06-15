@@ -167,11 +167,11 @@ class SpecifiedTradeSettlementPaymentMeans extends \Tiime\CrossIndustryInvoice\D
         }
 
         if ($payerPartyDebtorFinancialAccount instanceof PayerPartyDebtorFinancialAccount) {
-            $specifiedTradeSettlementPaymentMeans->setPayerPartyDebtorFinancialAccount($payeeSpecifiedCreditorFinancialInstitution);
+            $specifiedTradeSettlementPaymentMeans->setPayerPartyDebtorFinancialAccount($payerPartyDebtorFinancialAccount);
         }
 
         if ($payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
-            $specifiedTradeSettlementPaymentMeans->setPayeePartyCreditorFinancialAccount($payeeSpecifiedCreditorFinancialInstitution);
+            $specifiedTradeSettlementPaymentMeans->setPayeePartyCreditorFinancialAccount($payeePartyCreditorFinancialAccount);
         }
 
         if ($payeeSpecifiedCreditorFinancialInstitution instanceof PayeeSpecifiedCreditorFinancialInstitution) {

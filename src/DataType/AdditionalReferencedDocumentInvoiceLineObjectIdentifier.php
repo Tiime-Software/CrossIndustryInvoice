@@ -112,7 +112,13 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
         $additionalReferencedDocument = new self(new ObjectIdentifier($issuerAssignedIdentifier));
 
         if (1 === $referenceTypeCodeElements->count()) {
-            $additionalReferencedDocument->setReferenceTypeCode($referenceTypeCodeElements->item(0)->nodeValue);
+            $referenceTypeCode = ObjectSchemeCode::tryFrom($referenceTypeCodeElements->item(0)->nodeValue);
+
+            if (!$referenceTypeCode instanceof ObjectSchemeCode) {
+                throw new \Exception('Wrong ReferenceTypeCode');
+            }
+
+            $additionalReferencedDocument->setReferenceTypeCode($referenceTypeCode);
         }
 
         return $additionalReferencedDocument;

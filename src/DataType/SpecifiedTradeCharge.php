@@ -156,22 +156,15 @@ class SpecifiedTradeCharge
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $specifiedTradeChargeTrueIndicatorElements = $xpath->query(sprintf('.//%s/ram:ChargeIndicator/udt:Indicator[text() = \'true\']', self::XML_NODE), $currentElement);
+        $specifiedTradeChargeElements = $xpath->query(sprintf('.//%s[ram:ChargeIndicator/udt:Indicator[text() = \'true\']]', self::XML_NODE), $currentElement);
 
-        if (0 === $specifiedTradeChargeTrueIndicatorElements->count()) {
+        if (0 === $specifiedTradeChargeElements->count()) {
             return [];
-        }
-
-        $specifiedTradeChargeElements = [];
-
-        foreach ($specifiedTradeChargeTrueIndicatorElements as $specifiedTradeChargeTrueIndicatorElement) {
-            $specifiedTradeChargeElement = $xpath->query('.//../..', $specifiedTradeChargeTrueIndicatorElement);
-
-            $specifiedTradeChargeElements[] = $specifiedTradeChargeElement->item(0);
         }
 
         $specifiedTradeCharges = [];
 
+        /** @var \DOMElement $specifiedTradeChargeElement */
         foreach ($specifiedTradeChargeElements as $specifiedTradeChargeElement) {
             $calculationPercentElements = $xpath->query('.//ram:CalculationPercent', $specifiedTradeChargeElement);
             $basisAmountElements        = $xpath->query('.//ram:BasisAmount', $specifiedTradeChargeElement);
