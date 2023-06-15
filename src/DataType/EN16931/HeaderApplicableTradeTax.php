@@ -6,7 +6,6 @@ namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxPointDate;
 use Tiime\EN16931\BusinessTermsGroup\VatBreakdown;
-use Tiime\EN16931\DataType\DateCode2005;
 use Tiime\EN16931\DataType\DateCode2475;
 use Tiime\EN16931\DataType\VatCategory;
 use Tiime\EN16931\DataType\VatExoneration;

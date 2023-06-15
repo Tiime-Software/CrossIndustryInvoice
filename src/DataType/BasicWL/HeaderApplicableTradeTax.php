@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\EN16931\DataType\DateCode2005;
 use Tiime\EN16931\DataType\DateCode2475;
 use Tiime\EN16931\DataType\VatCategory;
 use Tiime\EN16931\DataType\VatExoneration;
