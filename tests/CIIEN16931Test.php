@@ -76,6 +76,7 @@ use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\DateCode2005;
+use Tiime\EN16931\DataType\DateCode2475;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 use Tiime\EN16931\DataType\Identifier\DebitedAccountIdentifier;
 use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
@@ -302,7 +303,7 @@ class CIIEN16931Test extends TestCase
                             ->setTaxPointDate(new TaxPointDate(new \DateTime()))
                             ->setExemptionReason('ExemptionReason')
                             ->setExemptionReasonCode(VatExoneration::NOT_SUBJECT_TO_VAT)
-                            ->setDueDateTypeCode(DateCode2005::INVOICE_DATE_TIME)
+                            ->setDueDateTypeCode(DateCode2475::INVOICE_DATE)
                             ->setRateApplicablePercent(50),
                     ],
                     (new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40))

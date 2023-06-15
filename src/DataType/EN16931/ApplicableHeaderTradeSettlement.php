@@ -14,7 +14,9 @@ use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
 use Tiime\EN16931\BusinessTermsGroup\InvoicingPeriod;
 use Tiime\EN16931\BusinessTermsGroup\Payee;
 use Tiime\EN16931\BusinessTermsGroup\PaymentInstructions;
+use Tiime\EN16931\Converter\DateCode2005ToDateCode2475Converter;
 use Tiime\EN16931\DataType\CurrencyCode;
+use Tiime\EN16931\DataType\DateCode2005;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 use Tiime\EN16931\Invoice;
 
@@ -228,7 +230,9 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         foreach ($invoice->getVatBreakdowns() as $vatBreakdown) {
             $applicableTradeTaxes[] = HeaderApplicableTradeTax::fromEN16931(
                 $vatBreakdown,
-                $invoice->getValueAddedTaxPointDateCode()
+                $invoice->getValueAddedTaxPointDateCode() instanceof DateCode2005
+                    ? DateCode2005ToDateCode2475Converter::convert($invoice->getValueAddedTaxPointDateCode())
+                    : null
             );
         }
 
