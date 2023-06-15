@@ -611,11 +611,11 @@ class CIIEN16931Test extends TestCase
                     [
                         (new HeaderApplicableTradeTax(16.38, 81.90, VatCategory::STANDARD))
                             ->setRateApplicablePercent(20)
-                        // ->setDueDateTypeCode(5) - @todo : to add when converter EN16931 (code list 2005) to CII available
+                            ->setDueDateTypeCode(DateCode2475::INVOICE_DATE)
                         ,
                         (new HeaderApplicableTradeTax(29.87, 543, VatCategory::STANDARD))
                             ->setRateApplicablePercent(5.5)
-                        // ->setDueDateTypeCode(5) - @todo : to add when converter EN16931 (code list 2005) to CII available
+                            ->setDueDateTypeCode(DateCode2475::INVOICE_DATE)
                     ],
                     (new SpecifiedTradeSettlementHeaderMonetarySummation(624.90, 624.90, 671.15, 470.15))
                         ->setTaxTotalAmount(new TaxTotalAmount(46.25, CurrencyCode::EURO))
