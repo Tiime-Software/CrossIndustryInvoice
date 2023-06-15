@@ -137,7 +137,7 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Buyer
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $buyerTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $buyerTradePartyElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $buyerTradePartyElements->count()) {
             throw new \Exception('Malformed');
@@ -146,8 +146,8 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Buyer
         /** @var \DOMElement $buyerTradePartyElement */
         $buyerTradePartyElement = $buyerTradePartyElements->item(0);
 
-        $identifierElements = $xpath->query('.//ram:ID', $buyerTradePartyElement);
-        $nameElements       = $xpath->query('.//ram:Name', $buyerTradePartyElement);
+        $identifierElements = $xpath->query('./ram:ID', $buyerTradePartyElement);
+        $nameElements       = $xpath->query('./ram:Name', $buyerTradePartyElement);
 
         if ($identifierElements->count() > 1) {
             throw new \Exception('Malformed');

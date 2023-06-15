@@ -61,7 +61,7 @@ class BasisQuantity
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $basisQuantityElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $basisQuantityElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $basisQuantityElements->count()) {
             return null;

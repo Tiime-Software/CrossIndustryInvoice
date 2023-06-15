@@ -52,7 +52,7 @@ class SpecifiedTaxRegistrationVA
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $specifiedTaxRegistrationVatElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $specifiedTaxRegistrationVatElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedTaxRegistrationVatElements->count()) {
             return null;
@@ -65,7 +65,7 @@ class SpecifiedTaxRegistrationVA
         /** @var \DOMElement $specifiedTaxRegistrationVatElement */
         $specifiedTaxRegistrationVatElement = $specifiedTaxRegistrationVatElements->item(0);
 
-        $identifierElements = $xpath->query('.//ram:ID', $specifiedTaxRegistrationVatElement);
+        $identifierElements = $xpath->query('./ram:ID', $specifiedTaxRegistrationVatElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');

@@ -48,7 +48,7 @@ class IssueDateTime
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $issueDateTimeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $issueDateTimeElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $issueDateTimeElements->count()) {
             throw new \Exception('Malformed');
@@ -57,7 +57,7 @@ class IssueDateTime
         /** @var \DOMElement $issueDateTimeElement */
         $issueDateTimeElement = $issueDateTimeElements->item(0);
 
-        $dateTimeStringElements = $xpath->query('.//udt:DateTimeString', $issueDateTimeElement);
+        $dateTimeStringElements = $xpath->query('./udt:DateTimeString', $issueDateTimeElement);
 
         if (1 !== $dateTimeStringElements->count()) {
             throw new \Exception('Malformed');

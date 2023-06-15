@@ -122,7 +122,7 @@ class ShipToTradeParty
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $shipToTradePartyElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $shipToTradePartyElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $shipToTradePartyElements->count()) {
             return null;
@@ -135,8 +135,8 @@ class ShipToTradeParty
         /** @var \DOMElement $shipToTradePartyElement */
         $shipToTradePartyElement = $shipToTradePartyElements->item(0);
 
-        $identifierElements = $xpath->query('.//ram:ID', $shipToTradePartyElement);
-        $nameElements       = $xpath->query('.//ram:Name', $shipToTradePartyElement);
+        $identifierElements = $xpath->query('./ram:ID', $shipToTradePartyElement);
+        $nameElements       = $xpath->query('./ram:Name', $shipToTradePartyElement);
 
         if ($identifierElements->count() > 1) {
             throw new \Exception('Malformed');

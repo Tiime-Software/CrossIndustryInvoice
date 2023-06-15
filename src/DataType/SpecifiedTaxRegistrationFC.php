@@ -52,7 +52,7 @@ class SpecifiedTaxRegistrationFC
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $specifiedTaxRegistrationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $specifiedTaxRegistrationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedTaxRegistrationElements->count()) {
             return null;
@@ -65,7 +65,7 @@ class SpecifiedTaxRegistrationFC
         /** @var \DOMElement $specifiedTaxRegistrationElement */
         $specifiedTaxRegistrationElement = $specifiedTaxRegistrationElements->item(0);
 
-        $identifierElements = $xpath->query('.//ram:ID', $specifiedTaxRegistrationElement);
+        $identifierElements = $xpath->query('./ram:ID', $specifiedTaxRegistrationElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');

@@ -21,7 +21,7 @@ class LocationGlobalIdentifier extends LocationIdentifier
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $locationGlobalIdentifierElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $locationGlobalIdentifierElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $locationGlobalIdentifierElements->count()) {
             return null;

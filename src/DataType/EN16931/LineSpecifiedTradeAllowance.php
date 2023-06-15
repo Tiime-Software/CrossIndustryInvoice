@@ -86,7 +86,7 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $lineSpecifiedTradeAllowanceElements = $xpath->query(sprintf('.//%s[ram:ChargeIndicator/udt:Indicator[text() = \'false\']]', self::XML_NODE), $currentElement);
+        $lineSpecifiedTradeAllowanceElements = $xpath->query(sprintf('./%s[ram:ChargeIndicator/udt:Indicator[text() = \'false\']]', self::XML_NODE), $currentElement);
 
         if (0 === $lineSpecifiedTradeAllowanceElements->count()) {
             return [];
@@ -95,11 +95,11 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
         $lineSpecifiedTradeAllowances = [];
 
         foreach ($lineSpecifiedTradeAllowanceElements as $lineSpecifiedTradeAllowanceElement) {
-            $calculationPercentElements = $xpath->query('.//ram:CalculationPercent', $lineSpecifiedTradeAllowanceElement);
-            $basisAmountElements        = $xpath->query('.//ram:BasisAmount', $lineSpecifiedTradeAllowanceElement);
-            $actualAmountElements       = $xpath->query('.//ram:ActualAmount', $lineSpecifiedTradeAllowanceElement);
-            $reasonCodeElements         = $xpath->query('.//ram:ReasonCode', $lineSpecifiedTradeAllowanceElement);
-            $reasonElements             = $xpath->query('.//ram:Reason', $lineSpecifiedTradeAllowanceElement);
+            $calculationPercentElements = $xpath->query('./ram:CalculationPercent', $lineSpecifiedTradeAllowanceElement);
+            $basisAmountElements        = $xpath->query('./ram:BasisAmount', $lineSpecifiedTradeAllowanceElement);
+            $actualAmountElements       = $xpath->query('./ram:ActualAmount', $lineSpecifiedTradeAllowanceElement);
+            $reasonCodeElements         = $xpath->query('./ram:ReasonCode', $lineSpecifiedTradeAllowanceElement);
+            $reasonElements             = $xpath->query('./ram:Reason', $lineSpecifiedTradeAllowanceElement);
 
             if ($calculationPercentElements->count() > 1) {
                 throw new \Exception('Malformed');

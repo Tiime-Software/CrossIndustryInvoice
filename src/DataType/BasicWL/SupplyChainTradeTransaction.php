@@ -30,7 +30,7 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\M
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $supplyChainTradeTransactionElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $supplyChainTradeTransactionElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $supplyChainTradeTransactionElements->count()) {
             throw new \Exception('Malformed');

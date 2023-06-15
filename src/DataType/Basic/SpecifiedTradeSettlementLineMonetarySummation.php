@@ -39,7 +39,7 @@ class SpecifiedTradeSettlementLineMonetarySummation
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $specifiedTradeSettlementLineMonetarySummationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $specifiedTradeSettlementLineMonetarySummationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $specifiedTradeSettlementLineMonetarySummationElements->count()) {
             throw new \Exception('Malformed');
@@ -48,7 +48,7 @@ class SpecifiedTradeSettlementLineMonetarySummation
         /** @var \DOMElement $specifiedTradeSettlementLineMonetarySummationElement */
         $specifiedTradeSettlementLineMonetarySummationElement = $specifiedTradeSettlementLineMonetarySummationElements->item(0);
 
-        $lineTotalAmountElements = $xpath->query('.//ram:LineTotalAmount', $specifiedTradeSettlementLineMonetarySummationElement);
+        $lineTotalAmountElements = $xpath->query('./ram:LineTotalAmount', $specifiedTradeSettlementLineMonetarySummationElement);
 
         if (1 !== $lineTotalAmountElements->count()) {
             throw new \Exception('Malformed');

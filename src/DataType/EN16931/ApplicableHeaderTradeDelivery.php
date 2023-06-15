@@ -68,7 +68,7 @@ class ApplicableHeaderTradeDelivery extends \Tiime\CrossIndustryInvoice\DataType
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $applicableHeaderTradeDeliveryElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $applicableHeaderTradeDeliveryElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $applicableHeaderTradeDeliveryElements->count()) {
             throw new \Exception('Malformed');

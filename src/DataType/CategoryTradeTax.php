@@ -74,7 +74,7 @@ class CategoryTradeTax
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $categoryTradeTaxElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $categoryTradeTaxElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $categoryTradeTaxElements->count()) {
             throw new \Exception('Malformed');
@@ -83,9 +83,9 @@ class CategoryTradeTax
         /** @var \DOMElement $categoryTradeTaxElement */
         $categoryTradeTaxElement = $categoryTradeTaxElements->item(0);
 
-        $typeCodeElements              = $xpath->query('.//ram:TypeCode', $categoryTradeTaxElement);
-        $categoryCodeElements          = $xpath->query('.//ram:CategoryCode', $categoryTradeTaxElement);
-        $rateApplicablePercentElements = $xpath->query('.//ram:RateApplicablePercent', $categoryTradeTaxElement);
+        $typeCodeElements              = $xpath->query('./ram:TypeCode', $categoryTradeTaxElement);
+        $categoryCodeElements          = $xpath->query('./ram:CategoryCode', $categoryTradeTaxElement);
+        $rateApplicablePercentElements = $xpath->query('./ram:RateApplicablePercent', $categoryTradeTaxElement);
 
         if (1 !== $typeCodeElements->count()) {
             throw new \Exception('Malformed');

@@ -95,7 +95,7 @@ class LineSpecifiedTradeAllowance
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $lineSpecifiedTradeAllowanceElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $lineSpecifiedTradeAllowanceElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $lineSpecifiedTradeAllowanceElements->count()) {
             return [];
@@ -104,9 +104,9 @@ class LineSpecifiedTradeAllowance
         $lineSpecifiedTradeAllowances = [];
 
         foreach ($lineSpecifiedTradeAllowanceElements as $lineSpecifiedTradeAllowanceElement) {
-            $actualAmountElements = $xpath->query('.//ram:ActualAmount', $lineSpecifiedTradeAllowanceElement);
-            $reasonCodeElements   = $xpath->query('.//ram:ReasonCode', $lineSpecifiedTradeAllowanceElement);
-            $reasonElements       = $xpath->query('.//ram:Reason', $lineSpecifiedTradeAllowanceElement);
+            $actualAmountElements = $xpath->query('./ram:ActualAmount', $lineSpecifiedTradeAllowanceElement);
+            $reasonCodeElements   = $xpath->query('./ram:ReasonCode', $lineSpecifiedTradeAllowanceElement);
+            $reasonElements       = $xpath->query('./ram:Reason', $lineSpecifiedTradeAllowanceElement);
 
             if (1 !== $actualAmountElements->count()) {
                 throw new \Exception('Malformed');

@@ -53,7 +53,7 @@ class AppliedTradeAllowanceCharge
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $appliedTradeAllowanceChargeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $appliedTradeAllowanceChargeElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $appliedTradeAllowanceChargeElements->count()) {
             return null;
@@ -66,7 +66,7 @@ class AppliedTradeAllowanceCharge
         /** @var \DOMElement $appliedTradeAllowanceChargeElement */
         $appliedTradeAllowanceChargeElement = $appliedTradeAllowanceChargeElements->item(0);
 
-        $actualAmountElements = $xpath->query('.//ram:ActualAmount', $appliedTradeAllowanceChargeElement);
+        $actualAmountElements = $xpath->query('./ram:ActualAmount', $appliedTradeAllowanceChargeElement);
 
         if ($actualAmountElements->count() > 1) {
             throw new \Exception('Malformed');

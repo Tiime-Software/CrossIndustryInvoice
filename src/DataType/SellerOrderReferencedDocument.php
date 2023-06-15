@@ -39,7 +39,7 @@ class SellerOrderReferencedDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $sellerOrderReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $sellerOrderReferencedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $sellerOrderReferencedDocumentElements->count()) {
             return null;
@@ -52,7 +52,7 @@ class SellerOrderReferencedDocument
         /** @var \DOMElement $sellerOrderReferencedDocumentElement */
         $sellerOrderReferencedDocumentElement = $sellerOrderReferencedDocumentElements->item(0);
 
-        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $sellerOrderReferencedDocumentElement);
+        $issuerAssignedIdentifierElements = $xpath->query('./ram:IssuerAssignedID', $sellerOrderReferencedDocumentElement);
 
         if (1 !== $issuerAssignedIdentifierElements->count()) {
             throw new \Exception('Malformed');

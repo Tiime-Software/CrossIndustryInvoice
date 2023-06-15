@@ -61,7 +61,7 @@ class SpecifiedTradeProduct
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $specifiedTradeProductElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $specifiedTradeProductElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $specifiedTradeProductElements->count()) {
             throw new \Exception('Malformed');
@@ -70,8 +70,8 @@ class SpecifiedTradeProduct
         /** @var \DOMElement $specifiedTradeProductElement */
         $specifiedTradeProductElement = $specifiedTradeProductElements->item(0);
 
-        $globalIdentifierElements = $xpath->query('.//ram:GlobalID', $specifiedTradeProductElement);
-        $nameElements             = $xpath->query('.//ram:Name', $specifiedTradeProductElement);
+        $globalIdentifierElements = $xpath->query('./ram:GlobalID', $specifiedTradeProductElement);
+        $nameElements             = $xpath->query('./ram:Name', $specifiedTradeProductElement);
 
         if ($globalIdentifierElements->count() > 1) {
             throw new \Exception('Malformed');

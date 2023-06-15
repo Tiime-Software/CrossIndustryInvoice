@@ -125,7 +125,7 @@ class AdditionalReferencedDocumentAdditionalSupportingDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $additionalReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $additionalReferencedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $additionalReferencedDocumentElements->count()) {
             return [];
@@ -134,11 +134,11 @@ class AdditionalReferencedDocumentAdditionalSupportingDocument
         $additionalReferencedDocuments = [];
 
         foreach ($additionalReferencedDocumentElements as $additionalReferencedDocumentElement) {
-            $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $additionalReferencedDocumentElement);
-            $uriIdentifierElements            = $xpath->query('.//ram:URIID', $additionalReferencedDocumentElement);
-            $typeCodeElements                 = $xpath->query('.//ram:TypeCode', $additionalReferencedDocumentElement);
-            $nameElements                     = $xpath->query('.//ram:Name', $additionalReferencedDocumentElement);
-            $attachmentBinaryObjectElements   = $xpath->query('.//ram:AttachmentBinaryObject', $additionalReferencedDocumentElement);
+            $issuerAssignedIdentifierElements = $xpath->query('./ram:IssuerAssignedID', $additionalReferencedDocumentElement);
+            $uriIdentifierElements            = $xpath->query('./ram:URIID', $additionalReferencedDocumentElement);
+            $typeCodeElements                 = $xpath->query('./ram:TypeCode', $additionalReferencedDocumentElement);
+            $nameElements                     = $xpath->query('./ram:Name', $additionalReferencedDocumentElement);
+            $attachmentBinaryObjectElements   = $xpath->query('./ram:AttachmentBinaryObject', $additionalReferencedDocumentElement);
 
             if (1 !== $issuerAssignedIdentifierElements->count()) {
                 throw new \Exception('Malformed');

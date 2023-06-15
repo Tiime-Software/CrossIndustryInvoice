@@ -57,7 +57,7 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $specifiedLegalOrganizationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $specifiedLegalOrganizationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedLegalOrganizationElements->count()) {
             return null;
@@ -70,8 +70,8 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
         /** @var \DOMElement $specifiedLegalOrganizationElement */
         $specifiedLegalOrganizationElement = $specifiedLegalOrganizationElements->item(0);
 
-        $identifierElements          = $xpath->query('.//ram:ID', $specifiedLegalOrganizationElement);
-        $tradingBusinessNameElements = $xpath->query('.//ram:TradingBusinessName', $specifiedLegalOrganizationElement);
+        $identifierElements          = $xpath->query('./ram:ID', $specifiedLegalOrganizationElement);
+        $tradingBusinessNameElements = $xpath->query('./ram:TradingBusinessName', $specifiedLegalOrganizationElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');

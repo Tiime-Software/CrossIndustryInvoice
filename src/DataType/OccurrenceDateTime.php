@@ -48,7 +48,7 @@ class OccurrenceDateTime
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $occurrenceDateTimeElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $occurrenceDateTimeElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $occurrenceDateTimeElements->count()) {
             throw new \Exception('Malformed');
@@ -57,7 +57,7 @@ class OccurrenceDateTime
         /** @var \DOMElement $occurrenceDateTimeElement */
         $occurrenceDateTimeElement = $occurrenceDateTimeElements->item(0);
 
-        $dateTimeStringElements = $xpath->query('.//udt:DateTimeString', $occurrenceDateTimeElement);
+        $dateTimeStringElements = $xpath->query('./udt:DateTimeString', $occurrenceDateTimeElement);
 
         if (1 !== $dateTimeStringElements->count()) {
             throw new \Exception('Malformed');

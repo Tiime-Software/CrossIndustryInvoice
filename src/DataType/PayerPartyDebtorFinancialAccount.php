@@ -39,7 +39,7 @@ class PayerPartyDebtorFinancialAccount
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $payerPartyDebtorFinancialAccountElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $payerPartyDebtorFinancialAccountElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $payerPartyDebtorFinancialAccountElements->count()) {
             return null;
@@ -52,7 +52,7 @@ class PayerPartyDebtorFinancialAccount
         /** @var \DOMElement $payerPartyDebtorFinancialAccountElement */
         $payerPartyDebtorFinancialAccountElement = $payerPartyDebtorFinancialAccountElements->item(0);
 
-        $ibanIdentifierElements = $xpath->query('.//ram:IBANID', $payerPartyDebtorFinancialAccountElement);
+        $ibanIdentifierElements = $xpath->query('./ram:IBANID', $payerPartyDebtorFinancialAccountElement);
 
         if (1 !== $ibanIdentifierElements->count()) {
             throw new \Exception('Malformed');

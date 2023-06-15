@@ -62,7 +62,7 @@ class InvoiceReferencedDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $invoiceReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $invoiceReferencedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $invoiceReferencedDocumentElements->count()) {
             return null;
@@ -75,7 +75,7 @@ class InvoiceReferencedDocument
         /** @var \DOMElement $invoiceReferencedDocumentElement */
         $invoiceReferencedDocumentElement = $invoiceReferencedDocumentElements->item(0);
 
-        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $invoiceReferencedDocumentElement);
+        $issuerAssignedIdentifierElements = $xpath->query('./ram:IssuerAssignedID', $invoiceReferencedDocumentElement);
 
         if (1 !== $issuerAssignedIdentifierElements->count()) {
             throw new \Exception('Malformed');

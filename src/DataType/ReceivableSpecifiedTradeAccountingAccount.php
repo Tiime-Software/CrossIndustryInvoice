@@ -39,7 +39,7 @@ class ReceivableSpecifiedTradeAccountingAccount
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $receivableSpecifiedTradeAccountingAccountElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $receivableSpecifiedTradeAccountingAccountElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $receivableSpecifiedTradeAccountingAccountElements->count()) {
             return null;
@@ -52,7 +52,7 @@ class ReceivableSpecifiedTradeAccountingAccount
         /** @var \DOMElement $receivableSpecifiedTradeAccountingAccountElement */
         $receivableSpecifiedTradeAccountingAccountElement = $receivableSpecifiedTradeAccountingAccountElements->item(0);
 
-        $identifierElements = $xpath->query('.//ram:ID', $receivableSpecifiedTradeAccountingAccountElement);
+        $identifierElements = $xpath->query('./ram:ID', $receivableSpecifiedTradeAccountingAccountElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');

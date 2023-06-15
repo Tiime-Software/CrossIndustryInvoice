@@ -54,7 +54,7 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $payeePartyCreditorFinancialAccountElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $payeePartyCreditorFinancialAccountElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $payeePartyCreditorFinancialAccountElements->count()) {
             return null;
@@ -67,9 +67,9 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
         /** @var \DOMElement $payeePartyCreditorFinancialAccountElement */
         $payeePartyCreditorFinancialAccountElement = $payeePartyCreditorFinancialAccountElements->item(0);
 
-        $ibanIdentifierElements        = $xpath->query('.//ram:IBANID', $payeePartyCreditorFinancialAccountElement);
-        $accountNameElements           = $xpath->query('.//ram:AccountName', $payeePartyCreditorFinancialAccountElement);
-        $proprietaryIdentifierElements = $xpath->query('.//ram:ProprietaryID', $payeePartyCreditorFinancialAccountElement);
+        $ibanIdentifierElements        = $xpath->query('./ram:IBANID', $payeePartyCreditorFinancialAccountElement);
+        $accountNameElements           = $xpath->query('./ram:AccountName', $payeePartyCreditorFinancialAccountElement);
+        $proprietaryIdentifierElements = $xpath->query('./ram:ProprietaryID', $payeePartyCreditorFinancialAccountElement);
 
         if ($ibanIdentifierElements->count() > 1) {
             throw new \Exception('Malformed');

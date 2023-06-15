@@ -39,7 +39,7 @@ class ContractReferencedDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $contractReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $contractReferencedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $contractReferencedDocumentElements->count()) {
             return null;
@@ -52,7 +52,7 @@ class ContractReferencedDocument
         /** @var \DOMElement $contractReferencedDocumentElement */
         $contractReferencedDocumentElement = $contractReferencedDocumentElements->item(0);
 
-        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $contractReferencedDocumentElement);
+        $issuerAssignedIdentifierElements = $xpath->query('./ram:IssuerAssignedID', $contractReferencedDocumentElement);
 
         if (1 !== $issuerAssignedIdentifierElements->count()) {
             throw new \Exception('Malformed');

@@ -143,7 +143,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $specifiedTradeSettlementHeaderMonetarySummationElements->count()) {
             throw new \Exception('Malformed');
@@ -152,13 +152,13 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         /** @var \DOMElement $specifiedTradeSettlementHeaderMonetarySummationElement */
         $specifiedTradeSettlementHeaderMonetarySummationElement = $specifiedTradeSettlementHeaderMonetarySummationElements->item(0);
 
-        $lineTotalAmountElements      = $xpath->query('.//ram:LineTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
-        $chargeTotalAmountElements    = $xpath->query('.//ram:ChargeTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
-        $allowanceTotalAmountElements = $xpath->query('.//ram:AllowanceTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
-        $taxBasisTotalAmountElements  = $xpath->query('.//ram:TaxBasisTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
-        $grandTotalAmountElements     = $xpath->query('.//ram:GrandTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
-        $totalPrepaidAmountElements   = $xpath->query('.//ram:TotalPrepaidAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
-        $duePayableAmountElements     = $xpath->query('.//ram:DuePayableAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $lineTotalAmountElements      = $xpath->query('./ram:LineTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $chargeTotalAmountElements    = $xpath->query('./ram:ChargeTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $allowanceTotalAmountElements = $xpath->query('./ram:AllowanceTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $taxBasisTotalAmountElements  = $xpath->query('./ram:TaxBasisTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $grandTotalAmountElements     = $xpath->query('./ram:GrandTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $totalPrepaidAmountElements   = $xpath->query('./ram:TotalPrepaidAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $duePayableAmountElements     = $xpath->query('./ram:DuePayableAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
 
         if (1 !== $lineTotalAmountElements->count()) {
             throw new \Exception('Malformed');
@@ -208,8 +208,8 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         }
 
         /** Checks BT-5/BT-6 for BT-110/BT-111 */
-        $invoiceCurrencyCodeElements = $xpath->query('.//ram:InvoiceCurrencyCode', $currentElement);
-        $taxCurrencyCodeElements     = $xpath->query('.//ram:TaxCurrencyCode');
+        $invoiceCurrencyCodeElements = $xpath->query('./ram:InvoiceCurrencyCode', $currentElement);
+        $taxCurrencyCodeElements     = $xpath->query('./ram:TaxCurrencyCode');
 
         if (1 !== $invoiceCurrencyCodeElements->count()) {
             throw new \Exception('Malformed');
@@ -235,7 +235,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
             }
         }
 
-        $taxTotalAmountElements = $xpath->query('.//ram:TaxTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
+        $taxTotalAmountElements = $xpath->query('./ram:TaxTotalAmount', $specifiedTradeSettlementHeaderMonetarySummationElement);
 
         if (null === $taxCurrencyCode || $invoiceCurrencyCode === $taxCurrencyCode) {
             /* Same currency code for BT-5 & BT-6, only fill BT-110, no need to fill BT-111 */

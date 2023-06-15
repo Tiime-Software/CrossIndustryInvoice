@@ -115,7 +115,7 @@ class DefinedTradeContact
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $definedTradeContactElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $definedTradeContactElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $definedTradeContactElements->count()) {
             return null;
@@ -128,8 +128,8 @@ class DefinedTradeContact
         /** @var \DOMElement $definedTradeContactElement */
         $definedTradeContactElement = $definedTradeContactElements->item(0);
 
-        $personNameElements     = $xpath->query('.//ram:PersonName', $definedTradeContactElement);
-        $departmentNameElements = $xpath->query('.//ram:DepartmentName', $definedTradeContactElement);
+        $personNameElements     = $xpath->query('./ram:PersonName', $definedTradeContactElement);
+        $departmentNameElements = $xpath->query('./ram:DepartmentName', $definedTradeContactElement);
 
         if ($personNameElements->count() > 1) {
             throw new \Exception('Malformed');

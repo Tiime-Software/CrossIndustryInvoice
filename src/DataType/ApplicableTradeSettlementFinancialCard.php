@@ -61,7 +61,7 @@ class ApplicableTradeSettlementFinancialCard
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $applicableTradeSettlementFinancialCardElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $applicableTradeSettlementFinancialCardElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $applicableTradeSettlementFinancialCardElements->count()) {
             return null;
@@ -74,8 +74,8 @@ class ApplicableTradeSettlementFinancialCard
         /** @var \DOMElement $applicableTradeSettlementFinancialCardElement */
         $applicableTradeSettlementFinancialCardElement = $applicableTradeSettlementFinancialCardElements->item(0);
 
-        $identifierElements     = $xpath->query('.//ram:ID', $applicableTradeSettlementFinancialCardElement);
-        $cardholderNameElements = $xpath->query('.//ram:CardholderName', $applicableTradeSettlementFinancialCardElement);
+        $identifierElements     = $xpath->query('./ram:ID', $applicableTradeSettlementFinancialCardElement);
+        $cardholderNameElements = $xpath->query('./ram:CardholderName', $applicableTradeSettlementFinancialCardElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');

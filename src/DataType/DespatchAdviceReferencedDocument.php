@@ -39,7 +39,7 @@ class DespatchAdviceReferencedDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $despatchAdviceReferencedDocumentElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $despatchAdviceReferencedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $despatchAdviceReferencedDocumentElements->count()) {
             return null;
@@ -52,7 +52,7 @@ class DespatchAdviceReferencedDocument
         /** @var \DOMElement $despatchAdviceReferencedDocumentElement */
         $despatchAdviceReferencedDocumentElement = $despatchAdviceReferencedDocumentElements->item(0);
 
-        $issuerAssignedIdentifierElements = $xpath->query('.//ram:IssuerAssignedID', $despatchAdviceReferencedDocumentElement);
+        $issuerAssignedIdentifierElements = $xpath->query('./ram:IssuerAssignedID', $despatchAdviceReferencedDocumentElement);
 
         if (1 !== $issuerAssignedIdentifierElements->count()) {
             throw new \Exception('Malformed');

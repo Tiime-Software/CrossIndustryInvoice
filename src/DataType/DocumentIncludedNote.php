@@ -61,7 +61,7 @@ class DocumentIncludedNote
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $documentIncludedNoteElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $documentIncludedNoteElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $documentIncludedNoteElements->count()) {
             return [];
@@ -70,8 +70,8 @@ class DocumentIncludedNote
         $documentIncludedNotes = [];
 
         foreach ($documentIncludedNoteElements as $documentIncludedNoteElement) {
-            $contentElements     = $xpath->query('.//ram:Content', $documentIncludedNoteElement);
-            $subjectCodeElements = $xpath->query('.//ram:SubjectCode', $documentIncludedNoteElement);
+            $contentElements     = $xpath->query('./ram:Content', $documentIncludedNoteElement);
+            $subjectCodeElements = $xpath->query('./ram:SubjectCode', $documentIncludedNoteElement);
 
             if (1 !== $contentElements->count()) {
                 throw new \Exception('Malformed');

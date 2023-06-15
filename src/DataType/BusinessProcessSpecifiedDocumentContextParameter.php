@@ -37,7 +37,7 @@ class BusinessProcessSpecifiedDocumentContextParameter
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $businessProcessSpecifiedDocumentContextParameterElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $businessProcessSpecifiedDocumentContextParameterElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $businessProcessSpecifiedDocumentContextParameterElements->count()) {
             return null;
@@ -50,7 +50,7 @@ class BusinessProcessSpecifiedDocumentContextParameter
         /** @var \DOMElement $businessProcessSpecifiedDocumentContextParameterElement */
         $businessProcessSpecifiedDocumentContextParameterElement = $businessProcessSpecifiedDocumentContextParameterElements->item(0);
 
-        $identifierElements = $xpath->query('.//ram:ID', $businessProcessSpecifiedDocumentContextParameterElement);
+        $identifierElements = $xpath->query('./ram:ID', $businessProcessSpecifiedDocumentContextParameterElement);
 
         if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');

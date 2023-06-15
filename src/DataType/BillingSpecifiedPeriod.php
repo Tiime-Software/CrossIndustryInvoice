@@ -71,7 +71,7 @@ class BillingSpecifiedPeriod
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $billingSpecifiedPeriodElements = $xpath->query(sprintf('.//%s', self::XML_NODE), $currentElement);
+        $billingSpecifiedPeriodElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $billingSpecifiedPeriodElements->count()) {
             return null;
