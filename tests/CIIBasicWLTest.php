@@ -54,7 +54,7 @@ class CIIBasicWLTest extends TestCase
         $invoice = new CrossIndustryInvoice(
             new ExchangedDocumentContext(
                 new GuidelineSpecifiedDocumentContextParameter(
-                    new SpecificationIdentifier(SpecificationIdentifier::BASIC_WL)
+                    new SpecificationIdentifier(SpecificationIdentifier::BASICWL)
                 )
             ),
             new ExchangedDocument(
@@ -94,7 +94,7 @@ class CIIBasicWLTest extends TestCase
         new CrossIndustryInvoice(
             new ExchangedDocumentContext(
                 new GuidelineSpecifiedDocumentContextParameter(
-                    new SpecificationIdentifier(SpecificationIdentifier::BASIC_WL)
+                    new SpecificationIdentifier(SpecificationIdentifier::BASICWL)
                 )
             ),
             new ExchangedDocument(
@@ -125,7 +125,7 @@ class CIIBasicWLTest extends TestCase
         $invoice = new CrossIndustryInvoice(
             (new ExchangedDocumentContext(
                 new GuidelineSpecifiedDocumentContextParameter(
-                    new SpecificationIdentifier(SpecificationIdentifier::BASIC_WL)
+                    new SpecificationIdentifier(SpecificationIdentifier::BASICWL)
                 )
             ))->setBusinessProcessSpecifiedDocumentContextParameter(new BusinessProcessSpecifiedDocumentContextParameter('BusinessProcess1')),
             (new ExchangedDocument(
