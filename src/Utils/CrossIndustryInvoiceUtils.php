@@ -32,7 +32,7 @@ class CrossIndustryInvoiceUtils
             throw new \Exception('The XML doesn\'t contain a valid version.');
         }
 
-        $explodedDocumentIdentifier = explode(':', $documentIdentifier);
+        $explodedDocumentIdentifier = explode(':', mb_strtoupper($documentIdentifier));
 
         $profile = end($explodedDocumentIdentifier);
 
@@ -43,7 +43,7 @@ class CrossIndustryInvoiceUtils
         $specificationIdentifierReflectionClass = new \ReflectionClass(SpecificationIdentifier::class);
         $specificationIdentifiers               = array_change_key_case($specificationIdentifierReflectionClass->getConstants(), \CASE_UPPER);
 
-        if (!\array_key_exists(mb_strtoupper($profile), $specificationIdentifiers)) {
+        if (!\array_key_exists($profile, $specificationIdentifiers)) {
             $profile = prev($explodedDocumentIdentifier);
 
             if (!$profile) {
@@ -51,10 +51,10 @@ class CrossIndustryInvoiceUtils
             }
         }
 
-        if (!\array_key_exists(mb_strtolower($profile), $specificationIdentifiers)) {
+        if (!\array_key_exists($profile, $specificationIdentifiers)) {
             throw new \Exception(sprintf('Invalid version : %s', $documentIdentifier));
         }
 
-        return $specificationIdentifierReflectionClass->getConstant($profile);
+        return $profile;
     }
 }
