@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\Utils;
 
-use ReflectionClass;
 use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
 
 class CrossIndustryInvoiceUtils
 {
     public static function getProfile(\DOMDocument $xml): string
     {
-        $xpath = new \DOMXpath($xml);
+        $xpath = new \DOMXPath($xml);
 
         /** @var \DOMNodeList<\DOMDocument> $elements */
         $elements = $xpath->query('//rsm:ExchangedDocumentContext/ram:GuidelineSpecifiedDocumentContextParameter/ram:ID');
@@ -29,21 +28,22 @@ class CrossIndustryInvoiceUtils
 
         $documentIdentifier = $documentIdentifierItem->nodeValue;
 
-        if (!is_string($documentIdentifier)) {
+        if (!\is_string($documentIdentifier)) {
             throw new \Exception('The XML doesn\'t contain a valid version.');
         }
 
         $explodedDocumentIdentifier = explode(':', $documentIdentifier);
 
         $profile = end($explodedDocumentIdentifier);
+
         if (!$profile) {
             throw new \Exception('The XML doesn\'t contain a valid version.');
         }
 
-        $specificationIdentifierReflectionClass = new ReflectionClass(SpecificationIdentifier::class);
-        $specificationIdentifiers = array_change_key_case($specificationIdentifierReflectionClass->getConstants(), CASE_UPPER);
+        $specificationIdentifierReflectionClass = new \ReflectionClass(SpecificationIdentifier::class);
+        $specificationIdentifiers               = array_change_key_case($specificationIdentifierReflectionClass->getConstants(), \CASE_UPPER);
 
-        if (!array_key_exists(strtoupper($profile), $specificationIdentifiers)) {
+        if (!\array_key_exists(mb_strtoupper($profile), $specificationIdentifiers)) {
             $profile = prev($explodedDocumentIdentifier);
 
             if (!$profile) {
@@ -51,7 +51,7 @@ class CrossIndustryInvoiceUtils
             }
         }
 
-        if (!array_key_exists(strtolower($profile), $specificationIdentifiers)) {
+        if (!\array_key_exists(mb_strtolower($profile), $specificationIdentifiers)) {
             throw new \Exception(sprintf('Invalid version : %s', $documentIdentifier));
         }
 
