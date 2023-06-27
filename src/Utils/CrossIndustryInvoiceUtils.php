@@ -12,7 +12,7 @@ class CrossIndustryInvoiceUtils
     {
         $xpath = new \DOMXPath($xml);
 
-        /** @var \DOMNodeList<\DOMDocument> $elements */
+        /** @var \DOMNodeList<\DOMElement> $elements */
         $elements = $xpath->query('//rsm:ExchangedDocumentContext/ram:GuidelineSpecifiedDocumentContextParameter/ram:ID');
 
         if (0 === $elements->count()) {
@@ -22,7 +22,7 @@ class CrossIndustryInvoiceUtils
 
         $documentIdentifierItem = $elements->item(0);
 
-        if (!$documentIdentifierItem instanceof \DOMDocument) {
+        if (!$documentIdentifierItem instanceof \DOMElement) {
             throw new \Exception('The XML doesn\'t contain a valid version.');
         }
 
