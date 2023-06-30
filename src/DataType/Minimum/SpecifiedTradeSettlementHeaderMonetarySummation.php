@@ -73,14 +73,14 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        $currentNode->appendChild($document->createElement('ram:TaxBasisTotalAmount', (string) $this->taxBasisTotalAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:TaxBasisTotalAmount', $this->taxBasisTotalAmount->getFormattedValueRounded()));
 
         if ($this->taxTotalAmount instanceof TaxTotalAmount) {
             $currentNode->appendChild($this->taxTotalAmount->toXML($document));
         }
 
-        $currentNode->appendChild($document->createElement('ram:GrandTotalAmount', (string) $this->grandTotalAmount->getValueRounded()));
-        $currentNode->appendChild($document->createElement('ram:DuePayableAmount', (string) $this->duePayableAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:GrandTotalAmount', $this->grandTotalAmount->getFormattedValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:DuePayableAmount', $this->duePayableAmount->getFormattedValueRounded()));
 
         return $currentNode;
     }

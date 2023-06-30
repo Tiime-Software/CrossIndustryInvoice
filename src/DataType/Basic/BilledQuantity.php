@@ -42,7 +42,7 @@ class BilledQuantity
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement(self::XML_NODE, (string) $this->quantity->getValueRounded());
+        $element = $document->createElement(self::XML_NODE, $this->quantity->getFormattedValueRounded());
         $element->setAttribute('unitCode', $this->unitCode->value);
 
         return $element;

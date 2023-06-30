@@ -44,14 +44,14 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        $currentNode->appendChild($document->createElement('ram:CalculatedAmount', (string) $this->calculatedAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:CalculatedAmount', $this->calculatedAmount->getFormattedValueRounded()));
         $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
         if (\is_string($this->exemptionReason)) {
             $currentNode->appendChild($document->createElement('ram:ExemptionReason', $this->exemptionReason));
         }
 
-        $currentNode->appendChild($document->createElement('ram:BasisAmount', (string) $this->basisAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:BasisAmount', $this->basisAmount->getFormattedValueRounded()));
         $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
 
         if ($this->exemptionReasonCode instanceof VatExoneration) {
@@ -67,7 +67,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
         }
 
         if ($this->rateApplicablePercent instanceof Percentage) {
-            $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->rateApplicablePercent->getValueRounded()));
+            $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', $this->rateApplicablePercent->getFormattedValueRounded()));
         }
 
         return $currentNode;

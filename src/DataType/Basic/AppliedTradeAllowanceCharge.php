@@ -46,7 +46,7 @@ class AppliedTradeAllowanceCharge
         $currentNode = $document->createElement(self::XML_NODE);
 
         $currentNode->appendChild($this->chargeIndicator->toXML($document));
-        $currentNode->appendChild($document->createElement('ram:ActualAmount', (string) $this->actualAmount->getValueRounded()));
+        $currentNode->appendChild($document->createElement('ram:ActualAmount', $this->actualAmount->getFormattedValueRounded()));
 
         return $currentNode;
     }

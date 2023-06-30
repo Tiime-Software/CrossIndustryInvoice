@@ -32,7 +32,7 @@ class SpecifiedTradeSettlementLineMonetarySummation
     {
         $element = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:LineTotalAmount', (string) $this->lineTotalAmount->getValueRounded()));
+        $element->appendChild($document->createElement('ram:LineTotalAmount', $this->lineTotalAmount->getFormattedValueRounded()));
 
         return $element;
     }
