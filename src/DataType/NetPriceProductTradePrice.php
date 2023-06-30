@@ -52,7 +52,7 @@ class NetPriceProductTradePrice
     {
         $element = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:ChargeAmount', (string) $this->chargeAmount->getValueRounded()));
+        $element->appendChild($document->createElement('ram:ChargeAmount', $this->chargeAmount->getFormattedValueRounded()));
 
         if ($this->basisQuantity instanceof BasisQuantity) {
             $element->appendChild($this->basisQuantity->toXML($document));

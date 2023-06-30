@@ -39,7 +39,7 @@ class TaxTotalAmount
 
     public function toXML(\DOMDocument $document): \DOMElement
     {
-        $element = $document->createElement(self::XML_NODE, (string) $this->value->getValueRounded());
+        $element = $document->createElement(self::XML_NODE, $this->value->getFormattedValueRounded());
 
         $element->setAttribute('currencyID', $this->currencyIdentifier->value);
 

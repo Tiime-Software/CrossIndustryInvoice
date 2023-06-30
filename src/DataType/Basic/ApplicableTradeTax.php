@@ -66,7 +66,7 @@ class ApplicableTradeTax
         $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
 
         if ($this->rateApplicablePercent instanceof Percentage) {
-            $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', (string) $this->rateApplicablePercent->getValueRounded()));
+            $currentNode->appendChild($document->createElement('ram:RateApplicablePercent', $this->rateApplicablePercent->getFormattedValueRounded()));
         }
 
         return $currentNode;
