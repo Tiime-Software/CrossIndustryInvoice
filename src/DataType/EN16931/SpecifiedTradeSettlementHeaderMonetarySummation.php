@@ -138,7 +138,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         $grandTotalAmount    = $grandTotalAmountElements->item(0)->nodeValue;
         $duePayableAmount    = $duePayableAmountElements->item(0)->nodeValue;
 
-        $specifiedTradeSettlementHeaderMonetarySummation = new self((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount, (float) $lineTotalAmount);
+        $specifiedTradeSettlementHeaderMonetarySummation = new self((float) $taxBasisTotalAmount, (float) $lineTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount);
 
         if (1 === $chargeTotalAmountElements->count()) {
             $specifiedTradeSettlementHeaderMonetarySummation->setChargeTotalAmount((float) $chargeTotalAmountElements->item(0)->nodeValue);
@@ -152,13 +152,13 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
             $specifiedTradeSettlementHeaderMonetarySummation->setRoundingAmount((float) $roundingAmountElements->item(0)->nodeValue);
         }
 
-        if ($totalPrepaidAmountElements->count() > 1) {
+        if (1 === $totalPrepaidAmountElements->count()) {
             $specifiedTradeSettlementHeaderMonetarySummation->setTotalPrepaidAmount((float) $totalPrepaidAmountElements->item(0)->nodeValue);
         }
 
         /** Checks BT-5/BT-6 for BT-110/BT-111 */
         $invoiceCurrencyCodeElements = $xpath->query('./ram:InvoiceCurrencyCode', $currentElement);
-        $taxCurrencyCodeElements     = $xpath->query('./ram:TaxCurrencyCode');
+        $taxCurrencyCodeElements     = $xpath->query('./ram:TaxCurrencyCode', $currentElement);
 
         if (1 !== $invoiceCurrencyCodeElements->count()) {
             throw new \Exception('Malformed');
