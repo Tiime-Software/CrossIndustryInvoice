@@ -535,7 +535,7 @@ class CIIEN16931Test extends TestCase
                     ),
                 (new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
-                    (new SpecifiedTradeSettlementHeaderMonetarySummation(624.90, 624.90, 671.15, 470.15))
+                    (new SpecifiedTradeSettlementHeaderMonetarySummation(624.90, 671.15, 470.15, 624.90))
                         ->setTaxTotalAmount(new TaxTotalAmount(46.25, CurrencyCode::EURO))
                         ->setTotalPrepaidAmount(201.00),
                     [
