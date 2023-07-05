@@ -127,6 +127,18 @@ class CIIEN16931Test extends TestCase
                 new IssueDateTime(new \DateTime())
             ),
             new SupplyChainTradeTransaction(
+                new ApplicableHeaderTradeAgreement(
+                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
+                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
+                ),
+                new ApplicableHeaderTradeDelivery(),
+                new ApplicableHeaderTradeSettlement(
+                    CurrencyCode::EURO,
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40),
+                    [
+                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD),
+                    ],
+                ),
                 [
                     new IncludedSupplyChainTradeLineItem(
                         new AssociatedDocumentLineDocument(
@@ -145,18 +157,6 @@ class CIIEN16931Test extends TestCase
                         )
                     ),
                 ],
-                new ApplicableHeaderTradeAgreement(
-                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
-                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
-                ),
-                new ApplicableHeaderTradeDelivery(),
-                new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
-                    [
-                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD),
-                    ],
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40)
-                )
             )
         );
 
@@ -187,61 +187,6 @@ class CIIEN16931Test extends TestCase
                     (new DocumentIncludedNote('DocumentIncludedNote'))->setSubjectCode(InvoiceNoteCode::NOTE),
                 ]),
             new SupplyChainTradeTransaction(
-                [
-                    new IncludedSupplyChainTradeLineItem(
-                        new AssociatedDocumentLineDocument(
-                            new InvoiceLineIdentifier('InvoiceLineIdentifier')
-                        ),
-                        new SpecifiedTradeProduct('SpecifiedTradProduct'),
-                        (new SpecifiedLineTradeAgreement(
-                            (new NetPriceProductTradePrice(100))->setBasisQuantity((new BasisQuantity(1))->setUnitCode(UnitOfMeasurement::ACCOUNTING_UNIT_REC20))
-                        ))->setGrossPriceProductTradePrice(
-                            (new GrossPriceProductTradePrice(100))
-                                ->setBasisQuantity(
-                                    (new BasisQuantity(100))
-                                        ->setUnitCode(UnitOfMeasurement::ACCOUNTING_UNIT_REC20)
-                                )
-                                ->setAppliedTradeAllowanceCharge(new AppliedTradeAllowanceCharge(100))
-                        )
-                            ->setBuyerOrderReferencedDocument(
-                                (new LineBuyerOrderReferencedDocument())
-                                    ->setLineIdentifier(new PurchaseOrderLineReference('PurchaseOrderLineReference'))
-                            ),
-                        new SpecifiedLineTradeDelivery(
-                            new BilledQuantity(1, UnitOfMeasurement::ACCOUNTING_UNIT_REC20)
-                        ),
-                        (new SpecifiedLineTradeSettlement(
-                            (new ApplicableTradeTax(VatCategory::STANDARD))
-                                ->setRateApplicablePercent(20),
-                            new SpecifiedTradeSettlementLineMonetarySummation(100)
-                        ))
-                            ->setBillingSpecifiedPeriod(
-                                (new BillingSpecifiedPeriod())
-                                    ->setStartDateTime(new StartDateTime(new \DateTime()))
-                                    ->setEndDateTime(new EndDateTime(new \DateTime()))
-                            )
-                            ->setSpecifiedTradeAllowances([
-                                (new LineSpecifiedTradeAllowance(50))
-                                    ->setReason('ReasonAllowance1')
-                                    ->setReasonCode(AllowanceReasonCode::STANDARD)
-                                    ->setBasisAmount(50)
-                                    ->setCalculationPercent(100),
-                            ])
-                            ->setSpecifiedTradeCharges([
-                                (new LineSpecifiedTradeCharge(50))
-                                    ->setReason('ReasonCharge1')
-                                    ->setReasonCode(ChargeReasonCode::ACCEPTANCE)
-                                    ->setBasisAmount(50)
-                                    ->setCalculationPercent(100),
-                            ])
-                            ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount('ReceivableSpecifiedTradeAccountingAccount'))
-                            ->setAdditionalReferencedDocument(
-                                (new AdditionalReferencedDocumentInvoiceLineObjectIdentifier(
-                                    new ObjectIdentifier('AdditionalReferencedDocument', ObjectSchemeCode::ACCOUNT_NUMBER)
-                                ))->setReferenceTypeCode(ObjectSchemeCode::ACCOUNT_NUMBER)
-                            )
-                    ),
-                ],
                 new ApplicableHeaderTradeAgreement(
                     new SellerTradeParty(
                         'SellerTradePartyName',
@@ -298,6 +243,12 @@ class CIIEN16931Test extends TestCase
                     ),
                 (new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
+                    (new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40))
+                        ->setRoundingAmount(40)
+                        ->setChargeTotalAmount(20)
+                        ->setAllowanceTotalAmount(10)
+                        ->setTaxTotalAmountCurrency(new TaxTotalAmount(10, CurrencyCode::EURO))
+                        ->setTotalPrepaidAmount(40),
                     [
                         (new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD))
                             ->setTaxPointDate(new TaxPointDate(new \DateTime()))
@@ -306,12 +257,6 @@ class CIIEN16931Test extends TestCase
                             ->setDueDateTypeCode(DateCode2475::INVOICE_DATE)
                             ->setRateApplicablePercent(50),
                     ],
-                    (new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40))
-                        ->setRoundingAmount(40)
-                        ->setChargeTotalAmount(20)
-                        ->setAllowanceTotalAmount(10)
-                        ->setTaxTotalAmountCurrency(new TaxTotalAmount(10, CurrencyCode::EURO))
-                        ->setTotalPrepaidAmount(40)
                 ))
                     ->setCreditorReferenceIdentifier(new BankAssignedCreditorIdentifier('BankAssignedCreditorIdentifier'))
                     ->setPaymentReference('PaymentReference')
@@ -389,7 +334,62 @@ class CIIEN16931Test extends TestCase
                         )
                             ->setFormattedIssueDateTime(new FormattedIssueDateTime(new \DateTime()))
                     )
-                    ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount('ReceivableSpecifiedTradeAccountingAccount'))
+                    ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount('ReceivableSpecifiedTradeAccountingAccount')),
+                [
+                    new IncludedSupplyChainTradeLineItem(
+                        new AssociatedDocumentLineDocument(
+                            new InvoiceLineIdentifier('InvoiceLineIdentifier')
+                        ),
+                        new SpecifiedTradeProduct('SpecifiedTradProduct'),
+                        (new SpecifiedLineTradeAgreement(
+                            (new NetPriceProductTradePrice(100))->setBasisQuantity((new BasisQuantity(1))->setUnitCode(UnitOfMeasurement::ACCOUNTING_UNIT_REC20))
+                        ))->setGrossPriceProductTradePrice(
+                            (new GrossPriceProductTradePrice(100))
+                                ->setBasisQuantity(
+                                    (new BasisQuantity(100))
+                                        ->setUnitCode(UnitOfMeasurement::ACCOUNTING_UNIT_REC20)
+                                )
+                                ->setAppliedTradeAllowanceCharge(new AppliedTradeAllowanceCharge(100))
+                        )
+                            ->setBuyerOrderReferencedDocument(
+                                (new LineBuyerOrderReferencedDocument())
+                                    ->setLineIdentifier(new PurchaseOrderLineReference('PurchaseOrderLineReference'))
+                            ),
+                        new SpecifiedLineTradeDelivery(
+                            new BilledQuantity(1, UnitOfMeasurement::ACCOUNTING_UNIT_REC20)
+                        ),
+                        (new SpecifiedLineTradeSettlement(
+                            (new ApplicableTradeTax(VatCategory::STANDARD))
+                                ->setRateApplicablePercent(20),
+                            new SpecifiedTradeSettlementLineMonetarySummation(100)
+                        ))
+                            ->setBillingSpecifiedPeriod(
+                                (new BillingSpecifiedPeriod())
+                                    ->setStartDateTime(new StartDateTime(new \DateTime()))
+                                    ->setEndDateTime(new EndDateTime(new \DateTime()))
+                            )
+                            ->setSpecifiedTradeAllowances([
+                                (new LineSpecifiedTradeAllowance(50))
+                                    ->setReason('ReasonAllowance1')
+                                    ->setReasonCode(AllowanceReasonCode::STANDARD)
+                                    ->setBasisAmount(50)
+                                    ->setCalculationPercent(100),
+                            ])
+                            ->setSpecifiedTradeCharges([
+                                (new LineSpecifiedTradeCharge(50))
+                                    ->setReason('ReasonCharge1')
+                                    ->setReasonCode(ChargeReasonCode::ACCEPTANCE)
+                                    ->setBasisAmount(50)
+                                    ->setCalculationPercent(100),
+                            ])
+                            ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount('ReceivableSpecifiedTradeAccountingAccount'))
+                            ->setAdditionalReferencedDocument(
+                                (new AdditionalReferencedDocumentInvoiceLineObjectIdentifier(
+                                    new ObjectIdentifier('AdditionalReferencedDocument', ObjectSchemeCode::ACCOUNT_NUMBER)
+                                ))->setReferenceTypeCode(ObjectSchemeCode::ACCOUNT_NUMBER)
+                            )
+                    ),
+                ],
             )
         );
 
@@ -416,6 +416,18 @@ class CIIEN16931Test extends TestCase
                 new IssueDateTime(new \DateTime())
             ),
             new SupplyChainTradeTransaction(
+                new ApplicableHeaderTradeAgreement(
+                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
+                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
+                ),
+                new ApplicableHeaderTradeDelivery(),
+                new ApplicableHeaderTradeSettlement(
+                    CurrencyCode::EURO,
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40),
+                    [
+                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD),
+                    ],
+                ),
                 [
                     new IncludedSupplyChainTradeLineItem(
                         new AssociatedDocumentLineDocument(
@@ -434,18 +446,6 @@ class CIIEN16931Test extends TestCase
                         )
                     ),
                 ],
-                new ApplicableHeaderTradeAgreement(
-                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
-                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
-                ),
-                new ApplicableHeaderTradeDelivery(),
-                new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
-                    [
-                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD),
-                    ],
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40)
-                )
             )
         );
 
@@ -475,6 +475,96 @@ class CIIEN16931Test extends TestCase
                 new IssueDateTime(new \DateTime('2017-11-13'))
             ))->setIncludedNotes([new DocumentIncludedNote('Franco de port (commande > 300 € HT)')]),
             new SupplyChainTradeTransaction(
+                (new ApplicableHeaderTradeAgreement(
+                    (new SellerTradeParty(
+                        'Au bon moulin',
+                        (new PostalTradeAddress(CountryAlpha2Code::FRANCE))
+                            ->setLineOne('1242 chemin de l\'olive')
+                            ->setPostcodeCode('84340')
+                            ->setCityName('Malaucène')
+                    ))
+                        ->setSpecifiedLegalOrganization(
+                            (new SellerSpecifiedLegalOrganization())
+                                ->setIdentifier(new LegalRegistrationIdentifier('99999999800010', InternationalCodeDesignator::SYSTEM_INFORMATION_ET_REPERTOIRE_DES_ENTREPRISE_ET_DES_ETABLISSEMENTS_SIRENE))
+                        )
+                        ->setDefinedTradeContact(
+                            (new DefinedTradeContact())
+                                ->setPersonName('Tony Dubois')
+                                ->setTelephoneUniversalCommunication(new TelephoneUniversalCommunication('+33 4 72 07 08 56'))
+                                ->setEmailURIUniversalCommunication(new EmailURIUniversalCommunication('tony.dubois@aubonmoulin.fr'))
+                        )
+                        ->setSpecifiedTaxRegistrationVA(
+                            new SpecifiedTaxRegistrationVA(new VatIdentifier('FR11999999998'))
+                        )
+                    ,
+                    (new BuyerTradeParty(
+                        'Ma jolie boutique',
+                        (new PostalTradeAddress(CountryAlpha2Code::FRANCE))
+                            ->setPostcodeCode('69001')
+                            ->setLineOne('35 rue de la République')
+                            ->setCityName('Lyon')
+                    ))
+                        ->setDefinedTradeContact(
+                            (new DefinedTradeContact())
+                                ->setPersonName('Alexandre Payet')
+                                ->setTelephoneUniversalCommunication(new TelephoneUniversalCommunication('+33 4 72 07 08 67'))
+                                ->setEmailURIUniversalCommunication(new EmailURIUniversalCommunication('alexandre.payet@majolieboutique.net'))
+                        )
+                        ->setSpecifiedLegalOrganization(
+                            new BuyerSpecifiedLegalOrganization(
+                                new LegalRegistrationIdentifier('78787878400035', InternationalCodeDesignator::SYSTEM_INFORMATION_ET_REPERTOIRE_DES_ENTREPRISE_ET_DES_ETABLISSEMENTS_SIRENE)
+                            )
+                        )
+                        ->setSpecifiedTaxRegistrationVA(
+                            new SpecifiedTaxRegistrationVA(
+                                new VatIdentifier('FR19787878784')
+                            )
+                        )
+                ))
+                    ->setBuyerOrderReferencedDocument(new BuyerOrderReferencedDocument(new PurchaseOrderReference('PO445')))
+                    ->setContractReferencedDocument(new ContractReferencedDocument(new ContractReference('MSPE2017')))
+                ,
+                (new ApplicableHeaderTradeDelivery())
+                    ->setShipToTradeParty(
+                        (new ShipToTradeParty())->setPostalTradeAddress(
+                            (new PostalTradeAddress(CountryAlpha2Code::FRANCE))
+                                ->setLineOne('35 rue de la République')
+                                ->setCityName('Lyon')
+                                ->setPostcodeCode('69001')
+                        )
+                    ),
+                (new ApplicableHeaderTradeSettlement(
+                    CurrencyCode::EURO,
+                    (new SpecifiedTradeSettlementHeaderMonetarySummation(624.90, 624.90, 671.15, 470.15))
+                        ->setTaxTotalAmount(new TaxTotalAmount(46.25, CurrencyCode::EURO))
+                        ->setTotalPrepaidAmount(201.00),
+                    [
+                        (new HeaderApplicableTradeTax(16.38, 81.90, VatCategory::STANDARD))
+                            ->setRateApplicablePercent(20)
+                            ->setDueDateTypeCode(DateCode2475::INVOICE_DATE)
+                        ,
+                        (new HeaderApplicableTradeTax(29.87, 543, VatCategory::STANDARD))
+                            ->setRateApplicablePercent(5.5)
+                            ->setDueDateTypeCode(DateCode2475::INVOICE_DATE)
+                    ],
+                ))
+                    ->setPaymentReference('FA-2017-0010')
+                    ->setSpecifiedTradeSettlementPaymentMeans(
+                        (new SpecifiedTradeSettlementPaymentMeans(PaymentMeansCode::CREDIT_TRANSFER))
+                            ->setInformation('Virement sur compte Banque Fiducial')
+                            ->setPayeePartyCreditorFinancialAccount(
+                                (new PayeePartyCreditorFinancialAccount())
+                                    ->setIbanIdentifier(new PaymentAccountIdentifier('FR2012421242124212421242124'))
+                            )
+                            ->setPayeeSpecifiedCreditorFinancialInstitution(
+                                new PayeeSpecifiedCreditorFinancialInstitution(new PaymentServiceProviderIdentifier('FIDCFR21XXX'))
+                            )
+                    )
+                    ->setSpecifiedTradePaymentTerms(
+                        (new SpecifiedTradePaymentTerms())
+                            ->setDescription('30% d\'acompte, solde à 30 j')
+                            ->setDueDateDateTime(new DueDateDateTime(new \DateTimeImmutable('2017-12-13')))
+                    ),
                 [
                     new IncludedSupplyChainTradeLineItem(
                         new AssociatedDocumentLineDocument(
@@ -547,96 +637,6 @@ class CIIEN16931Test extends TestCase
                         )
                     ),
                 ],
-                (new ApplicableHeaderTradeAgreement(
-                    (new SellerTradeParty(
-                        'Au bon moulin',
-                        (new PostalTradeAddress(CountryAlpha2Code::FRANCE))
-                            ->setLineOne('1242 chemin de l\'olive')
-                            ->setPostcodeCode('84340')
-                            ->setCityName('Malaucène')
-                    ))
-                        ->setSpecifiedLegalOrganization(
-                            (new SellerSpecifiedLegalOrganization())
-                                ->setIdentifier(new LegalRegistrationIdentifier('99999999800010', InternationalCodeDesignator::SYSTEM_INFORMATION_ET_REPERTOIRE_DES_ENTREPRISE_ET_DES_ETABLISSEMENTS_SIRENE))
-                        )
-                        ->setDefinedTradeContact(
-                            (new DefinedTradeContact())
-                                ->setPersonName('Tony Dubois')
-                                ->setTelephoneUniversalCommunication(new TelephoneUniversalCommunication('+33 4 72 07 08 56'))
-                                ->setEmailURIUniversalCommunication(new EmailURIUniversalCommunication('tony.dubois@aubonmoulin.fr'))
-                        )
-                        ->setSpecifiedTaxRegistrationVA(
-                            new SpecifiedTaxRegistrationVA(new VatIdentifier('FR11999999998'))
-                        )
-                    ,
-                    (new BuyerTradeParty(
-                        'Ma jolie boutique',
-                        (new PostalTradeAddress(CountryAlpha2Code::FRANCE))
-                            ->setPostcodeCode('69001')
-                            ->setLineOne('35 rue de la République')
-                            ->setCityName('Lyon')
-                    ))
-                        ->setDefinedTradeContact(
-                            (new DefinedTradeContact())
-                                ->setPersonName('Alexandre Payet')
-                                ->setTelephoneUniversalCommunication(new TelephoneUniversalCommunication('+33 4 72 07 08 67'))
-                                ->setEmailURIUniversalCommunication(new EmailURIUniversalCommunication('alexandre.payet@majolieboutique.net'))
-                        )
-                        ->setSpecifiedLegalOrganization(
-                            new BuyerSpecifiedLegalOrganization(
-                                new LegalRegistrationIdentifier('78787878400035', InternationalCodeDesignator::SYSTEM_INFORMATION_ET_REPERTOIRE_DES_ENTREPRISE_ET_DES_ETABLISSEMENTS_SIRENE)
-                            )
-                        )
-                        ->setSpecifiedTaxRegistrationVA(
-                            new SpecifiedTaxRegistrationVA(
-                                new VatIdentifier('FR19787878784')
-                            )
-                        )
-                ))
-                    ->setBuyerOrderReferencedDocument(new BuyerOrderReferencedDocument(new PurchaseOrderReference('PO445')))
-                    ->setContractReferencedDocument(new ContractReferencedDocument(new ContractReference('MSPE2017')))
-                ,
-                (new ApplicableHeaderTradeDelivery())
-                    ->setShipToTradeParty(
-                        (new ShipToTradeParty())->setPostalTradeAddress(
-                            (new PostalTradeAddress(CountryAlpha2Code::FRANCE))
-                                ->setLineOne('35 rue de la République')
-                                ->setCityName('Lyon')
-                                ->setPostcodeCode('69001')
-                        )
-                    ),
-                (new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
-                    [
-                        (new HeaderApplicableTradeTax(16.38, 81.90, VatCategory::STANDARD))
-                            ->setRateApplicablePercent(20)
-                            ->setDueDateTypeCode(DateCode2475::INVOICE_DATE)
-                        ,
-                        (new HeaderApplicableTradeTax(29.87, 543, VatCategory::STANDARD))
-                            ->setRateApplicablePercent(5.5)
-                            ->setDueDateTypeCode(DateCode2475::INVOICE_DATE)
-                    ],
-                    (new SpecifiedTradeSettlementHeaderMonetarySummation(624.90, 624.90, 671.15, 470.15))
-                        ->setTaxTotalAmount(new TaxTotalAmount(46.25, CurrencyCode::EURO))
-                        ->setTotalPrepaidAmount(201.00)
-                ))
-                    ->setPaymentReference('FA-2017-0010')
-                    ->setSpecifiedTradeSettlementPaymentMeans(
-                        (new SpecifiedTradeSettlementPaymentMeans(PaymentMeansCode::CREDIT_TRANSFER))
-                            ->setInformation('Virement sur compte Banque Fiducial')
-                            ->setPayeePartyCreditorFinancialAccount(
-                                (new PayeePartyCreditorFinancialAccount())
-                                    ->setIbanIdentifier(new PaymentAccountIdentifier('FR2012421242124212421242124'))
-                            )
-                            ->setPayeeSpecifiedCreditorFinancialInstitution(
-                                new PayeeSpecifiedCreditorFinancialInstitution(new PaymentServiceProviderIdentifier('FIDCFR21XXX'))
-                            )
-                    )
-                    ->setSpecifiedTradePaymentTerms(
-                        (new SpecifiedTradePaymentTerms())
-                            ->setDescription('30% d\'acompte, solde à 30 j')
-                            ->setDueDateDateTime(new DueDateDateTime(new \DateTimeImmutable('2017-12-13')))
-                    )
             )
         );
 

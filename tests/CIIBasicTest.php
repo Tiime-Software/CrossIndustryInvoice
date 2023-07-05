@@ -75,6 +75,18 @@ class CIIBasicTest extends TestCase
                 new IssueDateTime(new \DateTime())
             ),
             new SupplyChainTradeTransaction(
+                new ApplicableHeaderTradeAgreement(
+                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
+                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
+                ),
+                new ApplicableHeaderTradeDelivery(),
+                new ApplicableHeaderTradeSettlement(
+                    CurrencyCode::EURO,
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
+                    [
+                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
+                    ],
+                ),
                 [
                     new IncludedSupplyChainTradeLineItem(
                         new AssociatedDocumentLineDocument(new InvoiceLineIdentifier('FA-0001')),
@@ -87,18 +99,6 @@ class CIIBasicTest extends TestCase
                         )
                     ),
                 ],
-                new ApplicableHeaderTradeAgreement(
-                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
-                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
-                ),
-                new ApplicableHeaderTradeDelivery(),
-                new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
-                    [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
-                    ],
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 0, 50, 50)
-                )
             )
         );
 
@@ -127,6 +127,16 @@ class CIIBasicTest extends TestCase
                 new IssueDateTime(new \DateTime())
             ),
             new SupplyChainTradeTransaction(
+                new ApplicableHeaderTradeAgreement(
+                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
+                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
+                ),
+                new ApplicableHeaderTradeDelivery(),
+                new ApplicableHeaderTradeSettlement(
+                    CurrencyCode::EURO,
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
+                    [],
+                ),
                 [
                     new IncludedSupplyChainTradeLineItem(
                         new AssociatedDocumentLineDocument(new InvoiceLineIdentifier('FA-0001')),
@@ -139,16 +149,6 @@ class CIIBasicTest extends TestCase
                         )
                     ),
                 ],
-                new ApplicableHeaderTradeAgreement(
-                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
-                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
-                ),
-                new ApplicableHeaderTradeDelivery(),
-                new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
-                    [],
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 0, 50, 50)
-                )
             )
         );
     }
@@ -174,18 +174,6 @@ class CIIBasicTest extends TestCase
                 ]
             ),
             new SupplyChainTradeTransaction(
-                [
-                    new IncludedSupplyChainTradeLineItem(
-                        new AssociatedDocumentLineDocument(new InvoiceLineIdentifier('FA-0001')),
-                        new SpecifiedTradeProduct('Product 1'),
-                        new SpecifiedLineTradeAgreement(new NetPriceProductTradePrice(100)),
-                        new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasurement::BALL_REC21)),
-                        new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD),
-                            new SpecifiedTradeSettlementLineMonetarySummation(100)
-                        )
-                    ),
-                ],
                 new ApplicableHeaderTradeAgreement(
                     (new SellerTradeParty(
                         'SellerTradePartyName',
@@ -238,11 +226,23 @@ class CIIBasicTest extends TestCase
                     ),
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
                     [
                         new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
                     ],
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 0, 50, 50)
-                )
+                ),
+                [
+                    new IncludedSupplyChainTradeLineItem(
+                        new AssociatedDocumentLineDocument(new InvoiceLineIdentifier('FA-0001')),
+                        new SpecifiedTradeProduct('Product 1'),
+                        new SpecifiedLineTradeAgreement(new NetPriceProductTradePrice(100)),
+                        new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasurement::BALL_REC21)),
+                        new SpecifiedLineTradeSettlement(
+                            new ApplicableTradeTax(VatCategory::STANDARD),
+                            new SpecifiedTradeSettlementLineMonetarySummation(100)
+                        )
+                    ),
+                ],
             )
         );
 
@@ -269,6 +269,18 @@ class CIIBasicTest extends TestCase
                 new IssueDateTime(new \DateTime())
             ),
             new SupplyChainTradeTransaction(
+                new ApplicableHeaderTradeAgreement(
+                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
+                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
+                ),
+                new ApplicableHeaderTradeDelivery(),
+                new ApplicableHeaderTradeSettlement(
+                    CurrencyCode::EURO,
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
+                    [
+                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
+                    ],
+                ),
                 [
                     new IncludedSupplyChainTradeLineItem(
                         new AssociatedDocumentLineDocument(new InvoiceLineIdentifier('FA-0001')),
@@ -281,18 +293,6 @@ class CIIBasicTest extends TestCase
                         )
                     ),
                 ],
-                new ApplicableHeaderTradeAgreement(
-                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
-                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
-                ),
-                new ApplicableHeaderTradeDelivery(),
-                new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
-                    [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
-                    ],
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 0, 50, 50)
-                )
             )
         );
 

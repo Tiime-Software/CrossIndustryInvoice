@@ -40,9 +40,9 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
 
     public function __construct(
         float $taxBasisTotalAmount,
-        float $lineTotalAmount,
         float $grandTotalAmount,
         float $duePayableAmount,
+        float $lineTotalAmount,
     ) {
         parent::__construct($taxBasisTotalAmount, $grandTotalAmount, $duePayableAmount);
 
@@ -193,7 +193,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         $grandTotalAmount    = $grandTotalAmountElements->item(0)->nodeValue;
         $duePayableAmount    = $duePayableAmountElements->item(0)->nodeValue;
 
-        $specifiedTradeSettlementHeaderMonetarySummation = new self((float) $taxBasisTotalAmount, (float) $lineTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount);
+        $specifiedTradeSettlementHeaderMonetarySummation = new self((float) $taxBasisTotalAmount, (float) $grandTotalAmount, (float) $duePayableAmount, (float) $lineTotalAmount);
 
         if (1 === $chargeTotalAmountElements->count()) {
             $specifiedTradeSettlementHeaderMonetarySummation->setChargeTotalAmount((float) $chargeTotalAmountElements->item(0)->nodeValue);
