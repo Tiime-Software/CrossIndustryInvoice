@@ -87,8 +87,8 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
 
     public function __construct(
         CurrencyCode $invoiceCurrencyCode,
+        SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation,
         array $applicableTradeTaxes,
-        SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation
     ) {
         $tmpApplicableTradeTaxes = [];
 
@@ -395,7 +395,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         $invoiceReferencedDocument                       = InvoiceReferencedDocument::fromXML($xpath, $applicableHeaderTradeSettlementElement);
         $receivableSpecifiedTradeAccountingAccount       = ReceivableSpecifiedTradeAccountingAccount::fromXML($xpath, $applicableHeaderTradeSettlementElement);
 
-        $applicableHeaderTradeSettlement = new self($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
+        $applicableHeaderTradeSettlement = new self($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation, $applicableTradeTaxes);
 
         if (1 === $creditorReferenceIdentifierElements->count()) {
             $applicableHeaderTradeSettlement->setCreditorReferenceIdentifier($creditorReferenceIdentifierElements->item(0)->nodeValue);

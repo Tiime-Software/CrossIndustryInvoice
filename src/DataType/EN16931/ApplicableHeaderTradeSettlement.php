@@ -27,8 +27,8 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
 {
     public function __construct(
         CurrencyCode $invoiceCurrencyCode,
+        SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation,
         array $applicableTradeTaxes,
-        SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation
     ) {
         $tmpApplicableTradeTaxes = [];
 
@@ -44,7 +44,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
             throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one HeaderApplicableTradeTax.');
         }
 
-        parent::__construct($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
+        parent::__construct($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation, $applicableTradeTaxes);
     }
 
     public function setSpecifiedTradeSettlementPaymentMeans(SpecifiedTradeSettlementPaymentMeans|\Tiime\CrossIndustryInvoice\DataType\BasicWL\SpecifiedTradeSettlementPaymentMeans|null $specifiedTradeSettlementPaymentMeans): static
@@ -166,7 +166,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         $invoiceReferencedDocument                       = InvoiceReferencedDocument::fromXML($xpath, $applicableHeaderTradeSettlementElement);
         $receivableSpecifiedTradeAccountingAccount       = ReceivableSpecifiedTradeAccountingAccount::fromXML($xpath, $applicableHeaderTradeSettlementElement);
 
-        $applicableHeaderTradeSettlement = new self($invoiceCurrencyCode, $applicableTradeTaxes, $specifiedTradeSettlementHeaderMonetarySummation);
+        $applicableHeaderTradeSettlement = new self($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation, $applicableTradeTaxes);
 
         if (1 === $creditorReferenceIdentifierElements->count()) {
             $applicableHeaderTradeSettlement->setCreditorReferenceIdentifier(new BankAssignedCreditorIdentifier($creditorReferenceIdentifierElements->item(0)->nodeValue));
@@ -246,8 +246,8 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
 
         $applicableHeaderTradeSettlement = new self(
             $invoice->getCurrencyCode(),
+            SpecifiedTradeSettlementHeaderMonetarySummation::fromEN16931($invoice),
             $applicableTradeTaxes,
-            SpecifiedTradeSettlementHeaderMonetarySummation::fromEN16931($invoice)
         );
 
         $applicableHeaderTradeSettlement

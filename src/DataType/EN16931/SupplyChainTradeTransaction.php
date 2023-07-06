@@ -12,10 +12,10 @@ use Tiime\EN16931\Invoice;
 class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\Basic\SupplyChainTradeTransaction
 {
     public function __construct(
-        array $includedSupplyChainTradeLineItems,
         ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement,
         ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery,
-        ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement
+        ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement,
+        array $includedSupplyChainTradeLineItems,
     ) {
         if (0 === \count($includedSupplyChainTradeLineItems)) {
             throw new \Exception('Malformed');
@@ -35,7 +35,7 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
             throw new \Exception('SupplyChainTradeTransaction should contain at least one IncludedSupplyChainTradeLineItem.');
         }
 
-        parent::__construct($includedSupplyChainTradeLineItems, $applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
+        parent::__construct($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement, $includedSupplyChainTradeLineItems);
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
@@ -69,7 +69,7 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
         $applicableHeaderTradeDelivery     = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
         $applicableHeaderTradeSettlement   = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
 
-        return new self($includedSupplyChainTradeLineItems, $applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
+        return new self($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement, $includedSupplyChainTradeLineItems);
     }
 
     public static function fromEN16931(Invoice $invoice): self
@@ -81,10 +81,10 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
         }
 
         return new self(
-            $items,
             ApplicableHeaderTradeAgreement::fromEN16931($invoice),
             ApplicableHeaderTradeDelivery::fromEN16931($invoice),
             ApplicableHeaderTradeSettlement::fromEN16931($invoice),
+            $items,
         );
     }
 }

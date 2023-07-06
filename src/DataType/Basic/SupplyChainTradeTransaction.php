@@ -19,10 +19,10 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
      * @param non-empty-array<int, IncludedSupplyChainTradeLineItem> $includedSupplyChainTradeLineItems
      */
     public function __construct(
-        array $includedSupplyChainTradeLineItems,
         ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement,
         ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery,
-        ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement
+        ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement,
+        array $includedSupplyChainTradeLineItems,
     ) {
         if (0 === \count($includedSupplyChainTradeLineItems)) {
             throw new \Exception('Malformed');
@@ -82,6 +82,6 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
         $applicableHeaderTradeDelivery     = ApplicableHeaderTradeDelivery::fromXML($xpath, $supplyChainTradeTransactionElement);
         $applicableHeaderTradeSettlement   = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
 
-        return new self($includedSupplyChainTradeLineItems, $applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
+        return new self($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement, $includedSupplyChainTradeLineItems);
     }
 }

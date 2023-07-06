@@ -70,10 +70,10 @@ class CIIBasicWLTest extends TestCase
                 new ApplicableHeaderTradeDelivery(),
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
                     [
                         new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
                     ],
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 0, 50, 50)
                 )
             )
         );
@@ -110,8 +110,8 @@ class CIIBasicWLTest extends TestCase
                 new ApplicableHeaderTradeDelivery(),
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
                     [],
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 0, 50, 50)
                 )
             )
         );
@@ -190,10 +190,10 @@ class CIIBasicWLTest extends TestCase
                     ),
                 new ApplicableHeaderTradeSettlement(
                     CurrencyCode::EURO,
+                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
                     [
                         new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
                     ],
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 0, 50, 50)
                 )
             )
         );
