@@ -2,11 +2,12 @@
 
 namespace Tiime\CrossIndustryInvoice\Basic;
 
+use Tiime\CrossIndustryInvoice\CrossIndustryInvoiceInterface;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 
-class CrossIndustryInvoice extends \Tiime\CrossIndustryInvoice\BasicWL\CrossIndustryInvoice
+class CrossIndustryInvoice extends \Tiime\CrossIndustryInvoice\BasicWL\CrossIndustryInvoice implements CrossIndustryInvoiceInterface
 {
     public function __construct(
         ExchangedDocumentContext $exchangedDocumentContext,

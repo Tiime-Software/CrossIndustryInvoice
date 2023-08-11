@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\CrossIndustryInvoice\CrossIndustryInvoiceInterface;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
@@ -12,7 +13,7 @@ use Twig\Environment;
 use Twig\Extra\Intl\IntlExtension;
 use Twig\Loader\FilesystemLoader;
 
-class CrossIndustryInvoice
+class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
 {
     protected const XML_NODE = 'rsm:CrossIndustryInvoice';
 
