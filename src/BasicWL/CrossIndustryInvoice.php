@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\BasicWL;
 
+use Tiime\CrossIndustryInvoice\CrossIndustryInvoiceInterface;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 
-class CrossIndustryInvoice
+class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
 {
     protected const XML_NODE = 'rsm:CrossIndustryInvoice';
 
