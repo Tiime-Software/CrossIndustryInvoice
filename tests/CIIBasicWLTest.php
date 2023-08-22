@@ -72,7 +72,7 @@ class CIIBasicWLTest extends TestCase
                     CurrencyCode::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
                     [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
+                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD_RATE),
                     ],
                 )
             )
@@ -192,7 +192,7 @@ class CIIBasicWLTest extends TestCase
                     CurrencyCode::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
                     [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
+                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD_RATE),
                     ],
                 )
             )

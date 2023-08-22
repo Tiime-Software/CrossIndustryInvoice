@@ -84,7 +84,7 @@ class CIIBasicTest extends TestCase
                     CurrencyCode::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
                     [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
+                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD_RATE),
                     ],
                 ),
                 [
@@ -94,7 +94,7 @@ class CIIBasicTest extends TestCase
                         new SpecifiedLineTradeAgreement(new NetPriceProductTradePrice(100)),
                         new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasurement::BALL_REC21)),
                         new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD),
+                            new ApplicableTradeTax(VatCategory::STANDARD_RATE),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
                     ),
@@ -144,7 +144,7 @@ class CIIBasicTest extends TestCase
                         new SpecifiedLineTradeAgreement(new NetPriceProductTradePrice(100)),
                         new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasurement::BALL_REC21)),
                         new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD),
+                            new ApplicableTradeTax(VatCategory::STANDARD_RATE),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
                     ),
@@ -228,7 +228,7 @@ class CIIBasicTest extends TestCase
                     CurrencyCode::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
                     [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
+                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD_RATE),
                     ],
                 ),
                 [
@@ -238,7 +238,7 @@ class CIIBasicTest extends TestCase
                         new SpecifiedLineTradeAgreement(new NetPriceProductTradePrice(100)),
                         new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasurement::BALL_REC21)),
                         new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD),
+                            new ApplicableTradeTax(VatCategory::STANDARD_RATE),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
                     ),
@@ -278,7 +278,7 @@ class CIIBasicTest extends TestCase
                     CurrencyCode::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
                     [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD),
+                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD_RATE),
                     ],
                 ),
                 [
@@ -288,7 +288,7 @@ class CIIBasicTest extends TestCase
                         new SpecifiedLineTradeAgreement(new NetPriceProductTradePrice(100)),
                         new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasurement::BALL_REC21)),
                         new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD),
+                            new ApplicableTradeTax(VatCategory::STANDARD_RATE),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
                     ),

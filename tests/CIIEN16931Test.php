@@ -136,7 +136,7 @@ class CIIEN16931Test extends TestCase
                     CurrencyCode::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40),
                     [
-                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD),
+                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD_RATE),
                     ],
                 ),
                 [
@@ -152,7 +152,7 @@ class CIIEN16931Test extends TestCase
                             new BilledQuantity(1, UnitOfMeasurement::ACCOUNTING_UNIT_REC20)
                         ),
                         new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD),
+                            new ApplicableTradeTax(VatCategory::STANDARD_RATE),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
                     ),
@@ -250,7 +250,7 @@ class CIIEN16931Test extends TestCase
                         ->setTaxTotalAmountCurrency(new TaxTotalAmount(10, CurrencyCode::EURO))
                         ->setTotalPrepaidAmount(40),
                     [
-                        (new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD))
+                        (new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD_RATE))
                             ->setTaxPointDate(new TaxPointDate(new \DateTime()))
                             ->setExemptionReason('ExemptionReason')
                             ->setExemptionReasonCode(VatExoneration::NOT_SUBJECT_TO_VAT)
@@ -303,7 +303,7 @@ class CIIEN16931Test extends TestCase
                     ->setSpecifiedTradeAllowances([
                         (new SpecifiedTradeAllowance(
                             100,
-                            (new CategoryTradeTax(VatCategory::STANDARD))
+                            (new CategoryTradeTax(VatCategory::STANDARD_RATE))
                                 ->setRateApplicablePercent(new Percentage(50))
                         ))
                             ->setBasisAmount(100)
@@ -314,7 +314,7 @@ class CIIEN16931Test extends TestCase
                     ->setSpecifiedTradeCharges([
                         (new SpecifiedTradeCharge(
                             50,
-                            (new CategoryTradeTax(VatCategory::STANDARD))
+                            (new CategoryTradeTax(VatCategory::STANDARD_RATE))
                                 ->setRateApplicablePercent(new Percentage(20))
                         ))
                             ->setBasisAmount(50)
@@ -359,7 +359,7 @@ class CIIEN16931Test extends TestCase
                             new BilledQuantity(1, UnitOfMeasurement::ACCOUNTING_UNIT_REC20)
                         ),
                         (new SpecifiedLineTradeSettlement(
-                            (new ApplicableTradeTax(VatCategory::STANDARD))
+                            (new ApplicableTradeTax(VatCategory::STANDARD_RATE))
                                 ->setRateApplicablePercent(20),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         ))
@@ -425,7 +425,7 @@ class CIIEN16931Test extends TestCase
                     CurrencyCode::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40),
                     [
-                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD),
+                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD_RATE),
                     ],
                 ),
                 [
@@ -441,7 +441,7 @@ class CIIEN16931Test extends TestCase
                             new BilledQuantity(1, UnitOfMeasurement::ACCOUNTING_UNIT_REC20)
                         ),
                         new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD),
+                            new ApplicableTradeTax(VatCategory::STANDARD_RATE),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
                     ),
@@ -539,11 +539,11 @@ class CIIEN16931Test extends TestCase
                         ->setTaxTotalAmount(new TaxTotalAmount(46.25, CurrencyCode::EURO))
                         ->setTotalPrepaidAmount(201.00),
                     [
-                        (new HeaderApplicableTradeTax(16.38, 81.90, VatCategory::STANDARD))
+                        (new HeaderApplicableTradeTax(16.38, 81.90, VatCategory::STANDARD_RATE))
                             ->setRateApplicablePercent(20)
                             ->setDueDateTypeCode(DateCode2475::INVOICE_DATE)
                         ,
-                        (new HeaderApplicableTradeTax(29.87, 543, VatCategory::STANDARD))
+                        (new HeaderApplicableTradeTax(29.87, 543, VatCategory::STANDARD_RATE))
                             ->setRateApplicablePercent(5.5)
                             ->setDueDateTypeCode(DateCode2475::INVOICE_DATE)
                     ],
@@ -588,7 +588,7 @@ class CIIEN16931Test extends TestCase
                             new BilledQuantity(20, UnitOfMeasurement::ONE_REC20)
                         ),
                         new SpecifiedLineTradeSettlement(
-                            (new ApplicableTradeTax(VatCategory::STANDARD))
+                            (new ApplicableTradeTax(VatCategory::STANDARD_RATE))
                                 ->setRateApplicablePercent(20),
                             new SpecifiedTradeSettlementLineMonetarySummation(81.90)
                         )
@@ -610,7 +610,7 @@ class CIIEN16931Test extends TestCase
                             new BilledQuantity(15, UnitOfMeasurement::ONE_REC20)
                         ),
                         new SpecifiedLineTradeSettlement(
-                            (new ApplicableTradeTax(VatCategory::STANDARD))
+                            (new ApplicableTradeTax(VatCategory::STANDARD_RATE))
                                 ->setRateApplicablePercent(5.50),
                             new SpecifiedTradeSettlementLineMonetarySummation(48)
                         )
@@ -631,7 +631,7 @@ class CIIEN16931Test extends TestCase
                             new BilledQuantity(25, UnitOfMeasurement::LITRE_REC20)
                         ),
                         new SpecifiedLineTradeSettlement(
-                            (new ApplicableTradeTax(VatCategory::STANDARD))
+                            (new ApplicableTradeTax(VatCategory::STANDARD_RATE))
                                 ->setRateApplicablePercent(5.50),
                             new SpecifiedTradeSettlementLineMonetarySummation(495)
                         )
