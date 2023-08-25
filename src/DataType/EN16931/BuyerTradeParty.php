@@ -169,7 +169,7 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Buyer
         $identifier       = null;
         $globalIdentifier = null;
 
-        if ($buyer->getIdentifier()->scheme instanceof InternationalCodeDesignator) {
+        if ($buyer->getIdentifier()?->scheme instanceof InternationalCodeDesignator) {
             $globalIdentifier = new BuyerGlobalIdentifier($buyer->getIdentifier()->value, $buyer->getIdentifier()->scheme);
         } else {
             $identifier = $buyer->getIdentifier();
