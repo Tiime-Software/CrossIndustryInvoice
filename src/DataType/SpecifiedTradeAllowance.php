@@ -230,7 +230,7 @@ class SpecifiedTradeAllowance
     {
         $specifiedTradeAllowance = new self(
             $allowance->getAmount(),
-            (new CategoryTradeTax($allowance->getVatCategoryCode()))->setRateApplicablePercent($allowance->getVatRate())
+            (new CategoryTradeTax($allowance->getVatCategoryCode()))->setRateApplicablePercent(new Percentage($allowance->getVatRate()))
         );
 
         $specifiedTradeAllowance->setCalculationPercent($allowance->getPercentage())

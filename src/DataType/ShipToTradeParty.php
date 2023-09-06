@@ -175,7 +175,7 @@ class ShipToTradeParty
         $identifier       = null;
         $globalIdentifier = null;
 
-        if ($deliveryInformation->getLocationIdentifier()->scheme instanceof InternationalCodeDesignator) {
+        if ($deliveryInformation->getLocationIdentifier()?->scheme instanceof InternationalCodeDesignator) {
             $globalIdentifier = new LocationGlobalIdentifier(
                 $deliveryInformation->getLocationIdentifier()->value,
                 $deliveryInformation->getLocationIdentifier()->scheme
