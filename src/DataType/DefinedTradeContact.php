@@ -165,10 +165,18 @@ class DefinedTradeContact
 
     public static function fromEN16931(BuyerContact|SellerContact $contact): self
     {
-        return (new self())
+        $definedTradeContact = (new self())
             ->setPersonName($contact->getPoint())
-            ->setDepartmentName($contact->getPoint())
-            ->setTelephoneUniversalCommunication(new TelephoneUniversalCommunication($contact->getPhoneNumber()))
-            ->setEmailURIUniversalCommunication(new EmailURIUniversalCommunication($contact->getEmail()));
+            ->setDepartmentName($contact->getPoint());
+
+        if (is_string($contact->getPhoneNumber())) {
+            $definedTradeContact->setTelephoneUniversalCommunication(new TelephoneUniversalCommunication($contact->getPhoneNumber()));
+        }
+
+        if (is_string($contact->getEmail())) {
+            $definedTradeContact->setEmailURIUniversalCommunication(new EmailURIUniversalCommunication($contact->getEmail()));
+        }
+
+        return $definedTradeContact;
     }
 }
