@@ -18,6 +18,7 @@ class DesignatedProductClassification
 
     public function __construct()
     {
+        $this->classCode = null;
     }
 
     public function getClassCode(): ?ClassCode
