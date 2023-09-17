@@ -20,6 +20,7 @@ class OriginTradeCountry
 
     public function __construct()
     {
+        $this->identifier = null;
     }
 
     public function getIdentifier(): ?CountryAlpha2Code

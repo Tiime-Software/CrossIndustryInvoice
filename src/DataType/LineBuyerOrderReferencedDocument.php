@@ -21,6 +21,7 @@ class LineBuyerOrderReferencedDocument
 
     public function __construct()
     {
+        $this->lineIdentifier = null;
     }
 
     public function getLineIdentifier(): ?PurchaseOrderLineReference
