@@ -152,7 +152,7 @@ class ShipToTradeParty
         $shipToTradeParty = new self();
 
         if (1 === $identifierElements->count()) {
-            $shipToTradeParty->setName($identifierElements->item(0)->nodeValue);
+            $shipToTradeParty->setIdentifier(new LocationIdentifier($identifierElements->item(0)->nodeValue));
         }
 
         if ($globalIdentifier instanceof LocationGlobalIdentifier) {
