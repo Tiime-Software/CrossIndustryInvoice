@@ -42,9 +42,9 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         $this->taxTotalAmount      = null;
     }
 
-    public function getTaxBasisTotalAmount(): float
+    public function getTaxBasisTotalAmount(): Amount
     {
-        return $this->taxBasisTotalAmount->getValueRounded();
+        return $this->taxBasisTotalAmount;
     }
 
     public function getTaxTotalAmount(): ?TaxTotalAmount
@@ -59,14 +59,14 @@ class SpecifiedTradeSettlementHeaderMonetarySummation
         return $this;
     }
 
-    public function getGrandTotalAmount(): float
+    public function getGrandTotalAmount(): Amount
     {
-        return $this->grandTotalAmount->getValueRounded();
+        return $this->grandTotalAmount;
     }
 
-    public function getDuePayableAmount(): float
+    public function getDuePayableAmount(): Amount
     {
-        return $this->duePayableAmount->getValueRounded();
+        return $this->duePayableAmount;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement

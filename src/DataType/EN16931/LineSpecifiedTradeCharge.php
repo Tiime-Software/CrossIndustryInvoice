@@ -32,9 +32,9 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
         $this->basisAmount        = null;
     }
 
-    public function getCalculationPercent(): ?float
+    public function getCalculationPercent(): ?Percentage
     {
-        return $this->calculationPercent->getValueRounded();
+        return $this->calculationPercent;
     }
 
     public function setCalculationPercent(?float $calculationPercent): static
@@ -44,9 +44,9 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
         return $this;
     }
 
-    public function getBasisAmount(): ?float
+    public function getBasisAmount(): ?Amount
     {
-        return $this->basisAmount?->getValueRounded();
+        return $this->basisAmount;
     }
 
     public function setBasisAmount(?float $basisAmount): static
@@ -156,9 +156,9 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
 
     public static function fromEN16931(InvoiceLineCharge $charge): self
     {
-        return (new self($charge->getAmount()))
-            ->setCalculationPercent($charge->getPercentage())
-            ->setBasisAmount($charge->getBaseAmount())
+        return (new self($charge->getAmount()->getValueRounded()))
+            ->setCalculationPercent($charge->getPercentage()?->getValueRounded())
+            ->setBasisAmount($charge->getBaseAmount()?->getValueRounded())
             ->setReasonCode($charge->getReasonCode())
             ->setReason($charge->getReason());
     }

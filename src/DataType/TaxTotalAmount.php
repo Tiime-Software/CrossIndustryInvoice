@@ -27,9 +27,9 @@ class TaxTotalAmount
         $this->currencyIdentifier = $currencyIdentifier;
     }
 
-    public function getValue(): float
+    public function getValue(): Amount
     {
-        return $this->value->getValueRounded();
+        return $this->value;
     }
 
     public function getCurrencyIdentifier(): CurrencyCode

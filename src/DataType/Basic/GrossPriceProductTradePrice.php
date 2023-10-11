@@ -36,9 +36,9 @@ class GrossPriceProductTradePrice
         $this->appliedTradeAllowanceCharge = null;
     }
 
-    public function getChargeAmount(): float
+    public function getChargeAmount(): UnitPriceAmount
     {
-        return $this->chargeAmount->getValueRounded();
+        return $this->chargeAmount;
     }
 
     public function getBasisQuantity(): ?BasisQuantity
@@ -127,7 +127,7 @@ class GrossPriceProductTradePrice
             ? AppliedTradeAllowanceCharge::fromEN16931($priceDetails)
             : null;
 
-        return (new self($priceDetails->getItemGrossPrice()))
+        return (new self($priceDetails->getItemGrossPrice()?->getValueRounded()))
             ->setBasisQuantity(BasisQuantity::fromEN16931($priceDetails))
             ->setAppliedTradeAllowanceCharge($appliedTradeAllowanceCharge);
     }

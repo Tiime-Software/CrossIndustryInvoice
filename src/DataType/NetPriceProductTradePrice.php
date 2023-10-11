@@ -31,9 +31,9 @@ class NetPriceProductTradePrice
         $this->basisQuantity = null;
     }
 
-    public function getChargeAmount(): float
+    public function getChargeAmount(): UnitPriceAmount
     {
-        return $this->chargeAmount->getValueRounded();
+        return $this->chargeAmount;
     }
 
     public function getBasisQuantity(): ?BasisQuantity
@@ -92,11 +92,11 @@ class NetPriceProductTradePrice
 
     public static function fromEN16931(PriceDetails $priceDetails): self
     {
-        $basisQuantity = \is_float($priceDetails->getItemPriceBaseQuantity())
+        $basisQuantity = \is_float($priceDetails->getItemPriceBaseQuantity()?->getValueRounded())
             ? BasisQuantity::fromEN16931($priceDetails)
             : null;
 
-        return (new self($priceDetails->getItemNetPrice()))
+        return (new self($priceDetails->getItemNetPrice()?->getValueRounded()))
             ->setBasisQuantity($basisQuantity);
     }
 }

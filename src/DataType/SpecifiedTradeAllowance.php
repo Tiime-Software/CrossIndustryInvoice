@@ -67,9 +67,9 @@ class SpecifiedTradeAllowance
         return $this->allowanceChargeIndicator;
     }
 
-    public function getActualAmount(): float
+    public function getActualAmount(): Amount
     {
-        return $this->actualAmount->getValueRounded();
+        return $this->actualAmount;
     }
 
     public function getAllowanceCategoryTradeTax(): CategoryTradeTax
@@ -77,9 +77,9 @@ class SpecifiedTradeAllowance
         return $this->allowanceCategoryTradeTax;
     }
 
-    public function getCalculationPercent(): ?float
+    public function getCalculationPercent(): ?Percentage
     {
-        return $this->calculationPercent?->getValueRounded();
+        return $this->calculationPercent;
     }
 
     public function setCalculationPercent(?float $calculationPercent): static
@@ -89,9 +89,9 @@ class SpecifiedTradeAllowance
         return $this;
     }
 
-    public function getBasisAmount(): ?float
+    public function getBasisAmount(): ?Amount
     {
-        return $this->basisAmount?->getValueRounded();
+        return $this->basisAmount;
     }
 
     public function setBasisAmount(?float $basisAmount): static
@@ -229,12 +229,12 @@ class SpecifiedTradeAllowance
     public static function fromEN16931(DocumentLevelAllowance $allowance): self
     {
         $specifiedTradeAllowance = new self(
-            $allowance->getAmount(),
-            (new CategoryTradeTax($allowance->getVatCategoryCode()))->setRateApplicablePercent(new Percentage($allowance->getVatRate()))
+            $allowance->getAmount()->getValueRounded(),
+            (new CategoryTradeTax($allowance->getVatCategoryCode()))->setRateApplicablePercent($allowance->getVatRate())
         );
 
-        $specifiedTradeAllowance->setCalculationPercent($allowance->getPercentage())
-            ->setBasisAmount($allowance->getBaseAmount())
+        $specifiedTradeAllowance->setCalculationPercent($allowance->getPercentage()?->getValueRounded())
+            ->setBasisAmount($allowance->getBaseAmount()?->getValueRounded())
             ->setReasonCode($allowance->getReasonCode())
             ->setReason($allowance->getReason());
 

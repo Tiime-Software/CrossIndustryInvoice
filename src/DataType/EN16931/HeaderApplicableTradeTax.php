@@ -182,8 +182,8 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
     public static function fromEN16931(VatBreakdown $vatBreakdown, ?DateCode2475 $taxPointDateCode): self
     {
         $headerApplicableTradeTax = new self(
-            $vatBreakdown->getVatCategoryTaxAmount(),
-            $vatBreakdown->getVatCategoryTaxableAmount(),
+            $vatBreakdown->getVatCategoryTaxAmount()->getValueRounded(),
+            $vatBreakdown->getVatCategoryTaxableAmount()->getValueRounded(),
             $vatBreakdown->getVatCategoryCode()
         );
 
@@ -191,7 +191,7 @@ class HeaderApplicableTradeTax extends \Tiime\CrossIndustryInvoice\DataType\Basi
             ->setExemptionReason($vatBreakdown->getVatExemptionReasonText())
             ->setExemptionReasonCode($vatBreakdown->getVatExemptionReasonCode())
             ->setDueDateTypeCode($taxPointDateCode)
-            ->setRateApplicablePercent($vatBreakdown->getVatCategoryRate());
+            ->setRateApplicablePercent($vatBreakdown->getVatCategoryRate()?->getValueRounded());
 
         return $headerApplicableTradeTax;
     }

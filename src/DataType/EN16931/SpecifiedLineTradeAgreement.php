@@ -92,7 +92,7 @@ class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\B
 
         return (new self(NetPriceProductTradePrice::fromEN16931($invoiceLine->getPriceDetails())))
             ->setGrossPriceProductTradePrice(
-                \is_float($invoiceLine->getPriceDetails()->getItemGrossPrice())
+                \is_float($invoiceLine->getPriceDetails()->getItemGrossPrice()?->getValueRounded())
                     ? GrossPriceProductTradePrice::fromEN16931($invoiceLine->getPriceDetails())
                     : null
             )
