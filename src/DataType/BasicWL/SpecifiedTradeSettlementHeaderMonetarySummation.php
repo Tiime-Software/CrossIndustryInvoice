@@ -53,14 +53,14 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         $this->totalPrepaidAmount     = null;
     }
 
-    public function getLineTotalAmount(): float
+    public function getLineTotalAmount(): Amount
     {
-        return $this->lineTotalAmount->getValueRounded();
+        return $this->lineTotalAmount;
     }
 
-    public function getChargeTotalAmount(): ?float
+    public function getChargeTotalAmount(): ?Amount
     {
-        return $this->chargeTotalAmount instanceof Amount ? $this->chargeTotalAmount->getValueRounded() : null;
+        return $this->chargeTotalAmount;
     }
 
     public function setChargeTotalAmount(?float $chargeTotalAmount): static
@@ -70,9 +70,9 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $this;
     }
 
-    public function getAllowanceTotalAmount(): ?float
+    public function getAllowanceTotalAmount(): ?Amount
     {
-        return $this->allowanceTotalAmount instanceof Amount ? $this->allowanceTotalAmount->getValueRounded() : null;
+        return $this->allowanceTotalAmount;
     }
 
     public function setAllowanceTotalAmount(?float $allowanceTotalAmount): static
@@ -94,9 +94,9 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $this;
     }
 
-    public function getTotalPrepaidAmount(): ?float
+    public function getTotalPrepaidAmount(): ?Amount
     {
-        return $this->totalPrepaidAmount instanceof Amount ? $this->totalPrepaidAmount->getValueRounded() : null;
+        return $this->totalPrepaidAmount;
     }
 
     public function setTotalPrepaidAmount(?float $totalPrepaidAmount): static

@@ -30,9 +30,9 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         $this->roundingAmount = null;
     }
 
-    public function getRoundingAmount(): ?float
+    public function getRoundingAmount(): ?Amount
     {
-        return $this->roundingAmount instanceof Amount ? $this->roundingAmount->getValueRounded() : null;
+        return $this->roundingAmount;
     }
 
     public function setRoundingAmount(?float $roundingAmount): static
@@ -230,27 +230,27 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         $documentTotals = $invoice->getDocumentTotals();
 
         $specifiedTradeSettlementHeaderMonetarySummation = new self(
-            $documentTotals->getInvoiceTotalAmountWithoutVat(),
-            $documentTotals->getInvoiceTotalAmountWithVat(),
-            $documentTotals->getAmountDueForPayment(),
-            $documentTotals->getSumOfInvoiceLineNetAmount(),
+            $documentTotals->getInvoiceTotalAmountWithoutVat()->getValueRounded(),
+            $documentTotals->getInvoiceTotalAmountWithVat()->getValueRounded(),
+            $documentTotals->getAmountDueForPayment()->getValueRounded(),
+            $documentTotals->getSumOfInvoiceLineNetAmount()->getValueRounded(),
         );
 
         $specifiedTradeSettlementHeaderMonetarySummation
-            ->setChargeTotalAmount($documentTotals->getSumOfChargesOnDocumentLevel())
-            ->setAllowanceTotalAmount($documentTotals->getSumOfAllowancesOnDocumentLevel())
+            ->setChargeTotalAmount($documentTotals->getSumOfChargesOnDocumentLevel()?->getValueRounded())
+            ->setAllowanceTotalAmount($documentTotals->getSumOfAllowancesOnDocumentLevel()?->getValueRounded())
             ->setTaxTotalAmount(
-                \is_float($documentTotals->getInvoiceTotalVatAmount())
-                    ? new TaxTotalAmount($documentTotals->getInvoiceTotalVatAmount(), $invoice->getCurrencyCode())
+                \is_float($documentTotals->getInvoiceTotalVatAmount()?->getValueRounded())
+                    ? new TaxTotalAmount($documentTotals->getInvoiceTotalVatAmount()?->getValueRounded(), $invoice->getCurrencyCode())
                     : null
             )
             ->setTaxTotalAmountCurrency(
-                \is_float($documentTotals->getInvoiceTotalVatAmountInAccountingCurrency())
-                    ? new TaxTotalAmount($documentTotals->getInvoiceTotalVatAmountInAccountingCurrency(), $invoice->getVatAccountingCurrencyCode())
+                \is_float($documentTotals->getInvoiceTotalVatAmountInAccountingCurrency()?->getValueRounded())
+                    ? new TaxTotalAmount($documentTotals->getInvoiceTotalVatAmountInAccountingCurrency()?->getValueRounded(), $invoice->getVatAccountingCurrencyCode())
                     : null
             )
-            ->setTotalPrepaidAmount($documentTotals->getPaidAmount())
-            ->setRoundingAmount($documentTotals->getRoundingAmount())
+            ->setTotalPrepaidAmount($documentTotals->getPaidAmount()?->getValueRounded())
+            ->setRoundingAmount($documentTotals->getRoundingAmount()?->getValueRounded())
         ;
 
         return $specifiedTradeSettlementHeaderMonetarySummation;

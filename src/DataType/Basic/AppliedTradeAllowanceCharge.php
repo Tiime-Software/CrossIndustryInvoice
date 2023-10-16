@@ -36,9 +36,9 @@ class AppliedTradeAllowanceCharge
         return $this->chargeIndicator;
     }
 
-    public function getActualAmount(): float
+    public function getActualAmount(): UnitPriceAmount
     {
-        return $this->actualAmount->getValueRounded();
+        return $this->actualAmount;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
@@ -82,6 +82,6 @@ class AppliedTradeAllowanceCharge
 
     public static function fromEN16931(PriceDetails $priceDetails): self
     {
-        return new self($priceDetails->getItemPriceDiscount());
+        return new self($priceDetails->getItemPriceDiscount()?->getValueRounded());
     }
 }

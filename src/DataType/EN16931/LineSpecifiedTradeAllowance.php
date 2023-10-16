@@ -33,9 +33,9 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
         $this->basisAmount        = null;
     }
 
-    public function getCalculationPercent(): ?float
+    public function getCalculationPercent(): ?Percentage
     {
-        return $this->calculationPercent?->getValueRounded();
+        return $this->calculationPercent;
     }
 
     public function setCalculationPercent(?float $calculationPercent): static
@@ -45,9 +45,9 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
         return $this;
     }
 
-    public function getBasisAmount(): ?float
+    public function getBasisAmount(): ?Amount
     {
-        return $this->basisAmount?->getValueRounded();
+        return $this->basisAmount;
     }
 
     public function setBasisAmount(?float $basisAmount): static
@@ -157,9 +157,9 @@ class LineSpecifiedTradeAllowance extends \Tiime\CrossIndustryInvoice\DataType\B
 
     public static function fromEN16931(InvoiceLineAllowance $invoiceLineAllowance): self
     {
-        return (new self($invoiceLineAllowance->getAmount()))
-            ->setCalculationPercent($invoiceLineAllowance->getPercentage())
-            ->setBasisAmount($invoiceLineAllowance->getBaseAmount())
+        return (new self($invoiceLineAllowance->getAmount()->getValueRounded()))
+            ->setCalculationPercent($invoiceLineAllowance->getPercentage()?->getValueRounded())
+            ->setBasisAmount($invoiceLineAllowance->getBaseAmount()?->getValueRounded())
             ->setReasonCode($invoiceLineAllowance->getReasonCode())
             ->setReason($invoiceLineAllowance->getReason());
     }

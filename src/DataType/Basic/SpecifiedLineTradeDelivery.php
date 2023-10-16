@@ -56,7 +56,7 @@ class SpecifiedLineTradeDelivery
     public static function fromEN16931(InvoiceLine $invoiceLine): self
     {
         return new self(new BilledQuantity(
-            $invoiceLine->getInvoicedQuantity(),
+            $invoiceLine->getInvoicedQuantity()->getValueRounded(),
             $invoiceLine->getInvoicedQuantityUnitOfMeasureCode()
         ));
     }

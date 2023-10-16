@@ -172,7 +172,7 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
     public static function fromEN16931(InvoiceLine $invoiceLine): self
     {
         $applicableTradeTax = (new ApplicableTradeTax($invoiceLine->getLineVatInformation()->getInvoicedItemVatCategoryCode()))
-            ->setRateApplicablePercent($invoiceLine->getLineVatInformation()->getInvoicedItemVatRate());
+            ->setRateApplicablePercent($invoiceLine->getLineVatInformation()->getInvoicedItemVatRate()?->getValueRounded());
 
         $specifiedTradeAllowances = [];
         $specifiedTradeCharges    = [];
@@ -187,7 +187,7 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
 
         $specifiedLineTradeSettlement = new self(
             $applicableTradeTax,
-            new SpecifiedTradeSettlementLineMonetarySummation($invoiceLine->getNetAmount())
+            new SpecifiedTradeSettlementLineMonetarySummation($invoiceLine->getNetAmount()->getValueRounded())
         );
 
         $specifiedLineTradeSettlement

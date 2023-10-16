@@ -67,9 +67,9 @@ class SpecifiedTradeCharge
         return $this->chargeIndicator;
     }
 
-    public function getCalculationPercent(): ?float
+    public function getCalculationPercent(): ?Percentage
     {
-        return $this->calculationPercent?->getValueRounded();
+        return $this->calculationPercent;
     }
 
     public function setCalculationPercent(?float $calculationPercent): static
@@ -79,9 +79,9 @@ class SpecifiedTradeCharge
         return $this;
     }
 
-    public function getBasisAmount(): ?float
+    public function getBasisAmount(): ?Amount
     {
-        return $this->basisAmount?->getValueRounded();
+        return $this->basisAmount;
     }
 
     public function setBasisAmount(?float $basisAmount): static
@@ -91,9 +91,9 @@ class SpecifiedTradeCharge
         return $this;
     }
 
-    public function getActualAmount(): float
+    public function getActualAmount(): Amount
     {
-        return $this->actualAmount->getValueRounded();
+        return $this->actualAmount;
     }
 
     public function getReasonCode(): ?ChargeReasonCode
@@ -229,12 +229,12 @@ class SpecifiedTradeCharge
     public static function fromEN16931(DocumentLevelCharge $charge): self
     {
         $specifiedTradeCharge = new self(
-            $charge->getAmount(),
+            $charge->getAmount()->getValueRounded(),
             (new CategoryTradeTax($charge->getVatCategoryCode()))->setRateApplicablePercent($charge->getVatRate())
         );
 
-        $specifiedTradeCharge->setCalculationPercent($charge->getPercentage())
-            ->setBasisAmount($charge->getBaseAmount())
+        $specifiedTradeCharge->setCalculationPercent($charge->getPercentage()?->getValueRounded())
+            ->setBasisAmount($charge->getBaseAmount()?->getValueRounded())
             ->setReasonCode($charge->getReasonCode())
             ->setReason($charge->getReason());
 

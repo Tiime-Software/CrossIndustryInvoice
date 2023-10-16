@@ -31,9 +31,9 @@ class BasisQuantity
         $this->unitCode = null;
     }
 
-    public function getValue(): float
+    public function getValue(): Quantity
     {
-        return $this->value->getValue();
+        return $this->value;
     }
 
     public function getUnitCode(): ?UnitOfMeasurement
@@ -97,7 +97,7 @@ class BasisQuantity
 
     public static function fromEN16931(PriceDetails $priceDetails): self
     {
-        return (new self($priceDetails->getItemPriceBaseQuantity()))
+        return (new self($priceDetails->getItemPriceBaseQuantity()?->getValueRounded()))
             ->setUnitCode($priceDetails->getItemPriceBaseQuantityUnitOfMeasureCode());
     }
 }

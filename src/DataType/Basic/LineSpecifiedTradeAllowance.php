@@ -46,9 +46,9 @@ class LineSpecifiedTradeAllowance
         return $this->chargeIndicator;
     }
 
-    public function getActualAmount(): float
+    public function getActualAmount(): Amount
     {
-        return $this->actualAmount->getValueRounded();
+        return $this->actualAmount;
     }
 
     public function getReasonCode(): ?AllowanceReasonCode

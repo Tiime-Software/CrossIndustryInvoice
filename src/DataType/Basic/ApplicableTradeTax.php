@@ -46,9 +46,9 @@ class ApplicableTradeTax
         return $this->categoryCode;
     }
 
-    public function getRateApplicablePercent(): ?float
+    public function getRateApplicablePercent(): ?Percentage
     {
-        return $this->rateApplicablePercent?->getValueRounded();
+        return $this->rateApplicablePercent;
     }
 
     public function setRateApplicablePercent(?float $rateApplicablePercent): static

@@ -30,9 +30,9 @@ class BilledQuantity
         $this->unitCode = $unitCode;
     }
 
-    public function getQuantity(): float
+    public function getQuantity(): Quantity
     {
-        return $this->quantity->getValueRounded();
+        return $this->quantity;
     }
 
     public function getUnitCode(): UnitOfMeasurement
