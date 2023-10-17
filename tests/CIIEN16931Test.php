@@ -342,7 +342,7 @@ class CIIEN16931Test extends TestCase
         $document = new \DOMDocument();
         $document->loadXML($xmlEn16931);
 
-        $xsdFeedbacks = CrossIndustryInvoiceUtils::executeXSD($document, 'EN16931');
+        $xsdFeedbacks = CrossIndustryInvoiceUtils::validateXSD($document, 'EN16931');
 
         $this->assertCount(1, $xsdFeedbacks);
     }
@@ -581,7 +581,7 @@ class CIIEN16931Test extends TestCase
         $document = new \DOMDocument();
         $document->loadXML($xmlEn16931);
 
-        $xsdFeedback = CrossIndustryInvoiceUtils::executeXSD($document, 'EN16931');
+        $xsdFeedback = CrossIndustryInvoiceUtils::validateXSD($document, 'EN16931');
         $this->assertTrue($xsdFeedback);
     }
     
