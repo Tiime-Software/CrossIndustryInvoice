@@ -11,11 +11,11 @@ class CrossIndustryInvoiceUtils
     const XSD_FOLDER = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'xsd' . DIRECTORY_SEPARATOR;
 
     const SPECIFICATION_TO_XSD = [
-        SpecificationIdentifier::MINIMUM => self::XSD_FOLDER . 'Minimum'. DIRECTORY_SEPARATOR .'FACTUR-X_MINIMUM.xsd',
-        SpecificationIdentifier::BASICWL => self::XSD_FOLDER . 'BasicWL' . DIRECTORY_SEPARATOR . 'FACTUR-X_BASIC-WL.xsd',
-        SpecificationIdentifier::BASIC => self::XSD_FOLDER . 'Basic' . DIRECTORY_SEPARATOR . 'FACTUR-X_BASIC.xsd',
-        SpecificationIdentifier::EN16931 => self::XSD_FOLDER . 'EN16931' . DIRECTORY_SEPARATOR . 'FACTUR-X_EN16931.xsd',
-        SpecificationIdentifier::EXTENDED => self::XSD_FOLDER . 'Extended' . DIRECTORY_SEPARATOR . 'FACTUR-X_EXTENDED.xsd',
+        'MINIMUM' => self::XSD_FOLDER . 'Minimum'. DIRECTORY_SEPARATOR .'FACTUR-X_MINIMUM.xsd',
+        'BASICWL' => self::XSD_FOLDER . 'BasicWL' . DIRECTORY_SEPARATOR . 'FACTUR-X_BASIC-WL.xsd',
+        'BASIC' => self::XSD_FOLDER . 'Basic' . DIRECTORY_SEPARATOR . 'FACTUR-X_BASIC.xsd',
+        'EN16931' => self::XSD_FOLDER . 'EN16931' . DIRECTORY_SEPARATOR . 'FACTUR-X_EN16931.xsd',
+        'EXTENDED' => self::XSD_FOLDER . 'Extended' . DIRECTORY_SEPARATOR . 'FACTUR-X_EXTENDED.xsd',
     ];
 
     public static function executeXSD(\DOMDocument $xml, string $specificationIdentifier): bool|array
