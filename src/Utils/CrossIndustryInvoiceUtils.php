@@ -18,7 +18,7 @@ class CrossIndustryInvoiceUtils
         'EXTENDED' => self::XSD_FOLDER . 'Extended' . DIRECTORY_SEPARATOR . 'FACTUR-X_EXTENDED.xsd',
     ];
 
-    public static function executeXSD(\DOMDocument $xml, string $specificationIdentifier): bool|array
+    public static function validateXSD(\DOMDocument $xml, string $specificationIdentifier): bool|array
     {
         if (!array_key_exists($specificationIdentifier, self::SPECIFICATION_TO_XSD))  {
             throw new \Exception('This profile does not exist.');
