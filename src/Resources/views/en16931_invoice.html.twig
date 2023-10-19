@@ -337,7 +337,7 @@
             {%- set currentItemGrossPriceProductTradePrice = includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.grossPriceProductTradePrice -%}
             {%-
                 if currentItemGrossPriceProductTradePrice is defined and currentItemGrossPriceProductTradePrice is not null
-                and currentItemGrossPriceProductTradePrice.chargeAmount|number_format(4) != includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount|number_format(4)
+                and currentItemGrossPriceProductTradePrice.chargeAmount.getValueRounded|number_format(4) != includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount.getValueRounded|number_format(4)
             -%}
                 {%- set hasDiscountItem = true -%}
             {%- endif  -%}
@@ -368,7 +368,7 @@
                         </td>
 
                         <td style="text-align: right;white-space: nowrap;">
-                            {%- set currentItemQuantity = includedSupplyChainTradeLineItem.specifiedLineTradeDelivery.billedQuantity.quantity -%}
+                            {%- set currentItemQuantity = includedSupplyChainTradeLineItem.specifiedLineTradeDelivery.billedQuantity.quantity.getValueRounded -%}
 
                             {%- if includedSupplyChainTradeLineItem.specifiedLineTradeDelivery.billedQuantity.unitCode is same as(constant('Tiime\\EN16931\\DataType\\UnitOfMeasurement::ONE_REC20')) -%}
                                 {%- set currentItemQuantity = currentItemQuantity ~ ' Unité(s)' -%}
@@ -384,23 +384,23 @@
 
                         {%-
                             if currentItemGrossPriceProductTradePrice is defined and currentItemGrossPriceProductTradePrice is not null
-                            and currentItemGrossPriceProductTradePrice.chargeAmount|number_format(4) != includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount|number_format(4)
+                            and currentItemGrossPriceProductTradePrice.chargeAmount.getValueRounded|number_format(4) != includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount.getValueRounded|number_format(4)
                         -%}
                             {%- set hasCurrentItemGrossPriceProductTradePrice = true -%}
                         {%- endif -%}
 
                         <td style="text-align: right;white-space: nowrap;">
                             {%- if hasCurrentItemGrossPriceProductTradePrice -%}
-                                {{- currentItemGrossPriceProductTradePrice.chargeAmount|format_currency(invoiceCurrency) -}}
+                                {{- currentItemGrossPriceProductTradePrice.chargeAmount.getValueRounded|format_currency(invoiceCurrency) -}}
                             {%- else -%}
-                                {{- includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount|format_currency(invoiceCurrency) -}}
+                                {{- includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount.getValueRounded|format_currency(invoiceCurrency) -}}
                             {%- endif -%}
                         </td>
 
                         {%- if hasDiscountItem -%}
                             <td style="text-align: right;white-space: nowrap;">
                                 {%- if hasCurrentItemGrossPriceProductTradePrice -%}
-                                    {{- includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount|format_currency(invoiceCurrency) -}}
+                                    {{- includedSupplyChainTradeLineItem.specifiedLineTradeAgreement.netPriceProductTradePrice.chargeAmount.getValueRounded|format_currency(invoiceCurrency) -}}
                                 {%- endif -%}
                             </td>
                         {%- endif -%}
@@ -408,12 +408,12 @@
                         <td style="text-align: right;white-space: nowrap;">
                             {%- set currentItemRateApplicablePercent = includedSupplyChainTradeLineItem.specifiedLineTradeSettlement.applicableTradeTax.rateApplicablePercent -%}
                             {%- if currentItemRateApplicablePercent is defined and currentItemRateApplicablePercent is not null -%}
-                                {{- currentItemRateApplicablePercent ~ '%' -}}
+                                {{- currentItemRateApplicablePercent.getValueRounded ~ '%' -}}
                             {%- endif -%}
                         </td>
 
                         <td style="font-weight: bold;text-align: right;white-space: nowrap;">
-                            {{- includedSupplyChainTradeLineItem.specifiedLineTradeSettlement.specifiedTradeSettlementLineMonetarySummation.lineTotalAmount|format_currency(invoiceCurrency) -}}
+                            {{- includedSupplyChainTradeLineItem.specifiedLineTradeSettlement.specifiedTradeSettlementLineMonetarySummation.lineTotalAmount.getValueRounded|format_currency(invoiceCurrency) -}}
                         </td>
                     </tr>
                 {% endfor %}
@@ -425,23 +425,23 @@
                 <tbody>
                     <tr>
                         <td>Total HT</td>
-                        <td><span class="total_value">{{- invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementHeaderMonetarySummation.taxBasisTotalAmount|format_currency(invoiceCurrency) -}}</span></td>
+                        <td><span class="total_value">{{- invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementHeaderMonetarySummation.taxBasisTotalAmount.getValueRounded|format_currency(invoiceCurrency) -}}</span></td>
                     </tr>
 
                     {%- set invoiceTaxTotalAmount = invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementHeaderMonetarySummation.taxTotalAmount -%}
                     {%- if invoiceTaxTotalAmount is defined and invoiceTaxTotalAmount is not null -%}
                         <tr>
                             <td>Taxes</td>
-                            <td><span class="total_value">{{- invoiceTaxTotalAmount.value|format_currency(invoiceTaxTotalAmount.currencyIdentifier.value) -}}</span></td>
+                            <td><span class="total_value">{{- invoiceTaxTotalAmount.value.getValueRounded|format_currency(invoiceTaxTotalAmount.currencyIdentifier.value) -}}</span></td>
                         </tr>
                     {%- endif -%}
 
                     {%- for invoiceApplicableTradeTaxes in invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.applicableTradeTaxes -%}
                         {%- if invoiceApplicableTradeTaxes.rateApplicablePercent -%}
                             <tr>
-                                <td class="vat_line">{{- 'TVA ' ~ invoiceApplicableTradeTaxes.rateApplicablePercent ~ ' %' -}}</td>
+                                <td class="vat_line">{{- 'TVA ' ~ invoiceApplicableTradeTaxes.rateApplicablePercent.getValueRounded ~ ' %' -}}</td>
                                 <td>
-                                    <span class="total_value">{{- invoiceApplicableTradeTaxes.calculatedAmount|format_currency(invoiceCurrency) -}}</span>
+                                    <span class="total_value">{{- invoiceApplicableTradeTaxes.calculatedAmount.getValueRounded|format_currency(invoiceCurrency) -}}</span>
                                 </td>
                             </tr>
                         {%- endif -%}
@@ -451,7 +451,7 @@
                         <td style="font-weight: 700;">Total TTC</td>
                         <td>
                             <span class="total_value" style="background: #ffeff0;">
-                                {{- invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementHeaderMonetarySummation.grandTotalAmount|format_currency(invoiceCurrency) -}}
+                                {{- invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementHeaderMonetarySummation.grandTotalAmount.getValueRounded|format_currency(invoiceCurrency) -}}
                             </span>
                         </td>
                     </tr>
@@ -460,7 +460,7 @@
                         <td style="font-weight: 700;">Solde à payer</td>
                         <td>
                             <span class="total_value">
-                                {{- invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementHeaderMonetarySummation.duePayableAmount|format_currency(invoiceCurrency) -}}
+                                {{- invoice.supplyChainTradeTransaction.applicableHeaderTradeSettlement.specifiedTradeSettlementHeaderMonetarySummation.duePayableAmount.getValueRounded|format_currency(invoiceCurrency) -}}
                             </span>
                         </td>
                     </tr>
