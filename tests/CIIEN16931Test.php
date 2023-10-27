@@ -342,12 +342,12 @@ class CIIEN16931Test extends TestCase
         $document = new \DOMDocument();
         $document->loadXML($xmlEn16931);
 
-        $xsdFeedbacks = CrossIndustryInvoiceUtils::validateXSD($document, 'EN16931');
+        $xsdErrors = CrossIndustryInvoiceUtils::validateXSD($document, 'EN16931');
 
-        $this->assertCount(1, $xsdFeedbacks);
+        $this->assertCount(1, $xsdErrors);
     }
 
-    public function testCheckXsd(): void
+    public function testValidateXSD(): void
     {
         $xmlEn16931 = "<?xml version='1.0' encoding='UTF-8'?>
             <rsm:CrossIndustryInvoice xmlns:qdt=\"urn:un:unece:uncefact:data:standard:QualifiedDataType:100\" xmlns:ram=\"urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100\" xmlns:rsm=\"urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100\" xmlns:udt=\"urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">
@@ -581,10 +581,10 @@ class CIIEN16931Test extends TestCase
         $document = new \DOMDocument();
         $document->loadXML($xmlEn16931);
 
-        $xsdFeedback = CrossIndustryInvoiceUtils::validateXSD($document, 'EN16931');
-        $this->assertTrue($xsdFeedback);
+        $xsdErrors = CrossIndustryInvoiceUtils::validateXSD($document, 'EN16931');
+
+        $this->assertCount(0, $xsdErrors);
     }
-    
     
     /**
      * @testdox Create EN-16931 profile with mandatory fields
