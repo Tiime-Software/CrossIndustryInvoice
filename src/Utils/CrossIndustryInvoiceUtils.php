@@ -27,7 +27,7 @@ class CrossIndustryInvoiceUtils
         libxml_use_internal_errors(true);
         if (!$xml->schemaValidate(self::SPECIFICATION_TO_XSD[$specificationIdentifier])) {
             $errors = libxml_get_errors();
-            libxml_use_internal_errors(false);
+            libxml_clear_errors();
 
             return $errors;
         }
