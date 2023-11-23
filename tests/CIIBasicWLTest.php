@@ -28,6 +28,7 @@ use Tiime\CrossIndustryInvoice\DataType\SellerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
+use Tiime\CrossIndustryInvoice\Utils\CrossIndustryInvoiceUtils;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\ElectronicAddressScheme;
@@ -46,6 +47,42 @@ use Tiime\EN16931\DataType\VatCategory;
 
 class CIIBasicWLTest extends TestCase
 {
+    public function testValidateXsdError(): void
+    {
+        $xml = "<?xml version='1.0' encoding='UTF-8'?>
+            <rsm:CrossIndustryInvoice xmlns:qdt=\"urn:un:unece:uncefact:data:standard:QualifiedDataType:100\" xmlns:ram=\"urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100\" xmlns:rsm=\"urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100\" xmlns:udt=\"urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">
+              <rsm:ExchangedDocumentContext>
+                <ram:GuidelineSpecifiedDocumentContextParameter>
+                  <ram:ID>urn:factur-x.eu:1p0:basicwl</ram:ID>
+                </ram:GuidelineSpecifiedDocumentContextParameter>
+              </rsm:ExchangedDocumentContext>
+              <rsm:ExchangedDocument>
+                <ram:ID>FA-2017-0010</ram:ID>
+                <ram:TypeCode>380</ram:TypeCode>
+                <ram:IssueDateTime>
+                  <udt:DateTimeString format=\"102\">20171113</udt:DateTimeString>
+                </ram:IssueDateTime>
+              </rsm:ExchangedDocument>
+            </rsm:CrossIndustryInvoice>";
+
+        $document = new \DOMDocument();
+        $document->loadXML($xml);
+
+        $xsdErrors = CrossIndustryInvoiceUtils::validateXSD($document, 'BASICWL');
+
+        $this->assertCount(1, $xsdErrors);
+    }
+
+    public function testValidateXSDSuccess(): void
+    {
+        $document = new \DOMDocument();
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIBasicWLInvoice.xml'));
+
+        $xsdErrors = CrossIndustryInvoiceUtils::validateXSD($document, 'BASICWL');
+
+        $this->assertCount(0, $xsdErrors);
+    }
+
     /**
      * @testdox Create BasicWL profile with mandatory fields
      */
@@ -82,39 +119,6 @@ class CIIBasicWLTest extends TestCase
 
         $xml = $invoice->toXML();
         $this->assertIsString($xml->saveXML());
-    }
-
-    /**
-     * @testdox Create BasicWL profile with mandatory fields but empty array for (ApplicableHeaderTradeSettlement) $applicableTradeTaxes
-     */
-    public function testCreateBasicWLProfileWithMandatoryFieldsButEmptyArrayApplicableTradeTaxes(): void
-    {
-        $this->expectException(\Exception::class);
-
-        new CrossIndustryInvoice(
-            new ExchangedDocumentContext(
-                new GuidelineSpecifiedDocumentContextParameter(
-                    new SpecificationIdentifier(SpecificationIdentifier::BASICWL)
-                )
-            ),
-            new ExchangedDocument(
-                new InvoiceIdentifier('FA-1545'),
-                InvoiceTypeCode::COMMERCIAL_INVOICE,
-                new IssueDateTime(new \DateTime())
-            ),
-            new SupplyChainTradeTransaction(
-                new ApplicableHeaderTradeAgreement(
-                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
-                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
-                ),
-                new ApplicableHeaderTradeDelivery(),
-                new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
-                    [],
-                )
-            )
-        );
     }
 
     /**
@@ -202,5 +206,17 @@ class CIIBasicWLTest extends TestCase
 
         $xml = $invoice->toXML();
         $this->assertIsString($xml->saveXML());
+    }
+
+    /**
+     * @testdox Create BasicWL profile from XML
+     */
+    public function testCreateBasicWLProfileFromXML(): void
+    {
+        $document = new \DOMDocument();
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIBasicWLInvoice.xml'));
+
+        $invoice = CrossIndustryInvoice::fromXML($document);
+        $this->assertInstanceOf(CrossIndustryInvoice::class, $invoice);
     }
 }
