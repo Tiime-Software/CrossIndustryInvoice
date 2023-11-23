@@ -31,7 +31,7 @@ class TwigRendererTest extends TestCase
 
         $invoice = CrossIndustryInvoice::fromXML($document);
 
-        self::assertIsString(self::$renderer->render($invoice, 'en16931_invoice.html.twig'));
+        $this->assertIsString(self::$renderer->render($invoice, 'en16931_invoice.html.twig'));
     }
 
     public function testRenderWithLogo(): void
@@ -41,7 +41,7 @@ class TwigRendererTest extends TestCase
 
         $invoice = CrossIndustryInvoice::fromXML($document);
 
-        self::assertIsString(
+        $this->assertIsString(
             self::$renderer->render(
                 crossIndustryInvoice: $invoice,
                 template: 'en16931_invoice.html.twig',

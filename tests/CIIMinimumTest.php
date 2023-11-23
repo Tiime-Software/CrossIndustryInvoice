@@ -60,7 +60,7 @@ class CIIMinimumTest extends TestCase
 
         $this->assertCount(0, $xsdErrors);
     }
-    
+
     /**
      * @testdox Create Minimum profile with mandatory fields
      */

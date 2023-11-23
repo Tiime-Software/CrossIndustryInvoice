@@ -17,21 +17,15 @@ use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMoneta
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeeSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
-use Tiime\CrossIndustryInvoice\DataType\BasicWL\SellerSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 use Tiime\CrossIndustryInvoice\DataType\BusinessProcessSpecifiedDocumentContextParameter;
-use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\CategoryTradeTax;
-use Tiime\CrossIndustryInvoice\DataType\ContractReferencedDocument;
-use Tiime\CrossIndustryInvoice\DataType\DefinedTradeContact;
 use Tiime\CrossIndustryInvoice\DataType\DespatchAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\DocumentIncludedNote;
 use Tiime\CrossIndustryInvoice\DataType\DueDateDateTime;
-use Tiime\CrossIndustryInvoice\DataType\EmailURIUniversalCommunication;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\ApplicableHeaderTradeAgreement;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\ApplicableHeaderTradeDelivery;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\ApplicableHeaderTradeSettlement;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\BuyerSpecifiedLegalOrganization;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\BuyerTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\HeaderApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\IncludedSupplyChainTradeLineItem;
@@ -62,21 +56,18 @@ use Tiime\CrossIndustryInvoice\DataType\PayerPartyDebtorFinancialAccount;
 use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount;
 use Tiime\CrossIndustryInvoice\DataType\ReceivingAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
-use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
 use Tiime\CrossIndustryInvoice\DataType\StartDateTime;
 use Tiime\CrossIndustryInvoice\DataType\TaxPointDate;
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
-use Tiime\CrossIndustryInvoice\DataType\TelephoneUniversalCommunication;
 use Tiime\CrossIndustryInvoice\EN16931\CrossIndustryInvoice;
 use Tiime\CrossIndustryInvoice\Utils\CrossIndustryInvoiceUtils;
 use Tiime\EN16931\DataType\AllowanceReasonCode;
 use Tiime\EN16931\DataType\ChargeReasonCode;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 use Tiime\EN16931\DataType\CurrencyCode;
-use Tiime\EN16931\DataType\DateCode2005;
 use Tiime\EN16931\DataType\DateCode2475;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 use Tiime\EN16931\DataType\Identifier\DebitedAccountIdentifier;
@@ -89,20 +80,15 @@ use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
 use Tiime\EN16931\DataType\Identifier\PayeeIdentifier;
 use Tiime\EN16931\DataType\Identifier\PaymentAccountIdentifier;
 use Tiime\EN16931\DataType\Identifier\PaymentServiceProviderIdentifier;
-use Tiime\EN16931\DataType\Identifier\SellerItemIdentifier;
 use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
-use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
-use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 use Tiime\EN16931\DataType\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\InvoiceNoteCode;
 use Tiime\EN16931\DataType\InvoiceTypeCode;
 use Tiime\EN16931\DataType\ObjectSchemeCode;
 use Tiime\EN16931\DataType\PaymentMeansCode;
-use Tiime\EN16931\DataType\Reference\ContractReference;
 use Tiime\EN16931\DataType\Reference\DespatchAdviceReference;
 use Tiime\EN16931\DataType\Reference\PrecedingInvoiceReference;
 use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
-use Tiime\EN16931\DataType\Reference\PurchaseOrderReference;
 use Tiime\EN16931\DataType\Reference\ReceivingAdviceReference;
 use Tiime\EN16931\DataType\UnitOfMeasurement;
 use Tiime\EN16931\DataType\VatCategory;
@@ -144,7 +130,7 @@ class CIIEN16931Test extends TestCase
 
         $this->assertCount(0, $xsdErrors);
     }
-    
+
     /**
      * @testdox Create EN-16931 profile with mandatory fields
      */
