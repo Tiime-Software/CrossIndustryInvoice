@@ -3,6 +3,7 @@
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
+use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BG-31.
@@ -86,7 +87,21 @@ class SpecifiedTradeProduct
         $specifiedTradeProduct = new self($name);
 
         if (1 === $globalIdentifierElements->count()) {
-            $specifiedTradeProduct->setGlobalIdentifier($globalIdentifierElements->item(0)->nodeValue);
+            $globalIdentifierElement = $globalIdentifierElements->item(0);
+
+            $scheme = $globalIdentifierElement->hasAttribute('schemeID') ?
+                InternationalCodeDesignator::tryFrom($globalIdentifierElement->getAttribute('schemeID')) : null;
+
+            if (null === $scheme) {
+                throw new \Exception('Wrong schemeID');
+            }
+
+            $specifiedTradeProduct->setGlobalIdentifier(
+                new StandardItemIdentifier(
+                    value: $globalIdentifierElement->nodeValue,
+                    scheme: $scheme
+                )
+            );
         }
 
         return $specifiedTradeProduct;

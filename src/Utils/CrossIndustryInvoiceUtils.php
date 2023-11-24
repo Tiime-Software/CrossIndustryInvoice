@@ -8,14 +8,14 @@ use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
 
 class CrossIndustryInvoiceUtils
 {
-    const XSD_FOLDER = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'xsd' . DIRECTORY_SEPARATOR;
+    public const XSD_FOLDER = __DIR__ . \DIRECTORY_SEPARATOR . '..' . \DIRECTORY_SEPARATOR . '..' . \DIRECTORY_SEPARATOR . 'xsd' . \DIRECTORY_SEPARATOR;
 
-    const SPECIFICATION_TO_XSD = [
-        'MINIMUM' => self::XSD_FOLDER . 'Minimum'. DIRECTORY_SEPARATOR .'FACTUR-X_MINIMUM.xsd',
-        'BASICWL' => self::XSD_FOLDER . 'BasicWL' . DIRECTORY_SEPARATOR . 'FACTUR-X_BASIC-WL.xsd',
-        'BASIC' => self::XSD_FOLDER . 'Basic' . DIRECTORY_SEPARATOR . 'FACTUR-X_BASIC.xsd',
-        'EN16931' => self::XSD_FOLDER . 'EN16931' . DIRECTORY_SEPARATOR . 'FACTUR-X_EN16931.xsd',
-        'EXTENDED' => self::XSD_FOLDER . 'Extended' . DIRECTORY_SEPARATOR . 'FACTUR-X_EXTENDED.xsd',
+    public const SPECIFICATION_TO_XSD = [
+        'MINIMUM'  => self::XSD_FOLDER . 'Minimum' . \DIRECTORY_SEPARATOR . 'FACTUR-X_MINIMUM.xsd',
+        'BASICWL'  => self::XSD_FOLDER . 'BasicWL' . \DIRECTORY_SEPARATOR . 'FACTUR-X_BASIC-WL.xsd',
+        'BASIC'    => self::XSD_FOLDER . 'Basic' . \DIRECTORY_SEPARATOR . 'FACTUR-X_BASIC.xsd',
+        'EN16931'  => self::XSD_FOLDER . 'EN16931' . \DIRECTORY_SEPARATOR . 'FACTUR-X_EN16931.xsd',
+        'EXTENDED' => self::XSD_FOLDER . 'Extended' . \DIRECTORY_SEPARATOR . 'FACTUR-X_EXTENDED.xsd',
     ];
 
     /**
@@ -23,7 +23,7 @@ class CrossIndustryInvoiceUtils
      */
     public static function validateXSD(\DOMDocument $xml, string $specificationIdentifier): array
     {
-        if (!array_key_exists($specificationIdentifier, self::SPECIFICATION_TO_XSD))  {
+        if (!\array_key_exists($specificationIdentifier, self::SPECIFICATION_TO_XSD)) {
             throw new \Exception('This profile does not exist.');
         }
 

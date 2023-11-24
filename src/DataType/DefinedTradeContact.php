@@ -169,11 +169,11 @@ class DefinedTradeContact
             ->setPersonName($contact->getPoint())
             ->setDepartmentName($contact->getPoint());
 
-        if (is_string($contact->getPhoneNumber())) {
+        if (\is_string($contact->getPhoneNumber())) {
             $definedTradeContact->setTelephoneUniversalCommunication(new TelephoneUniversalCommunication($contact->getPhoneNumber()));
         }
 
-        if (is_string($contact->getEmail())) {
+        if (\is_string($contact->getEmail())) {
             $definedTradeContact->setEmailURIUniversalCommunication(new EmailURIUniversalCommunication($contact->getEmail()));
         }
 

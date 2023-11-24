@@ -36,7 +36,9 @@
         }
     ],
     "scripts": {
-        "test": "vendor/bin/phpunit tests --display-warnings"
+        "test": "vendor/bin/phpunit tests --display-warnings",
+        "fix-cs": "vendor/bin/php-cs-fixer fix",
+        "phpstan": "vendor/bin/phpstan analyse -l 9 src tests"
     },
     "minimum-stability": "stable"
 }

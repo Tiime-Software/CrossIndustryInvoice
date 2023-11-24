@@ -38,6 +38,7 @@ use Tiime\CrossIndustryInvoice\DataType\SellerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
+use Tiime\CrossIndustryInvoice\Utils\CrossIndustryInvoiceUtils;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 use Tiime\EN16931\DataType\CurrencyCode;
 use Tiime\EN16931\DataType\ElectronicAddressScheme;
@@ -58,6 +59,45 @@ use Tiime\EN16931\DataType\VatCategory;
 
 class CIIBasicTest extends TestCase
 {
+    public function testValidateXsdError(): void
+    {
+        $xml = "<?xml version='1.0' encoding='UTF-8'?>
+            <rsm:CrossIndustryInvoice xmlns:qdt=\"urn:un:unece:uncefact:data:standard:QualifiedDataType:100\" xmlns:ram=\"urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100\" xmlns:rsm=\"urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100\" xmlns:udt=\"urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">
+              <rsm:ExchangedDocumentContext>
+                <ram:GuidelineSpecifiedDocumentContextParameter>
+                  <ram:ID>urn:cen.eu:en16931:2017#compliant#urn:factur-x.eu:1p0:basic</ram:ID>
+                </ram:GuidelineSpecifiedDocumentContextParameter>
+              </rsm:ExchangedDocumentContext>
+              <rsm:ExchangedDocument>
+                <ram:ID>FA-2017-0010</ram:ID>
+                <ram:TypeCode>380</ram:TypeCode>
+                <ram:IssueDateTime>
+                  <udt:DateTimeString format=\"102\">20171113</udt:DateTimeString>
+                </ram:IssueDateTime>
+                <ram:IncludedNote>
+                  <ram:Content>Franco de port (commande &gt; 300 € HT)</ram:Content>
+                </ram:IncludedNote>
+              </rsm:ExchangedDocument>
+            </rsm:CrossIndustryInvoice>";
+
+        $document = new \DOMDocument();
+        $document->loadXML($xml);
+
+        $xsdErrors = CrossIndustryInvoiceUtils::validateXSD($document, 'BASIC');
+
+        $this->assertCount(1, $xsdErrors);
+    }
+
+    public function testValidateXSDSuccess(): void
+    {
+        $document = new \DOMDocument();
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIBasicInvoice.xml'));
+
+        $xsdErrors = CrossIndustryInvoiceUtils::validateXSD($document, 'BASIC');
+
+        $this->assertCount(0, $xsdErrors);
+    }
+
     /**
      * @testdox Create Basic profile with mandatory fields
      */
@@ -106,51 +146,6 @@ class CIIBasicTest extends TestCase
 
         $xml = $invoice->toXML();
         $this->assertIsString($xml->saveXML());
-    }
-
-    /**
-     * @testdox Create BasicWL profile with mandatory fields but empty array for (ApplicableHeaderTradeSettlement) $applicableTradeTaxes
-     */
-    public function testCreateBasicWLProfileWithMandatoryFieldsButEmptyArrayApplicableTradeTaxes(): void
-    {
-        $this->expectException(\Exception::class);
-
-        new CrossIndustryInvoice(
-            new ExchangedDocumentContext(
-                new GuidelineSpecifiedDocumentContextParameter(
-                    new SpecificationIdentifier(SpecificationIdentifier::BASICWL)
-                )
-            ),
-            new ExchangedDocument(
-                new InvoiceIdentifier('FA-1545'),
-                InvoiceTypeCode::COMMERCIAL_INVOICE,
-                new IssueDateTime(new \DateTime())
-            ),
-            new SupplyChainTradeTransaction(
-                new ApplicableHeaderTradeAgreement(
-                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
-                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
-                ),
-                new ApplicableHeaderTradeDelivery(),
-                new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
-                    [],
-                ),
-                [
-                    new IncludedSupplyChainTradeLineItem(
-                        new AssociatedDocumentLineDocument(new InvoiceLineIdentifier('FA-0001')),
-                        new SpecifiedTradeProduct('Product 1'),
-                        new SpecifiedLineTradeAgreement(new NetPriceProductTradePrice(100)),
-                        new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasurement::BALL_REC21)),
-                        new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD_RATE),
-                            new SpecifiedTradeSettlementLineMonetarySummation(100)
-                        )
-                    ),
-                ],
-            )
-        );
     }
 
     /**
@@ -253,63 +248,14 @@ class CIIBasicTest extends TestCase
     }
 
     /**
-     * @testdox Create BasicWL profile from XML mandatory data
+     * @testdox Create Basic profile from XML
      */
-    public function testCreateBasicWLProfileFromXMLMandatoryData(): void
+    public function testCreateBasicProfileFromXML(): void
     {
-        $invoiceToConvert = new CrossIndustryInvoice(
-            new ExchangedDocumentContext(
-                new GuidelineSpecifiedDocumentContextParameter(
-                    new SpecificationIdentifier(SpecificationIdentifier::BASICWL)
-                )
-            ),
-            new ExchangedDocument(
-                new InvoiceIdentifier('FA-1545'),
-                InvoiceTypeCode::COMMERCIAL_INVOICE,
-                new IssueDateTime(new \DateTime())
-            ),
-            new SupplyChainTradeTransaction(
-                new ApplicableHeaderTradeAgreement(
-                    new SellerTradeParty('SellerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE)),
-                    new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
-                ),
-                new ApplicableHeaderTradeDelivery(),
-                new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
-                    new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
-                    [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD_RATE),
-                    ],
-                ),
-                [
-                    new IncludedSupplyChainTradeLineItem(
-                        new AssociatedDocumentLineDocument(new InvoiceLineIdentifier('FA-0001')),
-                        new SpecifiedTradeProduct('Product 1'),
-                        new SpecifiedLineTradeAgreement(new NetPriceProductTradePrice(100)),
-                        new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasurement::BALL_REC21)),
-                        new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD_RATE),
-                            new SpecifiedTradeSettlementLineMonetarySummation(100)
-                        )
-                    ),
-                ],
-            )
-        );
-
-        $xmlInvoice = $invoiceToConvert->toXML();
-
         $document = new \DOMDocument();
-        $document->loadXML($xmlInvoice->saveXML());
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIBasicInvoice.xml'));
 
         $invoice = CrossIndustryInvoice::fromXML($document);
         $this->assertInstanceOf(CrossIndustryInvoice::class, $invoice);
-    }
-
-    /**
-     * @testdox Create BasicWL profile from XML mandatory and optional data
-     */
-    public function testCreateBasicWLProfileFromXMLMandatoryAndOptionalData(): void
-    {
-        $this->markTestSkipped('@todo');
     }
 }
