@@ -82,46 +82,46 @@ class SpecifiedTradeSettlementPaymentMeans
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $specifiedTradeSettlementPaymentMeansElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $specifiedTradeSettlementPaymentMeansElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedTradeSettlementPaymentMeansElements->count()) {
-            return null;
+            return [];
         }
 
-        if ($specifiedTradeSettlementPaymentMeansElements->count() > 1) {
-            throw new \Exception('Malformed');
-        }
+        $outputSpecifiedTradeSettlementPaymentMeans = [];
 
         /** @var \DOMElement $specifiedTradeSettlementPaymentMeansElement */
-        $specifiedTradeSettlementPaymentMeansElement = $specifiedTradeSettlementPaymentMeansElements->item(0);
+        foreach ($specifiedTradeSettlementPaymentMeansElements as $specifiedTradeSettlementPaymentMeansElement) {
+            $typeCodeElements = $xpath->query('./ram:TypeCode', $specifiedTradeSettlementPaymentMeansElement);
 
-        $typeCodeElements = $xpath->query('./ram:TypeCode', $specifiedTradeSettlementPaymentMeansElement);
+            if (1 !== $typeCodeElements->count()) {
+                throw new \Exception('Malformed');
+            }
 
-        if (1 !== $typeCodeElements->count()) {
-            throw new \Exception('Malformed');
+            $typeCode = PaymentMeansCode::tryFrom($typeCodeElements->item(0)->nodeValue);
+
+            if (null === $typeCode) {
+                throw new \Exception('Wrong TypeCode');
+            }
+
+            $payerPartyDebtorFinancialAccount   = PayerPartyDebtorFinancialAccount::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
+            $payeePartyCreditorFinancialAccount = PayeePartyCreditorFinancialAccount::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
+
+            $specifiedTradeSettlementPaymentMeans = new self($typeCode);
+
+            if ($payerPartyDebtorFinancialAccount instanceof PayerPartyDebtorFinancialAccount) {
+                $specifiedTradeSettlementPaymentMeans->setPayerPartyDebtorFinancialAccount($payerPartyDebtorFinancialAccount);
+            }
+
+            if ($payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
+                $specifiedTradeSettlementPaymentMeans->setPayeePartyCreditorFinancialAccount($payeePartyCreditorFinancialAccount);
+            }
+
+            $outputSpecifiedTradeSettlementPaymentMeans[] = $specifiedTradeSettlementPaymentMeans;
         }
 
-        $typeCode = PaymentMeansCode::tryFrom($typeCodeElements->item(0)->nodeValue);
-
-        if (null === $typeCode) {
-            throw new \Exception('Wrong TypeCode');
-        }
-
-        $payerPartyDebtorFinancialAccount   = PayerPartyDebtorFinancialAccount::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
-        $payeePartyCreditorFinancialAccount = PayeePartyCreditorFinancialAccount::fromXML($xpath, $specifiedTradeSettlementPaymentMeansElement);
-
-        $specifiedTradeSettlementPaymentMeans = new self($typeCode);
-
-        if ($payerPartyDebtorFinancialAccount instanceof PayerPartyDebtorFinancialAccount) {
-            $specifiedTradeSettlementPaymentMeans->setPayerPartyDebtorFinancialAccount($payerPartyDebtorFinancialAccount);
-        }
-
-        if ($payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
-            $specifiedTradeSettlementPaymentMeans->setPayeePartyCreditorFinancialAccount($payeePartyCreditorFinancialAccount);
-        }
-
-        return $specifiedTradeSettlementPaymentMeans;
+        return $outputSpecifiedTradeSettlementPaymentMeans;
     }
 }

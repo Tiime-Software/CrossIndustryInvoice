@@ -17,11 +17,11 @@ class BuyerSpecifiedLegalOrganization
     /**
      * BT-47 & BT-47-1.
      */
-    protected LegalRegistrationIdentifier $identifier;
+    protected ?LegalRegistrationIdentifier $identifier;
 
-    public function __construct(LegalRegistrationIdentifier $identifier)
+    public function __construct()
     {
-        $this->identifier = $identifier;
+        $this->identifier = null;
     }
 
     public function getIdentifier(): ?LegalRegistrationIdentifier
@@ -29,24 +29,31 @@ class BuyerSpecifiedLegalOrganization
         return $this->identifier;
     }
 
+    public function setIdentifier(?LegalRegistrationIdentifier $identifier): void
+    {
+        $this->identifier = $identifier;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        $identifierNode = $document->createElement('ram:ID', $this->identifier->value);
+        if ($this->identifier instanceof LegalRegistrationIdentifier) {
+            $identifierNode = $document->createElement('ram:ID', $this->identifier->value);
 
-        if ($this->identifier->scheme instanceof InternationalCodeDesignator) {
-            $identifierNode->setAttribute('schemeID', $this->identifier->scheme->value);
+            if ($this->identifier->scheme instanceof InternationalCodeDesignator) {
+                $identifierNode->setAttribute('schemeID', $this->identifier->scheme->value);
+            }
+
+            $currentNode->appendChild($identifierNode);
         }
-
-        $currentNode->appendChild($identifierNode);
 
         return $currentNode;
     }
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $specifiedLegalOrganizationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $specifiedLegalOrganizationElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedLegalOrganizationElements->count()) {
             return null;
@@ -61,24 +68,30 @@ class BuyerSpecifiedLegalOrganization
 
         $identifierElements = $xpath->query('./ram:ID', $specifiedLegalOrganizationElement);
 
-        if (1 !== $identifierElements->count()) {
+        if ($identifierElements->count() > 1) {
             throw new \Exception('Malformed');
         }
 
-        /** @var \DOMElement $identifierItem */
-        $identifierItem = $identifierElements->item(0);
-        $identifier     = $identifierItem->nodeValue;
+        $buyerSpecifiedLegalOrganization = new self();
 
-        $scheme = null;
+        if (1 === $identifierElements->count()) {
+            /** @var \DOMElement $identifierItem */
+            $identifierItem = $identifierElements->item(0);
+            $identifier     = $identifierItem->nodeValue;
 
-        if ($identifierItem->hasAttribute('schemeID')) {
-            $scheme = InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID'));
+            $scheme = null;
+
+            if ($identifierItem->hasAttribute('schemeID')) {
+                $scheme = InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID'));
+
+                if (!$scheme instanceof InternationalCodeDesignator) {
+                    throw new \Exception('Wrong schemeID');
+                }
+            }
+
+            $buyerSpecifiedLegalOrganization->setIdentifier(new LegalRegistrationIdentifier($identifier, $scheme));
         }
 
-        if (!$scheme instanceof InternationalCodeDesignator) {
-            throw new \Exception('Wrong schemeID');
-        }
-
-        return new self(new LegalRegistrationIdentifier($identifier, $scheme));
+        return $buyerSpecifiedLegalOrganization;
     }
 }
