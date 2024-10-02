@@ -29,9 +29,11 @@ class PayeeSpecifiedLegalOrganization
         return $this->identifier;
     }
 
-    public function setIdentifier(?LegalRegistrationIdentifier $identifier): void
+    public function setIdentifier(?LegalRegistrationIdentifier $identifier): static
     {
         $this->identifier = $identifier;
+
+        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
