@@ -47,17 +47,6 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         parent::__construct($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation, $applicableTradeTaxes);
     }
 
-    public function setSpecifiedTradeSettlementPaymentMeans(SpecifiedTradeSettlementPaymentMeans|\Tiime\CrossIndustryInvoice\DataType\BasicWL\SpecifiedTradeSettlementPaymentMeans|null $specifiedTradeSettlementPaymentMeans): static
-    {
-        if (null !== $specifiedTradeSettlementPaymentMeans && !$specifiedTradeSettlementPaymentMeans instanceof SpecifiedTradeSettlementPaymentMeans) {
-            throw new \TypeError();
-        }
-
-        $this->specifiedTradeSettlementPaymentMeans = $specifiedTradeSettlementPaymentMeans;
-
-        return $this;
-    }
-
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement(self::XML_NODE);
@@ -80,8 +69,8 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
             $currentNode->appendChild($this->payeeTradeParty->toXML($document));
         }
 
-        if ($this->specifiedTradeSettlementPaymentMeans instanceof SpecifiedTradeSettlementPaymentMeans) {
-            $currentNode->appendChild($this->specifiedTradeSettlementPaymentMeans->toXML($document));
+        foreach ($this->specifiedTradeSettlementPaymentMeans as $specifiedTradeSettlementPaymentMeansItem) {
+            $currentNode->appendChild($specifiedTradeSettlementPaymentMeansItem->toXML($document));
         }
 
         foreach ($this->applicableTradeTaxes as $applicableTradeTax) {
@@ -106,8 +95,8 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
 
         $currentNode->appendChild($this->specifiedTradeSettlementHeaderMonetarySummation->toXML($document));
 
-        if ($this->invoiceReferencedDocument instanceof InvoiceReferencedDocument) {
-            $currentNode->appendChild($this->invoiceReferencedDocument->toXML($document));
+        foreach ($this->invoiceReferencedDocuments as $invoiceReferencedDocument) {
+            $currentNode->appendChild($invoiceReferencedDocument->toXML($document));
         }
 
         if ($this->receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
@@ -119,7 +108,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $applicableHeaderTradeSettlementElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $applicableHeaderTradeSettlementElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $applicableHeaderTradeSettlementElements->count()) {
             throw new \Exception('Malformed');
@@ -163,7 +152,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         $specifiedTradeCharges                           = SpecifiedTradeCharge::fromXML($xpath, $applicableHeaderTradeSettlementElement);
         $specifiedTradePaymentTerms                      = SpecifiedTradePaymentTerms::fromXML($xpath, $applicableHeaderTradeSettlementElement);
         $specifiedTradeSettlementHeaderMonetarySummation = SpecifiedTradeSettlementHeaderMonetarySummation::fromXML($xpath, $applicableHeaderTradeSettlementElement);
-        $invoiceReferencedDocument                       = InvoiceReferencedDocument::fromXML($xpath, $applicableHeaderTradeSettlementElement);
+        $invoiceReferencedDocuments                      = InvoiceReferencedDocument::fromXML($xpath, $applicableHeaderTradeSettlementElement);
         $receivableSpecifiedTradeAccountingAccount       = ReceivableSpecifiedTradeAccountingAccount::fromXML($xpath, $applicableHeaderTradeSettlementElement);
 
         $applicableHeaderTradeSettlement = new self($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation, $applicableTradeTaxes);
@@ -190,7 +179,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
             $applicableHeaderTradeSettlement->setPayeeTradeParty($payeeTradeParty);
         }
 
-        if ($specifiedTradeSettlementPaymentMeans instanceof SpecifiedTradeSettlementPaymentMeans) {
+        if (\count($specifiedTradeSettlementPaymentMeans) > 0) {
             $applicableHeaderTradeSettlement->setSpecifiedTradeSettlementPaymentMeans($specifiedTradeSettlementPaymentMeans);
         }
 
@@ -210,8 +199,8 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
             $applicableHeaderTradeSettlement->setSpecifiedTradePaymentTerms($specifiedTradePaymentTerms);
         }
 
-        if ($invoiceReferencedDocument instanceof InvoiceReferencedDocument) {
-            $applicableHeaderTradeSettlement->setInvoiceReferencedDocument($invoiceReferencedDocument);
+        if (\count($invoiceReferencedDocuments) > 0) {
+            $applicableHeaderTradeSettlement->setInvoiceReferencedDocuments($invoiceReferencedDocuments);
         }
 
         if ($receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
@@ -262,7 +251,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
             ->setSpecifiedTradeSettlementPaymentMeans(
                 $invoice->getPaymentInstructions() instanceof PaymentInstructions
                     ? SpecifiedTradeSettlementPaymentMeans::fromEN16931($invoice->getPaymentInstructions())
-                    : null
+                    : []
             )
             ->setBillingSpecifiedPeriod(
                 $invoice->getDeliveryInformation()?->getInvoicingPeriod() instanceof InvoicingPeriod
@@ -272,7 +261,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
             ->setSpecifiedTradeAllowances($specifiedTradeAllowances)
             ->setSpecifiedTradeCharges($specifiedTradeCharges)
             ->setSpecifiedTradePaymentTerms(SpecifiedTradePaymentTerms::fromEN16931($invoice))
-            ->setInvoiceReferencedDocument(
+            ->setInvoiceReferencedDocuments(
                 \count($invoice->getPrecedingInvoices()) > 0
                     ? InvoiceReferencedDocument::fromEN16931($invoice)
                     : null

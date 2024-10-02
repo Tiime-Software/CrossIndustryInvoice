@@ -287,12 +287,11 @@ class CIIEN16931Test extends TestCase
                             ->setIdentifier(new PayeeIdentifier('PayeeIdentifier'))
                             ->setGlobalIdentifier(new PayeeGlobalIdentifier('PayeeGlobalIdentifier', InternationalCodeDesignator::FRANCE_TELECOM_ATM_END_SYSTEM_ADDRESS_PLAN))
                             ->setSpecifiedLegalOrganization(
-                                new PayeeSpecifiedLegalOrganization(
-                                    new LegalRegistrationIdentifier('LegalRegistrationIdentifier', InternationalCodeDesignator::FRANCE_TELECOM_ATM_END_SYSTEM_ADDRESS_PLAN)
-                                )
+                                (new PayeeSpecifiedLegalOrganization())
+                                    ->setIdentifier(new LegalRegistrationIdentifier('LegalRegistrationIdentifier', scheme: InternationalCodeDesignator::SYSTEM_INFORMATION_ET_REPERTOIRE_DES_ENTREPRISE_ET_DES_ETABLISSEMENTS_SIRENE))
                             )
                     )
-                    ->setSpecifiedTradeSettlementPaymentMeans(
+                    ->setSpecifiedTradeSettlementPaymentMeans([
                         (new SpecifiedTradeSettlementPaymentMeans(PaymentMeansCode::ACCEPTED_BILL_OF_EXCHANGE))
                             ->setInformation('Information')
                             ->setApplicableTradeSettlementFinancialCard(
@@ -314,8 +313,8 @@ class CIIEN16931Test extends TestCase
                                 new PayeeSpecifiedCreditorFinancialInstitution(
                                     new PaymentServiceProviderIdentifier('PaymentServiceProviderIdentifier')
                                 )
-                            )
-                    )
+                            ),
+                    ])
                     ->setBillingSpecifiedPeriod(
                         (new BillingSpecifiedPeriod())
                             ->setStartDateTime(new StartDateTime(new \DateTime()))
@@ -349,12 +348,12 @@ class CIIEN16931Test extends TestCase
                             ->setDescription('description')
                             ->setDueDateDateTime(new DueDateDateTime(new \DateTime()))
                     )
-                    ->setInvoiceReferencedDocument(
+                    ->setInvoiceReferencedDocuments([
                         (new InvoiceReferencedDocument(
                             new PrecedingInvoiceReference('PrecedingInvoiceReference'))
                         )
-                            ->setFormattedIssueDateTime(new FormattedIssueDateTime(new \DateTime()))
-                    )
+                            ->setFormattedIssueDateTime(new FormattedIssueDateTime(new \DateTime())),
+                    ])
                     ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount('ReceivableSpecifiedTradeAccountingAccount')),
                 [
                     new IncludedSupplyChainTradeLineItem(

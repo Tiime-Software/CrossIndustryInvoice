@@ -60,51 +60,51 @@ class InvoiceReferencedDocument
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $invoiceReferencedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $invoiceReferencedDocumentElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $invoiceReferencedDocumentElements->count()) {
-            return null;
+            return [];
         }
 
-        if ($invoiceReferencedDocumentElements->count() > 1) {
-            throw new \Exception('Malformed');
+        $invoiceReferencedDocuments = [];
+
+        /** @var \DOMElement $invoiceReferencedDocumentElements */
+        foreach ($invoiceReferencedDocumentElements as $invoiceReferencedDocumentElement) {
+            $issuerAssignedIdentifierElements = $xpath->query('./ram:IssuerAssignedID', $invoiceReferencedDocumentElement);
+
+            if (1 !== $issuerAssignedIdentifierElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
+
+            $formattedIssueDateTime = FormattedIssueDateTime::fromXML($xpath, $invoiceReferencedDocumentElement);
+
+            $invoiceReferencedDocument = new self(new PrecedingInvoiceReference($issuerAssignedIdentifier));
+
+            if ($formattedIssueDateTime instanceof FormattedIssueDateTime) {
+                $invoiceReferencedDocument->setFormattedIssueDateTime($formattedIssueDateTime);
+            }
+
+            $invoiceReferencedDocuments[] = $invoiceReferencedDocument;
         }
 
-        /** @var \DOMElement $invoiceReferencedDocumentElement */
-        $invoiceReferencedDocumentElement = $invoiceReferencedDocumentElements->item(0);
-
-        $issuerAssignedIdentifierElements = $xpath->query('./ram:IssuerAssignedID', $invoiceReferencedDocumentElement);
-
-        if (1 !== $issuerAssignedIdentifierElements->count()) {
-            throw new \Exception('Malformed');
-        }
-
-        $issuerAssignedIdentifier = $issuerAssignedIdentifierElements->item(0)->nodeValue;
-
-        $formattedIssueDateTime = FormattedIssueDateTime::fromXML($xpath, $invoiceReferencedDocumentElement);
-
-        $invoiceReferencedDocument = new self(new PrecedingInvoiceReference($issuerAssignedIdentifier));
-
-        if ($formattedIssueDateTime instanceof FormattedIssueDateTime) {
-            $invoiceReferencedDocument->setFormattedIssueDateTime($formattedIssueDateTime);
-        }
-
-        return $invoiceReferencedDocument;
+        return $invoiceReferencedDocuments;
     }
 
-    public static function fromEN16931(Invoice $invoice): self
+    public static function fromEN16931(Invoice $invoice): array
     {
         $precedingInvoices = $invoice->getPrecedingInvoices();
 
-        if (\count($precedingInvoices) > 1) {
-            throw new \Exception("Found multiple PrecedingInvoices but CII's cardinalities only allow a maximum of 1 occurrence.");
+        $invoiceReferencedDocuments = [];
+
+        foreach ($precedingInvoices as $precedingInvoice) {
+            $invoiceReferencedDocuments[] = (new self($precedingInvoice->getReference()))
+                ->setFormattedIssueDateTime(new FormattedIssueDateTime($precedingInvoice->getIssueDate()));
         }
 
-        $precedingInvoice = array_pop($precedingInvoices);
-
-        return (new self($precedingInvoice->getReference()))
-            ->setFormattedIssueDateTime(new FormattedIssueDateTime($precedingInvoice->getIssueDate()));
+        return $invoiceReferencedDocuments;
     }
 }
