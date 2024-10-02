@@ -39,7 +39,7 @@ class ReceivableSpecifiedTradeAccountingAccount
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $receivableSpecifiedTradeAccountingAccountElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $receivableSpecifiedTradeAccountingAccountElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $receivableSpecifiedTradeAccountingAccountElements->count()) {
             return null;

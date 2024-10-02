@@ -84,7 +84,7 @@ class GrossPriceProductTradePrice
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $grossPriceProductTradePriceElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $grossPriceProductTradePriceElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $grossPriceProductTradePriceElements->count()) {
             return null;

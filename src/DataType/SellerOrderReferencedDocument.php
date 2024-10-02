@@ -39,7 +39,7 @@ class SellerOrderReferencedDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $sellerOrderReferencedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $sellerOrderReferencedDocumentElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $sellerOrderReferencedDocumentElements->count()) {
             return null;

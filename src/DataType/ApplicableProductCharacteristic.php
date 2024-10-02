@@ -49,7 +49,7 @@ class ApplicableProductCharacteristic
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $applicableProductCharacteristicElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $applicableProductCharacteristicElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $applicableProductCharacteristicElements->count()) {
             return [];

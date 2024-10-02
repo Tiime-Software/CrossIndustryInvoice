@@ -12,7 +12,7 @@ class CrossIndustryInvoice extends \Tiime\CrossIndustryInvoice\BasicWL\CrossIndu
     public function __construct(
         ExchangedDocumentContext $exchangedDocumentContext,
         ExchangedDocument $exchangedDocument,
-        SupplyChainTradeTransaction $supplyChainTradeTransaction
+        SupplyChainTradeTransaction $supplyChainTradeTransaction,
     ) {
         parent::__construct($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
     }
@@ -21,7 +21,7 @@ class CrossIndustryInvoice extends \Tiime\CrossIndustryInvoice\BasicWL\CrossIndu
     {
         $xpath = new \DOMXPath($document);
 
-        $crossIndustryInvoiceElements = $xpath->query(sprintf('//%s', self::XML_NODE));
+        $crossIndustryInvoiceElements = $xpath->query(\sprintf('//%s', self::XML_NODE));
 
         if (1 !== $crossIndustryInvoiceElements->count()) {
             throw new \Exception('Malformed');

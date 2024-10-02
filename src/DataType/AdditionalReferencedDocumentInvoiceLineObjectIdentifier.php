@@ -74,7 +74,7 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $additionalReferencedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $additionalReferencedDocumentElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $additionalReferencedDocumentElements->count()) {
             return null;

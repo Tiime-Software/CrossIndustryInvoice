@@ -124,7 +124,7 @@ class AdditionalReferencedDocumentTenderOrLotReference
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $additionalReferencedDocumentTenderOrLotReferenceElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $additionalReferencedDocumentTenderOrLotReferenceElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $additionalReferencedDocumentTenderOrLotReferenceElements->count()) {
             return null;

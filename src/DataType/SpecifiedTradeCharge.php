@@ -156,7 +156,7 @@ class SpecifiedTradeCharge
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $specifiedTradeChargeElements = $xpath->query(sprintf('./%s[ram:ChargeIndicator/udt:Indicator[text() = \'true\']]', self::XML_NODE), $currentElement);
+        $specifiedTradeChargeElements = $xpath->query(\sprintf('./%s[ram:ChargeIndicator/udt:Indicator[text() = \'true\']]', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedTradeChargeElements->count()) {
             return [];

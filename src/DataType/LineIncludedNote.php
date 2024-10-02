@@ -37,7 +37,7 @@ class LineIncludedNote
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $lineIncludedNoteElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $lineIncludedNoteElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $lineIncludedNoteElements->count()) {
             return null;

@@ -122,7 +122,7 @@ class ShipToTradeParty
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $shipToTradePartyElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $shipToTradePartyElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $shipToTradePartyElements->count()) {
             return null;

@@ -26,7 +26,7 @@ class SellerGlobalIdentifier extends SellerIdentifier
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $sellerGlobalIdentifierElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $sellerGlobalIdentifierElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $sellerGlobalIdentifierElements->count()) {
             return [];

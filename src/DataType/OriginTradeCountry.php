@@ -46,7 +46,7 @@ class OriginTradeCountry
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $originTradeCountryElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $originTradeCountryElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $originTradeCountryElements->count()) {
             return null;

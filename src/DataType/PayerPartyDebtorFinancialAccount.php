@@ -39,7 +39,7 @@ class PayerPartyDebtorFinancialAccount
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $payerPartyDebtorFinancialAccountElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $payerPartyDebtorFinancialAccountElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $payerPartyDebtorFinancialAccountElements->count()) {
             return null;

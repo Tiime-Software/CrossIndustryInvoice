@@ -168,7 +168,7 @@ class HeaderApplicableTradeTax
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $headerApplicableTradeTaxElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $headerApplicableTradeTaxElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $headerApplicableTradeTaxElements->count()) {
             return [];

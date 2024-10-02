@@ -62,7 +62,7 @@ class AssociatedDocumentLineDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $associatedDocumentLineDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $associatedDocumentLineDocumentElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $associatedDocumentLineDocumentElements->count()) {
             throw new \Exception('Malformed');

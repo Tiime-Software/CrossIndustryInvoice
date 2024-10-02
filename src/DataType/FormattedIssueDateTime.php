@@ -51,7 +51,7 @@ class FormattedIssueDateTime
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $formattedIssueDateTimelements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $formattedIssueDateTimelements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $formattedIssueDateTimelements->count()) {
             return null;

@@ -179,7 +179,7 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $applicableHeaderTradeAgreementElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $applicableHeaderTradeAgreementElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $applicableHeaderTradeAgreementElements->count()) {
             throw new \Exception('Malformed');

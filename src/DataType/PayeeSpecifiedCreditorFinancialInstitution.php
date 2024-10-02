@@ -36,7 +36,7 @@ class PayeeSpecifiedCreditorFinancialInstitution
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $payeeSpecifiedCreditorFinancialInstitutionElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $payeeSpecifiedCreditorFinancialInstitutionElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $payeeSpecifiedCreditorFinancialInstitutionElements->count()) {
             return null;
