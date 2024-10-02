@@ -95,7 +95,7 @@ class LineSpecifiedTradeCharge
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $lineSpecifiedTradeChargeElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $lineSpecifiedTradeChargeElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $lineSpecifiedTradeChargeElements->count()) {
             return [];

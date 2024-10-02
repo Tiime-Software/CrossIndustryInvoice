@@ -70,7 +70,7 @@ class PayeePartyCreditorFinancialAccount
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $payeePartyCreditorFinancialAccountElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $payeePartyCreditorFinancialAccountElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $payeePartyCreditorFinancialAccountElements->count()) {
             return null;

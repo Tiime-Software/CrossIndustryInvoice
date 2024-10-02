@@ -166,7 +166,7 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
      */
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $postalTradeAddressElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $postalTradeAddressElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $postalTradeAddressElements->count()) {
             throw new \Exception('Malformed');

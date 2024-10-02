@@ -61,7 +61,7 @@ class ApplicableTradeSettlementFinancialCard
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $applicableTradeSettlementFinancialCardElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $applicableTradeSettlementFinancialCardElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $applicableTradeSettlementFinancialCardElements->count()) {
             return null;

@@ -66,7 +66,7 @@ class ClassCode
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $classCodeElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $classCodeElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $classCodeElements->count()) {
             return null;

@@ -59,7 +59,7 @@ class SellerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataT
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $sellerSpecifiedLegalOrganizationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $sellerSpecifiedLegalOrganizationElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $sellerSpecifiedLegalOrganizationElements->count()) {
             return null;

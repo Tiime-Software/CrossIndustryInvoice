@@ -111,7 +111,7 @@ class PayeeTradeParty
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $payeeTradePartyElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $payeeTradePartyElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $payeeTradePartyElements->count()) {
             return null;

@@ -95,7 +95,7 @@ class LineSpecifiedTradeAllowance
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $lineSpecifiedTradeAllowanceElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $lineSpecifiedTradeAllowanceElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $lineSpecifiedTradeAllowanceElements->count()) {
             return [];

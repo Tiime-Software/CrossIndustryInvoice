@@ -41,7 +41,7 @@ class IncludedSupplyChainTradeLineItem
         SpecifiedTradeProduct $specifiedTradeProduct,
         SpecifiedLineTradeAgreement $specifiedLineTradeAgreement,
         SpecifiedLineTradeDelivery $specifiedLineTradeDelivery,
-        SpecifiedLineTradeSettlement $specifiedLineTradeSettlement
+        SpecifiedLineTradeSettlement $specifiedLineTradeSettlement,
     ) {
         $this->associatedDocumentLineDocument = $associatedDocumentLineDocument;
         $this->specifiedTradeProduct          = $specifiedTradeProduct;
@@ -90,7 +90,7 @@ class IncludedSupplyChainTradeLineItem
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $includedSupplyChainTradeLineItemElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $includedSupplyChainTradeLineItemElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $includedSupplyChainTradeLineItemElements->count()) {
             return [];

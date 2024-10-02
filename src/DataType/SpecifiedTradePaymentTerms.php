@@ -93,7 +93,7 @@ class SpecifiedTradePaymentTerms
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $specifiedTradePaymentTermsElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $specifiedTradePaymentTermsElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedTradePaymentTermsElements->count()) {
             return null;

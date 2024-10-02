@@ -51,7 +51,7 @@ class DueDateDateTime
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $dueDateDateTimeElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $dueDateDateTimeElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $dueDateDateTimeElements->count()) {
             return null;

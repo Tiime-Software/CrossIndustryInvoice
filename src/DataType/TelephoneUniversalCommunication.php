@@ -37,7 +37,7 @@ class TelephoneUniversalCommunication
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $telephoneUniversalCommunicationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $telephoneUniversalCommunicationElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $telephoneUniversalCommunicationElements->count()) {
             return null;

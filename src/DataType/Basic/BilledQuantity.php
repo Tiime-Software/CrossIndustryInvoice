@@ -50,7 +50,7 @@ class BilledQuantity
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $billedQuantityElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $billedQuantityElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $billedQuantityElements->count()) {
             throw new \Exception('Malformed');

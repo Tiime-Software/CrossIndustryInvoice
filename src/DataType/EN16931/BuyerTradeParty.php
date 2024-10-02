@@ -102,7 +102,7 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Buyer
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $buyerTradePartyElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $buyerTradePartyElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $buyerTradePartyElements->count()) {
             throw new \Exception('Malformed');

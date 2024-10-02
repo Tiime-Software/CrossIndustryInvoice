@@ -18,7 +18,7 @@ class IncludedSupplyChainTradeLineItem extends \Tiime\CrossIndustryInvoice\DataT
         SpecifiedTradeProduct $specifiedTradeProduct,
         SpecifiedLineTradeAgreement $specifiedLineTradeAgreement,
         SpecifiedLineTradeDelivery $specifiedLineTradeDelivery,
-        SpecifiedLineTradeSettlement $specifiedLineTradeSettlement
+        SpecifiedLineTradeSettlement $specifiedLineTradeSettlement,
     ) {
         parent::__construct(
             $associatedDocumentLineDocument,
@@ -44,7 +44,7 @@ class IncludedSupplyChainTradeLineItem extends \Tiime\CrossIndustryInvoice\DataT
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $includedSupplyChainTradeLineItemElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $includedSupplyChainTradeLineItemElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $includedSupplyChainTradeLineItemElements->count()) {
             return [];

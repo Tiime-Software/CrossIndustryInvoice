@@ -42,7 +42,7 @@ class SpecifiedLineTradeSettlement
 
     public function __construct(
         ApplicableTradeTax $applicableTradeTax,
-        SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation
+        SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation,
     ) {
         $this->applicableTradeTax                            = $applicableTradeTax;
         $this->specifiedTradeSettlementLineMonetarySummation = $specifiedTradeSettlementLineMonetarySummation;
@@ -142,7 +142,7 @@ class SpecifiedLineTradeSettlement
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $specifiedLineTradeSettlementElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $specifiedLineTradeSettlementElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $specifiedLineTradeSettlementElements->count()) {
             throw new \Exception('Malformed');

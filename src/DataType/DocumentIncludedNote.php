@@ -61,7 +61,7 @@ class DocumentIncludedNote
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
     {
-        $documentIncludedNoteElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $documentIncludedNoteElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $documentIncludedNoteElements->count()) {
             return [];

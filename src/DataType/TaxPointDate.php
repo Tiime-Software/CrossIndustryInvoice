@@ -50,7 +50,7 @@ class TaxPointDate
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $taxPointDateElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $taxPointDateElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $taxPointDateElements->count()) {
             return null;

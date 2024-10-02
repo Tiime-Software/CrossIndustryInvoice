@@ -198,7 +198,7 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $specifiedTradeProductElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $specifiedTradeProductElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $specifiedTradeProductElements->count()) {
             throw new \Exception('Malformed');

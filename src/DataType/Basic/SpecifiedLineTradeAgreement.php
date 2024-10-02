@@ -59,7 +59,7 @@ class SpecifiedLineTradeAgreement
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $specifiedLineTradeAgreementElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $specifiedLineTradeAgreementElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $specifiedLineTradeAgreementElements->count()) {
             throw new \Exception('Malformed');

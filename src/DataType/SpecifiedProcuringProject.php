@@ -51,7 +51,7 @@ class SpecifiedProcuringProject
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $specifiedProcuringProjectElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $specifiedProcuringProjectElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedProcuringProjectElements->count()) {
             return null;

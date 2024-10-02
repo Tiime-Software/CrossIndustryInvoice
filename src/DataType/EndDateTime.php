@@ -51,7 +51,7 @@ class EndDateTime
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $endDateTimeElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $endDateTimeElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $endDateTimeElements->count()) {
             return null;

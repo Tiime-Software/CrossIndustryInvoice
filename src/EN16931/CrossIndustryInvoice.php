@@ -32,7 +32,7 @@ class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
     public function __construct(
         ExchangedDocumentContext $exchangedDocumentContext,
         ExchangedDocument $exchangedDocument,
-        SupplyChainTradeTransaction $supplyChainTradeTransaction
+        SupplyChainTradeTransaction $supplyChainTradeTransaction,
     ) {
         $this->exchangedDocumentContext    = $exchangedDocumentContext;
         $this->exchangedDocument           = $exchangedDocument;
@@ -93,7 +93,7 @@ class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
     {
         $xpath = new \DOMXPath($document);
 
-        $crossIndustryInvoiceElements = $xpath->query(sprintf('//%s', self::XML_NODE));
+        $crossIndustryInvoiceElements = $xpath->query(\sprintf('//%s', self::XML_NODE));
 
         if (1 !== $crossIndustryInvoiceElements->count()) {
             throw new \Exception('Malformed');

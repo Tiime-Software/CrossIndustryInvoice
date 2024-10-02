@@ -128,7 +128,7 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Sell
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $sellerTradePartyElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $sellerTradePartyElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $sellerTradePartyElements->count()) {
             throw new \Exception('Malformed');

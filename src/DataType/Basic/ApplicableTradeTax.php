@@ -74,7 +74,7 @@ class ApplicableTradeTax
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $applicableTradeTaxElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $applicableTradeTaxElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $applicableTradeTaxElements->count()) {
             throw new \Exception('Malformed');

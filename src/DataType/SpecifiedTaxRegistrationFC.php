@@ -52,7 +52,7 @@ class SpecifiedTaxRegistrationFC
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $specifiedTaxRegistrationElements = $xpath->query(sprintf('./%s[ram:ID[@schemeID = \'FC\']]', self::XML_NODE), $currentElement);
+        $specifiedTaxRegistrationElements = $xpath->query(\sprintf('./%s[ram:ID[@schemeID = \'FC\']]', self::XML_NODE), $currentElement);
 
         if (0 === $specifiedTaxRegistrationElements->count()) {
             return null;

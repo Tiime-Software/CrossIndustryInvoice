@@ -37,7 +37,7 @@ class BusinessProcessSpecifiedDocumentContextParameter
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $businessProcessSpecifiedDocumentContextParameterElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $businessProcessSpecifiedDocumentContextParameterElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $businessProcessSpecifiedDocumentContextParameterElements->count()) {
             return null;

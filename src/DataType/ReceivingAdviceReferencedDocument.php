@@ -39,7 +39,7 @@ class ReceivingAdviceReferencedDocument
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $receivingAdviceReferencedDocumentElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $receivingAdviceReferencedDocumentElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $receivingAdviceReferencedDocumentElements->count()) {
             return null;

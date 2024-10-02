@@ -85,7 +85,7 @@ class CrossIndustryInvoiceUtils
         }
 
         if (!\array_key_exists($profile, $specificationIdentifiers)) {
-            throw new \Exception(sprintf('Invalid version : %s', $documentIdentifier));
+            throw new \Exception(\sprintf('Invalid version : %s', $documentIdentifier));
         }
 
         return $profile;

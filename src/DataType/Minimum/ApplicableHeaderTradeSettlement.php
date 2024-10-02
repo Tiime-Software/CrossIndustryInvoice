@@ -25,7 +25,7 @@ class ApplicableHeaderTradeSettlement
 
     public function __construct(
         CurrencyCode $invoiceCurrencyCode,
-        SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation
+        SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation,
     ) {
         $this->invoiceCurrencyCode                             = $invoiceCurrencyCode;
         $this->specifiedTradeSettlementHeaderMonetarySummation = $specifiedTradeSettlementHeaderMonetarySummation;
@@ -53,7 +53,7 @@ class ApplicableHeaderTradeSettlement
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $applicableHeaderTradeSettlementElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $applicableHeaderTradeSettlementElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $applicableHeaderTradeSettlementElements->count()) {
             throw new \Exception('Malformed');

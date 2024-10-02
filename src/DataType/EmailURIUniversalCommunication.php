@@ -37,7 +37,7 @@ class EmailURIUniversalCommunication
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $emailURIUniversalCommunicationElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $emailURIUniversalCommunicationElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $emailURIUniversalCommunicationElements->count()) {
             return null;

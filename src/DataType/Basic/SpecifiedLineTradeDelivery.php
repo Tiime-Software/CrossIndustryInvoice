@@ -39,7 +39,7 @@ class SpecifiedLineTradeDelivery
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
     {
-        $specifiedLineTradeDeliveryElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $specifiedLineTradeDeliveryElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (1 !== $specifiedLineTradeDeliveryElements->count()) {
             throw new \Exception('Malformed');

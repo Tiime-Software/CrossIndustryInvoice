@@ -115,7 +115,7 @@ class DefinedTradeContact
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $definedTradeContactElements = $xpath->query(sprintf('./%s', self::XML_NODE), $currentElement);
+        $definedTradeContactElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $definedTradeContactElements->count()) {
             return null;
