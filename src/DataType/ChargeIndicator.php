@@ -54,7 +54,7 @@ class ChargeIndicator
 
         $indicator = $indicatorElements->item(0)->nodeValue;
 
-        if ('true' !== $indicator) {
+        if (mb_strtolower('true') !== mb_strtolower($indicator)) {
             throw new \Exception('Malformed');
         }
 

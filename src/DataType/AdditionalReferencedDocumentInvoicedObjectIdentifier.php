@@ -145,7 +145,7 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
 
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
-        $additionalReferencedDocumentInvoicedObjectIdentifierElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
+        $additionalReferencedDocumentInvoicedObjectIdentifierElements = $xpath->query(\sprintf('./%s[ram:TypeCode[text() = \'130\']]', self::XML_NODE), $currentElement);
 
         if (0 === $additionalReferencedDocumentInvoicedObjectIdentifierElements->count()) {
             return null;
