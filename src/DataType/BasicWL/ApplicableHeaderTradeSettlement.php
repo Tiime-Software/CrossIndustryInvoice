@@ -422,7 +422,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         $applicableHeaderTradeSettlement = new self($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation, $applicableTradeTaxes);
 
         if (1 === $creditorReferenceIdentifierElements->count()) {
-            $applicableHeaderTradeSettlement->setCreditorReferenceIdentifier($creditorReferenceIdentifierElements->item(0)->nodeValue);
+            $applicableHeaderTradeSettlement->setCreditorReferenceIdentifier(new BankAssignedCreditorIdentifier($creditorReferenceIdentifierElements->item(0)->nodeValue));
         }
 
         if (1 === $paymentReferenceElements->count()) {
