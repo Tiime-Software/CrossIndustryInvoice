@@ -14,18 +14,16 @@ class DocumentIncludedNote
     protected const XML_NODE = 'ram:IncludedNote';
 
     /**
-     * BT-22.
-     */
-    private string $content;
-
-    /**
      * BT-21.
      */
     private ?InvoiceNoteCode $subjectCode;
 
-    public function __construct(string $content)
-    {
-        $this->content     = $content;
+    /**
+     * @param string $content - BT-22
+     */
+    public function __construct(
+        private string $content,
+    ) {
         $this->subjectCode = null;
     }
 

@@ -12,13 +12,11 @@ class TelephoneUniversalCommunication
     protected const XML_NODE = 'ram:TelephoneUniversalCommunication';
 
     /**
-     * BT-42 or BT-57.
+     * @param string $completeNumber - BT-42 or BT-57
      */
-    private string $completeNumber;
-
-    public function __construct(string $completeNumber)
-    {
-        $this->completeNumber = $completeNumber;
+    public function __construct(
+        private string $completeNumber,
+    ) {
     }
 
     public function getCompleteNumber(): string

@@ -14,13 +14,11 @@ class OriginTradeCountry
     protected const XML_NODE = 'ram:OriginTradeCountry';
 
     /**
-     * BT-159.
+     * @param CountryAlpha2Code $identifier - BT-159
      */
-    private CountryAlpha2Code $identifier;
-
-    public function __construct(CountryAlpha2Code $identifier)
-    {
-        $this->identifier = $identifier;
+    public function __construct(
+        private CountryAlpha2Code $identifier,
+    ) {
     }
 
     public function getIdentifier(): ?CountryAlpha2Code

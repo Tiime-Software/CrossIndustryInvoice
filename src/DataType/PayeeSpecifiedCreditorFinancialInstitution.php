@@ -11,13 +11,11 @@ class PayeeSpecifiedCreditorFinancialInstitution
     protected const XML_NODE = 'ram:PayeeSpecifiedCreditorFinancialInstitution';
 
     /**
-     * BT-86.
+     * @param PaymentServiceProviderIdentifier $bicIdentifier - BT-86
      */
-    private PaymentServiceProviderIdentifier $bicIdentifier;
-
-    public function __construct(PaymentServiceProviderIdentifier $bicIdentifier)
-    {
-        $this->bicIdentifier = $bicIdentifier;
+    public function __construct(
+        private PaymentServiceProviderIdentifier $bicIdentifier,
+    ) {
     }
 
     public function getBicIdentifier(): PaymentServiceProviderIdentifier

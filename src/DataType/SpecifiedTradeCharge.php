@@ -47,15 +47,12 @@ class SpecifiedTradeCharge
     private ?string $reason;
 
     /**
-     * BT-102-00.
+     * @param CategoryTradeTax $categoryTradeTax - BT-102-00
      */
-    private CategoryTradeTax $categoryTradeTax;
-
-    public function __construct(float $actualAmount, CategoryTradeTax $categoryTradeTax)
+    public function __construct(float $actualAmount, private CategoryTradeTax $categoryTradeTax)
     {
         $this->chargeIndicator    = new ChargeIndicator();
         $this->actualAmount       = new Amount($actualAmount);
-        $this->categoryTradeTax   = $categoryTradeTax;
         $this->calculationPercent = null;
         $this->basisAmount        = null;
         $this->reasonCode         = null;

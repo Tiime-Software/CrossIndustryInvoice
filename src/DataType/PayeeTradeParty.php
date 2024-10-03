@@ -28,18 +28,16 @@ class PayeeTradeParty
     private ?PayeeGlobalIdentifier $globalIdentifier;
 
     /**
-     * BT-59.
-     */
-    private string $name;
-
-    /**
      * BT-61-00.
      */
     private ?PayeeSpecifiedLegalOrganization $specifiedLegalOrganization;
 
-    public function __construct(string $name)
-    {
-        $this->name                       = $name;
+    /**
+     * @param string $name - BT-59
+     */
+    public function __construct(
+        private string $name,
+    ) {
         $this->identifier                 = null;
         $this->globalIdentifier           = null;
         $this->specifiedLegalOrganization = null;

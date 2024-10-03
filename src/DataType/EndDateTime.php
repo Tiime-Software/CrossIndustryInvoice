@@ -12,19 +12,17 @@ class EndDateTime
     protected const XML_NODE = 'ram:EndDateTime';
 
     /**
-     * BT-74.
-     */
-    private \DateTimeInterface $dateTimeString;
-
-    /**
      * BT-74-0.
      */
     private string $format;
 
-    public function __construct(\DateTimeInterface $dateTimeString)
-    {
-        $this->dateTimeString = $dateTimeString;
-        $this->format         = '102';
+    /**
+     * @param \DateTimeInterface $dateTimeString - BT-74
+     */
+    public function __construct(
+        private \DateTimeInterface $dateTimeString,
+    ) {
+        $this->format = '102';
     }
 
     public function getDateTimeString(): \DateTimeInterface

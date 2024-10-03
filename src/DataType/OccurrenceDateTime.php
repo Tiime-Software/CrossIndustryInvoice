@@ -9,19 +9,17 @@ class OccurrenceDateTime
     protected const XML_NODE = 'ram:OccurrenceDateTime';
 
     /**
-     * BT-72.
-     */
-    private \DateTimeInterface $dateTimeString;
-
-    /**
      * BT-72-0.
      */
     private string $format;
 
-    public function __construct(\DateTimeInterface $dateTimeString)
-    {
-        $this->dateTimeString = $dateTimeString;
-        $this->format         = '102';
+    /**
+     * @param \DateTimeInterface $dateTimeString - BT-72
+     */
+    public function __construct(
+        private \DateTimeInterface $dateTimeString,
+    ) {
+        $this->format = '102';
     }
 
     public function getDateTimeString(): \DateTimeInterface

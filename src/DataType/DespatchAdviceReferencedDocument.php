@@ -14,13 +14,11 @@ class DespatchAdviceReferencedDocument
     protected const XML_NODE = 'ram:DespatchAdviceReferencedDocument';
 
     /**
-     * BT-16.
+     * @param DespatchAdviceReference $issuerAssignedIdentifier - BT-16
      */
-    private DespatchAdviceReference $issuerAssignedIdentifier;
-
-    public function __construct(DespatchAdviceReference $issuerAssignedIdentifier)
-    {
-        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
+    public function __construct(
+        private DespatchAdviceReference $issuerAssignedIdentifier,
+    ) {
     }
 
     public function getIssuerAssignedIdentifier(): DespatchAdviceReference

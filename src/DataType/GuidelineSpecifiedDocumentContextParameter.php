@@ -14,13 +14,11 @@ class GuidelineSpecifiedDocumentContextParameter
     protected const XML_NODE = 'ram:GuidelineSpecifiedDocumentContextParameter';
 
     /**
-     * BT-24.
+     * @param SpecificationIdentifier $identifier - BT-24
      */
-    private SpecificationIdentifier $identifier;
-
-    public function __construct(SpecificationIdentifier $identifier)
-    {
-        $this->identifier = $identifier;
+    public function __construct(
+        private SpecificationIdentifier $identifier,
+    ) {
     }
 
     public function getIdentifier(): SpecificationIdentifier

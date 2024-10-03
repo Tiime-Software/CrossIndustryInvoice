@@ -15,25 +15,15 @@ class SellerTaxRepresentativeTradeParty
     protected const XML_NODE = 'ram:SellerTaxRepresentativeTradeParty';
 
     /**
-     * BT-62.
+     * @param string                     $name                       - BT-62
+     * @param PostalTradeAddress         $postalTradeAddress         - BG-12
+     * @param SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA - BT-63-00
      */
-    private string $name;
-
-    /**
-     * BG-12.
-     */
-    private PostalTradeAddress $postalTradeAddress;
-
-    /**
-     * BT-63-00.
-     */
-    private SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA;
-
-    public function __construct(string $name, PostalTradeAddress $postalTradeAddress, SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA)
-    {
-        $this->name                       = $name;
-        $this->postalTradeAddress         = $postalTradeAddress;
-        $this->specifiedTaxRegistrationVA = $specifiedTaxRegistrationVA;
+    public function __construct(
+        private string $name,
+        private PostalTradeAddress $postalTradeAddress,
+        private SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA,
+    ) {
     }
 
     public function getName(): string

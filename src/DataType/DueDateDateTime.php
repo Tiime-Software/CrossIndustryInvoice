@@ -12,19 +12,17 @@ class DueDateDateTime
     protected const XML_NODE = 'ram:DueDateDateTime';
 
     /**
-     * BT-9.
-     */
-    private \DateTimeInterface $dateTimeString;
-
-    /**
      * BT-9-0.
      */
     private string $format;
 
-    public function __construct(\DateTimeInterface $dateTimeString)
-    {
-        $this->dateTimeString = $dateTimeString;
-        $this->format         = '102';
+    /**
+     * @param \DateTimeInterface $dateTimeString - BT-9
+     */
+    public function __construct(
+        private \DateTimeInterface $dateTimeString,
+    ) {
+        $this->format = '102';
     }
 
     public function getDateTimeString(): \DateTimeInterface

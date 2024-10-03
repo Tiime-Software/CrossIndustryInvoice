@@ -9,19 +9,17 @@ class IssueDateTime
     protected const XML_NODE = 'ram:IssueDateTime';
 
     /**
-     * BT-2.
-     */
-    private \DateTimeInterface $dateTimeString;
-
-    /**
      * BT-2-0.
      */
     private readonly string $dateFormat;
 
-    public function __construct(\DateTimeInterface $dateTimeString)
-    {
-        $this->dateTimeString = $dateTimeString;
-        $this->dateFormat     = '102';
+    /**
+     * @param \DateTimeInterface $dateTimeString - BT-2
+     */
+    public function __construct(
+        private \DateTimeInterface $dateTimeString,
+    ) {
+        $this->dateFormat = '102';
     }
 
     public function getDateTimeString(): \DateTimeInterface

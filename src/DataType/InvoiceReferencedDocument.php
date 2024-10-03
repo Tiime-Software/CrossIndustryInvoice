@@ -15,19 +15,17 @@ class InvoiceReferencedDocument
     protected const XML_NODE = 'ram:InvoiceReferencedDocument';
 
     /**
-     * BT-25.
-     */
-    private PrecedingInvoiceReference $issuerAssignedIdentifier;
-
-    /**
      * BT-26-00.
      */
     private ?FormattedIssueDateTime $formattedIssueDateTime;
 
-    public function __construct(PrecedingInvoiceReference $issuerAssignedIdentifier)
-    {
-        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
-        $this->formattedIssueDateTime   = null;
+    /**
+     * @param PrecedingInvoiceReference $issuerAssignedIdentifier - BT-25
+     */
+    public function __construct(
+        private PrecedingInvoiceReference $issuerAssignedIdentifier,
+    ) {
+        $this->formattedIssueDateTime = null;
     }
 
     public function getIssuerAssignedIdentifier(): PrecedingInvoiceReference

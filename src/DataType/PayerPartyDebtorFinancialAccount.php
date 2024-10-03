@@ -14,13 +14,11 @@ class PayerPartyDebtorFinancialAccount
     protected const XML_NODE = 'ram:PayerPartyDebtorFinancialAccount';
 
     /**
-     * BT-91.
+     * @param DebitedAccountIdentifier $ibanIdentifier - BT-91
      */
-    private DebitedAccountIdentifier $ibanIdentifier;
-
-    public function __construct(DebitedAccountIdentifier $ibanIdentifier)
-    {
-        $this->ibanIdentifier = $ibanIdentifier;
+    public function __construct(
+        private DebitedAccountIdentifier $ibanIdentifier,
+    ) {
     }
 
     public function getIbanIdentifier(): DebitedAccountIdentifier
