@@ -16,23 +16,16 @@ class OriginTradeCountry
     /**
      * BT-159.
      */
-    private ?CountryAlpha2Code $identifier;
+    private CountryAlpha2Code $identifier;
 
-    public function __construct()
+    public function __construct(CountryAlpha2Code $identifier)
     {
-        $this->identifier = null;
+        $this->identifier = $identifier;
     }
 
     public function getIdentifier(): ?CountryAlpha2Code
     {
         return $this->identifier;
-    }
-
-    public function setIdentifier(?CountryAlpha2Code $identifier): static
-    {
-        $this->identifier = $identifier;
-
-        return $this;
     }
 
     public function toXML(\DOMDocument $document): \DOMElement
@@ -61,22 +54,16 @@ class OriginTradeCountry
 
         $identifierElements = $xpath->query('./ram:ID', $originTradeCountryElement);
 
-        if ($identifierElements->count() > 1) {
+        if (1 !== $identifierElements->count()) {
             throw new \Exception('Malformed');
         }
 
-        $originTradeCountry = new self();
+        $identifier = CountryAlpha2Code::tryFrom($identifierElements->item(0)->nodeValue);
 
-        if (1 === $identifierElements->count()) {
-            $identifier = CountryAlpha2Code::tryFrom($identifierElements->item(0)->nodeValue);
-
-            if (!$identifier instanceof CountryAlpha2Code) {
-                throw new \Exception('Wrong ID');
-            }
-
-            $originTradeCountry->setIdentifier($identifier);
+        if (!$identifier instanceof CountryAlpha2Code) {
+            throw new \Exception('Wrong ID');
         }
 
-        return $originTradeCountry;
+        return new self($identifier);
     }
 }
