@@ -54,7 +54,7 @@ class AllowanceIndicator
 
         $indicator = $indicatorElements->item(0)->nodeValue;
 
-        if ('false' !== $indicator) {
+        if (mb_strtolower('false') !== mb_strtolower($indicator)) {
             throw new \Exception('Malformed');
         }
 

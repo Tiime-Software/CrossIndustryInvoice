@@ -265,7 +265,7 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
         }
 
         if (1 === $buyerAssignedIdentifierElements->count()) {
-            $specifiedTradeProduct->setBuyerAssignedIdentifier($buyerAssignedIdentifierElements->item(0)->nodeValue);
+            $specifiedTradeProduct->setBuyerAssignedIdentifier(new BuyerItemIdentifier($buyerAssignedIdentifierElements->item(0)->nodeValue));
         }
 
         if ($descriptionElements->count() > 1) {
