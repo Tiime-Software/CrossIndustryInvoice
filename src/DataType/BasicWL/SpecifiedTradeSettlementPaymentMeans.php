@@ -15,11 +15,6 @@ class SpecifiedTradeSettlementPaymentMeans
     protected const XML_NODE = 'ram:SpecifiedTradeSettlementPaymentMeans';
 
     /**
-     * BT-81.
-     */
-    protected PaymentMeansCode $typeCode;
-
-    /**
      * BT-91-00.
      */
     protected ?PayerPartyDebtorFinancialAccount $payerPartyDebtorFinancialAccount;
@@ -29,9 +24,12 @@ class SpecifiedTradeSettlementPaymentMeans
      */
     protected ?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount;
 
-    public function __construct(PaymentMeansCode $typeCode)
-    {
-        $this->typeCode                           = $typeCode;
+    /**
+     * @param PaymentMeansCode $typeCode - BT-81
+     */
+    public function __construct(
+        protected PaymentMeansCode $typeCode,
+    ) {
         $this->payerPartyDebtorFinancialAccount   = null;
         $this->payeePartyCreditorFinancialAccount = null;
     }

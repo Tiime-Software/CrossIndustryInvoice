@@ -17,13 +17,11 @@ class SpecifiedLineTradeAgreement
     protected ?GrossPriceProductTradePrice $grossPriceProductTradePrice;
 
     /**
-     * BT-146-00.
+     * @param NetPriceProductTradePrice $netPriceProductTradePrice - BT-146-00
      */
-    protected NetPriceProductTradePrice $netPriceProductTradePrice;
-
-    public function __construct(NetPriceProductTradePrice $netPriceProductTradePrice)
-    {
-        $this->netPriceProductTradePrice   = $netPriceProductTradePrice;
+    public function __construct(
+        protected NetPriceProductTradePrice $netPriceProductTradePrice,
+    ) {
         $this->grossPriceProductTradePrice = null;
     }
 
