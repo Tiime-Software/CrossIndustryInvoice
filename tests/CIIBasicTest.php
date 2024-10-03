@@ -2,6 +2,8 @@
 
 namespace Tiime\CrossIndustryInvoice\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Tiime\CrossIndustryInvoice\Basic\CrossIndustryInvoice;
 use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
@@ -88,19 +90,18 @@ class CIIBasicTest extends TestCase
         $this->assertCount(1, $xsdErrors);
     }
 
-    public function testValidateXSDSuccess(): void
+    #[DataProvider('provideBasicXml')]
+    public function testValidateXSDSuccess(string $filename): void
     {
         $document = new \DOMDocument();
-        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIBasicInvoice.xml'));
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/Basic/' . $filename . '.xml'));
 
         $xsdErrors = CrossIndustryInvoiceUtils::validateXSD($document, 'BASIC');
 
         $this->assertCount(0, $xsdErrors);
     }
 
-    /**
-     * @testdox Create Basic profile with mandatory fields
-     */
+    #[TestDox('Create Basic profile with mandatory fields')]
     public function testCreateBasicProfileWithMandatoryFields(): void
     {
         $invoice = new CrossIndustryInvoice(
@@ -148,9 +149,7 @@ class CIIBasicTest extends TestCase
         $this->assertIsString($xml->saveXML());
     }
 
-    /**
-     * @testdox Create BasicWL profile with mandatory and optional fields
-     */
+    #[TestDox('Create BasicWL profile with mandatory and optional fields')]
     public function testCreateBasicWLProfileWithMandatoryAndOptionalFields(): void
     {
         $invoice = new CrossIndustryInvoice(
@@ -247,15 +246,30 @@ class CIIBasicTest extends TestCase
         $this->assertIsString($xml->saveXML());
     }
 
-    /**
-     * @testdox Create Basic profile from XML
-     */
-    public function testCreateBasicProfileFromXML(): void
+    #[TestDox('Create Basic profile from XML')]
+    #[DataProvider('provideBasicXml')]
+    public function testCreateBasicProfileFromXML(string $filename): void
     {
         $document = new \DOMDocument();
-        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIBasicInvoice.xml'));
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/Basic/' . $filename . '.xml'));
 
         $invoice = CrossIndustryInvoice::fromXML($document);
         $this->assertInstanceOf(CrossIndustryInvoice::class, $invoice);
+    }
+
+    public static function provideBasicXml(): iterable
+    {
+        yield '#1' => ['CIIBasicInvoice'];
+        yield '#2' => ['CIIBasicInvoice_V7_01'];
+        yield '#3' => ['CIIBasicInvoice_V7_02'];
+        yield '#4' => ['CIIBasicInvoice_V7_03'];
+        yield '#5' => ['CIIBasicInvoice_V7_04'];
+        yield '#6' => ['CIIBasicInvoice_V7_05'];
+        yield '#7' => ['CIIBasicInvoice_V7_06'];
+        yield '#8' => ['CIIBasicInvoice_V7_07'];
+        yield '#9' => ['CIIBasicInvoice_V7_08'];
+        yield '#10' => ['CIIBasicInvoice_V7_09'];
+        yield '#11' => ['CIIBasicInvoice_V7_10'];
+        yield '#12' => ['CIIBasicInvoice_V7_11'];
     }
 }
