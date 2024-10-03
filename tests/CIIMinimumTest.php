@@ -2,6 +2,8 @@
 
 namespace Tiime\CrossIndustryInvoice\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Tiime\CrossIndustryInvoice\DataType\BusinessProcessSpecifiedDocumentContextParameter;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
@@ -51,19 +53,18 @@ class CIIMinimumTest extends TestCase
         $this->assertCount(1, $xsdErrors);
     }
 
-    public function testValidateXSDSuccess(): void
+    #[DataProvider('provideMinimumXml')]
+    public function testValidateXSDSuccess(string $filename): void
     {
         $document = new \DOMDocument();
-        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIMinimumInvoice.xml'));
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/Minimum/' . $filename . '.xml'));
 
         $xsdErrors = CrossIndustryInvoiceUtils::validateXSD($document, 'MINIMUM');
 
         $this->assertCount(0, $xsdErrors);
     }
 
-    /**
-     * @testdox Create Minimum profile with mandatory fields
-     */
+    #[TestDox('Create Minimum profile with mandatory fields')]
     public function testCreateMinimumProfileWithMandatoryFields(): void
     {
         $invoice = new CrossIndustryInvoice(
@@ -96,9 +97,7 @@ class CIIMinimumTest extends TestCase
         $this->assertIsString($xml->saveXML());
     }
 
-    /**
-     * @testdox Create Minimum profile with mandatory and optional fields
-     */
+    #[TestDox('Create Minimum profile with mandatory and optional fields')]
     public function testCreateMinimumProfileWithMandatoryAndOptionalFields(): void
     {
         /** ExchangedDocumentContext part */
@@ -164,15 +163,30 @@ class CIIMinimumTest extends TestCase
         $this->assertIsString($xml->saveXML());
     }
 
-    /**
-     * @testdox Create Minimum profile from XML
-     */
-    public function testCreateMinimumProfileFromXML(): void
+    #[TestDox('Create Minimum profile from XML')]
+    #[DataProvider('provideMinimumXml')]
+    public function testCreateMinimumProfileFromXML(string $filename): void
     {
         $document = new \DOMDocument();
-        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIMinimumInvoice.xml'));
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/Minimum/' . $filename . '.xml'));
 
         $invoice = CrossIndustryInvoice::fromXML($document);
         $this->assertInstanceOf(CrossIndustryInvoice::class, $invoice);
+    }
+
+    public static function provideMinimumXml(): iterable
+    {
+        yield '#1' => ['CIIMinimumInvoice'];
+        yield '#2' => ['CIIMinimumInvoice_V7_01'];
+        yield '#3' => ['CIIMinimumInvoice_V7_02'];
+        yield '#4' => ['CIIMinimumInvoice_V7_03'];
+        yield '#5' => ['CIIMinimumInvoice_V7_04'];
+        yield '#6' => ['CIIMinimumInvoice_V7_05'];
+        yield '#7' => ['CIIMinimumInvoice_V7_06'];
+        yield '#8' => ['CIIMinimumInvoice_V7_07'];
+        yield '#9' => ['CIIMinimumInvoice_V7_08'];
+        yield '#10' => ['CIIMinimumInvoice_V7_09'];
+        yield '#11' => ['CIIMinimumInvoice_V7_10'];
+        yield '#12' => ['CIIMinimumInvoice_V7_11'];
     }
 }
