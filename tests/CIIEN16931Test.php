@@ -2,6 +2,8 @@
 
 namespace Tiime\CrossIndustryInvoice\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
 use Tiime\CrossIndustryInvoice\DataType\AdditionalReferencedDocumentInvoiceLineObjectIdentifier;
@@ -121,19 +123,18 @@ class CIIEN16931Test extends TestCase
         $this->assertCount(1, $xsdErrors);
     }
 
-    public function testValidateXSDSuccess(): void
+    #[DataProvider('provideEN16931Xml')]
+    public function testValidateXSDSuccess(string $filename): void
     {
         $document = new \DOMDocument();
-        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIEN16931Invoice.xml'));
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/EN16931/' . $filename . '.xml'));
 
         $xsdErrors = CrossIndustryInvoiceUtils::validateXSD($document, 'EN16931');
 
         $this->assertCount(0, $xsdErrors);
     }
 
-    /**
-     * @testdox Create EN-16931 profile with mandatory fields
-     */
+    #[TestDox('Create EN-16931 profile with mandatory fields')]
     public function testCreateEN16931ProfileWithMandatoryFields(): void
     {
         $invoice = new CrossIndustryInvoice(
@@ -187,9 +188,7 @@ class CIIEN16931Test extends TestCase
         $this->assertIsString($xml->saveXML());
     }
 
-    /**
-     * @testdox Create EN16931 profile with mandatory and optional fields
-     */
+    #[TestDox('Create EN16931 profile with mandatory and optional fields')]
     public function testCreateEN16931ProfileWithMandatoryAndOptionalFields(): void
     {
         $invoice = new CrossIndustryInvoice(
@@ -419,15 +418,30 @@ class CIIEN16931Test extends TestCase
         $this->assertIsString($xml->saveXML());
     }
 
-    /**
-     * @testdox Create EN16931 profile from XML
-     */
-    public function testCreateEN16931ProfileFromXML(): void
+    #[TestDox('Create EN16931 profile from XML')]
+    #[DataProvider('provideEN16931Xml')]
+    public function testCreateEN16931ProfileFromXML(string $filename): void
     {
         $document = new \DOMDocument();
-        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIEN16931Invoice.xml'));
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/EN16931/' . $filename . '.xml'));
 
         $invoice = CrossIndustryInvoice::fromXML($document);
         $this->assertInstanceOf(CrossIndustryInvoice::class, $invoice);
+    }
+
+    public static function provideEN16931Xml(): iterable
+    {
+        yield '#1' => ['CIIEN16931Invoice'];
+        yield '#2' => ['CIIEN16931Invoice_V7_01'];
+        yield '#3' => ['CIIEN16931Invoice_V7_02'];
+        yield '#4' => ['CIIEN16931Invoice_V7_03'];
+        yield '#5' => ['CIIEN16931Invoice_V7_04'];
+        yield '#6' => ['CIIEN16931Invoice_V7_05'];
+        yield '#7' => ['CIIEN16931Invoice_V7_06'];
+        yield '#8' => ['CIIEN16931Invoice_V7_07'];
+        yield '#9' => ['CIIEN16931Invoice_V7_08'];
+        yield '#10' => ['CIIEN16931Invoice_V7_09'];
+        yield '#11' => ['CIIEN16931Invoice_V7_10'];
+        yield '#12' => ['CIIEN16931Invoice_V7_11'];
     }
 }
