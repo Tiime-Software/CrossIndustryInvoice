@@ -12,42 +12,19 @@ class IncludedSupplyChainTradeLineItem
     protected const XML_NODE = 'ram:IncludedSupplyChainTradeLineItem';
 
     /**
-     * BT-126-00.
+     * @param AssociatedDocumentLineDocument $associatedDocumentLineDocument - BT-126-00
+     * @param SpecifiedTradeProduct          $specifiedTradeProduct          - BG-31
+     * @param SpecifiedLineTradeAgreement    $specifiedLineTradeAgreement    - BG-29
+     * @param SpecifiedLineTradeDelivery     $specifiedLineTradeDelivery     - BT-129-00
+     * @param SpecifiedLineTradeSettlement   $specifiedLineTradeSettlement   - BG-30-00
      */
-    protected AssociatedDocumentLineDocument $associatedDocumentLineDocument;
-
-    /**
-     * BG-31.
-     */
-    protected SpecifiedTradeProduct $specifiedTradeProduct;
-
-    /**
-     * BG-29.
-     */
-    protected SpecifiedLineTradeAgreement $specifiedLineTradeAgreement;
-
-    /**
-     * BT-129-00.
-     */
-    protected SpecifiedLineTradeDelivery $specifiedLineTradeDelivery;
-
-    /**
-     * BG-30-00.
-     */
-    protected SpecifiedLineTradeSettlement $specifiedLineTradeSettlement;
-
     public function __construct(
-        AssociatedDocumentLineDocument $associatedDocumentLineDocument,
-        SpecifiedTradeProduct $specifiedTradeProduct,
-        SpecifiedLineTradeAgreement $specifiedLineTradeAgreement,
-        SpecifiedLineTradeDelivery $specifiedLineTradeDelivery,
-        SpecifiedLineTradeSettlement $specifiedLineTradeSettlement,
+        protected AssociatedDocumentLineDocument $associatedDocumentLineDocument,
+        protected SpecifiedTradeProduct $specifiedTradeProduct,
+        protected SpecifiedLineTradeAgreement $specifiedLineTradeAgreement,
+        protected SpecifiedLineTradeDelivery $specifiedLineTradeDelivery,
+        protected SpecifiedLineTradeSettlement $specifiedLineTradeSettlement,
     ) {
-        $this->associatedDocumentLineDocument = $associatedDocumentLineDocument;
-        $this->specifiedTradeProduct          = $specifiedTradeProduct;
-        $this->specifiedLineTradeAgreement    = $specifiedLineTradeAgreement;
-        $this->specifiedLineTradeDelivery     = $specifiedLineTradeDelivery;
-        $this->specifiedLineTradeSettlement   = $specifiedLineTradeSettlement;
     }
 
     public function getAssociatedDocumentLineDocument(): AssociatedDocumentLineDocument

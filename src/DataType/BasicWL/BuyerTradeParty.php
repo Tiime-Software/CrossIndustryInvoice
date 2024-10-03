@@ -26,11 +26,6 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Buyer
     protected ?BuyerGlobalIdentifier $globalIdentifier;
 
     /**
-     * BG-8.
-     */
-    protected PostalTradeAddress $postalTradeAddress;
-
-    /**
      * BT-49-00.
      */
     protected ?URIUniversalCommunication $URIUniversalCommunication;
@@ -40,11 +35,14 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Buyer
      */
     protected ?SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA;
 
-    public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
-    {
+    /**
+     * @param PostalTradeAddress $postalTradeAddress - BG-8
+     */
+    public function __construct(
+        string $name,
+        protected PostalTradeAddress $postalTradeAddress,
+    ) {
         parent::__construct($name);
-
-        $this->postalTradeAddress         = $postalTradeAddress;
         $this->identifier                 = null;
         $this->globalIdentifier           = null;
         $this->URIUniversalCommunication  = null;

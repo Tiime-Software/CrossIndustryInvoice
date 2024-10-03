@@ -18,13 +18,11 @@ class SpecifiedTradeProduct
     protected ?StandardItemIdentifier $globalIdentifier;
 
     /**
-     * BT-153.
+     * @param string $name - BT-153
      */
-    protected string $name;
-
-    public function __construct(string $name)
-    {
-        $this->name             = $name;
+    public function __construct(
+        protected string $name,
+    ) {
         $this->globalIdentifier = null;
     }
 

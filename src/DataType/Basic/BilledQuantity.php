@@ -20,14 +20,13 @@ class BilledQuantity
     private Quantity $quantity;
 
     /**
-     * BT-130.
+     * @param UnitOfMeasurement $unitCode - BT-130
      */
-    private UnitOfMeasurement $unitCode;
-
-    public function __construct(float $quantity, UnitOfMeasurement $unitCode)
-    {
+    public function __construct(
+        float $quantity,
+        private UnitOfMeasurement $unitCode,
+    ) {
         $this->quantity = new Quantity($quantity);
-        $this->unitCode = $unitCode;
     }
 
     public function getQuantity(): Quantity

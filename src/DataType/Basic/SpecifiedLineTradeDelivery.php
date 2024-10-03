@@ -14,13 +14,11 @@ class SpecifiedLineTradeDelivery
     protected const XML_NODE = 'ram:SpecifiedLineTradeDelivery';
 
     /**
-     * BT-129 & BT-130.
+     * @param BilledQuantity $billedQuantity - BT-129 & BT-130
      */
-    private BilledQuantity $billedQuantity;
-
-    public function __construct(BilledQuantity $billedQuantity)
-    {
-        $this->billedQuantity = $billedQuantity;
+    public function __construct(
+        private BilledQuantity $billedQuantity,
+    ) {
     }
 
     public function getBilledQuantity(): BilledQuantity

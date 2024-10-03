@@ -12,11 +12,6 @@ class SpecifiedLineTradeSettlement
     protected const XML_NODE = 'ram:SpecifiedLineTradeSettlement';
 
     /**
-     * BG-30.
-     */
-    protected ApplicableTradeTax $applicableTradeTax;
-
-    /**
      * BG-26.
      */
     protected ?BillingSpecifiedPeriod $billingSpecifiedPeriod;
@@ -36,19 +31,16 @@ class SpecifiedLineTradeSettlement
     protected array $specifiedTradeCharges;
 
     /**
-     * BT-131-00.
+     * @param ApplicableTradeTax                            $applicableTradeTax                            - BG-30
+     * @param SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation - BT-131-00
      */
-    protected SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation;
-
     public function __construct(
-        ApplicableTradeTax $applicableTradeTax,
-        SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation,
+        protected ApplicableTradeTax $applicableTradeTax,
+        protected SpecifiedTradeSettlementLineMonetarySummation $specifiedTradeSettlementLineMonetarySummation,
     ) {
-        $this->applicableTradeTax                            = $applicableTradeTax;
-        $this->specifiedTradeSettlementLineMonetarySummation = $specifiedTradeSettlementLineMonetarySummation;
-        $this->specifiedTradeAllowances                      = [];
-        $this->specifiedTradeCharges                         = [];
-        $this->billingSpecifiedPeriod                        = null;
+        $this->specifiedTradeAllowances = [];
+        $this->specifiedTradeCharges    = [];
+        $this->billingSpecifiedPeriod   = null;
     }
 
     public function getApplicableTradeTax(): ApplicableTradeTax

@@ -38,11 +38,6 @@ class HeaderApplicableTradeTax
     protected Amount $basisAmount;
 
     /**
-     * BT-118.
-     */
-    protected VatCategory $categoryCode;
-
-    /**
      * BT-121.
      */
     protected ?VatExoneration $exemptionReasonCode;
@@ -57,11 +52,16 @@ class HeaderApplicableTradeTax
      */
     protected ?Percentage $rateApplicablePercent;
 
-    public function __construct(float $calculatedAmount, float $basisAmount, VatCategory $categoryCode)
-    {
+    /**
+     * @param VatCategory $categoryCode - BT-118
+     */
+    public function __construct(
+        float $calculatedAmount,
+        float $basisAmount,
+        protected VatCategory $categoryCode,
+    ) {
         $this->calculatedAmount      = new Amount($calculatedAmount);
         $this->basisAmount           = new Amount($basisAmount);
-        $this->categoryCode          = $categoryCode;
         $this->typeCode              = 'VAT';
         $this->exemptionReason       = null;
         $this->exemptionReasonCode   = null;
