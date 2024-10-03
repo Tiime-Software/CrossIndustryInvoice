@@ -2,6 +2,8 @@
 
 namespace Tiime\CrossIndustryInvoice\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Tiime\CrossIndustryInvoice\BasicWL\CrossIndustryInvoice;
 use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
@@ -73,19 +75,18 @@ class CIIBasicWLTest extends TestCase
         $this->assertCount(1, $xsdErrors);
     }
 
-    public function testValidateXSDSuccess(): void
+    #[DataProvider('provideBasicWLXml')]
+    public function testValidateXSDSuccess(string $filename): void
     {
         $document = new \DOMDocument();
-        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIBasicWLInvoice.xml'));
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/BasicWL/' . $filename . '.xml'));
 
         $xsdErrors = CrossIndustryInvoiceUtils::validateXSD($document, 'BASICWL');
 
         $this->assertCount(0, $xsdErrors);
     }
 
-    /**
-     * @testdox Create BasicWL profile with mandatory fields
-     */
+    #[TestDox('Create BasicWL profile with mandatory fields')]
     public function testCreateBasicWLProfileWithMandatoryFields(): void
     {
         $invoice = new CrossIndustryInvoice(
@@ -121,9 +122,7 @@ class CIIBasicWLTest extends TestCase
         $this->assertIsString($xml->saveXML());
     }
 
-    /**
-     * @testdox Create BasicWL profile with mandatory and optional fields
-     */
+    #[TestDox('Create BasicWL profile with mandatory and optional fields')]
     public function testCreateBasicWLProfileWithMandatoryAndOptionalFields(): void
     {
         $invoice = new CrossIndustryInvoice(
@@ -208,15 +207,30 @@ class CIIBasicWLTest extends TestCase
         $this->assertIsString($xml->saveXML());
     }
 
-    /**
-     * @testdox Create BasicWL profile from XML
-     */
-    public function testCreateBasicWLProfileFromXML(): void
+    #[TestDox('Create BasicWL profile from XML')]
+    #[DataProvider('provideBasicWLXml')]
+    public function testCreateBasicWLProfileFromXML(string $filename): void
     {
         $document = new \DOMDocument();
-        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/CIIBasicWLInvoice.xml'));
+        $document->loadXML(file_get_contents(__DIR__ . '/Fixtures/BasicWL/' . $filename . '.xml'));
 
         $invoice = CrossIndustryInvoice::fromXML($document);
         $this->assertInstanceOf(CrossIndustryInvoice::class, $invoice);
+    }
+
+    public static function provideBasicWLXml(): iterable
+    {
+        yield '#1' => ['CIIBasicWLInvoice'];
+        yield '#2' => ['CIIBasicWLInvoice_V7_01'];
+        yield '#3' => ['CIIBasicWLInvoice_V7_02'];
+        yield '#4' => ['CIIBasicWLInvoice_V7_03'];
+        yield '#5' => ['CIIBasicWLInvoice_V7_04'];
+        yield '#6' => ['CIIBasicWLInvoice_V7_05'];
+        yield '#7' => ['CIIBasicWLInvoice_V7_06'];
+        yield '#8' => ['CIIBasicWLInvoice_V7_07'];
+        yield '#9' => ['CIIBasicWLInvoice_V7_08'];
+        yield '#10' => ['CIIBasicWLInvoice_V7_09'];
+        yield '#11' => ['CIIBasicWLInvoice_V7_10'];
+        yield '#12' => ['CIIBasicWLInvoice_V7_11'];
     }
 }
