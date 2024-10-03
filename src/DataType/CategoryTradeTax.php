@@ -20,18 +20,16 @@ class CategoryTradeTax
     private string $typeCode;
 
     /**
-     * BT-95.
-     */
-    private VatCategory $categoryCode;
-
-    /**
      * BT-96.
      */
     private ?Percentage $rateApplicablePercent;
 
-    public function __construct(VatCategory $categoryCode)
-    {
-        $this->categoryCode          = $categoryCode;
+    /**
+     * @param VatCategory $categoryCode - BT-95
+     */
+    public function __construct(
+        private VatCategory $categoryCode,
+    ) {
         $this->typeCode              = 'VAT';
         $this->rateApplicablePercent = null;
     }

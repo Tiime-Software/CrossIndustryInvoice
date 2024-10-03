@@ -9,24 +9,18 @@ class ClassCode
     protected const XML_NODE = 'ram:ClassCode';
 
     /**
-     * BT-158.
-     */
-    private string $value;
-
-    /**
-     * BT-158-1.
-     */
-    private ItemTypeCode $listIdentifier;
-
-    /**
      * BT-158-2.
      */
     private ?string $listVersionIdentifier;
 
-    public function __construct(string $value, ItemTypeCode $listIdentifier)
-    {
-        $this->value                 = $value;
-        $this->listIdentifier        = $listIdentifier;
+    /**
+     * @param string       $value          - BT-158
+     * @param ItemTypeCode $listIdentifier - BT-158-1
+     */
+    public function __construct(
+        private string $value,
+        private ItemTypeCode $listIdentifier,
+    ) {
         $this->listVersionIdentifier = null;
     }
 

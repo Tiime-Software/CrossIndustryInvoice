@@ -12,13 +12,11 @@ class LineIncludedNote
     protected const XML_NODE = 'ram:IncludedNote';
 
     /**
-     * BT-127.
+     * @param string $content - BT-127
      */
-    private string $content;
-
-    public function __construct(string $content)
-    {
-        $this->content = $content;
+    public function __construct(
+        private string $content,
+    ) {
     }
 
     public function getContent(): string
