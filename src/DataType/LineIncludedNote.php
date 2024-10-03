@@ -48,8 +48,12 @@ class LineIncludedNote
         /** @var \DOMElement $lineIncludedNoteElement */
         $lineIncludedNoteElement = $lineIncludedNoteElements->item(0);
 
-        $content = $xpath->query('./ram:Content', $lineIncludedNoteElement);
+        $contentElements = $xpath->query('./ram:Content', $lineIncludedNoteElement);
 
-        return new self($content);
+        if (1 !== $contentElements->count()) {
+            throw new \Exception('Malformed');
+        }
+
+        return new self($contentElements->item(0)->nodeValue);
     }
 }

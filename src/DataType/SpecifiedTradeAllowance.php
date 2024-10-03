@@ -49,8 +49,10 @@ class SpecifiedTradeAllowance
     /**
      * @param CategoryTradeTax $allowanceCategoryTradeTax - BT-95-00
      */
-    public function __construct(float $actualAmount, private CategoryTradeTax $allowanceCategoryTradeTax)
-    {
+    public function __construct(
+        float $actualAmount,
+        private CategoryTradeTax $allowanceCategoryTradeTax,
+    ) {
         $this->allowanceChargeIndicator = new AllowanceIndicator();
         $this->actualAmount             = new Amount($actualAmount);
         $this->calculationPercent       = null;
@@ -192,6 +194,9 @@ class SpecifiedTradeAllowance
             $actualAmount = $actualAmountElements->item(0)->nodeValue;
 
             $categoryTradeTax = CategoryTradeTax::fromXML($xpath, $specifiedTradeAllowanceElement);
+
+            // Look if node is well constructed, already created in the constructor
+            AllowanceIndicator::fromXML($xpath, $specifiedTradeAllowanceElement);
 
             $specifiedTradeAllowance = new self((float) $actualAmount, $categoryTradeTax);
 
