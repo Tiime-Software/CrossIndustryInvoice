@@ -14,13 +14,11 @@ class SellerOrderReferencedDocument
     protected const XML_NODE = 'ram:SellerOrderReferencedDocument';
 
     /**
-     * BT-14.
+     * @param SalesOrderReference $issuerAssignedIdentifier - BT-14
      */
-    private SalesOrderReference $issuerAssignedIdentifier;
-
-    public function __construct(SalesOrderReference $issuerAssignedIdentifier)
-    {
-        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
+    public function __construct(
+        private SalesOrderReference $issuerAssignedIdentifier,
+    ) {
     }
 
     public function getIssuerAssignedIdentifier(): SalesOrderReference

@@ -14,18 +14,15 @@ class SpecifiedTaxRegistrationVA
     protected const XML_NODE = 'ram:SpecifiedTaxRegistration';
 
     /**
-     * BT-48 or BT-63 or BT-31.
-     */
-    private VatIdentifier $identifier;
-
-    /**
      * BT-48-0 or BT-63-0 or BT-31-0.
      */
     private string $schemeIdentifier;
 
-    public function __construct(VatIdentifier $identifier)
+    /**
+     * @param VatIdentifier $identifier - BT-48 or BT-63 or BT-31
+     */
+    public function __construct(private VatIdentifier $identifier)
     {
-        $this->identifier       = $identifier;
         $this->schemeIdentifier = 'VA';
     }
 

@@ -12,19 +12,16 @@ class StartDateTime
     protected const XML_NODE = 'ram:StartDateTime';
 
     /**
-     * BT-73.
-     */
-    private \DateTimeInterface $dateTimeString;
-
-    /**
      * BT-73-0.
      */
     private string $format;
 
-    public function __construct(\DateTimeInterface $dateTimeString)
+    /**
+     * @param \DateTimeInterface $dateTimeString - BT-73
+     */
+    public function __construct(private \DateTimeInterface $dateTimeString)
     {
-        $this->dateTimeString = $dateTimeString;
-        $this->format         = '102';
+        $this->format = '102';
     }
 
     public function getDateTimeString(): \DateTimeInterface

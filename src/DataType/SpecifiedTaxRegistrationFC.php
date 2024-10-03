@@ -14,18 +14,15 @@ class SpecifiedTaxRegistrationFC
     protected const XML_NODE = 'ram:SpecifiedTaxRegistration';
 
     /**
-     * BT-32.
-     */
-    private VatIdentifier $identifier;
-
-    /**
      * BT-32-0.
      */
     private string $schemeIdentifier;
 
-    public function __construct(VatIdentifier $identifier)
+    /**
+     * @param VatIdentifier $identifier - BT-32
+     */
+    public function __construct(private VatIdentifier $identifier)
     {
-        $this->identifier       = $identifier;
         $this->schemeIdentifier = 'FC';
     }
 

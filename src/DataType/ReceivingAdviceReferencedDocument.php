@@ -14,13 +14,11 @@ class ReceivingAdviceReferencedDocument
     protected const XML_NODE = 'ram:ReceivingAdviceReferencedDocument';
 
     /**
-     * BT-15.
+     * @param ReceivingAdviceReference $issuerAssignedIdentifier - BT-15
      */
-    private ReceivingAdviceReference $issuerAssignedIdentifier;
-
-    public function __construct(ReceivingAdviceReference $issuerAssignedIdentifier)
-    {
-        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
+    public function __construct(
+        private ReceivingAdviceReference $issuerAssignedIdentifier,
+    ) {
     }
 
     public function getIssuerAssignedIdentifier(): ReceivingAdviceReference

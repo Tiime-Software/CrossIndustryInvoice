@@ -17,14 +17,11 @@ class TaxTotalAmount
     private Amount $value;
 
     /**
-     * BT-110-0.
+     * @param CurrencyCode $currencyIdentifier - BT-110-0
      */
-    private CurrencyCode $currencyIdentifier;
-
-    public function __construct(float $value, CurrencyCode $currencyIdentifier)
+    public function __construct(float $value, private CurrencyCode $currencyIdentifier)
     {
-        $this->value              = new Amount($value);
-        $this->currencyIdentifier = $currencyIdentifier;
+        $this->value = new Amount($value);
     }
 
     public function getValue(): Amount

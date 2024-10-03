@@ -14,13 +14,11 @@ class ReceivableSpecifiedTradeAccountingAccount
     protected const XML_NODE = 'ram:ReceivableSpecifiedTradeAccountingAccount';
 
     /**
-     * BT-19.
+     * @param string $identifier - BT-19
      */
-    private string $identifier;
-
-    public function __construct(string $identifier)
-    {
-        $this->identifier = $identifier;
+    public function __construct(
+        private string $identifier,
+    ) {
     }
 
     public function getIdentifier(): string

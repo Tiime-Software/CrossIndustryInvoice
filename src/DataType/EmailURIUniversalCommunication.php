@@ -12,13 +12,11 @@ class EmailURIUniversalCommunication
     protected const XML_NODE = 'ram:EmailURIUniversalCommunication';
 
     /**
-     * BT-43 or BT-58.
+     * @param string $uriIdentifier - BT-43 or BT-58
      */
-    private string $uriIdentifier;
-
-    public function __construct(string $uriIdentifier)
-    {
-        $this->uriIdentifier = $uriIdentifier;
+    public function __construct(
+        private string $uriIdentifier,
+    ) {
     }
 
     public function getUriIdentifier(): string

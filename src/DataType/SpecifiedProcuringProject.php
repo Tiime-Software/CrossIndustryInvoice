@@ -14,19 +14,16 @@ class SpecifiedProcuringProject
     protected const XML_NODE = 'ram:SpecifiedProcuringProject';
 
     /**
-     * BT-11.
-     */
-    private ProjectReference $identifier;
-
-    /**
      * BT-11-0.
      */
     private string $name;
 
-    public function __construct(ProjectReference $identifier)
+    /**
+     * @param ProjectReference $identifier - BT-11
+     */
+    public function __construct(private ProjectReference $identifier)
     {
-        $this->identifier = $identifier;
-        $this->name       = 'Project Reference';
+        $this->name = 'Project Reference';
     }
 
     public function getIdentifier(): ProjectReference

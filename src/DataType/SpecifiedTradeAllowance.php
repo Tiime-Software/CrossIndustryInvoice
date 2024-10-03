@@ -47,19 +47,16 @@ class SpecifiedTradeAllowance
     private ?string $reason;
 
     /**
-     * BT-95-00.
+     * @param CategoryTradeTax $allowanceCategoryTradeTax - BT-95-00
      */
-    private CategoryTradeTax $allowanceCategoryTradeTax;
-
-    public function __construct(float $actualAmount, CategoryTradeTax $allowanceCategoryTradeTax)
+    public function __construct(float $actualAmount, private CategoryTradeTax $allowanceCategoryTradeTax)
     {
-        $this->allowanceChargeIndicator  = new AllowanceIndicator();
-        $this->actualAmount              = new Amount($actualAmount);
-        $this->allowanceCategoryTradeTax = $allowanceCategoryTradeTax;
-        $this->calculationPercent        = null;
-        $this->basisAmount               = null;
-        $this->reasonCode                = null;
-        $this->reason                    = null;
+        $this->allowanceChargeIndicator = new AllowanceIndicator();
+        $this->actualAmount             = new Amount($actualAmount);
+        $this->calculationPercent       = null;
+        $this->basisAmount              = null;
+        $this->reasonCode               = null;
+        $this->reason                   = null;
     }
 
     public function getAllowanceChargeIndicator(): AllowanceIndicator

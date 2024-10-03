@@ -19,13 +19,11 @@ class ExchangedDocumentContext
     private ?BusinessProcessSpecifiedDocumentContextParameter $businessProcessSpecifiedDocumentContextParameter;
 
     /**
-     * BT-24-00.
+     * @param GuidelineSpecifiedDocumentContextParameter $guidelineSpecifiedDocumentContextParameter - BT-24-00
      */
-    private GuidelineSpecifiedDocumentContextParameter $guidelineSpecifiedDocumentContextParameter;
-
-    public function __construct(GuidelineSpecifiedDocumentContextParameter $guidelineSpecifiedDocumentContextParameter)
-    {
-        $this->guidelineSpecifiedDocumentContextParameter       = $guidelineSpecifiedDocumentContextParameter;
+    public function __construct(
+        private GuidelineSpecifiedDocumentContextParameter $guidelineSpecifiedDocumentContextParameter,
+    ) {
         $this->businessProcessSpecifiedDocumentContextParameter = null;
     }
 

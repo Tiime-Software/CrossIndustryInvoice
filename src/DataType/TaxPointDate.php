@@ -12,19 +12,16 @@ class TaxPointDate
     protected const XML_NODE = 'ram:TaxPointDate';
 
     /**
-     * BT-7.
-     */
-    private \DateTimeInterface $dateString;
-
-    /**
      * BT-7-0.
      */
     private readonly string $format;
 
-    public function __construct(\DateTimeInterface $dateString)
+    /**
+     * @param \DateTimeInterface $dateString - BT-7
+     */
+    public function __construct(private \DateTimeInterface $dateString)
     {
-        $this->dateString = $dateString;
-        $this->format     = '102';
+        $this->format = '102';
     }
 
     public function getDateString(): \DateTimeInterface
