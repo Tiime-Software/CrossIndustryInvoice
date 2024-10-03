@@ -7,11 +7,9 @@ use Twig\Environment;
 
 class TwigRenderer implements CrossIndustryInvoiceRendererInterface
 {
-    private Environment $environment;
-
-    public function __construct(Environment $environment)
-    {
-        $this->environment = $environment;
+    public function __construct(
+        private Environment $environment,
+    ) {
     }
 
     public function render(CrossIndustryInvoiceInterface $crossIndustryInvoice, string $template, array $context = []): string

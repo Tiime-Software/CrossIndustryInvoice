@@ -15,28 +15,15 @@ class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
     protected const XML_NODE = 'rsm:CrossIndustryInvoice';
 
     /**
-     * BG-2.
+     * @param ExchangedDocumentContext    $exchangedDocumentContext    - BG-2
+     * @param ExchangedDocument           $exchangedDocument           - BT-1-00
+     * @param SupplyChainTradeTransaction $supplyChainTradeTransaction - BG-25-00
      */
-    private ExchangedDocumentContext $exchangedDocumentContext;
-
-    /**
-     * BT-1-00.
-     */
-    private ExchangedDocument $exchangedDocument;
-
-    /**
-     * BG-25-00.
-     */
-    private SupplyChainTradeTransaction $supplyChainTradeTransaction;
-
     public function __construct(
-        ExchangedDocumentContext $exchangedDocumentContext,
-        ExchangedDocument $exchangedDocument,
-        SupplyChainTradeTransaction $supplyChainTradeTransaction,
+        private ExchangedDocumentContext $exchangedDocumentContext,
+        private ExchangedDocument $exchangedDocument,
+        private SupplyChainTradeTransaction $supplyChainTradeTransaction,
     ) {
-        $this->exchangedDocumentContext    = $exchangedDocumentContext;
-        $this->exchangedDocument           = $exchangedDocument;
-        $this->supplyChainTradeTransaction = $supplyChainTradeTransaction;
     }
 
     public function getExchangedDocumentContext(): ExchangedDocumentContext

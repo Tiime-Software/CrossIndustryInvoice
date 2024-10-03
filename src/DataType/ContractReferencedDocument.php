@@ -14,13 +14,11 @@ class ContractReferencedDocument
     protected const XML_NODE = 'ram:ContractReferencedDocument';
 
     /**
-     * BT-12.
+     * @param ContractReference $issuerAssignedIdentifier - BT-12
      */
-    private ContractReference $issuerAssignedIdentifier;
-
-    public function __construct(ContractReference $issuerAssignedIdentifier)
-    {
-        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
+    public function __construct(
+        private ContractReference $issuerAssignedIdentifier,
+    ) {
     }
 
     public function getIssuerAssignedIdentifier(): ContractReference
