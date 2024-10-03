@@ -16,25 +16,15 @@ class ExchangedDocument
     protected const XML_NODE = 'rsm:ExchangedDocument';
 
     /**
-     * BT-1.
+     * @param InvoiceIdentifier $identifier    - BT-1
+     * @param InvoiceTypeCode   $typeCode      - BT-3
+     * @param IssueDateTime     $issueDateTime - BT-2-00
      */
-    private InvoiceIdentifier $identifier;
-
-    /**
-     * BT-3.
-     */
-    private InvoiceTypeCode $typeCode;
-
-    /**
-     * BT-2-00.
-     */
-    private IssueDateTime $issueDateTime;
-
-    public function __construct(InvoiceIdentifier $identifier, InvoiceTypeCode $typeCode, IssueDateTime $issueDateTime)
-    {
-        $this->identifier    = $identifier;
-        $this->typeCode      = $typeCode;
-        $this->issueDateTime = $issueDateTime;
+    public function __construct(
+        private InvoiceIdentifier $identifier,
+        private InvoiceTypeCode $typeCode,
+        private IssueDateTime $issueDateTime,
+    ) {
     }
 
     public function getIdentifier(): InvoiceIdentifier

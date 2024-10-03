@@ -12,13 +12,11 @@ class ActualDeliverySupplyChainEvent
     protected const XML_NODE = 'ram:ActualDeliverySupplyChainEvent';
 
     /**
-     * BT-72-01.
+     * @param OccurrenceDateTime $occurrenceDateTime - BT-72-01
      */
-    private OccurrenceDateTime $occurrenceDateTime;
-
-    public function __construct(OccurrenceDateTime $occurrenceDateTime)
-    {
-        $this->occurrenceDateTime = $occurrenceDateTime;
+    public function __construct(
+        private OccurrenceDateTime $occurrenceDateTime,
+    ) {
     }
 
     public function getOccurrenceDateTime(): OccurrenceDateTime

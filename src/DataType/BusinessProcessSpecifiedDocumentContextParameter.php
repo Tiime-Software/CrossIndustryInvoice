@@ -12,13 +12,11 @@ class BusinessProcessSpecifiedDocumentContextParameter
     protected const XML_NODE = 'ram:BusinessProcessSpecifiedDocumentContextParameter';
 
     /**
-     * BT-23.
+     * @param string $identifier - BT-23
      */
-    private string $identifier;
-
-    public function __construct(string $identifier)
-    {
-        $this->identifier = $identifier;
+    public function __construct(
+        private string $identifier,
+    ) {
     }
 
     public function getIdentifier(): string

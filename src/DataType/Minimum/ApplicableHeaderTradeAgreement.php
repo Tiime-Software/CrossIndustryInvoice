@@ -19,24 +19,18 @@ class ApplicableHeaderTradeAgreement
     protected ?string $buyerReference;
 
     /**
-     * BG-4.
-     */
-    protected SellerTradeParty $sellerTradeParty;
-
-    /**
-     * BG-7.
-     */
-    protected BuyerTradeParty $buyerTradeParty;
-
-    /**
      * BT-13-00.
      */
     protected ?BuyerOrderReferencedDocument $buyerOrderReferencedDocument;
 
-    public function __construct(SellerTradeParty $sellerTradeParty, BuyerTradeParty $buyerTradeParty)
-    {
-        $this->sellerTradeParty             = $sellerTradeParty;
-        $this->buyerTradeParty              = $buyerTradeParty;
+    /**
+     * @param SellerTradeParty $sellerTradeParty - BG-4
+     * @param BuyerTradeParty  $buyerTradeParty  - BG-7
+     */
+    public function __construct(
+        protected SellerTradeParty $sellerTradeParty,
+        protected BuyerTradeParty $buyerTradeParty,
+    ) {
         $this->buyerOrderReferencedDocument = null;
         $this->buyerReference               = null;
     }

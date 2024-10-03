@@ -16,11 +16,6 @@ class AdditionalReferencedDocumentTenderOrLotReference
     protected const XML_NODE = 'ram:AdditionalReferencedDocument';
 
     /**
-     * BT-17.
-     */
-    private TenderOrLotReference $issuerAssignedIdentifier;
-
-    /**
      * BT-124.
      */
     private ?string $uriIdentifier;
@@ -40,13 +35,16 @@ class AdditionalReferencedDocumentTenderOrLotReference
      */
     private ?BinaryObject $attachmentBinaryObject;
 
-    public function __construct(TenderOrLotReference $issuerAssignedIdentifier)
-    {
-        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
-        $this->typeCode                 = '50';
-        $this->uriIdentifier            = null;
-        $this->name                     = null;
-        $this->attachmentBinaryObject   = null;
+    /**
+     * @param TenderOrLotReference $issuerAssignedIdentifier - BT-17
+     */
+    public function __construct(
+        private TenderOrLotReference $issuerAssignedIdentifier,
+    ) {
+        $this->typeCode               = '50';
+        $this->uriIdentifier          = null;
+        $this->name                   = null;
+        $this->attachmentBinaryObject = null;
     }
 
     public function getIssuerAssignedIdentifier(): TenderOrLotReference
