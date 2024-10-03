@@ -14,21 +14,13 @@ class ApplicableHeaderTradeSettlement
     protected const XML_NODE = 'ram:ApplicableHeaderTradeSettlement';
 
     /**
-     * BT-5.
+     * @param CurrencyCode                                    $invoiceCurrencyCode                             - BT-5
+     * @param SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation - BG-22
      */
-    protected CurrencyCode $invoiceCurrencyCode;
-
-    /**
-     * BG-22.
-     */
-    protected SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation;
-
     public function __construct(
-        CurrencyCode $invoiceCurrencyCode,
-        SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation,
+        protected CurrencyCode $invoiceCurrencyCode,
+        protected SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation,
     ) {
-        $this->invoiceCurrencyCode                             = $invoiceCurrencyCode;
-        $this->specifiedTradeSettlementHeaderMonetarySummation = $specifiedTradeSettlementHeaderMonetarySummation;
     }
 
     public function getInvoiceCurrencyCode(): CurrencyCode

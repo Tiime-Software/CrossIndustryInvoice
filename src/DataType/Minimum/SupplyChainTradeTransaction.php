@@ -12,28 +12,15 @@ class SupplyChainTradeTransaction
     protected const XML_NODE = 'rsm:SupplyChainTradeTransaction';
 
     /**
-     * BG-10-00.
+     * @param ApplicableHeaderTradeAgreement  $applicableHeaderTradeAgreement  - BG-10-00
+     * @param ApplicableHeaderTradeDelivery   $applicableHeaderTradeDelivery   - BG-13-00
+     * @param ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement - BG-19
      */
-    protected ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement;
-
-    /**
-     * BG-13-00.
-     */
-    protected ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery;
-
-    /**
-     * BG-19.
-     */
-    protected ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement;
-
     public function __construct(
-        ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement,
-        ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery,
-        ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement,
+        protected ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement,
+        protected ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery,
+        protected ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement,
     ) {
-        $this->applicableHeaderTradeAgreement  = $applicableHeaderTradeAgreement;
-        $this->applicableHeaderTradeDelivery   = $applicableHeaderTradeDelivery;
-        $this->applicableHeaderTradeSettlement = $applicableHeaderTradeSettlement;
     }
 
     public function getApplicableHeaderTradeAgreement(): ApplicableHeaderTradeAgreement

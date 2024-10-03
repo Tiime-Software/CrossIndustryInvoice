@@ -12,18 +12,16 @@ class BuyerTradeParty
     protected const XML_NODE = 'ram:BuyerTradeParty';
 
     /**
-     * BT-44.
-     */
-    protected string $name;
-
-    /**
      * BT-47-00.
      */
     protected ?BuyerSpecifiedLegalOrganization $specifiedLegalOrganization;
 
-    public function __construct(string $name)
-    {
-        $this->name                       = $name;
+    /**
+     * @param string $name - BT-44
+     */
+    public function __construct(
+        protected string $name,
+    ) {
         $this->specifiedLegalOrganization = null;
     }
 

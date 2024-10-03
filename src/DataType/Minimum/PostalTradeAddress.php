@@ -14,13 +14,11 @@ class PostalTradeAddress
     protected const XML_NODE = 'ram:PostalTradeAddress';
 
     /**
-     * BT-40 or BT-55 or BT-80.
+     * @param CountryAlpha2Code $countryIdentifier - BT-40 or BT-55 or BT-80
      */
-    protected CountryAlpha2Code $countryIdentifier;
-
-    public function __construct(CountryAlpha2Code $countryIdentifier)
-    {
-        $this->countryIdentifier = $countryIdentifier;
+    public function __construct(
+        protected CountryAlpha2Code $countryIdentifier,
+    ) {
     }
 
     public function getCountryIdentifier(): CountryAlpha2Code

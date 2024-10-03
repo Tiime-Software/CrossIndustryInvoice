@@ -14,29 +14,23 @@ class SellerTradeParty
     protected const XML_NODE = 'ram:SellerTradeParty';
 
     /**
-     * BT-27.
-     */
-    protected string $name;
-
-    /**
      * BT-30-00.
      */
     protected ?SellerSpecifiedLegalOrganization $specifiedLegalOrganization;
-
-    /**
-     * BG-5.
-     */
-    protected PostalTradeAddress $postalTradeAddress;
 
     /**
      * BT-31-00.
      */
     protected ?SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA;
 
-    public function __construct(string $name, PostalTradeAddress $postalTradeAddress)
-    {
-        $this->name                       = $name;
-        $this->postalTradeAddress         = $postalTradeAddress;
+    /**
+     * @param string             $name               - BT-27
+     * @param PostalTradeAddress $postalTradeAddress - BG-5
+     */
+    public function __construct(
+        protected string $name,
+        protected PostalTradeAddress $postalTradeAddress,
+    ) {
         $this->specifiedLegalOrganization = null;
         $this->specifiedTaxRegistrationVA = null;
     }

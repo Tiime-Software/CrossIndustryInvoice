@@ -16,11 +16,6 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
     protected const XML_NODE = 'ram:AdditionalReferencedDocument';
 
     /**
-     * BT-18.
-     */
-    private ObjectIdentifier $issuerAssignedIdentifier;
-
-    /**
      * BT-124.
      */
     private ?string $uriIdentifier;
@@ -45,14 +40,17 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
      */
     private ?BinaryObject $attachmentBinaryObject;
 
-    public function __construct(ObjectIdentifier $issuerAssignedIdentifier)
-    {
-        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
-        $this->typeCode                 = '130';
-        $this->referenceTypeCode        = null;
-        $this->uriIdentifier            = null;
-        $this->name                     = null;
-        $this->attachmentBinaryObject   = null;
+    /**
+     * @param ObjectIdentifier $issuerAssignedIdentifier - BT-18
+     */
+    public function __construct(
+        private ObjectIdentifier $issuerAssignedIdentifier,
+    ) {
+        $this->typeCode               = '130';
+        $this->referenceTypeCode      = null;
+        $this->uriIdentifier          = null;
+        $this->name                   = null;
+        $this->attachmentBinaryObject = null;
     }
 
     public function getIssuerAssignedIdentifier(): ObjectIdentifier

@@ -12,19 +12,13 @@ class ApplicableProductCharacteristic
     protected const XML_NODE = 'ram:ApplicableProductCharacteristic';
 
     /**
-     * BT-160.
+     * @param string $description - BT-160
+     * @param string $value       - BT-161
      */
-    private string $description;
-
-    /**
-     * BT-161.
-     */
-    private string $value;
-
-    public function __construct(string $description, string $value)
-    {
-        $this->description = $description;
-        $this->value       = $value;
+    public function __construct(
+        private string $description,
+        private string $value,
+    ) {
     }
 
     public function getDescription(): string

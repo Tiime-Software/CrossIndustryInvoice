@@ -14,18 +14,16 @@ class ApplicableTradeSettlementFinancialCard
     protected const XML_NODE = 'ram:ApplicableTradeSettlementFinancialCard';
 
     /**
-     * BT-87.
-     */
-    private string $identifier;
-
-    /**
      * BT-88.
      */
     private ?string $cardholderName;
 
-    public function __construct(string $identifier)
-    {
-        $this->identifier     = $identifier;
+    /**
+     * @param string $identifier - BT-87
+     */
+    public function __construct(
+        private string $identifier,
+    ) {
         $this->cardholderName = null;
     }
 

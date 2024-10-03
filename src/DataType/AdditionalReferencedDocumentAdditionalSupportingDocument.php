@@ -17,11 +17,6 @@ class AdditionalReferencedDocumentAdditionalSupportingDocument
     protected const XML_NODE = 'ram:AdditionalReferencedDocument';
 
     /**
-     * BT-122.
-     */
-    private SupportingDocumentReference $issuerAssignedIdentifier;
-
-    /**
      * BT-124.
      */
     private ?string $uriIdentifier;
@@ -41,13 +36,16 @@ class AdditionalReferencedDocumentAdditionalSupportingDocument
      */
     private ?BinaryObject $attachmentBinaryObject;
 
-    public function __construct(SupportingDocumentReference $issuerAssignedIdentifier)
-    {
-        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
-        $this->typeCode                 = '916';
-        $this->uriIdentifier            = null;
-        $this->name                     = null;
-        $this->attachmentBinaryObject   = null;
+    /**
+     * @param SupportingDocumentReference $issuerAssignedIdentifier - BT-122
+     */
+    public function __construct(
+        private SupportingDocumentReference $issuerAssignedIdentifier,
+    ) {
+        $this->typeCode               = '916';
+        $this->uriIdentifier          = null;
+        $this->name                   = null;
+        $this->attachmentBinaryObject = null;
     }
 
     public function getIssuerAssignedIdentifier(): SupportingDocumentReference

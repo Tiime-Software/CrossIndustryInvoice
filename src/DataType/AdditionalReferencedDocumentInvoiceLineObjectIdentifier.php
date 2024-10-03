@@ -15,11 +15,6 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
     protected const XML_NODE = 'ram:AdditionalReferencedDocument';
 
     /**
-     * BT-128.
-     */
-    private ObjectIdentifier $issuerAssignedIdentifier;
-
-    /**
      * BT-128-0.
      */
     private string $typeCode;
@@ -29,11 +24,14 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
      */
     private ?ObjectSchemeCode $referenceTypeCode;
 
-    public function __construct(ObjectIdentifier $issuerAssignedIdentifier)
-    {
-        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
-        $this->typeCode                 = '130';
-        $this->referenceTypeCode        = null;
+    /**
+     * @param ObjectIdentifier $issuerAssignedIdentifier - BT-128
+     */
+    public function __construct(
+        private ObjectIdentifier $issuerAssignedIdentifier,
+    ) {
+        $this->typeCode          = '130';
+        $this->referenceTypeCode = null;
     }
 
     public function getIssuerAssignedIdentifier(): ObjectIdentifier

@@ -14,13 +14,11 @@ class BuyerOrderReferencedDocument
     protected const XML_NODE = 'ram:BuyerOrderReferencedDocument';
 
     /**
-     * BT-13.
+     * @param PurchaseOrderReference $issuerAssignedIdentifier - BT-13
      */
-    private PurchaseOrderReference $issuerAssignedIdentifier;
-
-    public function __construct(PurchaseOrderReference $issuerAssignedIdentifier)
-    {
-        $this->issuerAssignedIdentifier = $issuerAssignedIdentifier;
+    public function __construct(
+        private PurchaseOrderReference $issuerAssignedIdentifier,
+    ) {
     }
 
     public function getIssuerAssignedIdentifier(): PurchaseOrderReference

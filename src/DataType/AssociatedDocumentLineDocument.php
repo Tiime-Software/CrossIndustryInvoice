@@ -15,19 +15,17 @@ class AssociatedDocumentLineDocument
     protected const XML_NODE = 'ram:AssociatedDocumentLineDocument';
 
     /**
-     * BT-126.
-     */
-    private InvoiceLineIdentifier $lineIdentifier;
-
-    /**
      * BT-127-00.
      */
     private ?LineIncludedNote $includedNote;
 
-    public function __construct(InvoiceLineIdentifier $lineIdentifier)
-    {
-        $this->lineIdentifier = $lineIdentifier;
-        $this->includedNote   = null;
+    /**
+     * @param InvoiceLineIdentifier $lineIdentifier - BT-126
+     */
+    public function __construct(
+        private InvoiceLineIdentifier $lineIdentifier,
+    ) {
+        $this->includedNote = null;
     }
 
     public function getLineIdentifier(): InvoiceLineIdentifier
