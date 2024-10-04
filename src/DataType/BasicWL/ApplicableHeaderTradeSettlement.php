@@ -124,6 +124,17 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         $this->specifiedTradeCharges                     = [];
     }
 
+    public function getSpecifiedTradeSettlementHeaderMonetarySummation(): SpecifiedTradeSettlementHeaderMonetarySummation
+    {
+        $specifiedTradeSettlementHeaderMonetarySummation = parent::getSpecifiedTradeSettlementHeaderMonetarySummation();
+
+        if (!$specifiedTradeSettlementHeaderMonetarySummation instanceof SpecifiedTradeSettlementHeaderMonetarySummation) {
+            throw new \LogicException('Must be of type BasicWL\\SpecifiedTradeSettlementHeaderMonetarySummation');
+        }
+
+        return $specifiedTradeSettlementHeaderMonetarySummation;
+    }
+
     public function getCreditorReferenceIdentifier(): ?BankAssignedCreditorIdentifier
     {
         return $this->creditorReferenceIdentifier;

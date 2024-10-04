@@ -31,6 +31,28 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
         $this->contractReferencedDocument        = null;
     }
 
+    public function getSellerTradeParty(): SellerTradeParty
+    {
+        $sellerTradeParty = parent::getSellerTradeParty();
+
+        if (!$sellerTradeParty instanceof SellerTradeParty) {
+            throw new \LogicException('Must be of type BasicWL\\SellerTradeParty');
+        }
+
+        return $sellerTradeParty;
+    }
+
+    public function getBuyerTradeParty(): BuyerTradeParty
+    {
+        $buyerTradeParty = parent::getBuyerTradeParty();
+
+        if (!$buyerTradeParty instanceof BuyerTradeParty) {
+            throw new \LogicException('Mst be of type BasicWL\\BuyerTradeParty');
+        }
+
+        return $buyerTradeParty;
+    }
+
     public function getSellerTaxRepresentativeTradeParty(): ?SellerTaxRepresentativeTradeParty
     {
         return $this->sellerTaxRepresentativeTradeParty;

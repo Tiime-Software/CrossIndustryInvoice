@@ -57,7 +57,7 @@ class ApplicableHeaderTradeAgreement
         return $this->buyerTradeParty;
     }
 
-    public function getBuyerOrderReferencedDocument(): BuyerOrderReferencedDocument
+    public function getBuyerOrderReferencedDocument(): ?BuyerOrderReferencedDocument
     {
         return $this->buyerOrderReferencedDocument;
     }

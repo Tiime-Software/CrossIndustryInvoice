@@ -29,6 +29,39 @@ class IncludedSupplyChainTradeLineItem extends \Tiime\CrossIndustryInvoice\DataT
         );
     }
 
+    public function getSpecifiedTradeProduct(): SpecifiedTradeProduct
+    {
+        $specifiedTradeProduct = parent::getSpecifiedTradeProduct();
+
+        if (!$specifiedTradeProduct instanceof SpecifiedTradeProduct) {
+            throw new \LogicException('Must be of type EN16931\\SpecifiedTradeProduct');
+        }
+
+        return $specifiedTradeProduct;
+    }
+
+    public function getSpecifiedLineTradeAgreement(): SpecifiedLineTradeAgreement
+    {
+        $specifiedLineTradeAgreement = parent::getSpecifiedLineTradeAgreement();
+
+        if (!$specifiedLineTradeAgreement instanceof SpecifiedLineTradeAgreement) {
+            throw new \LogicException('Must be of type EN16931\\SpecifiedLineTradeAgreement');
+        }
+
+        return $specifiedLineTradeAgreement;
+    }
+
+    public function getSpecifiedLineTradeSettlement(): SpecifiedLineTradeSettlement
+    {
+        $specifiedLineTradeSettlement = parent::getSpecifiedLineTradeSettlement();
+
+        if (!$specifiedLineTradeSettlement instanceof SpecifiedLineTradeSettlement) {
+            throw new \LogicException('Must be of type EN16931\\SpecifiedLineTradeSettlement');
+        }
+
+        return $specifiedLineTradeSettlement;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement(self::XML_NODE);

@@ -38,6 +38,55 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
         parent::__construct($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement, $includedSupplyChainTradeLineItems);
     }
 
+    public function getApplicableHeaderTradeAgreement(): ApplicableHeaderTradeAgreement
+    {
+        $applicableHeaderTradeAgreement = parent::getApplicableHeaderTradeAgreement();
+
+        if (!$applicableHeaderTradeAgreement instanceof ApplicableHeaderTradeAgreement) {
+            throw new \LogicException('Must be of type EN16931\\ApplicableHeaderTradeAgreement');
+        }
+
+        return $applicableHeaderTradeAgreement;
+    }
+
+    public function getApplicableHeaderTradeDelivery(): ApplicableHeaderTradeDelivery
+    {
+        $applicableHeaderTradeDelivery = parent::getApplicableHeaderTradeDelivery();
+
+        if (!$applicableHeaderTradeDelivery instanceof ApplicableHeaderTradeDelivery) {
+            throw new \LogicException('Must be of type EN16931\\ApplicableHeaderTradeDelivery');
+        }
+
+        return $applicableHeaderTradeDelivery;
+    }
+
+    public function getApplicableHeaderTradeSettlement(): ApplicableHeaderTradeSettlement
+    {
+        $applicableHeaderTradeSettlement = parent::getApplicableHeaderTradeSettlement();
+
+        if (!$applicableHeaderTradeSettlement instanceof ApplicableHeaderTradeSettlement) {
+            throw new \LogicException('Must be of type EN16931\\ApplicableHeaderTradeSettlement');
+        }
+
+        return $applicableHeaderTradeSettlement;
+    }
+
+    /**
+     * @return non-empty-array<int, IncludedSupplyChainTradeLineItem>
+     */
+    public function getIncludedSupplyChainTradeLineItems(): array
+    {
+        $includedSupplyChainTradeLineItems = parent::getIncludedSupplyChainTradeLineItems();
+
+        foreach ($includedSupplyChainTradeLineItems as $includedSupplyChainTradeLineItem) {
+            if (!$includedSupplyChainTradeLineItem instanceof IncludedSupplyChainTradeLineItem) {
+                throw new \LogicException('Must be of type EN16931\\IncludedSupplyChainTradeLineItem');
+            }
+        }
+
+        return $includedSupplyChainTradeLineItems;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement(self::XML_NODE);

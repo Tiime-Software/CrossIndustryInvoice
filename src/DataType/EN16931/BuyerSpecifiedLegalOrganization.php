@@ -17,9 +17,9 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
      */
     private ?string $tradingBusinessName;
 
-    public function __construct(LegalRegistrationIdentifier $identifier)
+    public function __construct()
     {
-        parent::__construct($identifier);
+        parent::__construct();
 
         $this->tradingBusinessName = null;
     }
