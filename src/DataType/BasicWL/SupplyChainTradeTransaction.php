@@ -17,6 +17,39 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\M
         parent::__construct($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
     }
 
+    public function getApplicableHeaderTradeAgreement(): ApplicableHeaderTradeAgreement
+    {
+        $applicableHeaderTradeAgreement = parent::getApplicableHeaderTradeAgreement();
+
+        if (!$applicableHeaderTradeAgreement instanceof ApplicableHeaderTradeAgreement) {
+            throw new \LogicException('Must be of type BasicWL\\ApplicableHeaderTradeAgreement');
+        }
+
+        return $applicableHeaderTradeAgreement;
+    }
+
+    public function getApplicableHeaderTradeDelivery(): ApplicableHeaderTradeDelivery
+    {
+        $applicableHeaderTradeDelivery = parent::getApplicableHeaderTradeDelivery();
+
+        if (!$applicableHeaderTradeDelivery instanceof ApplicableHeaderTradeDelivery) {
+            throw new \LogicException('Must be of type BasicWL\\ApplicableHeaderTradeDelivery');
+        }
+
+        return $applicableHeaderTradeDelivery;
+    }
+
+    public function getApplicableHeaderTradeSettlement(): ApplicableHeaderTradeSettlement
+    {
+        $applicableHeaderTradeSettlement = parent::getApplicableHeaderTradeSettlement();
+
+        if (!$applicableHeaderTradeSettlement instanceof ApplicableHeaderTradeSettlement) {
+            throw new \LogicException('Must be of type BasicWL\\ApplicableHeaderTradeSettlement');
+        }
+
+        return $applicableHeaderTradeSettlement;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement(self::XML_NODE);

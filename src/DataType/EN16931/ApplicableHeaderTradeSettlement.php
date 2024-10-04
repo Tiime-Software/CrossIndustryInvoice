@@ -47,6 +47,30 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         parent::__construct($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation, $applicableTradeTaxes);
     }
 
+    public function getSpecifiedTradeSettlementHeaderMonetarySummation(): SpecifiedTradeSettlementHeaderMonetarySummation
+    {
+        $specifiedTradeSettlementHeaderMonetarySummation = parent::getSpecifiedTradeSettlementHeaderMonetarySummation();
+
+        if (!$specifiedTradeSettlementHeaderMonetarySummation instanceof SpecifiedTradeSettlementHeaderMonetarySummation) {
+            throw new \LogicException('Must be of type EN16931\\SpecifiedTradeSettlementHeaderMonetarySummation');
+        }
+
+        return $specifiedTradeSettlementHeaderMonetarySummation;
+    }
+
+    public function getApplicableTradeTaxes(): array
+    {
+        $applicableTradeTaxes = parent::getApplicableTradeTaxes();
+
+        foreach ($applicableTradeTaxes as $applicableTradeTax) {
+            if (!$applicableTradeTax instanceof HeaderApplicableTradeTax) {
+                throw new \LogicException('Must be of type EN16931\\HeaderApplicableTradeTax');
+            }
+        }
+
+        return $applicableTradeTaxes;
+    }
+
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $currentNode = $document->createElement(self::XML_NODE);

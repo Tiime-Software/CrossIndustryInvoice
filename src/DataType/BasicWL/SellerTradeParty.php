@@ -42,6 +42,17 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Sell
         $this->URIUniversalCommunication = null;
     }
 
+    public function getPostalTradeAddress(): PostalTradeAddress
+    {
+        $postalTradeAddress = parent::getPostalTradeAddress();
+
+        if (!$postalTradeAddress instanceof PostalTradeAddress) {
+            throw new \LogicException('Must be of type BasicWL\\PostalTradeAddress');
+        }
+
+        return $postalTradeAddress;
+    }
+
     public function getIdentifiers(): array
     {
         return $this->identifiers;
