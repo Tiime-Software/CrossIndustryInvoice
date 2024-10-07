@@ -108,6 +108,11 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Sell
         return $this;
     }
 
+    public function getURIUniversalCommunication(): ?URIUniversalCommunication
+    {
+        return $this->URIUniversalCommunication;
+    }
+
     public function setURIUniversalCommunication(?URIUniversalCommunication $URIUniversalCommunication): static
     {
         $this->URIUniversalCommunication = $URIUniversalCommunication;
