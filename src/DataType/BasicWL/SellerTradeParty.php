@@ -42,6 +42,17 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Sell
         $this->URIUniversalCommunication = null;
     }
 
+    public function getSpecifiedLegalOrganization(): ?SellerSpecifiedLegalOrganization
+    {
+        $specifiedLegalOrganization = parent::getSpecifiedLegalOrganization();
+
+        if (!$specifiedLegalOrganization instanceof SellerSpecifiedLegalOrganization) {
+            throw new \LogicException('Must be of type BasicWL\\SellerSpecifiedLegalOrganization');
+        }
+
+        return $specifiedLegalOrganization;
+    }
+
     public function getPostalTradeAddress(): PostalTradeAddress
     {
         $postalTradeAddress = parent::getPostalTradeAddress();
