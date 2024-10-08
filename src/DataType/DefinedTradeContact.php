@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\EN16931\BusinessTermsGroup\BuyerContact;
-use Tiime\EN16931\BusinessTermsGroup\SellerContact;
-
 /**
  * BG-9 or BG-6.
  */
@@ -158,23 +155,6 @@ class DefinedTradeContact
 
         if ($emailURIUniversalCommunication instanceof EmailURIUniversalCommunication) {
             $definedTradeContact->setEmailURIUniversalCommunication($emailURIUniversalCommunication);
-        }
-
-        return $definedTradeContact;
-    }
-
-    public static function fromEN16931(BuyerContact|SellerContact $contact): self
-    {
-        $definedTradeContact = (new self())
-            ->setPersonName($contact->getPoint())
-            ->setDepartmentName($contact->getPoint());
-
-        if (\is_string($contact->getPhoneNumber())) {
-            $definedTradeContact->setTelephoneUniversalCommunication(new TelephoneUniversalCommunication($contact->getPhoneNumber()));
-        }
-
-        if (\is_string($contact->getEmail())) {
-            $definedTradeContact->setEmailURIUniversalCommunication(new EmailURIUniversalCommunication($contact->getEmail()));
         }
 
         return $definedTradeContact;

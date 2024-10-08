@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\ApplicableProductCharacteristic;
-use Tiime\CrossIndustryInvoice\DataType\ClassCode;
 use Tiime\CrossIndustryInvoice\DataType\DesignatedProductClassification;
 use Tiime\CrossIndustryInvoice\DataType\OriginTradeCountry;
-use Tiime\EN16931\BusinessTermsGroup\ItemInformation;
 use Tiime\EN16931\DataType\Identifier\BuyerItemIdentifier;
 use Tiime\EN16931\DataType\Identifier\SellerItemIdentifier;
 use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
@@ -277,31 +275,5 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
         }
 
         return $specifiedTradeProduct;
-    }
-
-    public static function fromEN16931(ItemInformation $itemInformation): self
-    {
-        $characteristics = [];
-        $classifications = [];
-
-        foreach ($itemInformation->getItemAttributes() as $attribute) {
-            $characteristics[] = new ApplicableProductCharacteristic($attribute->getName(), $attribute->getValue());
-        }
-
-        foreach ($itemInformation->getClassificationIdentifiers() as $classificationIdentifier) {
-            $classCode = (new ClassCode($classificationIdentifier->value, $classificationIdentifier->scheme))
-                ->setListVersionIdentifier($classificationIdentifier->version);
-
-            $classifications[] = (new DesignatedProductClassification())->setClassCode($classCode);
-        }
-
-        return (new self($itemInformation->getName()))
-            ->setGlobalIdentifier($itemInformation->getStandardIdentifier())
-            ->setSellerAssignedIdentifier($itemInformation->getSellerIdentifier())
-            ->setBuyerAssignedIdentifier($itemInformation->getBuyerIdentifier())
-            ->setDescription($itemInformation->getDescription())
-            ->setApplicableProductCharacteristics($characteristics)
-            ->setDesignatedProductClassifications($classifications)
-            ->setOriginTradeCountry($itemInformation->getItemCountryOfOrigin());
     }
 }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\EN16931\Invoice;
-
 /**
  * BT-19-00.
  */
@@ -57,10 +55,5 @@ class ReceivableSpecifiedTradeAccountingAccount
         }
 
         return new self($identifierElements->item(0)->nodeValue);
-    }
-
-    public static function fromEN16931(Invoice $invoice): self
-    {
-        return new self($invoice->getBuyerAccountingReference());
     }
 }

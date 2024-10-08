@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\DataType\Reference\PrecedingInvoiceReference;
-use Tiime\EN16931\Invoice;
 
 /**
  * BG-3.
@@ -87,20 +86,6 @@ class InvoiceReferencedDocument
             }
 
             $invoiceReferencedDocuments[] = $invoiceReferencedDocument;
-        }
-
-        return $invoiceReferencedDocuments;
-    }
-
-    public static function fromEN16931(Invoice $invoice): array
-    {
-        $precedingInvoices = $invoice->getPrecedingInvoices();
-
-        $invoiceReferencedDocuments = [];
-
-        foreach ($precedingInvoices as $precedingInvoice) {
-            $invoiceReferencedDocuments[] = (new self($precedingInvoice->getReference()))
-                ->setFormattedIssueDateTime(new FormattedIssueDateTime($precedingInvoice->getIssueDate()));
         }
 
         return $invoiceReferencedDocuments;

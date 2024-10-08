@@ -11,12 +11,7 @@ use Tiime\CrossIndustryInvoice\DataType\SellerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationFC;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
-use Tiime\EN16931\BusinessTermsGroup\Seller;
-use Tiime\EN16931\BusinessTermsGroup\SellerContact;
 use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
-use Tiime\EN16931\DataType\Identifier\TaxRegistrationIdentifier;
-use Tiime\EN16931\DataType\Identifier\VatIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BG-4.
@@ -207,45 +202,5 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Sell
         }
 
         return $sellerTradeParty;
-    }
-
-    public static function fromEN16931(Seller $seller): self
-    {
-        $identifiers       = [];
-        $globalIdentifiers = [];
-
-        foreach ($seller->getIdentifiers() as $identifier) {
-            if ($identifier->scheme instanceof InternationalCodeDesignator) {
-                $globalIdentifiers[] = new SellerGlobalIdentifier($identifier->value, $identifier->scheme);
-            } else {
-                $identifiers[] = $identifier;
-            }
-        }
-
-        $sellerSpecifiedLegalOrganization = (new SellerSpecifiedLegalOrganization())
-            ->setIdentifier($seller->getLegalRegistrationIdentifier())
-            ->setTradingBusinessName($seller->getTradingName());
-
-        return (new self($seller->getName(), PostalTradeAddress::fromEN16931($seller->getAddress())))
-            ->setIdentifiers($identifiers)
-            ->setGlobalIdentifiers($globalIdentifiers)
-            ->setDescription($seller->getAdditionalLegalInformation())
-            ->setSpecifiedLegalOrganization($sellerSpecifiedLegalOrganization)
-            ->setDefinedTradeContact(
-                $seller->getContact() instanceof SellerContact
-                    ? DefinedTradeContact::fromEN16931($seller->getContact())
-                    : null
-            )
-            ->setUriUniversalCommunication($seller->getElectronicAddress())
-            ->setSpecifiedTaxRegistrationVA(
-                $seller->getVatIdentifier() instanceof VatIdentifier
-                    ? new SpecifiedTaxRegistrationVA($seller->getVatIdentifier())
-                    : null
-            )
-            ->setSpecifiedTaxRegistrationFC(
-                $seller->getTaxRegistrationIdentifier() instanceof TaxRegistrationIdentifier
-                    ? new SpecifiedTaxRegistrationFC(new VatIdentifier($seller->getTaxRegistrationIdentifier()->value))
-                    : null
-            );
     }
 }

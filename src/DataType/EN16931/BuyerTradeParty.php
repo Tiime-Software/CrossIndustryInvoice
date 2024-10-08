@@ -9,13 +9,7 @@ use Tiime\CrossIndustryInvoice\DataType\BuyerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\DefinedTradeContact;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
-use Tiime\EN16931\BusinessTermsGroup\Buyer;
-use Tiime\EN16931\BusinessTermsGroup\BuyerContact;
 use Tiime\EN16931\DataType\Identifier\BuyerIdentifier;
-use Tiime\EN16931\DataType\Identifier\ElectronicAddressIdentifier;
-use Tiime\EN16931\DataType\Identifier\LegalRegistrationIdentifier;
-use Tiime\EN16931\DataType\Identifier\VatIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BG-7.
@@ -160,46 +154,6 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Buyer
         if ($specifiedTaxRegistrationVA instanceof SpecifiedTaxRegistrationVA) {
             $buyerTradeParty->setSpecifiedTaxRegistrationVA($specifiedTaxRegistrationVA);
         }
-
-        return $buyerTradeParty;
-    }
-
-    public static function fromEN16931(Buyer $buyer): self
-    {
-        $identifier       = null;
-        $globalIdentifier = null;
-
-        if ($buyer->getIdentifier()?->scheme instanceof InternationalCodeDesignator) {
-            $globalIdentifier = new BuyerGlobalIdentifier($buyer->getIdentifier()->value, $buyer->getIdentifier()->scheme);
-        } else {
-            $identifier = $buyer->getIdentifier();
-        }
-
-        $buyerTradeParty = new self($buyer->getName(), PostalTradeAddress::fromEN16931($buyer->getAddress()));
-
-        $buyerTradeParty
-            ->setIdentifier($identifier)
-            ->setGlobalIdentifier($globalIdentifier)
-            ->setSpecifiedLegalOrganization(
-                $buyer->getLegalRegistrationIdentifier() instanceof LegalRegistrationIdentifier
-                    ? new BuyerSpecifiedLegalOrganization($buyer->getLegalRegistrationIdentifier())
-                    : null
-            )
-            ->setDefinedTradeContact(
-                $buyer->getContact() instanceof BuyerContact
-                    ? DefinedTradeContact::fromEN16931($buyer->getContact())
-                    : null
-            )
-            ->setURIUniversalCommunication(
-                $buyer->getElectronicAddress() instanceof ElectronicAddressIdentifier
-                ? new URIUniversalCommunication($buyer->getElectronicAddress())
-                : null
-            )
-            ->setSpecifiedTaxRegistrationVA(
-                $buyer->getVatIdentifier() instanceof VatIdentifier
-                    ? new SpecifiedTaxRegistrationVA($buyer->getVatIdentifier())
-                    : null
-            );
 
         return $buyerTradeParty;
     }

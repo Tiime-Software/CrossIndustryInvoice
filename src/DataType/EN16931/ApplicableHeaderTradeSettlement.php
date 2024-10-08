@@ -11,14 +11,8 @@ use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccoun
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
-use Tiime\EN16931\BusinessTermsGroup\InvoicingPeriod;
-use Tiime\EN16931\BusinessTermsGroup\Payee;
-use Tiime\EN16931\BusinessTermsGroup\PaymentInstructions;
-use Tiime\EN16931\Converter\DateCode2005ToDateCode2475Converter;
 use Tiime\EN16931\DataType\CurrencyCode;
-use Tiime\EN16931\DataType\DateCode2005;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
-use Tiime\EN16931\Invoice;
 
 /**
  * BG-19.
@@ -226,71 +220,6 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         if ($receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
             $applicableHeaderTradeSettlement->setReceivableSpecifiedTradeAccountingAccount($receivableSpecifiedTradeAccountingAccount);
         }
-
-        return $applicableHeaderTradeSettlement;
-    }
-
-    public static function fromEN16931(Invoice $invoice): self
-    {
-        $applicableTradeTaxes     = [];
-        $specifiedTradeAllowances = [];
-        $specifiedTradeCharges    = [];
-
-        foreach ($invoice->getVatBreakdowns() as $vatBreakdown) {
-            $applicableTradeTaxes[] = HeaderApplicableTradeTax::fromEN16931(
-                $vatBreakdown,
-                $invoice->getValueAddedTaxPointDateCode() instanceof DateCode2005
-                    ? DateCode2005ToDateCode2475Converter::convert($invoice->getValueAddedTaxPointDateCode())
-                    : null
-            );
-        }
-
-        foreach ($invoice->getDocumentLevelAllowances() as $allowance) {
-            $specifiedTradeAllowances[] = SpecifiedTradeAllowance::fromEN16931($allowance);
-        }
-
-        foreach ($invoice->getDocumentLevelCharges() as $charge) {
-            $specifiedTradeCharges[] = SpecifiedTradeCharge::fromEN16931($charge);
-        }
-
-        $applicableHeaderTradeSettlement = new self(
-            $invoice->getCurrencyCode(),
-            SpecifiedTradeSettlementHeaderMonetarySummation::fromEN16931($invoice),
-            $applicableTradeTaxes,
-        );
-
-        $applicableHeaderTradeSettlement
-            ->setCreditorReferenceIdentifier($invoice->getPaymentInstructions()?->getDirectDebit()?->getBankAssignedCreditorIdentifier())
-            ->setPaymentReference($invoice->getPaymentInstructions()?->getRemittanceInformation())
-            ->setTaxCurrencyCode($invoice->getVatAccountingCurrencyCode())
-            ->setPayeeTradeParty(
-                $invoice->getPayee() instanceof Payee
-                    ? PayeeTradeParty::fromEN16931($invoice->getPayee())
-                    : null
-            )
-            ->setSpecifiedTradeSettlementPaymentMeans(
-                $invoice->getPaymentInstructions() instanceof PaymentInstructions
-                    ? SpecifiedTradeSettlementPaymentMeans::fromEN16931($invoice->getPaymentInstructions())
-                    : []
-            )
-            ->setBillingSpecifiedPeriod(
-                $invoice->getDeliveryInformation()?->getInvoicingPeriod() instanceof InvoicingPeriod
-                    ? BillingSpecifiedPeriod::fromEN16931($invoice->getDeliveryInformation()->getInvoicingPeriod())
-                    : null
-            )
-            ->setSpecifiedTradeAllowances($specifiedTradeAllowances)
-            ->setSpecifiedTradeCharges($specifiedTradeCharges)
-            ->setSpecifiedTradePaymentTerms(SpecifiedTradePaymentTerms::fromEN16931($invoice))
-            ->setInvoiceReferencedDocuments(
-                \count($invoice->getPrecedingInvoices()) > 0
-                    ? InvoiceReferencedDocument::fromEN16931($invoice)
-                    : null
-            )
-            ->setReceivableSpecifiedTradeAccountingAccount(
-                \is_string($invoice->getBuyerAccountingReference())
-                    ? ReceivableSpecifiedTradeAccountingAccount::fromEN16931($invoice)
-                    : null
-            );
 
         return $applicableHeaderTradeSettlement;
     }

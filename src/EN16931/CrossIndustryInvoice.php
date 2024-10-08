@@ -8,7 +8,6 @@ use Tiime\CrossIndustryInvoice\CrossIndustryInvoiceInterface;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
-use Tiime\EN16931\Invoice;
 
 class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
 {
@@ -94,14 +93,5 @@ class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
         $supplyChainTradeTransaction = SupplyChainTradeTransaction::fromXML($xpath, $crossIndustryInvoiceElement);
 
         return new self($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
-    }
-
-    public static function fromEN16931(Invoice $invoice): self
-    {
-        return new self(
-            ExchangedDocumentContext::fromEN16931($invoice),
-            ExchangedDocument::fromEN16931($invoice),
-            SupplyChainTradeTransaction::fromEN16931($invoice),
-        );
     }
 }

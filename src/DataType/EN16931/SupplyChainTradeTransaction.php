@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
-use Tiime\EN16931\Invoice;
-
 /**
  * BG-25-00.
  */
@@ -111,21 +109,5 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
         $applicableHeaderTradeSettlement   = ApplicableHeaderTradeSettlement::fromXML($xpath, $supplyChainTradeTransactionElement);
 
         return new self($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement, $includedSupplyChainTradeLineItems);
-    }
-
-    public static function fromEN16931(Invoice $invoice): self
-    {
-        $items = [];
-
-        foreach ($invoice->getInvoiceLines() as $invoiceLine) {
-            $items[] = IncludedSupplyChainTradeLineItem::fromEN16931($invoiceLine);
-        }
-
-        return new self(
-            ApplicableHeaderTradeAgreement::fromEN16931($invoice),
-            ApplicableHeaderTradeDelivery::fromEN16931($invoice),
-            ApplicableHeaderTradeSettlement::fromEN16931($invoice),
-            $items,
-        );
     }
 }

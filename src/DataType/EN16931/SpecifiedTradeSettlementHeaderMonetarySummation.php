@@ -6,7 +6,6 @@ namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
 use Tiime\EN16931\DataType\CurrencyCode;
-use Tiime\EN16931\Invoice;
 use Tiime\EN16931\SemanticDataType\Amount;
 
 /**
@@ -221,37 +220,6 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
                 }
             }
         }
-
-        return $specifiedTradeSettlementHeaderMonetarySummation;
-    }
-
-    public static function fromEN16931(Invoice $invoice): self
-    {
-        $documentTotals = $invoice->getDocumentTotals();
-
-        $specifiedTradeSettlementHeaderMonetarySummation = new self(
-            $documentTotals->getInvoiceTotalAmountWithoutVat()->getValueRounded(),
-            $documentTotals->getInvoiceTotalAmountWithVat()->getValueRounded(),
-            $documentTotals->getAmountDueForPayment()->getValueRounded(),
-            $documentTotals->getSumOfInvoiceLineNetAmount()->getValueRounded(),
-        );
-
-        $specifiedTradeSettlementHeaderMonetarySummation
-            ->setChargeTotalAmount($documentTotals->getSumOfChargesOnDocumentLevel()?->getValueRounded())
-            ->setAllowanceTotalAmount($documentTotals->getSumOfAllowancesOnDocumentLevel()?->getValueRounded())
-            ->setTaxTotalAmount(
-                \is_float($documentTotals->getInvoiceTotalVatAmount()?->getValueRounded())
-                    ? new TaxTotalAmount($documentTotals->getInvoiceTotalVatAmount()?->getValueRounded(), $invoice->getCurrencyCode())
-                    : null
-            )
-            ->setTaxTotalAmountCurrency(
-                \is_float($documentTotals->getInvoiceTotalVatAmountInAccountingCurrency()?->getValueRounded())
-                    ? new TaxTotalAmount($documentTotals->getInvoiceTotalVatAmountInAccountingCurrency()?->getValueRounded(), $invoice->getVatAccountingCurrencyCode())
-                    : null
-            )
-            ->setTotalPrepaidAmount($documentTotals->getPaidAmount()?->getValueRounded())
-            ->setRoundingAmount($documentTotals->getRoundingAmount()?->getValueRounded())
-        ;
 
         return $specifiedTradeSettlementHeaderMonetarySummation;
     }

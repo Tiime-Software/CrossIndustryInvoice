@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\EN16931\DataType\Identifier\MandateReferenceIdentifier;
-use Tiime\EN16931\Invoice;
 
 /**
  * BT-20-00.
@@ -134,17 +133,5 @@ class SpecifiedTradePaymentTerms
         }
 
         return $specifiedTradePaymentTerms;
-    }
-
-    public static function fromEN16931(Invoice $invoice): self
-    {
-        return (new self())
-            ->setDescription($invoice->getPaymentTerms())
-            ->setDueDateDateTime(
-                $invoice->getPaymentDueDate() instanceof \DateTimeInterface
-                    ? DueDateDateTime::fromEN16931($invoice->getPaymentDueDate())
-                    : null
-            )
-            ->setDirectDebitMandateIdentifier($invoice->getPaymentInstructions()?->getDirectDebit()?->getMandateReferenceIdentifier());
     }
 }
