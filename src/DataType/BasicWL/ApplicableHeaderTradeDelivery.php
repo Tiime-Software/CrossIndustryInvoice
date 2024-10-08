@@ -76,7 +76,11 @@ class ApplicableHeaderTradeDelivery extends \Tiime\CrossIndustryInvoice\DataType
         $element = $document->createElement(self::XML_NODE);
 
         if ($this->shipToTradeParty instanceof ShipToTradeParty) {
-            $element->appendChild($this->shipToTradeParty->toXML($document));
+            $shipToTradePartyXml = $this->shipToTradeParty->toXML($document);
+
+            if ($shipToTradePartyXml instanceof \DOMElement) {
+                $element->appendChild($shipToTradePartyXml);
+            }
         }
 
         if ($this->actualDeliverySupplyChainEvent instanceof ActualDeliverySupplyChainEvent) {

@@ -104,7 +104,11 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         }
 
         if ($this->specifiedTradePaymentTerms instanceof SpecifiedTradePaymentTerms) {
-            $currentNode->appendChild($this->specifiedTradePaymentTerms->toXML($document));
+            $specifiedTradePaymentTermsXml = $this->specifiedTradePaymentTerms->toXML($document);
+
+            if ($specifiedTradePaymentTermsXml instanceof \DOMElement) {
+                $currentNode->appendChild($specifiedTradePaymentTermsXml);
+            }
         }
 
         $currentNode->appendChild($this->specifiedTradeSettlementHeaderMonetarySummation->toXML($document));
