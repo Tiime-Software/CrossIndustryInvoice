@@ -51,8 +51,15 @@ class BillingSpecifiedPeriod
         return $this;
     }
 
-    public function toXML(\DOMDocument $document): \DOMElement
+    public function toXML(\DOMDocument $document): ?\DOMElement
     {
+        if (
+            null    === $this->startDateTime
+            && null === $this->endDateTime
+        ) {
+            return null;
+        }
+
         $element = $document->createElement(self::XML_NODE);
 
         if ($this->startDateTime instanceof StartDateTime) {
