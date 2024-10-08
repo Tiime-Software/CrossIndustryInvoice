@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
-use Tiime\EN16931\BusinessTermsGroup\SellerTaxRepresentativeParty;
 
 /**
  * BG-11.
@@ -87,14 +86,5 @@ class SellerTaxRepresentativeTradeParty
         }
 
         return new self($name, $postalTradeAddress, $specifiedTaxRegistrationVA);
-    }
-
-    public static function fromEN16931(SellerTaxRepresentativeParty $sellerTaxRepresentativeParty): self
-    {
-        return new self(
-            $sellerTaxRepresentativeParty->getName(),
-            PostalTradeAddress::fromEN16931($sellerTaxRepresentativeParty->getAddress()),
-            new SpecifiedTaxRegistrationVA($sellerTaxRepresentativeParty->getVatIdentifier())
-        );
     }
 }

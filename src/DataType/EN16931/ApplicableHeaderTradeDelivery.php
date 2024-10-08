@@ -6,13 +6,8 @@ namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
 use Tiime\CrossIndustryInvoice\DataType\DespatchAdviceReferencedDocument;
-use Tiime\CrossIndustryInvoice\DataType\OccurrenceDateTime;
 use Tiime\CrossIndustryInvoice\DataType\ReceivingAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
-use Tiime\EN16931\BusinessTermsGroup\DeliveryInformation;
-use Tiime\EN16931\DataType\Reference\DespatchAdviceReference;
-use Tiime\EN16931\DataType\Reference\ReceivingAdviceReference;
-use Tiime\EN16931\Invoice;
 
 /**
  * BG-13-00.
@@ -101,30 +96,5 @@ class ApplicableHeaderTradeDelivery extends \Tiime\CrossIndustryInvoice\DataType
         }
 
         return $applicableHeaderTradeDelivery;
-    }
-
-    public static function fromEN16931(Invoice $invoice): self
-    {
-        return (new self())
-            ->setShipToTradeParty(
-                $invoice->getDeliveryInformation() instanceof DeliveryInformation
-                    ? ShipToTradeParty::fromEN16931($invoice->getDeliveryInformation())
-                    : null
-            )
-            ->setActualDeliverySupplyChainEvent(
-                $invoice->getDeliveryInformation()?->getActualDeliveryDate() instanceof \DateTimeInterface
-                    ? new ActualDeliverySupplyChainEvent(new OccurrenceDateTime($invoice->getDeliveryInformation()->getActualDeliveryDate()))
-                    : null
-            )
-            ->setDespatchAdviceReferencedDocument(
-                $invoice->getDespatchAdviceReference() instanceof DespatchAdviceReference
-                    ? new DespatchAdviceReferencedDocument($invoice->getDespatchAdviceReference())
-                    : null
-            )
-            ->setReceivingAdviceReferencedDocument(
-                $invoice->getReceivingAdviceReference() instanceof ReceivingAdviceReference
-                    ? new ReceivingAdviceReferencedDocument($invoice->getReceivingAdviceReference())
-                    : null
-            );
     }
 }

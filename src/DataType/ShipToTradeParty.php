@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
-use Tiime\EN16931\BusinessTermsGroup\DeliverToAddress;
-use Tiime\EN16931\BusinessTermsGroup\DeliveryInformation;
 use Tiime\EN16931\DataType\Identifier\LocationIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BG-13.
@@ -168,30 +165,5 @@ class ShipToTradeParty
         }
 
         return $shipToTradeParty;
-    }
-
-    public static function fromEN16931(DeliveryInformation $deliveryInformation): self
-    {
-        $identifier       = null;
-        $globalIdentifier = null;
-
-        if ($deliveryInformation->getLocationIdentifier()?->scheme instanceof InternationalCodeDesignator) {
-            $globalIdentifier = new LocationGlobalIdentifier(
-                $deliveryInformation->getLocationIdentifier()->value,
-                $deliveryInformation->getLocationIdentifier()->scheme
-            );
-        } else {
-            $identifier = $deliveryInformation->getLocationIdentifier();
-        }
-
-        return (new self())
-            ->setIdentifier($identifier)
-            ->setGlobalIdentifier($globalIdentifier)
-            ->setName($deliveryInformation->getDeliverToPartyName())
-            ->setPostalTradeAddress(
-                $deliveryInformation->getDeliverToAddress() instanceof DeliverToAddress
-                    ? PostalTradeAddress::fromEN16931($deliveryInformation->getDeliverToAddress())
-                    : null
-            );
     }
 }

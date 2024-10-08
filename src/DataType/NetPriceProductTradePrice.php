@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\DataType\Basic\BasisQuantity;
-use Tiime\EN16931\BusinessTermsGroup\PriceDetails;
 use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
 
 /**
@@ -88,15 +87,5 @@ class NetPriceProductTradePrice
         }
 
         return $netPriceProductTradePrice;
-    }
-
-    public static function fromEN16931(PriceDetails $priceDetails): self
-    {
-        $basisQuantity = \is_float($priceDetails->getItemPriceBaseQuantity()?->getValueRounded())
-            ? BasisQuantity::fromEN16931($priceDetails)
-            : null;
-
-        return (new self($priceDetails->getItemNetPrice()?->getValueRounded()))
-            ->setBasisQuantity($basisQuantity);
     }
 }

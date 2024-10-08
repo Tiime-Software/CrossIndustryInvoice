@@ -9,9 +9,6 @@ use Tiime\CrossIndustryInvoice\DataType\Basic\ApplicableTradeTax;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeSettlementLineMonetarySummation;
 use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
 use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccount;
-use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
-use Tiime\EN16931\BusinessTermsGroup\InvoiceLinePeriod;
-use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
 
 /**
  * BG-30-00.
@@ -159,49 +156,6 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
         if ($receivableSpecifiedTradeAccountingAccount instanceof ReceivableSpecifiedTradeAccountingAccount) {
             $specifiedLineTradeSettlement->setReceivableSpecifiedTradeAccountingAccount($receivableSpecifiedTradeAccountingAccount);
         }
-
-        return $specifiedLineTradeSettlement;
-    }
-
-    public static function fromEN16931(InvoiceLine $invoiceLine): self
-    {
-        $applicableTradeTax = (new ApplicableTradeTax($invoiceLine->getLineVatInformation()->getInvoicedItemVatCategoryCode()))
-            ->setRateApplicablePercent($invoiceLine->getLineVatInformation()->getInvoicedItemVatRate()?->getValueRounded());
-
-        $specifiedTradeAllowances = [];
-        $specifiedTradeCharges    = [];
-
-        foreach ($invoiceLine->getAllowances() as $allowance) {
-            $specifiedTradeAllowances[] = LineSpecifiedTradeAllowance::fromEN16931($allowance);
-        }
-
-        foreach ($invoiceLine->getCharges() as $charge) {
-            $specifiedTradeCharges[] = LineSpecifiedTradeCharge::fromEN16931($charge);
-        }
-
-        $specifiedLineTradeSettlement = new self(
-            $applicableTradeTax,
-            new SpecifiedTradeSettlementLineMonetarySummation($invoiceLine->getNetAmount()->getValueRounded())
-        );
-
-        $specifiedLineTradeSettlement
-            ->setBillingSpecifiedPeriod(
-                $invoiceLine->getPeriod() instanceof InvoiceLinePeriod
-                    ? BillingSpecifiedPeriod::fromEN16931($invoiceLine->getPeriod())
-                    : null
-            )
-            ->setSpecifiedTradeAllowances($specifiedTradeAllowances)
-            ->setSpecifiedTradeCharges($specifiedTradeCharges)
-            ->setAdditionalReferencedDocument(
-                $invoiceLine->getObjectIdentifier() instanceof ObjectIdentifier
-                    ? new AdditionalReferencedDocumentInvoiceLineObjectIdentifier($invoiceLine->getObjectIdentifier())
-                    : null
-            )
-            ->setReceivableSpecifiedTradeAccountingAccount(
-                \is_string($invoiceLine->getBuyerAccountingReference())
-                    ? new ReceivableSpecifiedTradeAccountingAccount($invoiceLine->getBuyerAccountingReference())
-                    : null
-            );
 
         return $specifiedLineTradeSettlement;
     }

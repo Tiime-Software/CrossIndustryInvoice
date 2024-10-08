@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\EN16931\DataType\Address;
 use Tiime\EN16931\DataType\CountryAlpha2Code;
 
 /**
@@ -244,16 +243,5 @@ class PostalTradeAddress extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Po
         }
 
         return $postalTradeAddress;
-    }
-
-    public static function fromEN16931(Address $address): self
-    {
-        return (new self($address->getCountryCode()))
-            ->setPostcodeCode($address->getPostCode())
-            ->setLineOne($address->getLine1())
-            ->setLineTwo($address->getLine2())
-            ->setLineThree($address->getLine3())
-            ->setCityName($address->getCity())
-            ->setCountrySubDivisionName($address->getCountrySubdivision());
     }
 }
