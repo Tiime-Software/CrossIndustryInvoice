@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\Reference\ProjectReference;
  */
 class SpecifiedProcuringProject
 {
-    protected const XML_NODE = 'ram:SpecifiedProcuringProject';
+    protected const string XML_NODE = 'ram:SpecifiedProcuringProject';
 
     /**
      * BT-11-0.

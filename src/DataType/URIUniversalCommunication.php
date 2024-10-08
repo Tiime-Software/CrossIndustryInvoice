@@ -12,7 +12,7 @@ use Tiime\EN16931\DataType\Identifier\ElectronicAddressIdentifier;
  */
 class URIUniversalCommunication
 {
-    protected const XML_NODE = 'ram:URIUniversalCommunication';
+    protected const string XML_NODE = 'ram:URIUniversalCommunication';
 
     /**
      * @param ElectronicAddressIdentifier $electronicAddress - BT-34 or BT-49

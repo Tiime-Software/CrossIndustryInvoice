@@ -14,7 +14,7 @@ use Tiime\EN16931\DataType\Reference\SupportingDocumentReference;
  */
 class AdditionalReferencedDocumentAdditionalSupportingDocument
 {
-    protected const XML_NODE = 'ram:AdditionalReferencedDocument';
+    protected const string XML_NODE = 'ram:AdditionalReferencedDocument';
 
     /**
      * BT-124.

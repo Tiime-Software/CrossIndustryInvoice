@@ -12,7 +12,7 @@ use Tiime\EN16931\DataType\PaymentMeansCode;
  */
 class SpecifiedTradeSettlementPaymentMeans
 {
-    protected const XML_NODE = 'ram:SpecifiedTradeSettlementPaymentMeans';
+    protected const string XML_NODE = 'ram:SpecifiedTradeSettlementPaymentMeans';
 
     /**
      * BT-91-00.

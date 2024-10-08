@@ -13,7 +13,7 @@ use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
  */
 class NetPriceProductTradePrice
 {
-    protected const XML_NODE = 'ram:NetPriceProductTradePrice';
+    protected const string XML_NODE = 'ram:NetPriceProductTradePrice';
 
     /**
      * BT-146.

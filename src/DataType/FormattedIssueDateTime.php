@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class FormattedIssueDateTime
 {
-    protected const XML_NODE = 'ram:FormattedIssueDateTime';
+    protected const string XML_NODE = 'ram:FormattedIssueDateTime';
 
     /**
      * BT-26-0.

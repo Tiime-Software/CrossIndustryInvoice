@@ -13,7 +13,7 @@ use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
  */
 class AppliedTradeAllowanceCharge
 {
-    protected const XML_NODE = 'ram:AppliedTradeAllowanceCharge';
+    protected const string XML_NODE = 'ram:AppliedTradeAllowanceCharge';
 
     /**
      * BT-147-01.

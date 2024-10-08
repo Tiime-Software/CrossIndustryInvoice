@@ -13,7 +13,7 @@ use Tiime\EN16931\DataType\InvoiceTypeCode;
  */
 class ExchangedDocument
 {
-    protected const XML_NODE = 'rsm:ExchangedDocument';
+    protected const string XML_NODE = 'rsm:ExchangedDocument';
 
     /**
      * @param InvoiceIdentifier $identifier    - BT-1

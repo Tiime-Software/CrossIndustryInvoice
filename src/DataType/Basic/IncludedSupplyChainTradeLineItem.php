@@ -9,7 +9,7 @@ use Tiime\CrossIndustryInvoice\DataType\AssociatedDocumentLineDocument;
  */
 class IncludedSupplyChainTradeLineItem
 {
-    protected const XML_NODE = 'ram:IncludedSupplyChainTradeLineItem';
+    protected const string XML_NODE = 'ram:IncludedSupplyChainTradeLineItem';
 
     /**
      * @param AssociatedDocumentLineDocument $associatedDocumentLineDocument - BT-126-00

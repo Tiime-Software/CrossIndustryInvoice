@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class ApplicableProductCharacteristic
 {
-    protected const XML_NODE = 'ram:ApplicableProductCharacteristic';
+    protected const string XML_NODE = 'ram:ApplicableProductCharacteristic';
 
     /**
      * @param string $description - BT-160

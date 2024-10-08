@@ -12,7 +12,7 @@ use Tiime\EN16931\BusinessTermsGroup\SellerContact;
  */
 class DefinedTradeContact
 {
-    protected const XML_NODE = 'ram:DefinedTradeContact';
+    protected const string XML_NODE = 'ram:DefinedTradeContact';
 
     /**
      * BT-56 or BT-41.

@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class DueDateDateTime
 {
-    protected const XML_NODE = 'ram:DueDateDateTime';
+    protected const string XML_NODE = 'ram:DueDateDateTime';
 
     /**
      * BT-9-0.

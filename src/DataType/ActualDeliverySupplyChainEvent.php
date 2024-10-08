@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class ActualDeliverySupplyChainEvent
 {
-    protected const XML_NODE = 'ram:ActualDeliverySupplyChainEvent';
+    protected const string XML_NODE = 'ram:ActualDeliverySupplyChainEvent';
 
     /**
      * @param OccurrenceDateTime $occurrenceDateTime - BT-72-01

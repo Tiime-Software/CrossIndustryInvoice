@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\Reference\DespatchAdviceReference;
  */
 class DespatchAdviceReferencedDocument
 {
-    protected const XML_NODE = 'ram:DespatchAdviceReferencedDocument';
+    protected const string XML_NODE = 'ram:DespatchAdviceReferencedDocument';
 
     /**
      * @param DespatchAdviceReference $issuerAssignedIdentifier - BT-16

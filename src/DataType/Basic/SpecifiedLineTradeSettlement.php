@@ -9,7 +9,7 @@ use Tiime\CrossIndustryInvoice\DataType\BillingSpecifiedPeriod;
  */
 class SpecifiedLineTradeSettlement
 {
-    protected const XML_NODE = 'ram:SpecifiedLineTradeSettlement';
+    protected const string XML_NODE = 'ram:SpecifiedLineTradeSettlement';
 
     /**
      * BG-26.

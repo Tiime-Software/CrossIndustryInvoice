@@ -11,7 +11,7 @@ use Tiime\EN16931\BusinessTermsGroup\PaymentCardInformation;
  */
 class ApplicableTradeSettlementFinancialCard
 {
-    protected const XML_NODE = 'ram:ApplicableTradeSettlementFinancialCard';
+    protected const string XML_NODE = 'ram:ApplicableTradeSettlementFinancialCard';
 
     /**
      * BT-88.

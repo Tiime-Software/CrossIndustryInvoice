@@ -12,7 +12,7 @@ use Tiime\EN16931\DataType\InternationalCodeDesignator;
  */
 class PayeeGlobalIdentifier extends PayeeIdentifier
 {
-    protected const XML_NODE = 'ram:GlobalID';
+    protected const string XML_NODE = 'ram:GlobalID';
 
     public function __construct(string $value, InternationalCodeDesignator $scheme)
     {

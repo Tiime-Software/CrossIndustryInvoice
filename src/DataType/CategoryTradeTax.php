@@ -12,7 +12,7 @@ use Tiime\EN16931\SemanticDataType\Percentage;
  */
 class CategoryTradeTax
 {
-    protected const XML_NODE = 'ram:CategoryTradeTax';
+    protected const string XML_NODE = 'ram:CategoryTradeTax';
 
     /**
      * BT-95-0.

@@ -12,7 +12,7 @@ use Tiime\EN16931\BusinessTermsGroup\SellerTaxRepresentativeParty;
  */
 class SellerTaxRepresentativeTradeParty
 {
-    protected const XML_NODE = 'ram:SellerTaxRepresentativeTradeParty';
+    protected const string XML_NODE = 'ram:SellerTaxRepresentativeTradeParty';
 
     /**
      * @param string                     $name                       - BT-62

@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class EmailURIUniversalCommunication
 {
-    protected const XML_NODE = 'ram:EmailURIUniversalCommunication';
+    protected const string XML_NODE = 'ram:EmailURIUniversalCommunication';
 
     /**
      * @param string $uriIdentifier - BT-43 or BT-58

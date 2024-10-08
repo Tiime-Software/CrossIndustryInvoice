@@ -11,7 +11,7 @@ use Tiime\EN16931\SemanticDataType\Amount;
  */
 class SpecifiedTradeSettlementLineMonetarySummation
 {
-    protected const XML_NODE = 'ram:SpecifiedTradeSettlementLineMonetarySummation';
+    protected const string XML_NODE = 'ram:SpecifiedTradeSettlementLineMonetarySummation';
 
     /**
      * BT-131.

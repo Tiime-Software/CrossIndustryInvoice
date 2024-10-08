@@ -10,7 +10,7 @@ use Tiime\EN16931\DataType\InternationalCodeDesignator;
  */
 class SpecifiedTradeProduct
 {
-    protected const XML_NODE = 'ram:SpecifiedTradeProduct';
+    protected const string XML_NODE = 'ram:SpecifiedTradeProduct';
 
     /**
      * BT-157.

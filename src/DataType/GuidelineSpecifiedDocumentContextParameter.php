@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
  */
 class GuidelineSpecifiedDocumentContextParameter
 {
-    protected const XML_NODE = 'ram:GuidelineSpecifiedDocumentContextParameter';
+    protected const string XML_NODE = 'ram:GuidelineSpecifiedDocumentContextParameter';
 
     /**
      * @param SpecificationIdentifier $identifier - BT-24

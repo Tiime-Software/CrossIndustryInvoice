@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class LineIncludedNote
 {
-    protected const XML_NODE = 'ram:IncludedNote';
+    protected const string XML_NODE = 'ram:IncludedNote';
 
     /**
      * @param string $content - BT-127

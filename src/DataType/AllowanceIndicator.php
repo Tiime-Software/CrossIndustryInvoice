@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class AllowanceIndicator
 {
-    protected const XML_NODE = 'ram:ChargeIndicator';
+    protected const string XML_NODE = 'ram:ChargeIndicator';
 
     /**
      * BG-20-1.

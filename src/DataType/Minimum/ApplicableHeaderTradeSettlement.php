@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\CurrencyCode;
  */
 class ApplicableHeaderTradeSettlement
 {
-    protected const XML_NODE = 'ram:ApplicableHeaderTradeSettlement';
+    protected const string XML_NODE = 'ram:ApplicableHeaderTradeSettlement';
 
     /**
      * @param CurrencyCode                                    $invoiceCurrencyCode                             - BT-5

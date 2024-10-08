@@ -12,7 +12,7 @@ use Tiime\EN16931\SemanticDataType\Quantity;
  */
 class BilledQuantity
 {
-    protected const XML_NODE = 'ram:BilledQuantity';
+    protected const string XML_NODE = 'ram:BilledQuantity';
 
     /**
      * BT-129.

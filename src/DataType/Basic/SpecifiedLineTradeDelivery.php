@@ -11,7 +11,7 @@ use Tiime\EN16931\BusinessTermsGroup\InvoiceLine;
  */
 class SpecifiedLineTradeDelivery
 {
-    protected const XML_NODE = 'ram:SpecifiedLineTradeDelivery';
+    protected const string XML_NODE = 'ram:SpecifiedLineTradeDelivery';
 
     /**
      * @param BilledQuantity $billedQuantity - BT-129 & BT-130

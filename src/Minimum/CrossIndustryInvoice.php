@@ -11,7 +11,7 @@ use Tiime\CrossIndustryInvoice\DataType\Minimum\SupplyChainTradeTransaction;
 
 class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
 {
-    protected const XML_NODE = 'rsm:CrossIndustryInvoice';
+    protected const string XML_NODE = 'rsm:CrossIndustryInvoice';
 
     /**
      * @param ExchangedDocumentContext    $exchangedDocumentContext    - BG-2

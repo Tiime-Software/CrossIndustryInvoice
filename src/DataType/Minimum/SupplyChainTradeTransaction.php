@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
  */
 class SupplyChainTradeTransaction
 {
-    protected const XML_NODE = 'rsm:SupplyChainTradeTransaction';
+    protected const string XML_NODE = 'rsm:SupplyChainTradeTransaction';
 
     /**
      * @param ApplicableHeaderTradeAgreement  $applicableHeaderTradeAgreement  - BG-10-00

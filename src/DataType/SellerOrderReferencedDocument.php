@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\Reference\SalesOrderReference;
  */
 class SellerOrderReferencedDocument
 {
-    protected const XML_NODE = 'ram:SellerOrderReferencedDocument';
+    protected const string XML_NODE = 'ram:SellerOrderReferencedDocument';
 
     /**
      * @param SalesOrderReference $issuerAssignedIdentifier - BT-14

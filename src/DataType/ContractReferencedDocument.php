@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\Reference\ContractReference;
  */
 class ContractReferencedDocument
 {
-    protected const XML_NODE = 'ram:ContractReferencedDocument';
+    protected const string XML_NODE = 'ram:ContractReferencedDocument';
 
     /**
      * @param ContractReference $issuerAssignedIdentifier - BT-12

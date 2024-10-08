@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\Reference\PurchaseOrderReference;
  */
 class BuyerOrderReferencedDocument
 {
-    protected const XML_NODE = 'ram:BuyerOrderReferencedDocument';
+    protected const string XML_NODE = 'ram:BuyerOrderReferencedDocument';
 
     /**
      * @param PurchaseOrderReference $issuerAssignedIdentifier - BT-13
