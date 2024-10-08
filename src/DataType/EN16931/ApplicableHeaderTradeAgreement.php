@@ -103,16 +103,13 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
 
     public function setAdditionalReferencedDocuments(array $additionalReferencedDocuments): static
     {
-        $tmpAdditionalReferencedDocuments = [];
-
         foreach ($additionalReferencedDocuments as $additionalReferencedDocument) {
             if (!$additionalReferencedDocument instanceof AdditionalReferencedDocumentAdditionalSupportingDocument) {
                 throw new \TypeError();
             }
-            $tmpAdditionalReferencedDocuments[] = $additionalReferencedDocument;
         }
 
-        $this->additionalReferencedDocuments = $tmpAdditionalReferencedDocuments;
+        $this->additionalReferencedDocuments = $additionalReferencedDocuments;
 
         return $this;
     }

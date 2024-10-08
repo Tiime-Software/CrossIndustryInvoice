@@ -108,17 +108,13 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
 
     public function setApplicableProductCharacteristics(array $applicableProductCharacteristics): static
     {
-        $tmpApplicableProductCharacteristics = [];
-
         foreach ($applicableProductCharacteristics as $applicableProductCharacteristic) {
             if (!$applicableProductCharacteristic instanceof ApplicableProductCharacteristic) {
                 throw new \TypeError();
             }
-
-            $tmpApplicableProductCharacteristics[] = $applicableProductCharacteristic;
         }
 
-        $this->applicableProductCharacteristics = $tmpApplicableProductCharacteristics;
+        $this->applicableProductCharacteristics = $applicableProductCharacteristics;
 
         return $this;
     }
@@ -130,17 +126,13 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
 
     public function setDesignatedProductClassifications(array $designatedProductClassifications): static
     {
-        $tmpDesignatedProductClassifications = [];
-
         foreach ($designatedProductClassifications as $designatedProductClassification) {
             if (!$designatedProductClassification instanceof DesignatedProductClassification) {
                 throw new \TypeError();
             }
-
-            $tmpDesignatedProductClassifications[] = $designatedProductClassification;
         }
 
-        $this->designatedProductClassifications = $tmpDesignatedProductClassifications;
+        $this->designatedProductClassifications = $designatedProductClassifications;
 
         return $this;
     }

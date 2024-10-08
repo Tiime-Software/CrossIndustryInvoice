@@ -71,17 +71,13 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Sell
 
     public function setIdentifiers(array $identifiers): static
     {
-        $tmpIdentifiers = [];
-
         foreach ($identifiers as $identifier) {
             if (!$identifier instanceof SellerIdentifier) {
                 throw new \TypeError();
             }
-
-            $tmpIdentifiers[] = $identifier;
         }
 
-        $this->identifiers = $tmpIdentifiers;
+        $this->identifiers = $identifiers;
 
         return $this;
     }
@@ -93,17 +89,13 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Sell
 
     public function setGlobalIdentifiers(array $globalIdentifiers): static
     {
-        $tmpGlobalIdentifiers = [];
-
         foreach ($globalIdentifiers as $globalIdentifier) {
             if (!$globalIdentifier instanceof SellerGlobalIdentifier) {
                 throw new \TypeError();
             }
-
-            $tmpGlobalIdentifiers[] = $globalIdentifier;
         }
 
-        $this->globalIdentifiers = $tmpGlobalIdentifiers;
+        $this->globalIdentifiers = $globalIdentifiers;
 
         return $this;
     }

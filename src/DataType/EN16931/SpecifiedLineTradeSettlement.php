@@ -40,32 +40,26 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
 
     public function setSpecifiedTradeAllowances(array $specifiedTradeAllowances): static
     {
-        $tmpSpecifiedTradeAllowances = [];
-
         foreach ($specifiedTradeAllowances as $specifiedTradeAllowance) {
             if (!$specifiedTradeAllowance instanceof LineSpecifiedTradeAllowance) {
                 throw new \TypeError();
             }
-            $tmpSpecifiedTradeAllowances[] = $specifiedTradeAllowance;
         }
 
-        $this->specifiedTradeAllowances = $tmpSpecifiedTradeAllowances;
+        $this->specifiedTradeAllowances = $specifiedTradeAllowances;
 
         return $this;
     }
 
     public function setSpecifiedTradeCharges(array $specifiedTradeCharges): static
     {
-        $tmpSpecifiedTradeCharges = [];
-
         foreach ($specifiedTradeCharges as $specifiedTradeCharge) {
             if (!$specifiedTradeCharge instanceof LineSpecifiedTradeCharge) {
                 throw new \TypeError();
             }
-            $tmpSpecifiedTradeCharges[] = $specifiedTradeCharge;
         }
 
-        $this->specifiedTradeCharges = $tmpSpecifiedTradeCharges;
+        $this->specifiedTradeCharges = $specifiedTradeCharges;
 
         return $this;
     }

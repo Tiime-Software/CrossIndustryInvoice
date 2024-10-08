@@ -30,18 +30,14 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation,
         array $applicableTradeTaxes,
     ) {
-        $tmpApplicableTradeTaxes = [];
+        if (0 === \count($applicableTradeTaxes)) {
+            throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one HeaderApplicableTradeTax.');
+        }
 
         foreach ($applicableTradeTaxes as $applicableTradeTax) {
             if (!$applicableTradeTax instanceof HeaderApplicableTradeTax) {
                 throw new \TypeError();
             }
-
-            $tmpApplicableTradeTaxes[] = $applicableTradeTax;
-        }
-
-        if (0 === \count($tmpApplicableTradeTaxes)) {
-            throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one HeaderApplicableTradeTax.');
         }
 
         parent::__construct($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation, $applicableTradeTaxes);

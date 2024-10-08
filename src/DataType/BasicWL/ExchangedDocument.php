@@ -38,15 +38,13 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
 
     public function setIncludedNotes(array $includedNotes): static
     {
-        $tmpIncludedNotes = [];
-
         foreach ($includedNotes as $includedNote) {
             if (!$includedNote instanceof DocumentIncludedNote) {
                 throw new \TypeError();
             }
-            $tmpIncludedNotes[] = $includedNote;
         }
-        $this->includedNotes = $tmpIncludedNotes;
+
+        $this->includedNotes = $includedNotes;
 
         return $this;
     }
