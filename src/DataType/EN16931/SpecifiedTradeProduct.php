@@ -176,7 +176,11 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
         }
 
         foreach ($this->designatedProductClassifications as $designatedProductClassification) {
-            $currentNode->appendChild($designatedProductClassification->toXML($document));
+            $designatedProductClassificationXml = $designatedProductClassification->toXML($document);
+
+            if ($designatedProductClassificationXml instanceof \DOMElement) {
+                $currentNode->appendChild($designatedProductClassificationXml);
+            }
         }
 
         if ($this->originTradeCountry instanceof OriginTradeCountry) {
