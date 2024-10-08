@@ -92,7 +92,11 @@ class SpecifiedLineTradeSettlement extends \Tiime\CrossIndustryInvoice\DataType\
         $currentNode->appendChild($this->applicableTradeTax->toXML($document));
 
         if ($this->billingSpecifiedPeriod instanceof BillingSpecifiedPeriod) {
-            $currentNode->appendChild($this->billingSpecifiedPeriod->toXML($document));
+            $billingSpecifiedPeriodXml = $this->billingSpecifiedPeriod->toXML($document);
+
+            if ($billingSpecifiedPeriodXml instanceof \DOMElement) {
+                $currentNode->appendChild($billingSpecifiedPeriodXml);
+            }
         }
 
         foreach ($this->specifiedTradeAllowances as $specifiedTradeAllowance) {
