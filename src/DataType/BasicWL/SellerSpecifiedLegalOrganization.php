@@ -36,8 +36,15 @@ class SellerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataT
         return $this;
     }
 
-    public function toXML(\DOMDocument $document): \DOMElement
+    public function toXML(\DOMDocument $document): ?\DOMElement
     {
+        if (
+            null    === $this->identifier
+            && null === $this->tradingBusinessName
+        ) {
+            return null;
+        }
+
         $currentNode = $document->createElement(self::XML_NODE);
 
         if ($this->identifier instanceof LegalRegistrationIdentifier) {

@@ -49,7 +49,11 @@ class BuyerTradeParty
         $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
         if ($this->specifiedLegalOrganization instanceof BuyerSpecifiedLegalOrganization) {
-            $currentNode->appendChild($this->specifiedLegalOrganization->toXML($document));
+            $specifiedLegalOrganizationXml = $this->specifiedLegalOrganization->toXML($document);
+
+            if ($specifiedLegalOrganizationXml instanceof \DOMElement) {
+                $currentNode->appendChild($specifiedLegalOrganizationXml);
+            }
         }
 
         return $currentNode;
