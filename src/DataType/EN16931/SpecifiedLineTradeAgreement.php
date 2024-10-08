@@ -42,7 +42,11 @@ class SpecifiedLineTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\B
         $currentNode = $document->createElement(self::XML_NODE);
 
         if ($this->buyerOrderReferencedDocument instanceof LineBuyerOrderReferencedDocument) {
-            $currentNode->appendChild($this->buyerOrderReferencedDocument->toXML($document));
+            $buyerOrderReferencedDocumentXml = $this->buyerOrderReferencedDocument->toXML($document);
+
+            if ($buyerOrderReferencedDocumentXml instanceof \DOMElement) {
+                $currentNode->appendChild($buyerOrderReferencedDocumentXml);
+            }
         }
 
         if ($this->grossPriceProductTradePrice instanceof GrossPriceProductTradePrice) {
