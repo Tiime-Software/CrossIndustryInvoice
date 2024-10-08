@@ -35,8 +35,12 @@ class LineBuyerOrderReferencedDocument
         return $this;
     }
 
-    public function toXML(\DOMDocument $document): \DOMElement
+    public function toXML(\DOMDocument $document): ?\DOMElement
     {
+        if (null === $this->lineIdentifier) {
+            return null;
+        }
+
         $currentNode = $document->createElement(self::XML_NODE);
 
         if ($this->lineIdentifier instanceof PurchaseOrderLineReference) {
