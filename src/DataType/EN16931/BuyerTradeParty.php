@@ -78,7 +78,11 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Buyer
         }
 
         if ($this->definedTradeContact instanceof DefinedTradeContact) {
-            $currentNode->appendChild($this->definedTradeContact->toXML($document));
+            $definedTradeContactXml = $this->definedTradeContact->toXML($document);
+
+            if ($definedTradeContactXml instanceof \DOMElement) {
+                $currentNode->appendChild($definedTradeContactXml);
+            }
         }
 
         $currentNode->appendChild($this->postalTradeAddress->toXML($document));

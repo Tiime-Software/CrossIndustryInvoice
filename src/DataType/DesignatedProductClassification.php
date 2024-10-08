@@ -33,8 +33,12 @@ class DesignatedProductClassification
         return $this;
     }
 
-    public function toXML(\DOMDocument $document): \DOMElement
+    public function toXML(\DOMDocument $document): ?\DOMElement
     {
+        if (null === $this->classCode) {
+            return null;
+        }
+
         $currentNode = $document->createElement(self::XML_NODE);
 
         if ($this->classCode instanceof ClassCode) {

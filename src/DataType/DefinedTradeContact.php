@@ -87,8 +87,17 @@ class DefinedTradeContact
         return $this;
     }
 
-    public function toXML(\DOMDocument $document): \DOMElement
+    public function toXML(\DOMDocument $document): ?\DOMElement
     {
+        if (
+            null    === $this->personName
+            && null === $this->departmentName
+            && null === $this->telephoneUniversalCommunication
+            && null === $this->emailURIUniversalCommunication
+        ) {
+            return null;
+        }
+
         $currentNode = $document->createElement(self::XML_NODE);
 
         if (\is_string($this->personName)) {
