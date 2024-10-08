@@ -48,7 +48,7 @@ class SpecifiedTradePaymentTerms
         return $this;
     }
 
-    public function getDueDateDateTime(): DueDateDateTime
+    public function getDueDateDateTime(): ?DueDateDateTime
     {
         return $this->dueDateDateTime;
     }

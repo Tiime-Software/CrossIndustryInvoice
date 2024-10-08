@@ -28,19 +28,15 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
             throw new \Exception('Malformed');
         }
 
-        $tmpIncludedSupplyChainTradeLineItems = [];
-
         foreach ($includedSupplyChainTradeLineItems as $includedSupplyChainTradeLineItem) {
             if (!$includedSupplyChainTradeLineItem instanceof IncludedSupplyChainTradeLineItem) {
                 throw new \TypeError();
             }
-
-            $tmpIncludedSupplyChainTradeLineItems[] = $includedSupplyChainTradeLineItem;
         }
 
         parent::__construct($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
 
-        $this->includedSupplyChainTradeLineItems = $tmpIncludedSupplyChainTradeLineItems;
+        $this->includedSupplyChainTradeLineItems = $includedSupplyChainTradeLineItems;
     }
 
     /**

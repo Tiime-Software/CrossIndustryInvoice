@@ -94,23 +94,19 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation,
         array $applicableTradeTaxes,
     ) {
-        $tmpApplicableTradeTaxes = [];
+        if (0 === \count($applicableTradeTaxes)) {
+            throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one HeaderApplicableTradeTax.');
+        }
 
         foreach ($applicableTradeTaxes as $applicableTradeTax) {
             if (!$applicableTradeTax instanceof HeaderApplicableTradeTax) {
                 throw new \TypeError();
             }
-
-            $tmpApplicableTradeTaxes[] = $applicableTradeTax;
-        }
-
-        if (0 === \count($tmpApplicableTradeTaxes)) {
-            throw new \Exception('ApplicableHeaderTradeSettlement should contain at least one HeaderApplicableTradeTax.');
         }
 
         parent::__construct($invoiceCurrencyCode, $specifiedTradeSettlementHeaderMonetarySummation);
 
-        $this->applicableTradeTaxes                      = $tmpApplicableTradeTaxes;
+        $this->applicableTradeTaxes                      = $applicableTradeTaxes;
         $this->creditorReferenceIdentifier               = null;
         $this->paymentReference                          = null;
         $this->taxCurrencyCode                           = null;
@@ -190,17 +186,13 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
 
     public function setSpecifiedTradeSettlementPaymentMeans(array $specifiedTradeSettlementPaymentMeans): static
     {
-        $tmpSpecifiedTradeSettlementPaymentMeans = [];
-
         foreach ($specifiedTradeSettlementPaymentMeans as $specifiedTradeSettlementPaymentMeansItem) {
             if (!$specifiedTradeSettlementPaymentMeansItem instanceof SpecifiedTradeSettlementPaymentMeans) {
                 throw new \TypeError();
             }
-
-            $tmpSpecifiedTradeSettlementPaymentMeans[] = $specifiedTradeSettlementPaymentMeansItem;
         }
 
-        $this->specifiedTradeSettlementPaymentMeans = $tmpSpecifiedTradeSettlementPaymentMeans;
+        $this->specifiedTradeSettlementPaymentMeans = $specifiedTradeSettlementPaymentMeans;
 
         return $this;
     }
@@ -229,17 +221,13 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
 
     public function setSpecifiedTradeAllowances(array $specifiedTradeAllowances): static
     {
-        $tmpSpecifiedTradeAllowances = [];
-
         foreach ($specifiedTradeAllowances as $specifiedTradeAllowance) {
             if (!$specifiedTradeAllowance instanceof SpecifiedTradeAllowance) {
                 throw new \TypeError();
             }
-
-            $tmpSpecifiedTradeAllowances[] = $specifiedTradeAllowance;
         }
 
-        $this->specifiedTradeAllowances = $tmpSpecifiedTradeAllowances;
+        $this->specifiedTradeAllowances = $specifiedTradeAllowances;
 
         return $this;
     }
@@ -251,17 +239,13 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
 
     public function setSpecifiedTradeCharges(array $specifiedTradeCharges): static
     {
-        $tmpSpecifiedTradeCharges = [];
-
         foreach ($specifiedTradeCharges as $specifiedTradeCharge) {
             if (!$specifiedTradeCharge instanceof SpecifiedTradeCharge) {
                 throw new \TypeError();
             }
-
-            $tmpSpecifiedTradeCharges[] = $specifiedTradeCharge;
         }
 
-        $this->specifiedTradeCharges = $tmpSpecifiedTradeCharges;
+        $this->specifiedTradeCharges = $specifiedTradeCharges;
 
         return $this;
     }
@@ -285,17 +269,13 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
 
     public function setInvoiceReferencedDocuments(array $invoiceReferencedDocuments): static
     {
-        $tmpInvoiceReferencedDocuments = [];
-
         foreach ($invoiceReferencedDocuments as $invoiceReferencedDocument) {
             if (!$invoiceReferencedDocument instanceof InvoiceReferencedDocument) {
                 throw new \TypeError();
             }
-
-            $tmpInvoiceReferencedDocuments[] = $invoiceReferencedDocument;
         }
 
-        $this->invoiceReferencedDocuments = $tmpInvoiceReferencedDocuments;
+        $this->invoiceReferencedDocuments = $invoiceReferencedDocuments;
 
         return $this;
     }

@@ -18,21 +18,13 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\B
         array $includedSupplyChainTradeLineItems,
     ) {
         if (0 === \count($includedSupplyChainTradeLineItems)) {
-            throw new \Exception('Malformed');
+            throw new \Exception('SupplyChainTradeTransaction should contain at least one IncludedSupplyChainTradeLineItem.');
         }
-
-        $tmpIncludedSupplyChainTradeLineItems = [];
 
         foreach ($includedSupplyChainTradeLineItems as $includedSupplyChainTradeLineItem) {
             if (!$includedSupplyChainTradeLineItem instanceof IncludedSupplyChainTradeLineItem) {
                 throw new \TypeError();
             }
-
-            $tmpIncludedSupplyChainTradeLineItems[] = $includedSupplyChainTradeLineItem;
-        }
-
-        if (0 === \count($tmpIncludedSupplyChainTradeLineItems)) {
-            throw new \Exception('SupplyChainTradeTransaction should contain at least one IncludedSupplyChainTradeLineItem.');
         }
 
         parent::__construct($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement, $includedSupplyChainTradeLineItems);
