@@ -71,8 +71,16 @@ class SpecifiedTradePaymentTerms
         return $this;
     }
 
-    public function toXML(\DOMDocument $document): \DOMElement
+    public function toXML(\DOMDocument $document): ?\DOMElement
     {
+        if (
+            null    === $this->dueDateDateTime
+            && null === $this->description
+            && null === $this->directDebitMandateIdentifier
+        ) {
+            return null;
+        }
+
         $element = $document->createElement(self::XML_NODE);
 
         if (\is_string($this->description)) {

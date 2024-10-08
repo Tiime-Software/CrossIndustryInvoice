@@ -90,8 +90,17 @@ class ShipToTradeParty
         return $this;
     }
 
-    public function toXML(\DOMDocument $document): \DOMElement
+    public function toXML(\DOMDocument $document): ?\DOMElement
     {
+        if (
+            null    === $this->identifier
+            && null === $this->globalIdentifier
+            && null === $this->name
+            && null === $this->postalTradeAddress
+        ) {
+            return null;
+        }
+
         $element = $document->createElement(self::XML_NODE);
 
         if ($this->identifier instanceof LocationIdentifier) {
