@@ -13,7 +13,7 @@ use Tiime\EN16931\SemanticDataType\Quantity;
  */
 class BasisQuantity
 {
-    protected const XML_NODE = 'ram:BasisQuantity';
+    protected const string XML_NODE = 'ram:BasisQuantity';
 
     /**
      * BT-149-1.

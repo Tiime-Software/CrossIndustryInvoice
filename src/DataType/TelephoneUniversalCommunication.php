@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class TelephoneUniversalCommunication
 {
-    protected const XML_NODE = 'ram:TelephoneUniversalCommunication';
+    protected const string XML_NODE = 'ram:TelephoneUniversalCommunication';
 
     /**
      * @param string $completeNumber - BT-42 or BT-57

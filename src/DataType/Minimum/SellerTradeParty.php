@@ -11,7 +11,7 @@ use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
  */
 class SellerTradeParty
 {
-    protected const XML_NODE = 'ram:SellerTradeParty';
+    protected const string XML_NODE = 'ram:SellerTradeParty';
 
     /**
      * BT-30-00.

@@ -12,7 +12,7 @@ use Tiime\EN16931\DataType\Identifier\InvoiceLineIdentifier;
  */
 class AssociatedDocumentLineDocument
 {
-    protected const XML_NODE = 'ram:AssociatedDocumentLineDocument';
+    protected const string XML_NODE = 'ram:AssociatedDocumentLineDocument';
 
     /**
      * BT-127-00.

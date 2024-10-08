@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class StartDateTime
 {
-    protected const XML_NODE = 'ram:StartDateTime';
+    protected const string XML_NODE = 'ram:StartDateTime';
 
     /**
      * BT-73-0.

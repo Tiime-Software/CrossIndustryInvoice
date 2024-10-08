@@ -8,7 +8,7 @@ use Tiime\EN16931\DataType\Identifier\PaymentServiceProviderIdentifier;
 
 class PayeeSpecifiedCreditorFinancialInstitution
 {
-    protected const XML_NODE = 'ram:PayeeSpecifiedCreditorFinancialInstitution';
+    protected const string XML_NODE = 'ram:PayeeSpecifiedCreditorFinancialInstitution';
 
     /**
      * @param PaymentServiceProviderIdentifier $bicIdentifier - BT-86

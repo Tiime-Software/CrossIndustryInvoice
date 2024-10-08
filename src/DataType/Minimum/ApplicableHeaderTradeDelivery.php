@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
  */
 class ApplicableHeaderTradeDelivery
 {
-    protected const XML_NODE = 'ram:ApplicableHeaderTradeDelivery';
+    protected const string XML_NODE = 'ram:ApplicableHeaderTradeDelivery';
 
     public function toXML(\DOMDocument $document): \DOMElement
     {

@@ -15,7 +15,7 @@ use Tiime\EN16931\DataType\InternationalCodeDesignator;
  */
 class ShipToTradeParty
 {
-    protected const XML_NODE = 'ram:ShipToTradeParty';
+    protected const string XML_NODE = 'ram:ShipToTradeParty';
 
     /**
      * BT-71.

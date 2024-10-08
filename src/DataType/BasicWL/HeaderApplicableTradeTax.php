@@ -15,7 +15,7 @@ use Tiime\EN16931\SemanticDataType\Percentage;
  */
 class HeaderApplicableTradeTax
 {
-    protected const XML_NODE = 'ram:ApplicableTradeTax';
+    protected const string XML_NODE = 'ram:ApplicableTradeTax';
 
     /**
      * BT-117.

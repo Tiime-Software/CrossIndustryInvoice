@@ -6,7 +6,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
 
 class OccurrenceDateTime
 {
-    protected const XML_NODE = 'ram:OccurrenceDateTime';
+    protected const string XML_NODE = 'ram:OccurrenceDateTime';
 
     /**
      * BT-72-0.

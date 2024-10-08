@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\Reference\ReceivingAdviceReference;
  */
 class ReceivingAdviceReferencedDocument
 {
-    protected const XML_NODE = 'ram:ReceivingAdviceReferencedDocument';
+    protected const string XML_NODE = 'ram:ReceivingAdviceReferencedDocument';
 
     /**
      * @param ReceivingAdviceReference $issuerAssignedIdentifier - BT-15

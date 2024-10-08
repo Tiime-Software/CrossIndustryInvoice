@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\Identifier\VatIdentifier;
  */
 class SpecifiedTaxRegistrationFC
 {
-    protected const XML_NODE = 'ram:SpecifiedTaxRegistration';
+    protected const string XML_NODE = 'ram:SpecifiedTaxRegistration';
 
     /**
      * BT-32-0.

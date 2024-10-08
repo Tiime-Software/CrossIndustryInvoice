@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class EndDateTime
 {
-    protected const XML_NODE = 'ram:EndDateTime';
+    protected const string XML_NODE = 'ram:EndDateTime';
 
     /**
      * BT-74-0.

@@ -12,7 +12,7 @@ use Tiime\EN16931\Invoice;
  */
 class InvoiceReferencedDocument
 {
-    protected const XML_NODE = 'ram:InvoiceReferencedDocument';
+    protected const string XML_NODE = 'ram:InvoiceReferencedDocument';
 
     /**
      * BT-26-00.

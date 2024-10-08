@@ -11,7 +11,7 @@ use Tiime\EN16931\Invoice;
  */
 class ExchangedDocumentContext
 {
-    protected const XML_NODE = 'rsm:ExchangedDocumentContext';
+    protected const string XML_NODE = 'rsm:ExchangedDocumentContext';
 
     /**
      * BT-23-00.

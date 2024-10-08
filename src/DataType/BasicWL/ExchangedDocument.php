@@ -16,7 +16,7 @@ use Tiime\EN16931\Invoice;
  */
 class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\ExchangedDocument
 {
-    protected const XML_NODE = 'rsm:ExchangedDocument';
+    protected const string XML_NODE = 'rsm:ExchangedDocument';
 
     /**
      * BG-1.

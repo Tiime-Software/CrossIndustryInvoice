@@ -12,7 +12,7 @@ use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
  */
 class GrossPriceProductTradePrice
 {
-    protected const XML_NODE = 'ram:GrossPriceProductTradePrice';
+    protected const string XML_NODE = 'ram:GrossPriceProductTradePrice';
 
     /**
      * BT-148.

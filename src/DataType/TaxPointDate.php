@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class TaxPointDate
 {
-    protected const XML_NODE = 'ram:TaxPointDate';
+    protected const string XML_NODE = 'ram:TaxPointDate';
 
     /**
      * BT-7-0.

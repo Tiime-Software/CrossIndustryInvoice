@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\InvoiceNoteCode;
  */
 class DocumentIncludedNote
 {
-    protected const XML_NODE = 'ram:IncludedNote';
+    protected const string XML_NODE = 'ram:IncludedNote';
 
     /**
      * BT-21.

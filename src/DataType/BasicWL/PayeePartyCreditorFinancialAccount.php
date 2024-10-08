@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\Identifier\PaymentAccountIdentifier;
  */
 class PayeePartyCreditorFinancialAccount
 {
-    protected const XML_NODE = 'ram:PayeePartyCreditorFinancialAccount';
+    protected const string XML_NODE = 'ram:PayeePartyCreditorFinancialAccount';
 
     /**
      * BT-84.

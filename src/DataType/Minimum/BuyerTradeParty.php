@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
  */
 class BuyerTradeParty
 {
-    protected const XML_NODE = 'ram:BuyerTradeParty';
+    protected const string XML_NODE = 'ram:BuyerTradeParty';
 
     /**
      * BT-47-00.

@@ -12,7 +12,7 @@ use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
  */
 class LineBuyerOrderReferencedDocument
 {
-    protected const XML_NODE = 'ram:BuyerOrderReferencedDocument';
+    protected const string XML_NODE = 'ram:BuyerOrderReferencedDocument';
 
     /**
      * BT-132.

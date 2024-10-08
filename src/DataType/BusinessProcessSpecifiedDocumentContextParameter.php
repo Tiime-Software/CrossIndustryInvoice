@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class BusinessProcessSpecifiedDocumentContextParameter
 {
-    protected const XML_NODE = 'ram:BusinessProcessSpecifiedDocumentContextParameter';
+    protected const string XML_NODE = 'ram:BusinessProcessSpecifiedDocumentContextParameter';
 
     /**
      * @param string $identifier - BT-23

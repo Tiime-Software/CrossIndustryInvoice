@@ -11,7 +11,7 @@ use Tiime\EN16931\Invoice;
  */
 class ReceivableSpecifiedTradeAccountingAccount
 {
-    protected const XML_NODE = 'ram:ReceivableSpecifiedTradeAccountingAccount';
+    protected const string XML_NODE = 'ram:ReceivableSpecifiedTradeAccountingAccount';
 
     /**
      * @param string $identifier - BT-19

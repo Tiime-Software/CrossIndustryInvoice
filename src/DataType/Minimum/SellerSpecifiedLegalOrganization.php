@@ -12,7 +12,7 @@ use Tiime\EN16931\DataType\InternationalCodeDesignator;
  */
 class SellerSpecifiedLegalOrganization
 {
-    protected const XML_NODE = 'ram:SpecifiedLegalOrganization';
+    protected const string XML_NODE = 'ram:SpecifiedLegalOrganization';
 
     /**
      * BT-30 & BT-30-1.

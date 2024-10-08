@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\Identifier\DebitedAccountIdentifier;
  */
 class PayerPartyDebtorFinancialAccount
 {
-    protected const XML_NODE = 'ram:PayerPartyDebtorFinancialAccount';
+    protected const string XML_NODE = 'ram:PayerPartyDebtorFinancialAccount';
 
     /**
      * @param DebitedAccountIdentifier $ibanIdentifier - BT-91

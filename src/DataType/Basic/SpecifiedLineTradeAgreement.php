@@ -9,7 +9,7 @@ use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
  */
 class SpecifiedLineTradeAgreement
 {
-    protected const XML_NODE = 'ram:SpecifiedLineTradeAgreement';
+    protected const string XML_NODE = 'ram:SpecifiedLineTradeAgreement';
 
     /**
      * BT-148-00.

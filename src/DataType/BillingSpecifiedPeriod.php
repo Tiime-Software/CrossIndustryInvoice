@@ -12,7 +12,7 @@ use Tiime\EN16931\BusinessTermsGroup\InvoicingPeriod;
  */
 class BillingSpecifiedPeriod
 {
-    protected const XML_NODE = 'ram:BillingSpecifiedPeriod';
+    protected const string XML_NODE = 'ram:BillingSpecifiedPeriod';
 
     /**
      * BT-73-00.

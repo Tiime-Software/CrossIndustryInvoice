@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\CountryAlpha2Code;
  */
 class PostalTradeAddress
 {
-    protected const XML_NODE = 'ram:PostalTradeAddress';
+    protected const string XML_NODE = 'ram:PostalTradeAddress';
 
     /**
      * @param CountryAlpha2Code $countryIdentifier - BT-40 or BT-55 or BT-80

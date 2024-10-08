@@ -6,7 +6,7 @@ use Tiime\EN16931\DataType\ItemTypeCode;
 
 class ClassCode
 {
-    protected const XML_NODE = 'ram:ClassCode';
+    protected const string XML_NODE = 'ram:ClassCode';
 
     /**
      * BT-158-2.

@@ -15,7 +15,7 @@ use Tiime\EN16931\DataType\InternationalCodeDesignator;
  */
 class PayeeTradeParty
 {
-    protected const XML_NODE = 'ram:PayeeTradeParty';
+    protected const string XML_NODE = 'ram:PayeeTradeParty';
 
     /**
      * BT-60.

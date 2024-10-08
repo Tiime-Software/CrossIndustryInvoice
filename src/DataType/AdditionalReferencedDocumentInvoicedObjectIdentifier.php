@@ -13,7 +13,7 @@ use Tiime\EN16931\DataType\MimeCode;
  */
 class AdditionalReferencedDocumentInvoicedObjectIdentifier
 {
-    protected const XML_NODE = 'ram:AdditionalReferencedDocument';
+    protected const string XML_NODE = 'ram:AdditionalReferencedDocument';
 
     /**
      * BT-124.

@@ -11,7 +11,7 @@ use Tiime\EN16931\SemanticDataType\Amount;
  */
 class LineSpecifiedTradeAllowance
 {
-    protected const XML_NODE = 'ram:SpecifiedTradeAllowanceCharge';
+    protected const string XML_NODE = 'ram:SpecifiedTradeAllowanceCharge';
 
     /**
      * BG-27-0 & BG-27-1.

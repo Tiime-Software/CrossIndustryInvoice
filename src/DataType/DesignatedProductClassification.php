@@ -9,7 +9,7 @@ namespace Tiime\CrossIndustryInvoice\DataType;
  */
 class DesignatedProductClassification
 {
-    protected const XML_NODE = 'ram:DesignatedProductClassification';
+    protected const string XML_NODE = 'ram:DesignatedProductClassification';
 
     /**
      * BT-158 & BT-158-1 & BT-158-2.

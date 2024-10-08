@@ -12,7 +12,7 @@ use Tiime\EN16931\Invoice;
  */
 class SpecifiedTradePaymentTerms
 {
-    protected const XML_NODE = 'ram:SpecifiedTradePaymentTerms';
+    protected const string XML_NODE = 'ram:SpecifiedTradePaymentTerms';
 
     /**
      * BT-20.

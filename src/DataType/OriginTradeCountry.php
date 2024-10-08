@@ -11,7 +11,7 @@ use Tiime\EN16931\DataType\CountryAlpha2Code;
  */
 class OriginTradeCountry
 {
-    protected const XML_NODE = 'ram:OriginTradeCountry';
+    protected const string XML_NODE = 'ram:OriginTradeCountry';
 
     /**
      * @param CountryAlpha2Code $identifier - BT-159

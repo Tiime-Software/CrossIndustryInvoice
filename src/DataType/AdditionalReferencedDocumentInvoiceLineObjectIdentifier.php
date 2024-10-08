@@ -12,7 +12,7 @@ use Tiime\EN16931\DataType\ObjectSchemeCode;
  */
 class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
 {
-    protected const XML_NODE = 'ram:AdditionalReferencedDocument';
+    protected const string XML_NODE = 'ram:AdditionalReferencedDocument';
 
     /**
      * BT-128-0.

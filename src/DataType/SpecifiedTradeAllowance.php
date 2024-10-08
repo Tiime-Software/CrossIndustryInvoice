@@ -14,7 +14,7 @@ use Tiime\EN16931\SemanticDataType\Percentage;
  */
 class SpecifiedTradeAllowance
 {
-    protected const XML_NODE = 'ram:SpecifiedTradeAllowanceCharge';
+    protected const string XML_NODE = 'ram:SpecifiedTradeAllowanceCharge';
 
     /**
      * BG-20-0.

@@ -13,7 +13,7 @@ use Tiime\EN16931\DataType\Reference\TenderOrLotReference;
  */
 class AdditionalReferencedDocumentTenderOrLotReference
 {
-    protected const XML_NODE = 'ram:AdditionalReferencedDocument';
+    protected const string XML_NODE = 'ram:AdditionalReferencedDocument';
 
     /**
      * BT-124.
