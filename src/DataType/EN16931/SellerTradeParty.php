@@ -99,7 +99,11 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Sell
         }
 
         if ($this->specifiedLegalOrganization instanceof SellerSpecifiedLegalOrganization) {
-            $currentNode->appendChild($this->specifiedLegalOrganization->toXML($document));
+            $specifiedLegalOrganizationXml = $this->specifiedLegalOrganization->toXML($document);
+
+            if ($specifiedLegalOrganizationXml instanceof \DOMElement) {
+                $currentNode->appendChild($specifiedLegalOrganizationXml);
+            }
         }
 
         if ($this->definedTradeContact instanceof DefinedTradeContact) {

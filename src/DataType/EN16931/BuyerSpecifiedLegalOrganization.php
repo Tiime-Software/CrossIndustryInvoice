@@ -36,17 +36,26 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
         return $this->tradingBusinessName;
     }
 
-    public function toXML(\DOMDocument $document): \DOMElement
+    public function toXML(\DOMDocument $document): ?\DOMElement
     {
-        $currentNode = $document->createElement(self::XML_NODE);
-
-        $identifierNode = $document->createElement('ram:ID', $this->getIdentifier()->value);
-
-        if ($this->identifier->scheme instanceof InternationalCodeDesignator) {
-            $identifierNode->setAttribute('schemeID', $this->identifier->scheme->value);
+        if (
+            null    === $this->identifier
+            && null === $this->tradingBusinessName
+        ) {
+            return null;
         }
 
-        $currentNode->appendChild($identifierNode);
+        $currentNode = $document->createElement(self::XML_NODE);
+
+        if ($this->identifier instanceof LegalRegistrationIdentifier) {
+            $identifierNode = $document->createElement('ram:ID', $this->identifier->value);
+
+            if ($this->identifier->scheme instanceof InternationalCodeDesignator) {
+                $identifierNode->setAttribute('schemeID', $this->identifier->scheme->value);
+            }
+
+            $currentNode->appendChild($identifierNode);
+        }
 
         if (\is_string($this->tradingBusinessName)) {
             $currentNode->appendChild($document->createElement('ram:TradingBusinessName', $this->tradingBusinessName));

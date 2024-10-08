@@ -129,7 +129,11 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Sell
         $currentNode->appendChild($document->createElement('ram:Name', $this->name));
 
         if ($this->specifiedLegalOrganization instanceof SellerSpecifiedLegalOrganization) {
-            $currentNode->appendChild($this->specifiedLegalOrganization->toXML($document));
+            $specifiedLegalOrganizationXml = $this->specifiedLegalOrganization->toXML($document);
+
+            if ($specifiedLegalOrganizationXml instanceof \DOMElement) {
+                $currentNode->appendChild($specifiedLegalOrganizationXml);
+            }
         }
 
         $currentNode->appendChild($this->postalTradeAddress->toXML($document));
