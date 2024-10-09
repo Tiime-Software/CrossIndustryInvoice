@@ -98,7 +98,11 @@ class PayeeTradeParty
         $element->appendChild($document->createElement('ram:Name', $this->name));
 
         if ($this->specifiedLegalOrganization instanceof PayeeSpecifiedLegalOrganization) {
-            $element->appendChild($this->specifiedLegalOrganization->toXML($document));
+            $specifiedLegalOrganizationXml = $this->specifiedLegalOrganization->toXML($document);
+
+            if ($specifiedLegalOrganizationXml instanceof \DOMElement) {
+                $element->appendChild($specifiedLegalOrganizationXml);
+            }
         }
 
         return $element;
