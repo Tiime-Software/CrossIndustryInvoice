@@ -53,8 +53,15 @@ class PayeePartyCreditorFinancialAccount
         return $this;
     }
 
-    public function toXML(\DOMDocument $document): \DOMElement
+    public function toXML(\DOMDocument $document): ?\DOMElement
     {
+        if (
+            null    === $this->ibanIdentifier
+            && null === $this->proprietaryIdentifier
+        ) {
+            return null;
+        }
+
         $currentNode = $document->createElement(self::XML_NODE);
 
         if ($this->ibanIdentifier instanceof PaymentAccountIdentifier) {
