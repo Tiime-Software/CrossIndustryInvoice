@@ -74,7 +74,11 @@ class SpecifiedTradeSettlementPaymentMeans
         }
 
         if ($this->payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
-            $element->appendChild($this->payeePartyCreditorFinancialAccount->toXML($document));
+            $payeePartyCreditorFinancialAccountXml = $this->payeePartyCreditorFinancialAccount->toXML($document);
+
+            if ($payeePartyCreditorFinancialAccountXml instanceof \DOMElement) {
+                $element->appendChild($payeePartyCreditorFinancialAccountXml);
+            }
         }
 
         return $element;

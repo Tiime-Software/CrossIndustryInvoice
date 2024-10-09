@@ -104,7 +104,11 @@ class SpecifiedTradeSettlementPaymentMeans extends \Tiime\CrossIndustryInvoice\D
         }
 
         if ($this->payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
-            $currentNode->appendChild($this->payeePartyCreditorFinancialAccount->toXML($document));
+            $payeePartyCreditorFinancialAccountXml = $this->payeePartyCreditorFinancialAccount->toXML($document);
+
+            if ($payeePartyCreditorFinancialAccountXml instanceof \DOMElement) {
+                $currentNode->appendChild($payeePartyCreditorFinancialAccountXml);
+            }
         }
 
         if ($this->payeeSpecifiedCreditorFinancialInstitution instanceof PayeeSpecifiedCreditorFinancialInstitution) {

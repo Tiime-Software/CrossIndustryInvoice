@@ -6,6 +6,9 @@ namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\EN16931\DataType\Identifier\PaymentAccountIdentifier;
 
+/**
+ * BG-17.
+ */
 class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeePartyCreditorFinancialAccount
 {
     /**
@@ -32,8 +35,16 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
         return $this;
     }
 
-    public function toXML(\DOMDocument $document): \DOMElement
+    public function toXML(\DOMDocument $document): ?\DOMElement
     {
+        if (
+            null    === $this->ibanIdentifier
+            && null === $this->proprietaryIdentifier
+            && null === $this->accountName
+        ) {
+            return null;
+        }
+
         $currentNode = $document->createElement(self::XML_NODE);
 
         if ($this->ibanIdentifier instanceof PaymentAccountIdentifier) {
