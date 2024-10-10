@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\EN16931;
 
+use Tiime\CrossIndustryInvoice\Basic\CrossIndustryInvoice as BasicCrossIndustryInvoice;
 use Tiime\CrossIndustryInvoice\CrossIndustryInvoiceInterface;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 
-class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
+class CrossIndustryInvoice extends BasicCrossIndustryInvoice implements CrossIndustryInvoiceInterface
 {
     protected const string XML_NODE = 'rsm:CrossIndustryInvoice';
 
@@ -19,25 +20,22 @@ class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
      * @param SupplyChainTradeTransaction $supplyChainTradeTransaction - BG-25-00
      */
     public function __construct(
-        private ExchangedDocumentContext $exchangedDocumentContext,
-        private ExchangedDocument $exchangedDocument,
-        private SupplyChainTradeTransaction $supplyChainTradeTransaction,
+        ExchangedDocumentContext $exchangedDocumentContext,
+        ExchangedDocument $exchangedDocument,
+        SupplyChainTradeTransaction $supplyChainTradeTransaction,
     ) {
-    }
-
-    public function getExchangedDocumentContext(): ExchangedDocumentContext
-    {
-        return $this->exchangedDocumentContext;
-    }
-
-    public function getExchangedDocument(): ExchangedDocument
-    {
-        return $this->exchangedDocument;
+        parent::__construct($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
     }
 
     public function getSupplyChainTradeTransaction(): SupplyChainTradeTransaction
     {
-        return $this->supplyChainTradeTransaction;
+        $supplyChainTradeTransaction = parent::getSupplyChainTradeTransaction();
+
+        if (!$supplyChainTradeTransaction instanceof SupplyChainTradeTransaction) {
+            throw new \LogicException('Must be of type EN16931\\SupplyChainTradeTransaction');
+        }
+
+        return $supplyChainTradeTransaction;
     }
 
     public function toXML(): \DOMDocument
