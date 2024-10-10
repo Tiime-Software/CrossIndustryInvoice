@@ -2,12 +2,13 @@
 
 namespace Tiime\CrossIndustryInvoice\Basic;
 
+use Tiime\CrossIndustryInvoice\BasicWL\CrossIndustryInvoice as BasicWLCrossIndustryInvoice;
 use Tiime\CrossIndustryInvoice\CrossIndustryInvoiceInterface;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 
-class CrossIndustryInvoice extends \Tiime\CrossIndustryInvoice\BasicWL\CrossIndustryInvoice implements CrossIndustryInvoiceInterface
+class CrossIndustryInvoice extends BasicWLCrossIndustryInvoice implements CrossIndustryInvoiceInterface
 {
     public function __construct(
         ExchangedDocumentContext $exchangedDocumentContext,
@@ -15,6 +16,17 @@ class CrossIndustryInvoice extends \Tiime\CrossIndustryInvoice\BasicWL\CrossIndu
         SupplyChainTradeTransaction $supplyChainTradeTransaction,
     ) {
         parent::__construct($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
+    }
+
+    public function getSupplyChainTradeTransaction(): SupplyChainTradeTransaction
+    {
+        $supplyChainTradeTransaction = parent::getSupplyChainTradeTransaction();
+
+        if (!$supplyChainTradeTransaction instanceof SupplyChainTradeTransaction) {
+            throw new \LogicException('Must be of type Basic\\SupplyChainTradeTransaction');
+        }
+
+        return $supplyChainTradeTransaction;
     }
 
     public static function fromXML(\DOMDocument $document): self

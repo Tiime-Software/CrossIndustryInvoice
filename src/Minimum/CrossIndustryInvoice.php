@@ -19,9 +19,9 @@ class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
      * @param SupplyChainTradeTransaction $supplyChainTradeTransaction - BG-25-00
      */
     public function __construct(
-        private ExchangedDocumentContext $exchangedDocumentContext,
-        private ExchangedDocument $exchangedDocument,
-        private SupplyChainTradeTransaction $supplyChainTradeTransaction,
+        protected ExchangedDocumentContext $exchangedDocumentContext,
+        protected ExchangedDocument $exchangedDocument,
+        protected SupplyChainTradeTransaction $supplyChainTradeTransaction,
     ) {
     }
 
