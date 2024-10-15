@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\EN16931\DataType\AllowanceReasonCode;
+use Tiime\EN16931\Codelist\AllowanceReasonCodeUNTDID5189;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
@@ -38,7 +38,7 @@ class SpecifiedTradeAllowance
     /**
      * BT-98.
      */
-    private ?AllowanceReasonCode $reasonCode;
+    private ?AllowanceReasonCodeUNTDID5189 $reasonCode;
 
     /**
      * BT-97.
@@ -50,7 +50,7 @@ class SpecifiedTradeAllowance
      */
     public function __construct(
         float $actualAmount,
-        private CategoryTradeTax $allowanceCategoryTradeTax,
+        private readonly CategoryTradeTax $allowanceCategoryTradeTax,
     ) {
         $this->allowanceChargeIndicator = new AllowanceIndicator();
         $this->actualAmount             = new Amount($actualAmount);
@@ -99,12 +99,12 @@ class SpecifiedTradeAllowance
         return $this;
     }
 
-    public function getReasonCode(): ?AllowanceReasonCode
+    public function getReasonCode(): ?AllowanceReasonCodeUNTDID5189
     {
         return $this->reasonCode;
     }
 
-    public function setReasonCode(?AllowanceReasonCode $reasonCode): static
+    public function setReasonCode(?AllowanceReasonCodeUNTDID5189 $reasonCode): static
     {
         $this->reasonCode = $reasonCode;
 
@@ -139,7 +139,7 @@ class SpecifiedTradeAllowance
 
         $currentNode->appendChild($document->createElement('ram:ActualAmount', $this->actualAmount->getFormattedValueRounded()));
 
-        if ($this->reasonCode instanceof AllowanceReasonCode) {
+        if ($this->reasonCode instanceof AllowanceReasonCodeUNTDID5189) {
             $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
         }
 
@@ -208,7 +208,7 @@ class SpecifiedTradeAllowance
             }
 
             if (1 === $reasonCodeElements->count()) {
-                $reasonCode = AllowanceReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);
+                $reasonCode = AllowanceReasonCodeUNTDID5189::tryFrom($reasonCodeElements->item(0)->nodeValue);
 
                 if (null === $reasonCode) {
                     throw new \Exception('Wrong ReasonCode');

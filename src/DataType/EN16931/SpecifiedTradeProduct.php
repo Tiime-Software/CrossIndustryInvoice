@@ -7,10 +7,10 @@ namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 use Tiime\CrossIndustryInvoice\DataType\ApplicableProductCharacteristic;
 use Tiime\CrossIndustryInvoice\DataType\DesignatedProductClassification;
 use Tiime\CrossIndustryInvoice\DataType\OriginTradeCountry;
+use Tiime\EN16931\Codelist\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\Identifier\BuyerItemIdentifier;
 use Tiime\EN16931\DataType\Identifier\SellerItemIdentifier;
 use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BG-31.

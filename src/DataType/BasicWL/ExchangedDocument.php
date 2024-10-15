@@ -6,8 +6,8 @@ namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
 use Tiime\CrossIndustryInvoice\DataType\DocumentIncludedNote;
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
+use Tiime\EN16931\Codelist\InvoiceTypeCodeUNTDID1001;
 use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
-use Tiime\EN16931\DataType\InvoiceTypeCode;
 
 /**
  * BT-1-00.
@@ -23,7 +23,7 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
      */
     private array $includedNotes;
 
-    public function __construct(InvoiceIdentifier $identifier, InvoiceTypeCode $typeCode, IssueDateTime $issueDateTime)
+    public function __construct(InvoiceIdentifier $identifier, InvoiceTypeCodeUNTDID1001 $typeCode, IssueDateTime $issueDateTime)
     {
         parent::__construct($identifier, $typeCode, $issueDateTime);
         $this->includedNotes = [];
@@ -82,7 +82,7 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
 
         $identifier = $identifierElements->item(0)->nodeValue;
 
-        $typeCode = InvoiceTypeCode::tryFrom($typeCodeElements->item(0)->nodeValue);
+        $typeCode = InvoiceTypeCodeUNTDID1001::tryFrom($typeCodeElements->item(0)->nodeValue);
 
         if (null === $typeCode) {
             throw new \Exception('Wrong currency code');

@@ -66,11 +66,19 @@ use Tiime\CrossIndustryInvoice\DataType\TaxPointDate;
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
 use Tiime\CrossIndustryInvoice\EN16931\CrossIndustryInvoice;
 use Tiime\CrossIndustryInvoice\Utils\CrossIndustryInvoiceUtils;
-use Tiime\EN16931\DataType\AllowanceReasonCode;
-use Tiime\EN16931\DataType\ChargeReasonCode;
-use Tiime\EN16931\DataType\CountryAlpha2Code;
-use Tiime\EN16931\DataType\CurrencyCode;
-use Tiime\EN16931\DataType\DateCode2475;
+use Tiime\EN16931\Codelist\AllowanceReasonCodeUNTDID5189;
+use Tiime\EN16931\Codelist\ChargeReasonCodeUNTDID7161;
+use Tiime\EN16931\Codelist\CountryAlpha2Code;
+use Tiime\EN16931\Codelist\CurrencyCodeISO4217;
+use Tiime\EN16931\Codelist\DutyTaxFeeCategoryCodeUNTDID5305;
+use Tiime\EN16931\Codelist\InternationalCodeDesignator;
+use Tiime\EN16931\Codelist\InvoiceTypeCodeUNTDID1001;
+use Tiime\EN16931\Codelist\PaymentMeansCodeUNTDID4461;
+use Tiime\EN16931\Codelist\ReferenceQualifierCodeUNTDID1153;
+use Tiime\EN16931\Codelist\TextSubjectCodeUNTDID4451;
+use Tiime\EN16931\Codelist\TimeReferencingCodeUNTDID2475;
+use Tiime\EN16931\Codelist\UnitOfMeasureCode;
+use Tiime\EN16931\Codelist\VatExemptionReasonCode;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 use Tiime\EN16931\DataType\Identifier\DebitedAccountIdentifier;
 use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
@@ -83,18 +91,10 @@ use Tiime\EN16931\DataType\Identifier\PayeeIdentifier;
 use Tiime\EN16931\DataType\Identifier\PaymentAccountIdentifier;
 use Tiime\EN16931\DataType\Identifier\PaymentServiceProviderIdentifier;
 use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
-use Tiime\EN16931\DataType\InvoiceNoteCode;
-use Tiime\EN16931\DataType\InvoiceTypeCode;
-use Tiime\EN16931\DataType\ObjectSchemeCode;
-use Tiime\EN16931\DataType\PaymentMeansCode;
 use Tiime\EN16931\DataType\Reference\DespatchAdviceReference;
 use Tiime\EN16931\DataType\Reference\PrecedingInvoiceReference;
 use Tiime\EN16931\DataType\Reference\PurchaseOrderLineReference;
 use Tiime\EN16931\DataType\Reference\ReceivingAdviceReference;
-use Tiime\EN16931\DataType\UnitOfMeasurement;
-use Tiime\EN16931\DataType\VatCategory;
-use Tiime\EN16931\DataType\VatExoneration;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
 class CIIEN16931Test extends TestCase
@@ -145,7 +145,7 @@ class CIIEN16931Test extends TestCase
             ),
             new ExchangedDocument(
                 new InvoiceIdentifier('FA-1545'),
-                InvoiceTypeCode::COMMERCIAL_INVOICE,
+                InvoiceTypeCodeUNTDID1001::COMMERCIAL_INVOICE,
                 new IssueDateTime(new \DateTime())
             ),
             new SupplyChainTradeTransaction(
@@ -155,10 +155,10 @@ class CIIEN16931Test extends TestCase
                 ),
                 new ApplicableHeaderTradeDelivery(),
                 new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
+                    CurrencyCodeISO4217::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40),
                     [
-                        new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD_RATE),
+                        new HeaderApplicableTradeTax(100, 100, DutyTaxFeeCategoryCodeUNTDID5305::STANDARD_RATE),
                     ],
                 ),
                 [
@@ -171,10 +171,10 @@ class CIIEN16931Test extends TestCase
                             new NetPriceProductTradePrice(100)
                         ),
                         new SpecifiedLineTradeDelivery(
-                            new BilledQuantity(1, UnitOfMeasurement::ACCOUNTING_UNIT_REC20)
+                            new BilledQuantity(1, UnitOfMeasureCode::ACCOUNTING_UNIT)
                         ),
                         new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD_RATE),
+                            new ApplicableTradeTax(DutyTaxFeeCategoryCodeUNTDID5305::STANDARD_RATE),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
                     ),
@@ -200,11 +200,11 @@ class CIIEN16931Test extends TestCase
                 ->setBusinessProcessSpecifiedDocumentContextParameter(new BusinessProcessSpecifiedDocumentContextParameter('BusinessProcess1')),
             (new ExchangedDocument(
                 new InvoiceIdentifier('FA-1545'),
-                InvoiceTypeCode::COMMERCIAL_INVOICE,
+                InvoiceTypeCodeUNTDID1001::COMMERCIAL_INVOICE,
                 new IssueDateTime(new \DateTime())
             ))
                 ->setIncludedNotes([
-                    (new DocumentIncludedNote('DocumentIncludedNote'))->setSubjectCode(InvoiceNoteCode::NOTE),
+                    (new DocumentIncludedNote('DocumentIncludedNote'))->setSubjectCode(TextSubjectCodeUNTDID4451::NOTE),
                 ]),
             new SupplyChainTradeTransaction(
                 new ApplicableHeaderTradeAgreement(
@@ -262,25 +262,25 @@ class CIIEN16931Test extends TestCase
                         )
                     ),
                 (new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
+                    CurrencyCodeISO4217::EURO,
                     (new SpecifiedTradeSettlementHeaderMonetarySummation(40, 40, 40, 40))
                         ->setRoundingAmount(40)
                         ->setChargeTotalAmount(20)
                         ->setAllowanceTotalAmount(10)
-                        ->setTaxTotalAmountCurrency(new TaxTotalAmount(10, CurrencyCode::EURO))
+                        ->setTaxTotalAmountCurrency(new TaxTotalAmount(10, CurrencyCodeISO4217::EURO))
                         ->setTotalPrepaidAmount(40),
                     [
-                        (new HeaderApplicableTradeTax(100, 100, VatCategory::STANDARD_RATE))
+                        (new HeaderApplicableTradeTax(100, 100, DutyTaxFeeCategoryCodeUNTDID5305::STANDARD_RATE))
                             ->setTaxPointDate(new TaxPointDate(new \DateTime()))
                             ->setExemptionReason('ExemptionReason')
-                            ->setExemptionReasonCode(VatExoneration::NOT_SUBJECT_TO_VAT)
-                            ->setDueDateTypeCode(DateCode2475::INVOICE_DATE)
+                            ->setExemptionReasonCode(VatExemptionReasonCode::NOT_SUBJECT_TO_VAT)
+                            ->setDueDateTypeCode(TimeReferencingCodeUNTDID2475::DATE_OF_INVOICE)
                             ->setRateApplicablePercent(50),
                     ],
                 ))
                     ->setCreditorReferenceIdentifier(new BankAssignedCreditorIdentifier('BankAssignedCreditorIdentifier'))
                     ->setPaymentReference('PaymentReference')
-                    ->setTaxCurrencyCode(CurrencyCode::EURO)
+                    ->setTaxCurrencyCode(CurrencyCodeISO4217::EURO)
                     ->setPayeeTradeParty(
                         (new PayeeTradeParty('PayeeTradePartyName'))
                             ->setIdentifier(new PayeeIdentifier('PayeeIdentifier'))
@@ -291,7 +291,7 @@ class CIIEN16931Test extends TestCase
                             )
                     )
                     ->setSpecifiedTradeSettlementPaymentMeans([
-                        (new SpecifiedTradeSettlementPaymentMeans(PaymentMeansCode::ACCEPTED_BILL_OF_EXCHANGE))
+                        (new SpecifiedTradeSettlementPaymentMeans(PaymentMeansCodeUNTDID4461::ACCEPTED_BILL_OF_EXCHANGE))
                             ->setInformation('Information')
                             ->setApplicableTradeSettlementFinancialCard(
                                 (new ApplicableTradeSettlementFinancialCard('ApplicableTradeSettlementFinancialCardIdentifier'))
@@ -322,23 +322,23 @@ class CIIEN16931Test extends TestCase
                     ->setSpecifiedTradeAllowances([
                         (new SpecifiedTradeAllowance(
                             100,
-                            (new CategoryTradeTax(VatCategory::STANDARD_RATE))
+                            (new CategoryTradeTax(DutyTaxFeeCategoryCodeUNTDID5305::STANDARD_RATE))
                                 ->setRateApplicablePercent(new Percentage(50))
                         ))
                             ->setBasisAmount(100)
                             ->setReason('ReasonAllowanceHeader1')
-                            ->setReasonCode(AllowanceReasonCode::DISCOUNT)
+                            ->setReasonCode(AllowanceReasonCodeUNTDID5189::DISCOUNT)
                             ->setCalculationPercent(50),
                     ])
                     ->setSpecifiedTradeCharges([
                         (new SpecifiedTradeCharge(
                             50,
-                            (new CategoryTradeTax(VatCategory::STANDARD_RATE))
+                            (new CategoryTradeTax(DutyTaxFeeCategoryCodeUNTDID5305::STANDARD_RATE))
                                 ->setRateApplicablePercent(new Percentage(20))
                         ))
                             ->setBasisAmount(50)
                             ->setReason('ReasonChargeHeader1')
-                            ->setReasonCode(ChargeReasonCode::ACCEPTANCE)
+                            ->setReasonCode(ChargeReasonCodeUNTDID7161::ACCEPTANCE)
                             ->setCalculationPercent(20),
                     ])
                     ->setSpecifiedTradePaymentTerms(
@@ -361,12 +361,12 @@ class CIIEN16931Test extends TestCase
                         ),
                         new SpecifiedTradeProduct('SpecifiedTradProduct'),
                         (new SpecifiedLineTradeAgreement(
-                            (new NetPriceProductTradePrice(100))->setBasisQuantity((new BasisQuantity(1))->setUnitCode(UnitOfMeasurement::ACCOUNTING_UNIT_REC20))
+                            (new NetPriceProductTradePrice(100))->setBasisQuantity((new BasisQuantity(1))->setUnitCode(UnitOfMeasureCode::ACCOUNTING_UNIT))
                         ))->setGrossPriceProductTradePrice(
                             (new GrossPriceProductTradePrice(100))
                                 ->setBasisQuantity(
                                     (new BasisQuantity(100))
-                                        ->setUnitCode(UnitOfMeasurement::ACCOUNTING_UNIT_REC20)
+                                        ->setUnitCode(UnitOfMeasureCode::ACCOUNTING_UNIT)
                                 )
                                 ->setAppliedTradeAllowanceCharge(new AppliedTradeAllowanceCharge(100))
                         )
@@ -375,10 +375,10 @@ class CIIEN16931Test extends TestCase
                                     ->setLineIdentifier(new PurchaseOrderLineReference('PurchaseOrderLineReference'))
                             ),
                         new SpecifiedLineTradeDelivery(
-                            new BilledQuantity(1, UnitOfMeasurement::ACCOUNTING_UNIT_REC20)
+                            new BilledQuantity(1, UnitOfMeasureCode::ACCOUNTING_UNIT)
                         ),
                         (new SpecifiedLineTradeSettlement(
-                            (new ApplicableTradeTax(VatCategory::STANDARD_RATE))
+                            (new ApplicableTradeTax(DutyTaxFeeCategoryCodeUNTDID5305::STANDARD_RATE))
                                 ->setRateApplicablePercent(20),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         ))
@@ -390,22 +390,22 @@ class CIIEN16931Test extends TestCase
                             ->setSpecifiedTradeAllowances([
                                 (new LineSpecifiedTradeAllowance(50))
                                     ->setReason('ReasonAllowance1')
-                                    ->setReasonCode(AllowanceReasonCode::STANDARD)
+                                    ->setReasonCode(AllowanceReasonCodeUNTDID5189::STANDARD)
                                     ->setBasisAmount(50)
                                     ->setCalculationPercent(100),
                             ])
                             ->setSpecifiedTradeCharges([
                                 (new LineSpecifiedTradeCharge(50))
                                     ->setReason('ReasonCharge1')
-                                    ->setReasonCode(ChargeReasonCode::ACCEPTANCE)
+                                    ->setReasonCode(ChargeReasonCodeUNTDID7161::ACCEPTANCE)
                                     ->setBasisAmount(50)
                                     ->setCalculationPercent(100),
                             ])
                             ->setReceivableSpecifiedTradeAccountingAccount(new ReceivableSpecifiedTradeAccountingAccount('ReceivableSpecifiedTradeAccountingAccount'))
                             ->setAdditionalReferencedDocument(
                                 (new AdditionalReferencedDocumentInvoiceLineObjectIdentifier(
-                                    new ObjectIdentifier('AdditionalReferencedDocument', ObjectSchemeCode::ACCOUNT_NUMBER)
-                                ))->setReferenceTypeCode(ObjectSchemeCode::ACCOUNT_NUMBER)
+                                    new ObjectIdentifier('AdditionalReferencedDocument', ReferenceQualifierCodeUNTDID1153::ACCOUNT_NUMBER)
+                                ))->setReferenceTypeCode(ReferenceQualifierCodeUNTDID1153::ACCOUNT_NUMBER)
                             )
                     ),
                 ],

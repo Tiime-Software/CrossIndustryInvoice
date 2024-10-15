@@ -22,7 +22,7 @@ class AssociatedDocumentLineDocument
      * @param InvoiceLineIdentifier $lineIdentifier - BT-126
      */
     public function __construct(
-        private InvoiceLineIdentifier $lineIdentifier,
+        private readonly InvoiceLineIdentifier $lineIdentifier,
     ) {
         $this->includedNote = null;
     }

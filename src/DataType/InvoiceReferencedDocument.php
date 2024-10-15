@@ -22,7 +22,7 @@ class InvoiceReferencedDocument
      * @param PrecedingInvoiceReference $issuerAssignedIdentifier - BT-25
      */
     public function __construct(
-        private PrecedingInvoiceReference $issuerAssignedIdentifier,
+        private readonly PrecedingInvoiceReference $issuerAssignedIdentifier,
     ) {
         $this->formattedIssueDateTime = null;
     }

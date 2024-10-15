@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\EN16931\DataType\ElectronicAddressScheme;
+use Tiime\EN16931\Codelist\ElectronicAddressSchemeCode;
 use Tiime\EN16931\DataType\Identifier\ElectronicAddressIdentifier;
 
 /**
@@ -18,7 +18,7 @@ class URIUniversalCommunication
      * @param ElectronicAddressIdentifier $electronicAddress - BT-34 or BT-49
      */
     public function __construct(
-        private ElectronicAddressIdentifier $electronicAddress,
+        private readonly ElectronicAddressIdentifier $electronicAddress,
     ) {
     }
 
@@ -62,7 +62,7 @@ class URIUniversalCommunication
         $electronicAddressItem = $electronicAddressElements->item(0);
         $electronicAddress     = $electronicAddressItem->nodeValue;
         $scheme                = '' !== $electronicAddressItem->getAttribute('schemeID') ?
-            ElectronicAddressScheme::tryFrom($electronicAddressItem->getAttribute('schemeID')) : null;
+            ElectronicAddressSchemeCode::tryFrom($electronicAddressItem->getAttribute('schemeID')) : null;
 
         if (null === $scheme) {
             throw new \Exception('Wrong schemeID');

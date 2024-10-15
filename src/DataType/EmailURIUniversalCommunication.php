@@ -15,7 +15,7 @@ class EmailURIUniversalCommunication
      * @param string $uriIdentifier - BT-43 or BT-58
      */
     public function __construct(
-        private string $uriIdentifier,
+        private readonly string $uriIdentifier,
     ) {
     }
 

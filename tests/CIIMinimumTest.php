@@ -23,14 +23,14 @@ use Tiime\CrossIndustryInvoice\DataType\Minimum\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\Minimum\CrossIndustryInvoice;
 use Tiime\CrossIndustryInvoice\Utils\CrossIndustryInvoiceUtils;
-use Tiime\EN16931\DataType\CountryAlpha2Code;
-use Tiime\EN16931\DataType\CurrencyCode;
+use Tiime\EN16931\Codelist\CountryAlpha2Code;
+use Tiime\EN16931\Codelist\CurrencyCodeISO4217;
+use Tiime\EN16931\Codelist\InternationalCodeDesignator;
+use Tiime\EN16931\Codelist\InvoiceTypeCodeUNTDID1001;
 use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
 use Tiime\EN16931\DataType\Identifier\LegalRegistrationIdentifier;
 use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
-use Tiime\EN16931\DataType\InvoiceTypeCode;
 
 class CIIMinimumTest extends TestCase
 {
@@ -75,7 +75,7 @@ class CIIMinimumTest extends TestCase
             ),
             new ExchangedDocument(
                 new InvoiceIdentifier('FA-1545'),
-                InvoiceTypeCode::COMMERCIAL_INVOICE,
+                InvoiceTypeCodeUNTDID1001::COMMERCIAL_INVOICE,
                 new IssueDateTime(new \DateTime())
             ),
             new SupplyChainTradeTransaction(
@@ -85,7 +85,7 @@ class CIIMinimumTest extends TestCase
                 ),
                 new ApplicableHeaderTradeDelivery(),
                 new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
+                    CurrencyCodeISO4217::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(12, 13, 14)
                 )
             )
@@ -111,12 +111,13 @@ class CIIMinimumTest extends TestCase
 
         /** BuyerTradeParty part */
         $buyerTradeParty                 = new BuyerTradeParty('BuyerTradePartyName');
-        $buyerSpecifiedLegalOrganization = new BuyerSpecifiedLegalOrganization(
-            new LegalRegistrationIdentifier(
-                'LegalRegistrationBuyer',
-                InternationalCodeDesignator::FRANCE_TELECOM_ATM_END_SYSTEM_ADDRESS_PLAN
-            )
-        );
+        $buyerSpecifiedLegalOrganization = (new BuyerSpecifiedLegalOrganization())
+            ->setIdentifier(
+                new LegalRegistrationIdentifier(
+                    'LegalRegistrationBuyer',
+                    InternationalCodeDesignator::FRANCE_TELECOM_ATM_END_SYSTEM_ADDRESS_PLAN
+                )
+            );
         $buyerTradeParty->setSpecifiedLegalOrganization($buyerSpecifiedLegalOrganization);
 
         /** SellerTradeParty part */
@@ -144,14 +145,14 @@ class CIIMinimumTest extends TestCase
             $exchangedDocumentContext,
             new ExchangedDocument(
                 new InvoiceIdentifier('FA-1545'),
-                InvoiceTypeCode::COMMERCIAL_INVOICE,
+                InvoiceTypeCodeUNTDID1001::COMMERCIAL_INVOICE,
                 new IssueDateTime(new \DateTime())
             ),
             new SupplyChainTradeTransaction(
                 new ApplicableHeaderTradeAgreement($sellerTradeParty, $buyerTradeParty),
                 new ApplicableHeaderTradeDelivery(),
                 new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
+                    CurrencyCodeISO4217::EURO,
                     $specifiedTradeSettlementHeaderMonetarySummation
                 )
             )

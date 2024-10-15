@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
+use Tiime\EN16931\Codelist\InvoiceTypeCodeUNTDID1001;
 use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
-use Tiime\EN16931\DataType\InvoiceTypeCode;
 
 /**
  * BT-1-00.
@@ -16,14 +16,14 @@ class ExchangedDocument
     protected const string XML_NODE = 'rsm:ExchangedDocument';
 
     /**
-     * @param InvoiceIdentifier $identifier    - BT-1
-     * @param InvoiceTypeCode   $typeCode      - BT-3
-     * @param IssueDateTime     $issueDateTime - BT-2-00
+     * @param InvoiceIdentifier         $identifier    - BT-1
+     * @param InvoiceTypeCodeUNTDID1001 $typeCode      - BT-3
+     * @param IssueDateTime             $issueDateTime - BT-2-00
      */
     public function __construct(
-        private InvoiceIdentifier $identifier,
-        private InvoiceTypeCode $typeCode,
-        private IssueDateTime $issueDateTime,
+        private readonly InvoiceIdentifier $identifier,
+        private readonly InvoiceTypeCodeUNTDID1001 $typeCode,
+        private readonly IssueDateTime $issueDateTime,
     ) {
     }
 
@@ -32,7 +32,7 @@ class ExchangedDocument
         return $this->identifier;
     }
 
-    public function getTypeCode(): InvoiceTypeCode
+    public function getTypeCode(): InvoiceTypeCodeUNTDID1001
     {
         return $this->typeCode;
     }
@@ -78,7 +78,7 @@ class ExchangedDocument
 
         $identifier = $identifierElements->item(0)->nodeValue;
 
-        $typeCode = InvoiceTypeCode::tryFrom($typeCodeElements->item(0)->nodeValue);
+        $typeCode = InvoiceTypeCodeUNTDID1001::tryFrom($typeCodeElements->item(0)->nodeValue);
 
         if (null === $typeCode) {
             throw new \Exception('Wrong currency code');

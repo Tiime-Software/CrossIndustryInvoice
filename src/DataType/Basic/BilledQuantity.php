@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
-use Tiime\EN16931\DataType\UnitOfMeasurement;
+use Tiime\EN16931\Codelist\UnitOfMeasureCode;
 use Tiime\EN16931\SemanticDataType\Quantity;
 
 /**
@@ -20,11 +20,11 @@ class BilledQuantity
     private Quantity $quantity;
 
     /**
-     * @param UnitOfMeasurement $unitCode - BT-130
+     * @param UnitOfMeasureCode $unitCode - BT-130
      */
     public function __construct(
         float $quantity,
-        private UnitOfMeasurement $unitCode,
+        private readonly UnitOfMeasureCode $unitCode,
     ) {
         $this->quantity = new Quantity($quantity);
     }
@@ -34,7 +34,7 @@ class BilledQuantity
         return $this->quantity;
     }
 
-    public function getUnitCode(): UnitOfMeasurement
+    public function getUnitCode(): UnitOfMeasureCode
     {
         return $this->unitCode;
     }
@@ -60,7 +60,7 @@ class BilledQuantity
 
         $billedQuantity = $billedQuantityElement->nodeValue;
         $unitCode       = '' !== $billedQuantityElement->getAttribute('unitCode') ?
-            UnitOfMeasurement::tryFrom($billedQuantityElement->getAttribute('unitCode')) : null;
+            UnitOfMeasureCode::tryFrom($billedQuantityElement->getAttribute('unitCode')) : null;
 
         if (null === $unitCode) {
             throw new \Exception('Wrong unitCode');

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\Codelist\MimeCode;
 use Tiime\EN16931\DataType\BinaryObject;
-use Tiime\EN16931\DataType\MimeCode;
 use Tiime\EN16931\DataType\Reference\SupportingDocumentReference;
 
 /**
@@ -39,7 +39,7 @@ class AdditionalReferencedDocumentAdditionalSupportingDocument
      * @param SupportingDocumentReference $issuerAssignedIdentifier - BT-122
      */
     public function __construct(
-        private SupportingDocumentReference $issuerAssignedIdentifier,
+        private readonly SupportingDocumentReference $issuerAssignedIdentifier,
     ) {
         $this->typeCode               = '916';
         $this->uriIdentifier          = null;

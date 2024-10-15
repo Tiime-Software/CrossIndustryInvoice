@@ -19,9 +19,9 @@ class SellerTaxRepresentativeTradeParty
      * @param SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA - BT-63-00
      */
     public function __construct(
-        private string $name,
-        private PostalTradeAddress $postalTradeAddress,
-        private SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA,
+        private readonly string $name,
+        private readonly PostalTradeAddress $postalTradeAddress,
+        private readonly SpecifiedTaxRegistrationVA $specifiedTaxRegistrationVA,
     ) {
     }
 

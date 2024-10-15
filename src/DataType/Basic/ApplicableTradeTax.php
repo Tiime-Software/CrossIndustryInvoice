@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
-use Tiime\EN16931\DataType\VatCategory;
+use Tiime\EN16931\Codelist\DutyTaxFeeCategoryCodeUNTDID5305;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
 /**
@@ -25,10 +25,10 @@ class ApplicableTradeTax
     private ?Percentage $rateApplicablePercent;
 
     /**
-     * @param VatCategory $categoryCode - BT-151
+     * @param DutyTaxFeeCategoryCodeUNTDID5305 $categoryCode - BT-151
      */
     public function __construct(
-        private VatCategory $categoryCode,
+        private readonly DutyTaxFeeCategoryCodeUNTDID5305 $categoryCode,
     ) {
         $this->typeCode              = 'VAT';
         $this->rateApplicablePercent = null;
@@ -39,7 +39,7 @@ class ApplicableTradeTax
         return $this->typeCode;
     }
 
-    public function getCategoryCode(): VatCategory
+    public function getCategoryCode(): DutyTaxFeeCategoryCodeUNTDID5305
     {
         return $this->categoryCode;
     }
@@ -97,14 +97,14 @@ class ApplicableTradeTax
             throw new \Exception('Malformed');
         }
 
-        $categoryCode = VatCategory::tryFrom($categoryCodeElements->item(0)->nodeValue);
+        $categoryCode = DutyTaxFeeCategoryCodeUNTDID5305::tryFrom($categoryCodeElements->item(0)->nodeValue);
 
         if ('VAT' !== $typeCodeElements->item(0)->nodeValue) {
             throw new \Exception('Wrong TypeCode');
         }
 
-        if (!$categoryCode instanceof VatCategory) {
-            throw new \Exception('Wrong CategoryCode');
+        if (!$categoryCode instanceof DutyTaxFeeCategoryCodeUNTDID5305) {
+            throw new \Exception('Wrong DutyTaxFeeCategoryCodeUNTDID5305');
         }
 
         $applicableTradeTax = new self($categoryCode);

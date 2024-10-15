@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\Codelist\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\Identifier\LocationIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BT-71-0 & BT-71-1.
  */
-class LocationGlobalIdentifier extends LocationIdentifier
+readonly class LocationGlobalIdentifier extends LocationIdentifier
 {
     protected const string XML_NODE = 'ram:GlobalID';
 

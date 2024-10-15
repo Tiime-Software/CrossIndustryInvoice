@@ -15,7 +15,7 @@ class ActualDeliverySupplyChainEvent
      * @param OccurrenceDateTime $occurrenceDateTime - BT-72-01
      */
     public function __construct(
-        private OccurrenceDateTime $occurrenceDateTime,
+        private readonly OccurrenceDateTime $occurrenceDateTime,
     ) {
     }
 

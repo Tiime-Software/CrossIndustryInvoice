@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\Codelist\ReferenceQualifierCodeUNTDID1153;
 use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
-use Tiime\EN16931\DataType\ObjectSchemeCode;
 
 /**
  * BT-128-00.
@@ -22,13 +22,13 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
     /**
      * BT-128-1.
      */
-    private ?ObjectSchemeCode $referenceTypeCode;
+    private ?ReferenceQualifierCodeUNTDID1153 $referenceTypeCode;
 
     /**
      * @param ObjectIdentifier $issuerAssignedIdentifier - BT-128
      */
     public function __construct(
-        private ObjectIdentifier $issuerAssignedIdentifier,
+        private readonly ObjectIdentifier $issuerAssignedIdentifier,
     ) {
         $this->typeCode          = '130';
         $this->referenceTypeCode = null;
@@ -44,12 +44,12 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
         return $this->typeCode;
     }
 
-    public function getReferenceTypeCode(): ?ObjectSchemeCode
+    public function getReferenceTypeCode(): ?ReferenceQualifierCodeUNTDID1153
     {
         return $this->referenceTypeCode;
     }
 
-    public function setReferenceTypeCode(?ObjectSchemeCode $referenceTypeCode): static
+    public function setReferenceTypeCode(?ReferenceQualifierCodeUNTDID1153 $referenceTypeCode): static
     {
         $this->referenceTypeCode = $referenceTypeCode;
 
@@ -63,7 +63,7 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
         $currentNode->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
         $currentNode->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
-        if ($this->referenceTypeCode instanceof ObjectSchemeCode) {
+        if ($this->referenceTypeCode instanceof ReferenceQualifierCodeUNTDID1153) {
             $currentNode->appendChild($document->createElement('ram:ReferenceTypeCode', $this->referenceTypeCode->value));
         }
 
@@ -110,9 +110,9 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
         $additionalReferencedDocument = new self(new ObjectIdentifier($issuerAssignedIdentifier));
 
         if (1 === $referenceTypeCodeElements->count()) {
-            $referenceTypeCode = ObjectSchemeCode::tryFrom($referenceTypeCodeElements->item(0)->nodeValue);
+            $referenceTypeCode = ReferenceQualifierCodeUNTDID1153::tryFrom($referenceTypeCodeElements->item(0)->nodeValue);
 
-            if (!$referenceTypeCode instanceof ObjectSchemeCode) {
+            if (!$referenceTypeCode instanceof ReferenceQualifierCodeUNTDID1153) {
                 throw new \Exception('Wrong ReferenceTypeCode');
             }
 

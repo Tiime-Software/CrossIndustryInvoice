@@ -11,7 +11,7 @@ use Tiime\CrossIndustryInvoice\DataType\ReceivableSpecifiedTradeAccountingAccoun
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeAllowance;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradeCharge;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTradePaymentTerms;
-use Tiime\EN16931\DataType\CurrencyCode;
+use Tiime\EN16931\Codelist\CurrencyCodeISO4217;
 use Tiime\EN16931\DataType\Identifier\BankAssignedCreditorIdentifier;
 
 /**
@@ -32,7 +32,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
     /**
      * BT-6.
      */
-    protected ?CurrencyCode $taxCurrencyCode;
+    protected ?CurrencyCodeISO4217 $taxCurrencyCode;
 
     /**
      * BG-10.
@@ -90,7 +90,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
     protected ?ReceivableSpecifiedTradeAccountingAccount $receivableSpecifiedTradeAccountingAccount;
 
     public function __construct(
-        CurrencyCode $invoiceCurrencyCode,
+        CurrencyCodeISO4217 $invoiceCurrencyCode,
         SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation,
         array $applicableTradeTaxes,
     ) {
@@ -155,12 +155,12 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         return $this;
     }
 
-    public function getTaxCurrencyCode(): ?CurrencyCode
+    public function getTaxCurrencyCode(): ?CurrencyCodeISO4217
     {
         return $this->taxCurrencyCode;
     }
 
-    public function setTaxCurrencyCode(?CurrencyCode $taxCurrencyCode): static
+    public function setTaxCurrencyCode(?CurrencyCodeISO4217 $taxCurrencyCode): static
     {
         $this->taxCurrencyCode = $taxCurrencyCode;
 
@@ -304,7 +304,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
             $currentNode->appendChild($document->createElement('ram:PaymentReference', $this->paymentReference));
         }
 
-        if ($this->taxCurrencyCode instanceof CurrencyCode) {
+        if ($this->taxCurrencyCode instanceof CurrencyCodeISO4217) {
             $currentNode->appendChild($document->createElement('ram:TaxCurrencyCode', $this->taxCurrencyCode->value));
         }
 
@@ -394,14 +394,14 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         $taxCurrencyCode = null;
 
         if (1 === $taxCurrencyCodeElements->count()) {
-            $taxCurrencyCode = CurrencyCode::tryFrom($taxCurrencyCodeElements->item(0)->nodeValue);
+            $taxCurrencyCode = CurrencyCodeISO4217::tryFrom($taxCurrencyCodeElements->item(0)->nodeValue);
 
             if (null === $taxCurrencyCode) {
                 throw new \Exception('Wrong TaxCurrencyCode');
             }
         }
 
-        $invoiceCurrencyCode = CurrencyCode::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
+        $invoiceCurrencyCode = CurrencyCodeISO4217::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
 
         if (null === $invoiceCurrencyCode) {
             throw new \Exception('Wrong InvoiceCurrencyCode');
@@ -428,7 +428,7 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
             $applicableHeaderTradeSettlement->setPaymentReference($paymentReferenceElements->item(0)->nodeValue);
         }
 
-        if ($taxCurrencyCode instanceof CurrencyCode) {
+        if ($taxCurrencyCode instanceof CurrencyCodeISO4217) {
             $applicableHeaderTradeSettlement->setTaxCurrencyCode($taxCurrencyCode);
         }
 

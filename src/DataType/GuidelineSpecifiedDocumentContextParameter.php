@@ -17,7 +17,7 @@ class GuidelineSpecifiedDocumentContextParameter
      * @param SpecificationIdentifier $identifier - BT-24
      */
     public function __construct(
-        private SpecificationIdentifier $identifier,
+        private readonly SpecificationIdentifier $identifier,
     ) {
     }
 

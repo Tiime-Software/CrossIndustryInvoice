@@ -2,7 +2,7 @@
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\EN16931\DataType\ItemTypeCode;
+use Tiime\EN16931\Codelist\ItemTypeCodeUNTDID7143;
 
 class ClassCode
 {
@@ -14,12 +14,12 @@ class ClassCode
     private ?string $listVersionIdentifier;
 
     /**
-     * @param string       $value          - BT-158
-     * @param ItemTypeCode $listIdentifier - BT-158-1
+     * @param string                 $value          - BT-158
+     * @param ItemTypeCodeUNTDID7143 $listIdentifier - BT-158-1
      */
     public function __construct(
-        private string $value,
-        private ItemTypeCode $listIdentifier,
+        private readonly string $value,
+        private readonly ItemTypeCodeUNTDID7143 $listIdentifier,
     ) {
         $this->listVersionIdentifier = null;
     }
@@ -29,7 +29,7 @@ class ClassCode
         return $this->value;
     }
 
-    public function getListIdentifier(): ItemTypeCode
+    public function getListIdentifier(): ItemTypeCodeUNTDID7143
     {
         return $this->listIdentifier;
     }
@@ -75,9 +75,9 @@ class ClassCode
 
         $value = $classCodeElement->nodeValue;
 
-        $identifier = ItemTypeCode::tryFrom($classCodeElement->getAttribute('listID'));
+        $identifier = ItemTypeCodeUNTDID7143::tryFrom($classCodeElement->getAttribute('listID'));
 
-        if (!$identifier instanceof ItemTypeCode) {
+        if (!$identifier instanceof ItemTypeCodeUNTDID7143) {
             throw new \Exception('Wrong listID');
         }
 

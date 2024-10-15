@@ -17,7 +17,7 @@ class ReceivingAdviceReferencedDocument
      * @param ReceivingAdviceReference $issuerAssignedIdentifier - BT-15
      */
     public function __construct(
-        private ReceivingAdviceReference $issuerAssignedIdentifier,
+        private readonly ReceivingAdviceReference $issuerAssignedIdentifier,
     ) {
     }
 

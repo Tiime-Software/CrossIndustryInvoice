@@ -20,7 +20,7 @@ class EndDateTime
      * @param \DateTimeInterface $dateTimeString - BT-74
      */
     public function __construct(
-        private \DateTimeInterface $dateTimeString,
+        private readonly \DateTimeInterface $dateTimeString,
     ) {
         $this->format = '102';
     }

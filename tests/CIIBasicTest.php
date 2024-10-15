@@ -41,9 +41,14 @@ use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
 use Tiime\CrossIndustryInvoice\Utils\CrossIndustryInvoiceUtils;
-use Tiime\EN16931\DataType\CountryAlpha2Code;
-use Tiime\EN16931\DataType\CurrencyCode;
-use Tiime\EN16931\DataType\ElectronicAddressScheme;
+use Tiime\EN16931\Codelist\CountryAlpha2Code;
+use Tiime\EN16931\Codelist\CurrencyCodeISO4217;
+use Tiime\EN16931\Codelist\DutyTaxFeeCategoryCodeUNTDID5305;
+use Tiime\EN16931\Codelist\ElectronicAddressSchemeCode;
+use Tiime\EN16931\Codelist\InternationalCodeDesignator;
+use Tiime\EN16931\Codelist\InvoiceTypeCodeUNTDID1001;
+use Tiime\EN16931\Codelist\TextSubjectCodeUNTDID4451;
+use Tiime\EN16931\Codelist\UnitOfMeasureCode;
 use Tiime\EN16931\DataType\Identifier\ElectronicAddressIdentifier;
 use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
 use Tiime\EN16931\DataType\Identifier\InvoiceLineIdentifier;
@@ -52,12 +57,7 @@ use Tiime\EN16931\DataType\Identifier\LocationIdentifier;
 use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
 use Tiime\EN16931\DataType\Identifier\SpecificationIdentifier;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
-use Tiime\EN16931\DataType\InvoiceNoteCode;
-use Tiime\EN16931\DataType\InvoiceTypeCode;
 use Tiime\EN16931\DataType\Reference\DespatchAdviceReference;
-use Tiime\EN16931\DataType\UnitOfMeasurement;
-use Tiime\EN16931\DataType\VatCategory;
 
 class CIIBasicTest extends TestCase
 {
@@ -112,7 +112,7 @@ class CIIBasicTest extends TestCase
             ),
             new ExchangedDocument(
                 new InvoiceIdentifier('FA-1545'),
-                InvoiceTypeCode::COMMERCIAL_INVOICE,
+                InvoiceTypeCodeUNTDID1001::COMMERCIAL_INVOICE,
                 new IssueDateTime(new \DateTime())
             ),
             new SupplyChainTradeTransaction(
@@ -122,10 +122,10 @@ class CIIBasicTest extends TestCase
                 ),
                 new ApplicableHeaderTradeDelivery(),
                 new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
+                    CurrencyCodeISO4217::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
                     [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD_RATE),
+                        new HeaderApplicableTradeTax(14.50, 50, DutyTaxFeeCategoryCodeUNTDID5305::STANDARD_RATE),
                     ],
                 ),
                 [
@@ -133,9 +133,9 @@ class CIIBasicTest extends TestCase
                         new AssociatedDocumentLineDocument(new InvoiceLineIdentifier('FA-0001')),
                         new SpecifiedTradeProduct('Product 1'),
                         new SpecifiedLineTradeAgreement(new NetPriceProductTradePrice(100)),
-                        new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasurement::BALL_REC21)),
+                        new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasureCode::BALL)),
                         new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD_RATE),
+                            new ApplicableTradeTax(DutyTaxFeeCategoryCodeUNTDID5305::STANDARD_RATE),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
                     ),
@@ -160,11 +160,11 @@ class CIIBasicTest extends TestCase
             ))->setBusinessProcessSpecifiedDocumentContextParameter(new BusinessProcessSpecifiedDocumentContextParameter('BusinessProcess1')),
             (new ExchangedDocument(
                 new InvoiceIdentifier('FA-1545'),
-                InvoiceTypeCode::COMMERCIAL_INVOICE,
+                InvoiceTypeCodeUNTDID1001::COMMERCIAL_INVOICE,
                 new IssueDateTime(new \DateTime())
             ))->setIncludedNotes(
                 [
-                    (new DocumentIncludedNote('DocumentIncludedNote1'))->setSubjectCode(InvoiceNoteCode::ADDITIONAL_CONDITIONS),
+                    (new DocumentIncludedNote('DocumentIncludedNote1'))->setSubjectCode(TextSubjectCodeUNTDID4451::ADDITIONAL_CONDITIONS),
                 ]
             ),
             new SupplyChainTradeTransaction(
@@ -189,7 +189,7 @@ class CIIBasicTest extends TestCase
                         )
                         ->setURIUniversalCommunication(
                             new URIUniversalCommunication(
-                                new ElectronicAddressIdentifier('ElectronicAddressIdentifier', ElectronicAddressScheme::FRENCH_VAT_NUMBER)
+                                new ElectronicAddressIdentifier('ElectronicAddressIdentifier', ElectronicAddressSchemeCode::FRENCH_VAT_NUMBER)
                             )
                         ),
                     new BuyerTradeParty('BuyerTradePartyName', new PostalTradeAddress(CountryAlpha2Code::FRANCE))
@@ -219,10 +219,10 @@ class CIIBasicTest extends TestCase
                         new DespatchAdviceReferencedDocument(new DespatchAdviceReference('DespatchAdviceReference'))
                     ),
                 new ApplicableHeaderTradeSettlement(
-                    CurrencyCode::EURO,
+                    CurrencyCodeISO4217::EURO,
                     new SpecifiedTradeSettlementHeaderMonetarySummation(50, 50, 50, 0),
                     [
-                        new HeaderApplicableTradeTax(14.50, 50, VatCategory::STANDARD_RATE),
+                        new HeaderApplicableTradeTax(14.50, 50, DutyTaxFeeCategoryCodeUNTDID5305::STANDARD_RATE),
                     ],
                 ),
                 [
@@ -230,9 +230,9 @@ class CIIBasicTest extends TestCase
                         new AssociatedDocumentLineDocument(new InvoiceLineIdentifier('FA-0001')),
                         new SpecifiedTradeProduct('Product 1'),
                         new SpecifiedLineTradeAgreement(new NetPriceProductTradePrice(100)),
-                        new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasurement::BALL_REC21)),
+                        new SpecifiedLineTradeDelivery(new BilledQuantity(1, UnitOfMeasureCode::BALL)),
                         new SpecifiedLineTradeSettlement(
-                            new ApplicableTradeTax(VatCategory::STANDARD_RATE),
+                            new ApplicableTradeTax(DutyTaxFeeCategoryCodeUNTDID5305::STANDARD_RATE),
                             new SpecifiedTradeSettlementLineMonetarySummation(100)
                         )
                     ),

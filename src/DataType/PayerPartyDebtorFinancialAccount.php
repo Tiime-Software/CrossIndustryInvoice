@@ -17,7 +17,7 @@ class PayerPartyDebtorFinancialAccount
      * @param DebitedAccountIdentifier $ibanIdentifier - BT-91
      */
     public function __construct(
-        private DebitedAccountIdentifier $ibanIdentifier,
+        private readonly DebitedAccountIdentifier $ibanIdentifier,
     ) {
     }
 

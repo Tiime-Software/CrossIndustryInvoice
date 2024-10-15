@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
-use Tiime\EN16931\DataType\UnitOfMeasurement;
+use Tiime\EN16931\Codelist\UnitOfMeasureCode;
 use Tiime\EN16931\SemanticDataType\Quantity;
 
 /**
@@ -22,7 +22,7 @@ class BasisQuantity
     /**
      * BT-150-1.
      */
-    private ?UnitOfMeasurement $unitCode;
+    private ?UnitOfMeasureCode $unitCode;
 
     public function __construct(float $value)
     {
@@ -35,12 +35,12 @@ class BasisQuantity
         return $this->value;
     }
 
-    public function getUnitCode(): ?UnitOfMeasurement
+    public function getUnitCode(): ?UnitOfMeasureCode
     {
         return $this->unitCode;
     }
 
-    public function setUnitCode(?UnitOfMeasurement $unitCode): static
+    public function setUnitCode(?UnitOfMeasureCode $unitCode): static
     {
         $this->unitCode = $unitCode;
 
@@ -51,7 +51,7 @@ class BasisQuantity
     {
         $element = $document->createElement(self::XML_NODE, $this->value->getFormattedValueRounded());
 
-        if ($this->unitCode instanceof UnitOfMeasurement) {
+        if ($this->unitCode instanceof UnitOfMeasureCode) {
             $element->setAttribute('unitCode', $this->unitCode->value);
         }
 
@@ -78,16 +78,16 @@ class BasisQuantity
         $unitCode = null;
 
         if ('' !== $basisQuantityElement->getAttribute('unitCode')) {
-            $unitCode = UnitOfMeasurement::tryFrom($basisQuantityElement->getAttribute('unitCode'));
+            $unitCode = UnitOfMeasureCode::tryFrom($basisQuantityElement->getAttribute('unitCode'));
 
-            if (!$unitCode instanceof UnitOfMeasurement) {
+            if (!$unitCode instanceof UnitOfMeasureCode) {
                 throw new \Exception('Wrong unitCode');
             }
         }
 
         $basisQuantity = new self((float) $value);
 
-        if ($unitCode instanceof UnitOfMeasurement) {
+        if ($unitCode instanceof UnitOfMeasureCode) {
             $basisQuantity->setUnitCode($unitCode);
         }
 

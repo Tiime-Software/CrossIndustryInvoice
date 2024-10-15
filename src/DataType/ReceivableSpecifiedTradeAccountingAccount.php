@@ -15,7 +15,7 @@ class ReceivableSpecifiedTradeAccountingAccount
      * @param string $identifier - BT-19
      */
     public function __construct(
-        private string $identifier,
+        private readonly string $identifier,
     ) {
     }
 

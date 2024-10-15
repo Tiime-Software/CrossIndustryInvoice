@@ -16,8 +16,8 @@ class ApplicableProductCharacteristic
      * @param string $value       - BT-161
      */
     public function __construct(
-        private string $description,
-        private string $value,
+        private readonly string $description,
+        private readonly string $value,
     ) {
     }
 

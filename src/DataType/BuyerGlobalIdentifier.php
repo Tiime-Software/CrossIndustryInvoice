@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\Codelist\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\Identifier\BuyerIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BT-46-0 & BT-46-1.
  */
-class BuyerGlobalIdentifier extends BuyerIdentifier
+readonly class BuyerGlobalIdentifier extends BuyerIdentifier
 {
     protected const string XML_NODE = 'ram:GlobalID';
 

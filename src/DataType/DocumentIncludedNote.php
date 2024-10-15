@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\EN16931\DataType\InvoiceNoteCode;
+use Tiime\EN16931\Codelist\TextSubjectCodeUNTDID4451;
 
 /**
  * BG-1.
@@ -16,13 +16,13 @@ class DocumentIncludedNote
     /**
      * BT-21.
      */
-    private ?InvoiceNoteCode $subjectCode;
+    private ?TextSubjectCodeUNTDID4451 $subjectCode;
 
     /**
      * @param string $content - BT-22
      */
     public function __construct(
-        private string $content,
+        private readonly string $content,
     ) {
         $this->subjectCode = null;
     }
@@ -32,12 +32,12 @@ class DocumentIncludedNote
         return $this->content;
     }
 
-    public function getSubjectCode(): ?InvoiceNoteCode
+    public function getSubjectCode(): ?TextSubjectCodeUNTDID4451
     {
         return $this->subjectCode;
     }
 
-    public function setSubjectCode(?InvoiceNoteCode $subjectCode): static
+    public function setSubjectCode(?TextSubjectCodeUNTDID4451 $subjectCode): static
     {
         $this->subjectCode = $subjectCode;
 
@@ -50,7 +50,7 @@ class DocumentIncludedNote
 
         $currentNode->appendChild($document->createElement('ram:Content', $this->content));
 
-        if ($this->subjectCode instanceof InvoiceNoteCode) {
+        if ($this->subjectCode instanceof TextSubjectCodeUNTDID4451) {
             $currentNode->appendChild($document->createElement('ram:SubjectCode', $this->subjectCode->value));
         }
 
@@ -84,7 +84,7 @@ class DocumentIncludedNote
             $documentIncludedNote = new self($content);
 
             if (1 === $subjectCodeElements->count()) {
-                $subjectCode = InvoiceNoteCode::tryFrom($subjectCodeElements->item(0)->nodeValue);
+                $subjectCode = TextSubjectCodeUNTDID4451::tryFrom($subjectCodeElements->item(0)->nodeValue);
 
                 if (null === $subjectCode) {
                     throw new \Exception('Wrong SubjectCode');

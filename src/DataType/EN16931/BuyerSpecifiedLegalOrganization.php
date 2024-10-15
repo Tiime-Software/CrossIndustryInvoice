@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\EN16931\Codelist\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\Identifier\LegalRegistrationIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BT-47-00.

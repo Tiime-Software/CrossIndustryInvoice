@@ -14,7 +14,7 @@ class PayeeSpecifiedCreditorFinancialInstitution
      * @param PaymentServiceProviderIdentifier $bicIdentifier - BT-86
      */
     public function __construct(
-        private PaymentServiceProviderIdentifier $bicIdentifier,
+        private readonly PaymentServiceProviderIdentifier $bicIdentifier,
     ) {
     }
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\ChargeIndicator;
-use Tiime\EN16931\DataType\ChargeReasonCode;
+use Tiime\EN16931\Codelist\ChargeReasonCodeUNTDID7161;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
@@ -71,7 +71,7 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
 
         $currentNode->appendChild($document->createElement('ram:ActualAmount', $this->actualAmount->getFormattedValueRounded()));
 
-        if ($this->reasonCode instanceof ChargeReasonCode) {
+        if ($this->reasonCode instanceof ChargeReasonCodeUNTDID7161) {
             $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
         }
 
@@ -134,7 +134,7 @@ class LineSpecifiedTradeCharge extends \Tiime\CrossIndustryInvoice\DataType\Basi
             }
 
             if (1 === $reasonCodeElements->count()) {
-                $reasonCode = ChargeReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);
+                $reasonCode = ChargeReasonCodeUNTDID7161::tryFrom($reasonCodeElements->item(0)->nodeValue);
 
                 if (null === $reasonCode) {
                     throw new \Exception('Wrong ReasonCode');

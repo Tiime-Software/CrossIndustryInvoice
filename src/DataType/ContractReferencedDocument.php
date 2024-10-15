@@ -17,7 +17,7 @@ class ContractReferencedDocument
      * @param ContractReference $issuerAssignedIdentifier - BT-12
      */
     public function __construct(
-        private ContractReference $issuerAssignedIdentifier,
+        private readonly ContractReference $issuerAssignedIdentifier,
     ) {
     }
 

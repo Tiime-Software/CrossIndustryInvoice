@@ -21,7 +21,7 @@ class SpecifiedTaxRegistrationVA
     /**
      * @param VatIdentifier $identifier - BT-48 or BT-63 or BT-31
      */
-    public function __construct(private VatIdentifier $identifier)
+    public function __construct(private readonly VatIdentifier $identifier)
     {
         $this->schemeIdentifier = 'VA';
     }

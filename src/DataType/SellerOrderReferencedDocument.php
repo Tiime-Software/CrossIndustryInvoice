@@ -17,7 +17,7 @@ class SellerOrderReferencedDocument
      * @param SalesOrderReference $issuerAssignedIdentifier - BT-14
      */
     public function __construct(
-        private SalesOrderReference $issuerAssignedIdentifier,
+        private readonly SalesOrderReference $issuerAssignedIdentifier,
     ) {
     }
 

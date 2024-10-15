@@ -21,7 +21,7 @@ class SpecifiedTaxRegistrationFC
     /**
      * @param VatIdentifier $identifier - BT-32
      */
-    public function __construct(private VatIdentifier $identifier)
+    public function __construct(private readonly VatIdentifier $identifier)
     {
         $this->schemeIdentifier = 'FC';
     }
