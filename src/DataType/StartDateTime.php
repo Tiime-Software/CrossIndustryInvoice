@@ -19,8 +19,9 @@ class StartDateTime
     /**
      * @param \DateTimeInterface $dateTimeString - BT-73
      */
-    public function __construct(private \DateTimeInterface $dateTimeString)
-    {
+    public function __construct(
+        private readonly \DateTimeInterface $dateTimeString,
+    ) {
         $this->format = '102';
     }
 

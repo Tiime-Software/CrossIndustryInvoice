@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
 use Tiime\CrossIndustryInvoice\DataType\PayerPartyDebtorFinancialAccount;
-use Tiime\EN16931\DataType\PaymentMeansCode;
+use Tiime\EN16931\Codelist\PaymentMeansCodeUNTDID4461;
 
 /**
  * BG-16.
@@ -25,16 +25,16 @@ class SpecifiedTradeSettlementPaymentMeans
     protected ?PayeePartyCreditorFinancialAccount $payeePartyCreditorFinancialAccount;
 
     /**
-     * @param PaymentMeansCode $typeCode - BT-81
+     * @param PaymentMeansCodeUNTDID4461 $typeCode - BT-81
      */
     public function __construct(
-        protected PaymentMeansCode $typeCode,
+        protected PaymentMeansCodeUNTDID4461 $typeCode,
     ) {
         $this->payerPartyDebtorFinancialAccount   = null;
         $this->payeePartyCreditorFinancialAccount = null;
     }
 
-    public function getTypeCode(): PaymentMeansCode
+    public function getTypeCode(): PaymentMeansCodeUNTDID4461
     {
         return $this->typeCode;
     }
@@ -102,7 +102,7 @@ class SpecifiedTradeSettlementPaymentMeans
                 throw new \Exception('Malformed');
             }
 
-            $typeCode = PaymentMeansCode::tryFrom($typeCodeElements->item(0)->nodeValue);
+            $typeCode = PaymentMeansCodeUNTDID4461::tryFrom($typeCodeElements->item(0)->nodeValue);
 
             if (null === $typeCode) {
                 throw new \Exception('Wrong TypeCode');

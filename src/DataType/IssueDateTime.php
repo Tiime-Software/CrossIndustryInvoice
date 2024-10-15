@@ -17,7 +17,7 @@ class IssueDateTime
      * @param \DateTimeInterface $dateTimeString - BT-2
      */
     public function __construct(
-        private \DateTimeInterface $dateTimeString,
+        private readonly \DateTimeInterface $dateTimeString,
     ) {
         $this->dateFormat = '102';
     }

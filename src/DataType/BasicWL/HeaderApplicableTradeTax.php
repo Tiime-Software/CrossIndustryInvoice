@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
-use Tiime\EN16931\DataType\DateCode2475;
-use Tiime\EN16931\DataType\VatCategory;
-use Tiime\EN16931\DataType\VatExoneration;
+use Tiime\EN16931\Codelist\DutyTaxFeeCategoryCodeUNTDID5305;
+use Tiime\EN16931\Codelist\TimeReferencingCodeUNTDID2475;
+use Tiime\EN16931\Codelist\VatExemptionReasonCode;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
@@ -40,12 +40,12 @@ class HeaderApplicableTradeTax
     /**
      * BT-121.
      */
-    protected ?VatExoneration $exemptionReasonCode;
+    protected ?VatExemptionReasonCode $exemptionReasonCode;
 
     /**
      * BT-8.
      */
-    protected ?DateCode2475 $dueDateTypeCode;
+    protected ?TimeReferencingCodeUNTDID2475 $dueDateTypeCode;
 
     /**
      * BT-119.
@@ -53,12 +53,12 @@ class HeaderApplicableTradeTax
     protected ?Percentage $rateApplicablePercent;
 
     /**
-     * @param VatCategory $categoryCode - BT-118
+     * @param DutyTaxFeeCategoryCodeUNTDID5305 $categoryCode - BT-118
      */
     public function __construct(
         float $calculatedAmount,
         float $basisAmount,
-        protected VatCategory $categoryCode,
+        protected DutyTaxFeeCategoryCodeUNTDID5305 $categoryCode,
     ) {
         $this->calculatedAmount      = new Amount($calculatedAmount);
         $this->basisAmount           = new Amount($basisAmount);
@@ -96,29 +96,29 @@ class HeaderApplicableTradeTax
         return $this->basisAmount;
     }
 
-    public function getCategoryCode(): VatCategory
+    public function getCategoryCode(): DutyTaxFeeCategoryCodeUNTDID5305
     {
         return $this->categoryCode;
     }
 
-    public function getExemptionReasonCode(): ?VatExoneration
+    public function getExemptionReasonCode(): ?VatExemptionReasonCode
     {
         return $this->exemptionReasonCode;
     }
 
-    public function setExemptionReasonCode(?VatExoneration $exemptionReasonCode): static
+    public function setExemptionReasonCode(?VatExemptionReasonCode $exemptionReasonCode): static
     {
         $this->exemptionReasonCode = $exemptionReasonCode;
 
         return $this;
     }
 
-    public function getDueDateTypeCode(): ?DateCode2475
+    public function getDueDateTypeCode(): ?TimeReferencingCodeUNTDID2475
     {
         return $this->dueDateTypeCode;
     }
 
-    public function setDueDateTypeCode(?DateCode2475 $dueDateTypeCode): static
+    public function setDueDateTypeCode(?TimeReferencingCodeUNTDID2475 $dueDateTypeCode): static
     {
         $this->dueDateTypeCode = $dueDateTypeCode;
 
@@ -151,11 +151,11 @@ class HeaderApplicableTradeTax
         $currentNode->appendChild($document->createElement('ram:BasisAmount', $this->basisAmount->getFormattedValueRounded()));
         $currentNode->appendChild($document->createElement('ram:CategoryCode', $this->categoryCode->value));
 
-        if ($this->exemptionReasonCode instanceof VatExoneration) {
+        if ($this->exemptionReasonCode instanceof VatExemptionReasonCode) {
             $currentNode->appendChild($document->createElement('ram:ExemptionReasonCode', $this->exemptionReasonCode->value));
         }
 
-        if ($this->dueDateTypeCode instanceof DateCode2475) {
+        if ($this->dueDateTypeCode instanceof TimeReferencingCodeUNTDID2475) {
             $currentNode->appendChild($document->createElement('ram:DueDateTypeCode', $this->dueDateTypeCode->value));
         }
 
@@ -220,7 +220,7 @@ class HeaderApplicableTradeTax
 
             $calculatedAmount = $calculatedAmountElements->item(0)->nodeValue;
             $basisAmount      = $basisAmountElements->item(0)->nodeValue;
-            $categoryCode     = VatCategory::tryFrom($categoryCodeElements->item(0)->nodeValue);
+            $categoryCode     = DutyTaxFeeCategoryCodeUNTDID5305::tryFrom($categoryCodeElements->item(0)->nodeValue);
 
             if (null === $categoryCode) {
                 throw new \Exception('Wrong CategoryCode');
@@ -237,7 +237,7 @@ class HeaderApplicableTradeTax
             }
 
             if (1 === $exemptionReasonCodeElements->count()) {
-                $exemptionReasonCode = VatExoneration::tryFrom($exemptionReasonCodeElements->item(0)->nodeValue);
+                $exemptionReasonCode = VatExemptionReasonCode::tryFrom($exemptionReasonCodeElements->item(0)->nodeValue);
 
                 if (null === $exemptionReasonCode) {
                     throw new \Exception('Wrong ExemptionReasonCode');
@@ -247,7 +247,7 @@ class HeaderApplicableTradeTax
             }
 
             if (1 === $dueDateTypeCodeElements->count()) {
-                $dueDateTypeCode = DateCode2475::tryFrom($dueDateTypeCodeElements->item(0)->nodeValue);
+                $dueDateTypeCode = TimeReferencingCodeUNTDID2475::tryFrom($dueDateTypeCodeElements->item(0)->nodeValue);
 
                 if (null === $dueDateTypeCode) {
                     throw new \Exception('Wrong DueDateTypeCode');

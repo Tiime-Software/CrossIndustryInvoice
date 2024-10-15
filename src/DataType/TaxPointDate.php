@@ -19,8 +19,9 @@ class TaxPointDate
     /**
      * @param \DateTimeInterface $dateString - BT-7
      */
-    public function __construct(private \DateTimeInterface $dateString)
-    {
+    public function __construct(
+        private readonly \DateTimeInterface $dateString,
+    ) {
         $this->format = '102';
     }
 

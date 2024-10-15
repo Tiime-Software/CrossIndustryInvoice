@@ -3,7 +3,7 @@
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\CrossIndustryInvoice\DataType\AllowanceIndicator;
-use Tiime\EN16931\DataType\AllowanceReasonCode;
+use Tiime\EN16931\Codelist\AllowanceReasonCodeUNTDID5189;
 use Tiime\EN16931\SemanticDataType\Amount;
 
 /**
@@ -26,7 +26,7 @@ class LineSpecifiedTradeAllowance
     /**
      * BT-140.
      */
-    protected ?AllowanceReasonCode $reasonCode;
+    protected ?AllowanceReasonCodeUNTDID5189 $reasonCode;
 
     /**
      * BT-139.
@@ -51,12 +51,12 @@ class LineSpecifiedTradeAllowance
         return $this->actualAmount;
     }
 
-    public function getReasonCode(): ?AllowanceReasonCode
+    public function getReasonCode(): ?AllowanceReasonCodeUNTDID5189
     {
         return $this->reasonCode;
     }
 
-    public function setReasonCode(?AllowanceReasonCode $reasonCode): static
+    public function setReasonCode(?AllowanceReasonCodeUNTDID5189 $reasonCode): static
     {
         $this->reasonCode = $reasonCode;
 
@@ -82,7 +82,7 @@ class LineSpecifiedTradeAllowance
         $currentNode->appendChild($this->chargeIndicator->toXML($document));
         $currentNode->appendChild($document->createElement('ram:ActualAmount', $this->actualAmount->getFormattedValueRounded()));
 
-        if ($this->reasonCode instanceof AllowanceReasonCode) {
+        if ($this->reasonCode instanceof AllowanceReasonCodeUNTDID5189) {
             $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
         }
 
@@ -127,7 +127,7 @@ class LineSpecifiedTradeAllowance
             $lineSpecifiedTradeAllowance = new self((float) $actualAmount);
 
             if (1 === $reasonCodeElements->count()) {
-                $reasonCode = AllowanceReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);
+                $reasonCode = AllowanceReasonCodeUNTDID5189::tryFrom($reasonCodeElements->item(0)->nodeValue);
 
                 if (null === $reasonCode) {
                     throw new \Exception('Wrong ReasonCode');

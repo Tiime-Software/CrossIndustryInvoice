@@ -2,8 +2,8 @@
 
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
+use Tiime\EN16931\Codelist\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BG-31.

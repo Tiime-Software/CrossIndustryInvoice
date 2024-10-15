@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\Codelist\MimeCode;
 use Tiime\EN16931\DataType\BinaryObject;
 use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
-use Tiime\EN16931\DataType\MimeCode;
 
 /**
  * BT-18-00.
@@ -44,7 +44,7 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
      * @param ObjectIdentifier $issuerAssignedIdentifier - BT-18
      */
     public function __construct(
-        private ObjectIdentifier $issuerAssignedIdentifier,
+        private readonly ObjectIdentifier $issuerAssignedIdentifier,
     ) {
         $this->typeCode               = '130';
         $this->referenceTypeCode      = null;

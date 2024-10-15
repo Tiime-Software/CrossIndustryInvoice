@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\EN16931\DataType\VatCategory;
+use Tiime\EN16931\Codelist\DutyTaxFeeCategoryCodeUNTDID5305;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
 /**
@@ -25,10 +25,10 @@ class CategoryTradeTax
     private ?Percentage $rateApplicablePercent;
 
     /**
-     * @param VatCategory $categoryCode - BT-95
+     * @param DutyTaxFeeCategoryCodeUNTDID5305 $categoryCode - BT-95
      */
     public function __construct(
-        private VatCategory $categoryCode,
+        private readonly DutyTaxFeeCategoryCodeUNTDID5305 $categoryCode,
     ) {
         $this->typeCode              = 'VAT';
         $this->rateApplicablePercent = null;
@@ -39,7 +39,7 @@ class CategoryTradeTax
         return $this->typeCode;
     }
 
-    public function getCategoryCode(): VatCategory
+    public function getCategoryCode(): DutyTaxFeeCategoryCodeUNTDID5305
     {
         return $this->categoryCode;
     }
@@ -97,7 +97,7 @@ class CategoryTradeTax
             throw new \Exception('Malformed');
         }
 
-        $categoryCode = VatCategory::tryFrom($categoryCodeElements->item(0)->nodeValue);
+        $categoryCode = DutyTaxFeeCategoryCodeUNTDID5305::tryFrom($categoryCodeElements->item(0)->nodeValue);
 
         if (null === $categoryCode) {
             throw new \Exception('Wrong CategoryCode');

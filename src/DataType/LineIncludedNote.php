@@ -15,7 +15,7 @@ class LineIncludedNote
      * @param string $content - BT-127
      */
     public function __construct(
-        private string $content,
+        private readonly string $content,
     ) {
     }
 

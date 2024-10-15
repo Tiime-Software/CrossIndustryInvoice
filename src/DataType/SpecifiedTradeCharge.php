@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\EN16931\DataType\ChargeReasonCode;
+use Tiime\EN16931\Codelist\ChargeReasonCodeUNTDID7161;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
@@ -38,7 +38,7 @@ class SpecifiedTradeCharge
     /**
      * BT-105.
      */
-    private ?ChargeReasonCode $reasonCode;
+    private ?ChargeReasonCodeUNTDID7161 $reasonCode;
 
     /**
      * BT-104.
@@ -48,8 +48,10 @@ class SpecifiedTradeCharge
     /**
      * @param CategoryTradeTax $categoryTradeTax - BT-102-00
      */
-    public function __construct(float $actualAmount, private CategoryTradeTax $categoryTradeTax)
-    {
+    public function __construct(
+        float $actualAmount,
+        private readonly CategoryTradeTax $categoryTradeTax,
+    ) {
         $this->chargeIndicator    = new ChargeIndicator();
         $this->actualAmount       = new Amount($actualAmount);
         $this->calculationPercent = null;
@@ -92,12 +94,12 @@ class SpecifiedTradeCharge
         return $this->actualAmount;
     }
 
-    public function getReasonCode(): ?ChargeReasonCode
+    public function getReasonCode(): ?ChargeReasonCodeUNTDID7161
     {
         return $this->reasonCode;
     }
 
-    public function setReasonCode(?ChargeReasonCode $reasonCode): static
+    public function setReasonCode(?ChargeReasonCodeUNTDID7161 $reasonCode): static
     {
         $this->reasonCode = $reasonCode;
 
@@ -137,7 +139,7 @@ class SpecifiedTradeCharge
 
         $currentNode->appendChild($document->createElement('ram:ActualAmount', $this->actualAmount->getFormattedValueRounded()));
 
-        if ($this->reasonCode instanceof ChargeReasonCode) {
+        if ($this->reasonCode instanceof ChargeReasonCodeUNTDID7161) {
             $currentNode->appendChild($document->createElement('ram:ReasonCode', $this->reasonCode->value));
         }
 
@@ -203,7 +205,7 @@ class SpecifiedTradeCharge
             }
 
             if (1 === $reasonCodeElements->count()) {
-                $reasonCode = ChargeReasonCode::tryFrom($reasonCodeElements->item(0)->nodeValue);
+                $reasonCode = ChargeReasonCodeUNTDID7161::tryFrom($reasonCodeElements->item(0)->nodeValue);
 
                 if (null === $reasonCode) {
                     throw new \Exception('Wrong ReasonCode');

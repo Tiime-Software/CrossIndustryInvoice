@@ -33,7 +33,7 @@ class PayeeTradeParty
      * @param string $name - BT-59
      */
     public function __construct(
-        private string $name,
+        private readonly string $name,
     ) {
         $this->identifier                 = null;
         $this->globalIdentifier           = null;

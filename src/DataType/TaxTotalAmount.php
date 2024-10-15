@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\EN16931\DataType\CurrencyCode;
+use Tiime\EN16931\Codelist\CurrencyCodeISO4217;
 use Tiime\EN16931\SemanticDataType\Amount;
 
 class TaxTotalAmount
@@ -17,9 +17,9 @@ class TaxTotalAmount
     private Amount $value;
 
     /**
-     * @param CurrencyCode $currencyIdentifier - BT-110-0
+     * @param CurrencyCodeISO4217 $currencyIdentifier - BT-110-0
      */
-    public function __construct(float $value, private CurrencyCode $currencyIdentifier)
+    public function __construct(float $value, private CurrencyCodeISO4217 $currencyIdentifier)
     {
         $this->value = new Amount($value);
     }
@@ -29,7 +29,7 @@ class TaxTotalAmount
         return $this->value;
     }
 
-    public function getCurrencyIdentifier(): CurrencyCode
+    public function getCurrencyIdentifier(): CurrencyCodeISO4217
     {
         return $this->currencyIdentifier;
     }
@@ -48,7 +48,7 @@ class TaxTotalAmount
     {
         $value              = $currentElement->nodeValue;
         $currencyIdentifier = '' !== $currentElement->getAttribute('currencyID') ?
-            CurrencyCode::tryFrom($currentElement->getAttribute('currencyID')) : null;
+            CurrencyCodeISO4217::tryFrom($currentElement->getAttribute('currencyID')) : null;
 
         if (null === $currencyIdentifier) {
             throw new \Exception('Wrong currencyID');

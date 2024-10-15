@@ -21,7 +21,7 @@ class SpecifiedProcuringProject
     /**
      * @param ProjectReference $identifier - BT-11
      */
-    public function __construct(private ProjectReference $identifier)
+    public function __construct(private readonly ProjectReference $identifier)
     {
         $this->name = 'Project Reference';
     }

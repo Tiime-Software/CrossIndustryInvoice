@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\EN16931\DataType\CountryAlpha2Code;
+use Tiime\EN16931\Codelist\CountryAlpha2Code;
 
 /**
  * BT-159-00.
@@ -17,7 +17,7 @@ class OriginTradeCountry
      * @param CountryAlpha2Code $identifier - BT-159
      */
     public function __construct(
-        private CountryAlpha2Code $identifier,
+        private readonly CountryAlpha2Code $identifier,
     ) {
     }
 

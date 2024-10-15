@@ -15,7 +15,7 @@ class TelephoneUniversalCommunication
      * @param string $completeNumber - BT-42 or BT-57
      */
     public function __construct(
-        private string $completeNumber,
+        private readonly string $completeNumber,
     ) {
     }
 

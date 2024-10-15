@@ -20,7 +20,7 @@ class FormattedIssueDateTime
      * @param \DateTimeInterface $dateTimeString - BT-26
      */
     public function __construct(
-        private \DateTimeInterface $dateTimeString,
+        private readonly \DateTimeInterface $dateTimeString,
     ) {
         $this->format = '102';
     }

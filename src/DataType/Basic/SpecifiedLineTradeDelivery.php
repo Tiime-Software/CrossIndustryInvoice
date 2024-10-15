@@ -15,7 +15,7 @@ class SpecifiedLineTradeDelivery
      * @param BilledQuantity $billedQuantity - BT-129 & BT-130
      */
     public function __construct(
-        private BilledQuantity $billedQuantity,
+        private readonly BilledQuantity $billedQuantity,
     ) {
     }
 

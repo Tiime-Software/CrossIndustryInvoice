@@ -27,7 +27,7 @@ class TwigRendererTest extends TestCase
     public function testRender(): void
     {
         $document = new \DOMDocument();
-        $document->loadXML(file_get_contents(__DIR__ . '/../Fixtures/CIIEN16931Invoice.xml'));
+        $document->loadXML(file_get_contents(__DIR__ . '/../Fixtures/EN16931/CIIEN16931Invoice.xml'));
 
         $invoice = CrossIndustryInvoice::fromXML($document);
 
@@ -37,7 +37,7 @@ class TwigRendererTest extends TestCase
     public function testRenderWithLogo(): void
     {
         $document = new \DOMDocument();
-        $document->loadXML(file_get_contents(__DIR__ . '/../Fixtures/CIIEN16931Invoice.xml'));
+        $document->loadXML(file_get_contents(__DIR__ . '/../Fixtures/EN16931/CIIEN16931Invoice.xml'));
 
         $invoice = CrossIndustryInvoice::fromXML($document);
 

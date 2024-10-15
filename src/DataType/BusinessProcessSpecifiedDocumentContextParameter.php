@@ -15,7 +15,7 @@ class BusinessProcessSpecifiedDocumentContextParameter
      * @param string $identifier - BT-23
      */
     public function __construct(
-        private string $identifier,
+        private readonly string $identifier,
     ) {
     }
 

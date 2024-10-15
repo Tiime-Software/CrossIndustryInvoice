@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
-use Tiime\EN16931\DataType\CurrencyCode;
+use Tiime\EN16931\Codelist\CurrencyCodeISO4217;
 use Tiime\EN16931\SemanticDataType\Amount;
 
 /**
@@ -219,7 +219,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
             throw new \Exception('Malformed');
         }
 
-        $invoiceCurrencyCode = CurrencyCode::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
+        $invoiceCurrencyCode = CurrencyCodeISO4217::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
 
         if (null === $invoiceCurrencyCode) {
             throw new \Exception('Wrong InvoiceCurrencyCode');
@@ -228,7 +228,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         $taxCurrencyCode = null;
 
         if (1 === $taxCurrencyCodeElements->count()) {
-            $taxCurrencyCode = CurrencyCode::tryFrom($taxCurrencyCodeElements->item(0)->nodeValue);
+            $taxCurrencyCode = CurrencyCodeISO4217::tryFrom($taxCurrencyCodeElements->item(0)->nodeValue);
 
             if (null === $taxCurrencyCode) {
                 throw new \Exception('Wrong TaxCurrencyCode');

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
-use Tiime\EN16931\DataType\CurrencyCode;
+use Tiime\EN16931\Codelist\CurrencyCodeISO4217;
 
 /**
  * BG-19.
@@ -14,16 +14,16 @@ class ApplicableHeaderTradeSettlement
     protected const string XML_NODE = 'ram:ApplicableHeaderTradeSettlement';
 
     /**
-     * @param CurrencyCode                                    $invoiceCurrencyCode                             - BT-5
+     * @param CurrencyCodeISO4217                             $invoiceCurrencyCode                             - BT-5
      * @param SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation - BG-22
      */
     public function __construct(
-        protected CurrencyCode $invoiceCurrencyCode,
+        protected CurrencyCodeISO4217 $invoiceCurrencyCode,
         protected SpecifiedTradeSettlementHeaderMonetarySummation $specifiedTradeSettlementHeaderMonetarySummation,
     ) {
     }
 
-    public function getInvoiceCurrencyCode(): CurrencyCode
+    public function getInvoiceCurrencyCode(): CurrencyCodeISO4217
     {
         return $this->invoiceCurrencyCode;
     }
@@ -60,7 +60,7 @@ class ApplicableHeaderTradeSettlement
             throw new \Exception('Malformed');
         }
 
-        $invoiceCurrencyCode = CurrencyCode::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
+        $invoiceCurrencyCode = CurrencyCodeISO4217::tryFrom($invoiceCurrencyCodeElements->item(0)->nodeValue);
 
         if (null === $invoiceCurrencyCode) {
             throw new \Exception('Wrong currency code');

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\Codelist\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\Identifier\PayeeIdentifier;
-use Tiime\EN16931\DataType\InternationalCodeDesignator;
 
 /**
  * BT-60-0 & BT-60-1.
  */
-class PayeeGlobalIdentifier extends PayeeIdentifier
+readonly class PayeeGlobalIdentifier extends PayeeIdentifier
 {
     protected const string XML_NODE = 'ram:GlobalID';
 

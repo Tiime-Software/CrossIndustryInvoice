@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\Codelist\MimeCode;
 use Tiime\EN16931\DataType\BinaryObject;
-use Tiime\EN16931\DataType\MimeCode;
 use Tiime\EN16931\DataType\Reference\TenderOrLotReference;
 
 /**
@@ -39,7 +39,7 @@ class AdditionalReferencedDocumentTenderOrLotReference
      * @param TenderOrLotReference $issuerAssignedIdentifier - BT-17
      */
     public function __construct(
-        private TenderOrLotReference $issuerAssignedIdentifier,
+        private readonly TenderOrLotReference $issuerAssignedIdentifier,
     ) {
         $this->typeCode               = '50';
         $this->uriIdentifier          = null;

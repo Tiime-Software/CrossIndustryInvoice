@@ -20,7 +20,7 @@ class ExchangedDocumentContext
      * @param GuidelineSpecifiedDocumentContextParameter $guidelineSpecifiedDocumentContextParameter - BT-24-00
      */
     public function __construct(
-        private GuidelineSpecifiedDocumentContextParameter $guidelineSpecifiedDocumentContextParameter,
+        private readonly GuidelineSpecifiedDocumentContextParameter $guidelineSpecifiedDocumentContextParameter,
     ) {
         $this->businessProcessSpecifiedDocumentContextParameter = null;
     }

@@ -20,7 +20,7 @@ class ApplicableTradeSettlementFinancialCard
      * @param string $identifier - BT-87
      */
     public function __construct(
-        private string $identifier,
+        private readonly string $identifier,
     ) {
         $this->cardholderName = null;
     }

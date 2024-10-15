@@ -17,7 +17,7 @@ class OccurrenceDateTime
      * @param \DateTimeInterface $dateTimeString - BT-72
      */
     public function __construct(
-        private \DateTimeInterface $dateTimeString,
+        private readonly \DateTimeInterface $dateTimeString,
     ) {
         $this->format = '102';
     }

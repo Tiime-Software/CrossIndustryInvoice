@@ -17,7 +17,7 @@ class DespatchAdviceReferencedDocument
      * @param DespatchAdviceReference $issuerAssignedIdentifier - BT-16
      */
     public function __construct(
-        private DespatchAdviceReference $issuerAssignedIdentifier,
+        private readonly DespatchAdviceReference $issuerAssignedIdentifier,
     ) {
     }
 
