@@ -62,6 +62,17 @@ class SpecifiedTradeSettlementPaymentMeans extends \Tiime\CrossIndustryInvoice\D
         return $this;
     }
 
+    public function getPayeePartyCreditorFinancialAccount(): ?PayeePartyCreditorFinancialAccount
+    {
+        $payeePartyCreditorFinancialAccount = parent::getPayeePartyCreditorFinancialAccount();
+
+        if (!$payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
+            throw new \LogicException('Must be of type EN16931\\PayeePartyCreditorFinancialAccount');
+        }
+
+        return $payeePartyCreditorFinancialAccount;
+    }
+
     public function setPayeePartyCreditorFinancialAccount(PayeePartyCreditorFinancialAccount|\Tiime\CrossIndustryInvoice\DataType\BasicWL\PayeePartyCreditorFinancialAccount|null $payeePartyCreditorFinancialAccount): static
     {
         if (null !== $payeePartyCreditorFinancialAccount && !$payeePartyCreditorFinancialAccount instanceof PayeePartyCreditorFinancialAccount) {
