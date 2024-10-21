@@ -60,6 +60,9 @@ class SpecifiedLineTradeSettlement
         return $this;
     }
 
+    /**
+     * @return LineSpecifiedTradeAllowance[]
+     */
     public function getSpecifiedTradeAllowances(): array
     {
         return $this->specifiedTradeAllowances;
@@ -78,6 +81,9 @@ class SpecifiedLineTradeSettlement
         return $this;
     }
 
+    /**
+     * @return LineSpecifiedTradeCharge[]
+     */
     public function getSpecifiedTradeCharges(): array
     {
         return $this->specifiedTradeCharges;

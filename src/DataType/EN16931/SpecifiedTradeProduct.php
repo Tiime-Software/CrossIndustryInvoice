@@ -99,6 +99,9 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
         return $this;
     }
 
+    /**
+     * @return ApplicableProductCharacteristic[]
+     */
     public function getApplicableProductCharacteristics(): array
     {
         return $this->applicableProductCharacteristics;
@@ -117,6 +120,9 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
         return $this;
     }
 
+    /**
+     * @return DesignatedProductClassification[]
+     */
     public function getDesignatedProductClassifications(): array
     {
         return $this->designatedProductClassifications;

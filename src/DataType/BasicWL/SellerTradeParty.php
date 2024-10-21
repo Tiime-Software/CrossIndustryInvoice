@@ -64,6 +64,9 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Sell
         return $postalTradeAddress;
     }
 
+    /**
+     * @return SellerIdentifier[]
+     */
     public function getIdentifiers(): array
     {
         return $this->identifiers;
@@ -82,6 +85,9 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Sell
         return $this;
     }
 
+    /**
+     * @return SellerGlobalIdentifier[]
+     */
     public function getGlobalIdentifiers(): array
     {
         return $this->globalIdentifiers;

@@ -48,6 +48,9 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         return $specifiedTradeSettlementHeaderMonetarySummation;
     }
 
+    /**
+     * @return HeaderApplicableTradeTax[]
+     */
     public function getApplicableTradeTaxes(): array
     {
         $applicableTradeTaxes = parent::getApplicableTradeTaxes();

@@ -90,6 +90,9 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
         return $this;
     }
 
+    /**
+     * @return AdditionalReferencedDocumentAdditionalSupportingDocument[]
+     */
     public function getAdditionalReferencedDocuments(): array
     {
         return $this->additionalReferencedDocuments;
