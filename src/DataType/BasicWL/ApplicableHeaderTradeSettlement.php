@@ -179,6 +179,9 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         return $this;
     }
 
+    /**
+     * @return SpecifiedTradeSettlementPaymentMeans[]
+     */
     public function getSpecifiedTradeSettlementPaymentMeans(): array
     {
         return $this->specifiedTradeSettlementPaymentMeans;
@@ -197,6 +200,9 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         return $this;
     }
 
+    /**
+     * @return HeaderApplicableTradeTax[]
+     */
     public function getApplicableTradeTaxes(): array
     {
         return $this->applicableTradeTaxes;
@@ -214,6 +220,9 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         return $this;
     }
 
+    /**
+     * @return SpecifiedTradeAllowance[]
+     */
     public function getSpecifiedTradeAllowances(): array
     {
         return $this->specifiedTradeAllowances;
@@ -232,6 +241,9 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         return $this;
     }
 
+    /**
+     * @return SpecifiedTradeCharge[]
+     */
     public function getSpecifiedTradeCharges(): array
     {
         return $this->specifiedTradeCharges;
@@ -262,6 +274,9 @@ class ApplicableHeaderTradeSettlement extends \Tiime\CrossIndustryInvoice\DataTy
         return $this;
     }
 
+    /**
+     * @return InvoiceReferencedDocument[]
+     */
     public function getInvoiceReferencedDocuments(): array
     {
         return $this->invoiceReferencedDocuments;

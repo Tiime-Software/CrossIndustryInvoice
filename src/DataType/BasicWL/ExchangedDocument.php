@@ -29,6 +29,9 @@ class ExchangedDocument extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Exc
         $this->includedNotes = [];
     }
 
+    /**
+     * @return DocumentIncludedNote[]
+     */
     public function getIncludedNotes(): array
     {
         return $this->includedNotes;
