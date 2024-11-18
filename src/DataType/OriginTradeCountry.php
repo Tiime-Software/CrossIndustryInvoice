@@ -21,7 +21,7 @@ class OriginTradeCountry
     ) {
     }
 
-    public function getIdentifier(): ?CountryAlpha2Code
+    public function getIdentifier(): CountryAlpha2Code
     {
         return $this->identifier;
     }
@@ -38,12 +38,13 @@ class OriginTradeCountry
     public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
     {
         $originTradeCountryElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
+        $count                      = $originTradeCountryElements->count();
 
-        if (0 === $originTradeCountryElements->count()) {
+        if (0 === $count) {
             return null;
         }
 
-        if ($originTradeCountryElements->count() > 1) {
+        if ($count > 1) {
             throw new \Exception('Malformed');
         }
 
