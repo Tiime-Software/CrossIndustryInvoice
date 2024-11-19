@@ -5,9 +5,9 @@
         "php": ">=8.3",
         "ext-dom": "*",
         "ext-libxml": "*",
-        "tiime/en-16931": "dev-main",
-        "twig/twig": "^3.6",
-        "twig/intl-extra": "^3.6"
+        "tiime/en-16931": "^0.10.0",
+        "twig/intl-extra": "^3.15",
+        "twig/twig": "^3.15"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",
@@ -39,6 +39,9 @@
         "test": "vendor/bin/phpunit tests --display-warnings",
         "fix-cs": "vendor/bin/php-cs-fixer fix",
         "phpstan": "vendor/bin/phpstan analyse -l 9 src tests"
+    },
+    "config": {
+        "sort-packages": true
     },
     "minimum-stability": "stable"
 }
