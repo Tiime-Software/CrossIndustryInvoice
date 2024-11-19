@@ -46,6 +46,10 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\Minimum\Sell
     {
         $specifiedLegalOrganization = parent::getSpecifiedLegalOrganization();
 
+        if (null === $specifiedLegalOrganization) {
+            return null;
+        }
+
         if (!$specifiedLegalOrganization instanceof SellerSpecifiedLegalOrganization) {
             throw new \LogicException('Must be of type BasicWL\\SellerSpecifiedLegalOrganization');
         }
