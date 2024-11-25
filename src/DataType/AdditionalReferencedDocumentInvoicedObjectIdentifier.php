@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
-use Tiime\EN16931\Codelist\MimeCode;
-use Tiime\EN16931\DataType\BinaryObject;
 use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
 
 /**
@@ -14,11 +12,6 @@ use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
 class AdditionalReferencedDocumentInvoicedObjectIdentifier
 {
     protected const string XML_NODE = 'ram:AdditionalReferencedDocument';
-
-    /**
-     * BT-124.
-     */
-    private ?string $uriIdentifier;
 
     /**
      * BT-18-0.
@@ -31,43 +24,18 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
     private ?string $referenceTypeCode;
 
     /**
-     * BT-123.
-     */
-    private ?string $name;
-
-    /**
-     * BT-125.
-     */
-    private ?BinaryObject $attachmentBinaryObject;
-
-    /**
      * @param ObjectIdentifier $issuerAssignedIdentifier - BT-18
      */
     public function __construct(
         private readonly ObjectIdentifier $issuerAssignedIdentifier,
     ) {
-        $this->typeCode               = '130';
-        $this->referenceTypeCode      = null;
-        $this->uriIdentifier          = null;
-        $this->name                   = null;
-        $this->attachmentBinaryObject = null;
+        $this->typeCode          = '130';
+        $this->referenceTypeCode = null;
     }
 
     public function getIssuerAssignedIdentifier(): ObjectIdentifier
     {
         return $this->issuerAssignedIdentifier;
-    }
-
-    public function getUriIdentifier(): ?string
-    {
-        return $this->uriIdentifier;
-    }
-
-    public function setUriIdentifier(?string $uriIdentifier): static
-    {
-        $this->uriIdentifier = $uriIdentifier;
-
-        return $this;
     }
 
     public function getTypeCode(): string
@@ -87,57 +55,15 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
         return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getAttachmentBinaryObject(): ?BinaryObject
-    {
-        return $this->attachmentBinaryObject;
-    }
-
-    public function setAttachmentBinaryObject(?BinaryObject $attachmentBinaryObject): static
-    {
-        $this->attachmentBinaryObject = $attachmentBinaryObject;
-
-        return $this;
-    }
-
     public function toXML(\DOMDocument $document): \DOMElement
     {
         $element = $document->createElement(self::XML_NODE);
 
         $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
-
-        if (\is_string($this->uriIdentifier)) {
-            $element->appendChild($document->createElement('ram:URIID', $this->uriIdentifier));
-        }
-
         $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
         if (\is_string($this->referenceTypeCode)) {
             $element->appendChild($document->createElement('ram:ReferenceTypeCode', $this->referenceTypeCode));
-        }
-
-        if (\is_string($this->name)) {
-            $element->appendChild($document->createElement('ram:Name', $this->name));
-        }
-
-        if ($this->attachmentBinaryObject instanceof BinaryObject) {
-            $binaryObjectElement = $document->createElement('ram:AttachmentBinaryObject', $this->attachmentBinaryObject->content);
-
-            $binaryObjectElement->setAttribute('mimeCode', $this->attachmentBinaryObject->mimeCode->value);
-            $binaryObjectElement->setAttribute('filename', $this->attachmentBinaryObject->filename);
-
-            $element->appendChild($binaryObjectElement);
         }
 
         return $element;
@@ -159,17 +85,10 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
         $additionalReferencedDocumentInvoicedObjectIdentifierElement = $additionalReferencedDocumentInvoicedObjectIdentifierElements->item(0);
 
         $issuerAssignedIdentifierElements = $xpath->query('./ram:IssuerAssignedID', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
-        $uriIdentifierElements            = $xpath->query('./ram:URIID', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
         $typeCodeElements                 = $xpath->query('./ram:TypeCode', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
         $referenceTypeCodeElements        = $xpath->query('./ram:ReferenceTypeCode', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
-        $nameElements                     = $xpath->query('./ram:Name', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
-        $attachmentBinaryObjectElements   = $xpath->query('./ram:AttachmentBinaryObject', $additionalReferencedDocumentInvoicedObjectIdentifierElement);
 
         if (1 !== $issuerAssignedIdentifierElements->count()) {
-            throw new \Exception('Malformed');
-        }
-
-        if ($uriIdentifierElements->count() > 1) {
             throw new \Exception('Malformed');
         }
 
@@ -178,14 +97,6 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
         }
 
         if ($referenceTypeCodeElements->count() > 1) {
-            throw new \Exception('Malformed');
-        }
-
-        if ($nameElements->count() > 1) {
-            throw new \Exception('Malformed');
-        }
-
-        if ($attachmentBinaryObjectElements->count() > 1) {
             throw new \Exception('Malformed');
         }
 
@@ -198,30 +109,8 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
 
         $additionalReferencedDocumentInvoicedObjectIdentifier = new self(new ObjectIdentifier($issuerAssignedIdentifier));
 
-        if (1 === $uriIdentifierElements->count()) {
-            $additionalReferencedDocumentInvoicedObjectIdentifier->setUriIdentifier($uriIdentifierElements->item(0)->nodeValue);
-        }
-
         if (1 === $referenceTypeCodeElements->count()) {
             $additionalReferencedDocumentInvoicedObjectIdentifier->setReferenceTypeCode($referenceTypeCodeElements->item(0)->nodeValue);
-        }
-
-        if (1 === $nameElements->count()) {
-            $additionalReferencedDocumentInvoicedObjectIdentifier->setName($nameElements->item(0)->nodeValue);
-        }
-
-        if (1 === $attachmentBinaryObjectElements->count()) {
-            $attachmentBinaryObjectItem = $attachmentBinaryObjectElements->item(0);
-            $content                    = $attachmentBinaryObjectItem->nodeValue;
-            $mimeCode                   = MimeCode::tryFrom($attachmentBinaryObjectItem->getAttribute('mimeCode'));
-
-            if (!$mimeCode instanceof MimeCode) {
-                throw new \Exception('Wrong mimeCode');
-            }
-
-            $filename = $attachmentBinaryObjectItem->getAttribute('filename');
-
-            $additionalReferencedDocumentInvoicedObjectIdentifier->setAttachmentBinaryObject(new BinaryObject($content, $mimeCode, $filename));
         }
 
         return $additionalReferencedDocumentInvoicedObjectIdentifier;
