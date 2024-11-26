@@ -14,16 +14,13 @@ class SpecifiedProcuringProject
     protected const string XML_NODE = 'ram:SpecifiedProcuringProject';
 
     /**
-     * BT-11-0.
-     */
-    private string $name;
-
-    /**
      * @param ProjectReference $identifier - BT-11
+     * @param string           $name       - BT-11-0
      */
-    public function __construct(private readonly ProjectReference $identifier)
-    {
-        $this->name = 'Project Reference';
+    public function __construct(
+        private readonly ProjectReference $identifier,
+        private readonly string $name = 'Project Reference',
+    ) {
     }
 
     public function getIdentifier(): ProjectReference
@@ -75,10 +72,10 @@ class SpecifiedProcuringProject
         $identifier = $identifierElements->item(0)->nodeValue;
         $name       = $nameElements->item(0)->nodeValue;
 
-        if (mb_strtolower('Project Reference') !== mb_strtolower($name)) {
-            throw new \Exception('Wrong Name');
+        if ('' === $name) {
+            throw new \Exception('Wrong SpecifiedProcuringProject name');
         }
 
-        return new self(new ProjectReference($identifier));
+        return new self(new ProjectReference($identifier), $name);
     }
 }
