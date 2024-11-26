@@ -10,8 +10,8 @@
         "twig/twig": "^3.15"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.10",
         "friendsofphp/php-cs-fixer": "^3.16",
+        "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^10.1"
     },
     "license": "MIT",
