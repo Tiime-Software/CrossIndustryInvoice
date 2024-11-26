@@ -9,6 +9,7 @@ use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
 use Tiime\CrossIndustryInvoice\Minimum\CrossIndustryInvoice as MinimumCrossIndustryInvoice;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 
 class CrossIndustryInvoice extends MinimumCrossIndustryInvoice implements CrossIndustryInvoiceInterface
 {
@@ -86,7 +87,7 @@ class CrossIndustryInvoice extends MinimumCrossIndustryInvoice implements CrossI
 
     public static function fromXML(\DOMDocument $document): self
     {
-        $xpath = new \DOMXPath($document);
+        $xpath = new XPath($document);
 
         $crossIndustryInvoiceElements = $xpath->query(\sprintf('//%s', self::XML_NODE));
 

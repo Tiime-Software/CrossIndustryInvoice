@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\ElectronicAddressSchemeCode;
 use Tiime\EN16931\DataType\Identifier\ElectronicAddressIdentifier;
 
@@ -38,7 +39,7 @@ class URIUniversalCommunication
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $uriUniversalCommunicationElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

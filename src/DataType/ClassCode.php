@@ -2,6 +2,7 @@
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\ItemTypeCodeUNTDID7143;
 
 class ClassCode
@@ -58,7 +59,7 @@ class ClassCode
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $classCodeElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

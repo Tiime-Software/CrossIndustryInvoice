@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\Identifier\LegalRegistrationIdentifier;
 
@@ -64,7 +65,7 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $specifiedLegalOrganizationElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

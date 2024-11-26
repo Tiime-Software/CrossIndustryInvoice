@@ -3,6 +3,7 @@
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\CrossIndustryInvoice\DataType\NetPriceProductTradePrice;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 
 /**
  * BG-29.
@@ -55,7 +56,7 @@ class SpecifiedLineTradeAgreement
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $specifiedLineTradeAgreementElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

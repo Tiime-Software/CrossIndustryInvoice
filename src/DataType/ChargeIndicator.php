@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
+
 /**
  * BG-21-0.
  */
@@ -35,7 +37,7 @@ class ChargeIndicator
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $chargeIndicatorElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

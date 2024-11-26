@@ -2,6 +2,7 @@
 
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\Identifier\StandardItemIdentifier;
 
@@ -58,7 +59,7 @@ class SpecifiedTradeProduct
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $specifiedTradeProductElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

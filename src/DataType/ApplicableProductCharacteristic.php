@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
+
 /**
  * BG-32.
  */
@@ -41,7 +43,7 @@ class ApplicableProductCharacteristic
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): array
     {
         $applicableProductCharacteristicElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

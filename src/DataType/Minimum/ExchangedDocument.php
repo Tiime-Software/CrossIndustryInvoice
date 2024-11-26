@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
 use Tiime\CrossIndustryInvoice\DataType\IssueDateTime;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\InvoiceTypeCodeUNTDID1001;
 use Tiime\EN16931\DataType\Identifier\InvoiceIdentifier;
 
@@ -54,7 +55,7 @@ class ExchangedDocument
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $exchangedDocumentElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

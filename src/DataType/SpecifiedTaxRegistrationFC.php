@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\DataType\Identifier\VatIdentifier;
 
 /**
@@ -47,7 +48,7 @@ class SpecifiedTaxRegistrationFC
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $specifiedTaxRegistrationElements = $xpath->query(\sprintf('./%s[ram:ID[@schemeID = \'FC\']]', self::XML_NODE), $currentElement);
 

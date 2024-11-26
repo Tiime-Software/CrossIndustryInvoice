@@ -7,6 +7,7 @@ namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 use Tiime\CrossIndustryInvoice\DataType\ApplicableProductCharacteristic;
 use Tiime\CrossIndustryInvoice\DataType\DesignatedProductClassification;
 use Tiime\CrossIndustryInvoice\DataType\OriginTradeCountry;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\Identifier\BuyerItemIdentifier;
 use Tiime\EN16931\DataType\Identifier\SellerItemIdentifier;
@@ -196,7 +197,7 @@ class SpecifiedTradeProduct extends \Tiime\CrossIndustryInvoice\DataType\Basic\S
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $specifiedTradeProductElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\DutyTaxFeeCategoryCodeUNTDID5305;
 use Tiime\EN16931\SemanticDataType\Percentage;
 
@@ -70,7 +71,7 @@ class CategoryTradeTax
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $categoryTradeTaxElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

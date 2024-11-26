@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
+
 /**
  * BT-74-00.
  */
@@ -47,7 +49,7 @@ class EndDateTime
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $endDateTimeElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

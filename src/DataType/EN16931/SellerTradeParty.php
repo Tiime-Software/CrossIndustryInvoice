@@ -11,6 +11,7 @@ use Tiime\CrossIndustryInvoice\DataType\SellerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationFC;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
 
 /**
@@ -131,7 +132,7 @@ class SellerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Sell
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $sellerTradePartyElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

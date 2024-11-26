@@ -7,6 +7,7 @@ namespace Tiime\CrossIndustryInvoice\DataType\BasicWL;
 use Tiime\CrossIndustryInvoice\DataType\BuyerOrderReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ContractReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\SellerTaxRepresentativeTradeParty;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 
 /**
  * BT-10-00.
@@ -103,7 +104,7 @@ class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataTyp
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $applicableHeaderTradeAgreementElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

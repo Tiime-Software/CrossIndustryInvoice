@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
+
 /**
  * BT-127-00.
  */
@@ -33,7 +35,7 @@ class LineIncludedNote
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $lineIncludedNoteElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
