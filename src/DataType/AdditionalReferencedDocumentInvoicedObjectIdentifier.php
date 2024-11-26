@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\EN16931\Codelist\ReferenceQualifierCodeUNTDID1153;
 use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
 
 /**
@@ -21,7 +22,7 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
     /**
      * BT-18-1.
      */
-    private ?string $referenceTypeCode;
+    private ?ReferenceQualifierCodeUNTDID1153 $referenceTypeCode;
 
     /**
      * @param ObjectIdentifier $issuerAssignedIdentifier - BT-18
@@ -43,12 +44,12 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
         return $this->typeCode;
     }
 
-    public function getReferenceTypeCode(): ?string
+    public function getReferenceTypeCode(): ?ReferenceQualifierCodeUNTDID1153
     {
         return $this->referenceTypeCode;
     }
 
-    public function setReferenceTypeCode(?string $referenceTypeCode): static
+    public function setReferenceTypeCode(?ReferenceQualifierCodeUNTDID1153 $referenceTypeCode): static
     {
         $this->referenceTypeCode = $referenceTypeCode;
 
@@ -62,8 +63,8 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
         $element->appendChild($document->createElement('ram:IssuerAssignedID', $this->issuerAssignedIdentifier->value));
         $element->appendChild($document->createElement('ram:TypeCode', $this->typeCode));
 
-        if (\is_string($this->referenceTypeCode)) {
-            $element->appendChild($document->createElement('ram:ReferenceTypeCode', $this->referenceTypeCode));
+        if ($this->referenceTypeCode instanceof ReferenceQualifierCodeUNTDID1153) {
+            $element->appendChild($document->createElement('ram:ReferenceTypeCode', $this->referenceTypeCode->value));
         }
 
         return $element;
@@ -110,7 +111,13 @@ class AdditionalReferencedDocumentInvoicedObjectIdentifier
         $additionalReferencedDocumentInvoicedObjectIdentifier = new self(new ObjectIdentifier($issuerAssignedIdentifier));
 
         if (1 === $referenceTypeCodeElements->count()) {
-            $additionalReferencedDocumentInvoicedObjectIdentifier->setReferenceTypeCode($referenceTypeCodeElements->item(0)->nodeValue);
+            $referenceTypeCode = ReferenceQualifierCodeUNTDID1153::tryFrom($referenceTypeCodeElements->item(0)->nodeValue);
+
+            if (!$referenceTypeCode instanceof ReferenceQualifierCodeUNTDID1153) {
+                throw new \Exception('Wrong ReferenceTypeCode');
+            }
+
+            $additionalReferencedDocumentInvoicedObjectIdentifier->setReferenceTypeCode($referenceTypeCode);
         }
 
         return $additionalReferencedDocumentInvoicedObjectIdentifier;
