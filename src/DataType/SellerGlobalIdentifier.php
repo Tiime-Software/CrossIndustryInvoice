@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\InternationalCodeDesignator;
 use Tiime\EN16931\DataType\Identifier\SellerIdentifier;
 
@@ -24,7 +25,7 @@ readonly class SellerGlobalIdentifier extends SellerIdentifier
         // todo
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): array
     {
         $sellerGlobalIdentifierElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

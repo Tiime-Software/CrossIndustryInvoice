@@ -9,6 +9,7 @@ use Tiime\CrossIndustryInvoice\DataType\BuyerGlobalIdentifier;
 use Tiime\CrossIndustryInvoice\DataType\DefinedTradeContact;
 use Tiime\CrossIndustryInvoice\DataType\SpecifiedTaxRegistrationVA;
 use Tiime\CrossIndustryInvoice\DataType\URIUniversalCommunication;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\DataType\Identifier\BuyerIdentifier;
 
 /**
@@ -102,7 +103,7 @@ class BuyerTradeParty extends \Tiime\CrossIndustryInvoice\DataType\BasicWL\Buyer
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $buyerTradePartyElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

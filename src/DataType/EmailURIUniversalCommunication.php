@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
+
 /**
  * BT-43-00 or BT-58-00.
  */
@@ -33,7 +35,7 @@ class EmailURIUniversalCommunication
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $emailURIUniversalCommunicationElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

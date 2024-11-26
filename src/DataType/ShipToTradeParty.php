@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\PostalTradeAddress;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\DataType\Identifier\LocationIdentifier;
 
 /**
@@ -126,7 +127,7 @@ class ShipToTradeParty
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $shipToTradePartyElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

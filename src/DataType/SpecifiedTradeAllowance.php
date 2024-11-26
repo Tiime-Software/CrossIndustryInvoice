@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\AllowanceReasonCodeUNTDID5189;
 use Tiime\EN16931\SemanticDataType\Amount;
 use Tiime\EN16931\SemanticDataType\Percentage;
@@ -152,7 +153,7 @@ class SpecifiedTradeAllowance
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): array
     {
         $specifiedTradeAllowanceElements = $xpath->query(\sprintf('./%s[ram:ChargeIndicator/udt:Indicator[text() = \'false\']]', self::XML_NODE), $currentElement);
 

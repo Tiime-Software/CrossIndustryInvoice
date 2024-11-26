@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\TextSubjectCodeUNTDID4451;
 
 /**
@@ -57,7 +58,7 @@ class DocumentIncludedNote
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): array
     {
         $documentIncludedNoteElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

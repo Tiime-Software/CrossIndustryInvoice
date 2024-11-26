@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\DataType\Reference\PrecedingInvoiceReference;
 
 /**
@@ -57,7 +58,7 @@ class InvoiceReferencedDocument
         return $element;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): array
     {
         $invoiceReferencedDocumentElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

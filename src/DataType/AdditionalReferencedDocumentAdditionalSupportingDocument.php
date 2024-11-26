@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\MimeCode;
 use Tiime\EN16931\DataType\BinaryObject;
 use Tiime\EN16931\DataType\Reference\SupportingDocumentReference;
@@ -120,7 +121,7 @@ class AdditionalReferencedDocumentAdditionalSupportingDocument
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): array
     {
         $additionalReferencedDocumentElements = $xpath->query(\sprintf('./%s[ram:TypeCode[text() = \'916\']]', self::XML_NODE), $currentElement);
 

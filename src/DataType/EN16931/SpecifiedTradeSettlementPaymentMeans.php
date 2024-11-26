@@ -7,6 +7,7 @@ namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 use Tiime\CrossIndustryInvoice\DataType\ApplicableTradeSettlementFinancialCard;
 use Tiime\CrossIndustryInvoice\DataType\PayeeSpecifiedCreditorFinancialInstitution;
 use Tiime\CrossIndustryInvoice\DataType\PayerPartyDebtorFinancialAccount;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\PaymentMeansCodeUNTDID4461;
 
 /**
@@ -133,7 +134,7 @@ class SpecifiedTradeSettlementPaymentMeans extends \Tiime\CrossIndustryInvoice\D
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): array
     {
         $specifiedTradeSettlementPaymentMeansElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

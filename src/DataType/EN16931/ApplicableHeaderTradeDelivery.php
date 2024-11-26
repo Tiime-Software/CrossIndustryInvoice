@@ -8,6 +8,7 @@ use Tiime\CrossIndustryInvoice\DataType\ActualDeliverySupplyChainEvent;
 use Tiime\CrossIndustryInvoice\DataType\DespatchAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ReceivingAdviceReferencedDocument;
 use Tiime\CrossIndustryInvoice\DataType\ShipToTradeParty;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 
 /**
  * BG-13-00.
@@ -65,7 +66,7 @@ class ApplicableHeaderTradeDelivery extends \Tiime\CrossIndustryInvoice\DataType
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $applicableHeaderTradeDeliveryElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

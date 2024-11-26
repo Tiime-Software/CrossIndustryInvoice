@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\CountryAlpha2Code;
 
 /**
@@ -35,7 +36,7 @@ class OriginTradeCountry
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $originTradeCountryElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
         $count                      = $originTradeCountryElements->count();

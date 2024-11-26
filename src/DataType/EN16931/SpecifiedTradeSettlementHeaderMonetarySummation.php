@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
 use Tiime\CrossIndustryInvoice\DataType\TaxTotalAmount;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\CurrencyCodeISO4217;
 use Tiime\EN16931\SemanticDataType\Amount;
 
@@ -80,7 +81,7 @@ class SpecifiedTradeSettlementHeaderMonetarySummation extends \Tiime\CrossIndust
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $specifiedTradeSettlementHeaderMonetarySummationElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

@@ -3,6 +3,7 @@
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\CrossIndustryInvoice\DataType\AssociatedDocumentLineDocument;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 
 /**
  * BG-25.
@@ -65,7 +66,7 @@ class IncludedSupplyChainTradeLineItem
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): array
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): array
     {
         $includedSupplyChainTradeLineItemElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

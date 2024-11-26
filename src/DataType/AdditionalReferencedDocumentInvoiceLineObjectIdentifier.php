@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\ReferenceQualifierCodeUNTDID1153;
 use Tiime\EN16931\DataType\Identifier\ObjectIdentifier;
 
@@ -70,7 +71,7 @@ class AdditionalReferencedDocumentInvoiceLineObjectIdentifier
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $additionalReferencedDocumentElements = $xpath->query(\sprintf('./%s[ram:TypeCode[text() = \'130\']]', self::XML_NODE), $currentElement);
 

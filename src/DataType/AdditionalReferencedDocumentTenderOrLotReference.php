@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\DataType\Reference\TenderOrLotReference;
 
 /**
@@ -47,7 +48,7 @@ class AdditionalReferencedDocumentTenderOrLotReference
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $additionalReferencedDocumentTenderOrLotReferenceElements = $xpath->query(\sprintf('./%s[ram:TypeCode[text() = \'50\']]', self::XML_NODE), $currentElement);
 

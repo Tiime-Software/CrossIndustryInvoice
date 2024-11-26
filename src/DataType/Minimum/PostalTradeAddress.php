@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\Codelist\CountryAlpha2Code;
 
 /**
@@ -40,7 +41,7 @@ class PostalTradeAddress
      * BasicWL\PostalTradeAddress have to return ?static
      * Because of the heritage, Minimum\PostalTradeAddress have to return ?static too.
      */
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $postalTradeAddressElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

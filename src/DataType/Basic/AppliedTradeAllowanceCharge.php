@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tiime\CrossIndustryInvoice\DataType\Basic;
 
 use Tiime\CrossIndustryInvoice\DataType\AllowanceIndicator;
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\SemanticDataType\UnitPriceAmount;
 
 /**
@@ -50,7 +51,7 @@ class AppliedTradeAllowanceCharge
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $appliedTradeAllowanceChargeElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

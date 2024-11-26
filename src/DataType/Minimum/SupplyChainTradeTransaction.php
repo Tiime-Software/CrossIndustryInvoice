@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Minimum;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
+
 /**
  * BG-25-00.
  */
@@ -49,7 +51,7 @@ class SupplyChainTradeTransaction
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): self
     {
         $supplyChainTradeTransactionElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 

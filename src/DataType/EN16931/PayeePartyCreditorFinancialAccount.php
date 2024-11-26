@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\EN16931;
 
+use Tiime\CrossIndustryInvoice\Utils\XPath;
 use Tiime\EN16931\DataType\Identifier\PaymentAccountIdentifier;
 
 /**
@@ -62,7 +63,7 @@ class PayeePartyCreditorFinancialAccount extends \Tiime\CrossIndustryInvoice\Dat
         return $currentNode;
     }
 
-    public static function fromXML(\DOMXPath $xpath, \DOMElement $currentElement): ?self
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
     {
         $payeePartyCreditorFinancialAccountElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
