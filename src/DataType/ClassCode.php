@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tiime\CrossIndustryInvoice\DataType;
 
 use Tiime\CrossIndustryInvoice\Utils\XPath;
