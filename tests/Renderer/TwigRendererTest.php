@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tiime\CrossIndustryInvoice\Tests\Renderer;
 
 use PHPUnit\Framework\TestCase;

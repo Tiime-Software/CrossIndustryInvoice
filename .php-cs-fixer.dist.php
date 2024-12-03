@@ -49,6 +49,7 @@ return (new PhpCsFixer\Config())
             'nullable_type_declaration_for_default_null_value' => true,
             'protected_to_private'                             => false,
             'trailing_comma_in_multiline'                      => ['elements' => ['arrays', 'match', 'parameters']],
+            'declare_strict_types'                             => true,
         ]
     )
     ->setRiskyAllowed(true)
