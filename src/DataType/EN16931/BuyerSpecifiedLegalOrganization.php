@@ -83,7 +83,7 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
         $identifierElements          = $xpath->query('./ram:ID', $specifiedLegalOrganizationElement);
         $tradingBusinessNameElements = $xpath->query('./ram:TradingBusinessName', $specifiedLegalOrganizationElement);
 
-        if (1 !== $identifierElements->count()) {
+        if ($identifierElements->count() > 1) {
             throw new \Exception('Malformed');
         }
 
@@ -91,21 +91,25 @@ class BuyerSpecifiedLegalOrganization extends \Tiime\CrossIndustryInvoice\DataTy
             throw new \Exception('Malformed');
         }
 
-        /** @var \DOMElement $identifierItem */
-        $identifierItem = $identifierElements->item(0);
-        $identifier     = $identifierItem->nodeValue;
+        $specifiedLegalOrganization = new self();
 
-        $scheme = null;
+        if (1 === $identifierElements->count()) {
+            /** @var \DOMElement $identifierItem */
+            $identifierItem = $identifierElements->item(0);
+            $identifier     = $identifierItem->nodeValue;
 
-        if ($identifierItem->hasAttribute('schemeID')) {
-            $scheme = InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID'));
+            $scheme = null;
+
+            if ($identifierItem->hasAttribute('schemeID')) {
+                $scheme = InternationalCodeDesignator::tryFrom($identifierItem->getAttribute('schemeID'));
+
+                if (!$scheme instanceof InternationalCodeDesignator) {
+                    throw new \Exception('Wrong schemeID');
+                }
+            }
+
+            $specifiedLegalOrganization->setIdentifier(new LegalRegistrationIdentifier($identifier, $scheme));
         }
-
-        if (!$scheme instanceof InternationalCodeDesignator) {
-            throw new \Exception('Wrong schemeID');
-        }
-
-        $specifiedLegalOrganization = new self(new LegalRegistrationIdentifier($identifier, $scheme));
 
         if (1 === $tradingBusinessNameElements->count()) {
             $specifiedLegalOrganization->setTradingBusinessName($tradingBusinessNameElements->item(0)->nodeValue);
