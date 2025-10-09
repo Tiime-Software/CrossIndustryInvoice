@@ -1,0 +1,46 @@
+name: CI
+
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+
+            - name: 'Setup PHP'
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.3'
+
+            - uses: "ramsey/composer-install@v3"
+
+            - name: PHP CS Fixer
+              run: ./vendor/bin/php-cs-fixer check
+
+    test:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                php-version:
+                    - "8.3"
+                    - "8.4"
+
+        steps:
+            - uses: actions/checkout@v5
+
+            - name: 'Setup PHP'
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "${{ matrix.php-version }}"
+
+            - uses: "ramsey/composer-install@v3"
+              with:
+                  composer-options: "--prefer-dist"
+
+            - name: Run tests
+              run: vendor/bin/phpunit
