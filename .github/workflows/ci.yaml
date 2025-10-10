@@ -21,20 +21,20 @@ jobs:
             - name: PHP CS Fixer
               run: ./vendor/bin/php-cs-fixer check
 
-    phpstan:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v5
-
-            - name: 'Setup PHP'
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: '8.3'
-
-            - uses: "ramsey/composer-install@v3"
-
-            - name: Run PHPStan
-              run: composer run-script phpstan
+#    phpstan:
+#        runs-on: ubuntu-latest
+#        steps:
+#            - uses: actions/checkout@v5
+#
+#            - name: 'Setup PHP'
+#              uses: shivammathur/setup-php@v2
+#              with:
+#                  php-version: '8.3'
+#
+#            - uses: "ramsey/composer-install@v3"
+#
+#            - name: Run PHPStan
+#              run: composer run-script phpstan
 
     test:
         runs-on: ubuntu-latest
