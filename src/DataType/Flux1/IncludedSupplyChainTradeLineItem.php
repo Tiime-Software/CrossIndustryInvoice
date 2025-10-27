@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Flux1;
 
-use Tiime\CrossIndustryInvoice\DataType\AssociatedDocumentLineDocument;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedLineTradeAgreement;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedLineTradeDelivery;
 use Tiime\CrossIndustryInvoice\DataType\Basic\SpecifiedTradeProduct;
