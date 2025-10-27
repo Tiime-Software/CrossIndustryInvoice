@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\Flux1;
 
-use Tiime\CrossIndustryInvoice\Basic\CrossIndustryInvoice as BasicCrossIndustryInvoice;
 use Tiime\CrossIndustryInvoice\CrossIndustryInvoiceInterface;
 use Tiime\CrossIndustryInvoice\DataType\BasicWL\ExchangedDocument;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\DataType\ExchangedDocumentContext;
+use Tiime\CrossIndustryInvoice\DataType\Flux1\SupplyChainTradeTransaction;
 use Tiime\CrossIndustryInvoice\Utils\XPath;
 
-class CrossIndustryInvoice extends BasicCrossIndustryInvoice implements CrossIndustryInvoiceInterface
+class CrossIndustryInvoice implements CrossIndustryInvoiceInterface
 {
     protected const string XML_NODE = 'rsm:CrossIndustryInvoice';
 
@@ -21,22 +20,25 @@ class CrossIndustryInvoice extends BasicCrossIndustryInvoice implements CrossInd
      * @param SupplyChainTradeTransaction $supplyChainTradeTransaction - BG-25-00
      */
     public function __construct(
-        ExchangedDocumentContext $exchangedDocumentContext,
-        ExchangedDocument $exchangedDocument,
-        SupplyChainTradeTransaction $supplyChainTradeTransaction,
+        protected ExchangedDocumentContext $exchangedDocumentContext,
+        protected ExchangedDocument $exchangedDocument,
+        protected SupplyChainTradeTransaction $supplyChainTradeTransaction,
     ) {
-        parent::__construct($exchangedDocumentContext, $exchangedDocument, $supplyChainTradeTransaction);
+    }
+
+    public function getExchangedDocumentContext(): ExchangedDocumentContext
+    {
+        return $this->exchangedDocumentContext;
+    }
+
+    public function getExchangedDocument(): ExchangedDocument
+    {
+        return $this->exchangedDocument;
     }
 
     public function getSupplyChainTradeTransaction(): SupplyChainTradeTransaction
     {
-        $supplyChainTradeTransaction = parent::getSupplyChainTradeTransaction();
-
-        if (!$supplyChainTradeTransaction instanceof SupplyChainTradeTransaction) {
-            throw new \LogicException('Must be of type EN16931\\SupplyChainTradeTransaction');
-        }
-
-        return $supplyChainTradeTransaction;
+        return $this->supplyChainTradeTransaction;
     }
 
     public function toXML(): \DOMDocument

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Flux1;
 
-use Tiime\CrossIndustryInvoice\DataType\EN16931\ApplicableHeaderTradeDelivery;
-use Tiime\CrossIndustryInvoice\DataType\EN16931\ApplicableHeaderTradeSettlement;
 use Tiime\CrossIndustryInvoice\DataType\EN16931\IncludedSupplyChainTradeLineItem;
 use Tiime\CrossIndustryInvoice\Utils\XPath;
 
 /**
  * BG-25-00.
  */
-class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\Minimum\SupplyChainTradeTransaction
+class SupplyChainTradeTransaction
 {
+    protected const string XML_NODE = 'rsm:SupplyChainTradeTransaction';
+
     /**
      * BG-25.
      *
@@ -21,10 +21,13 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\M
      */
     protected array $includedSupplyChainTradeLineItems;
 
+    /**
+     * @param array<int, IncludedSupplyChainTradeLineItem> $includedSupplyChainTradeLineItems
+     */
     public function __construct(
-        ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement,
-        ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery,
-        ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement,
+        protected ApplicableHeaderTradeAgreement $applicableHeaderTradeAgreement,
+        protected ApplicableHeaderTradeDelivery $applicableHeaderTradeDelivery,
+        protected ApplicableHeaderTradeSettlement $applicableHeaderTradeSettlement,
         array $includedSupplyChainTradeLineItems,
     ) {
         foreach ($includedSupplyChainTradeLineItems as $includedSupplyChainTradeLineItem) {
@@ -33,42 +36,22 @@ class SupplyChainTradeTransaction extends \Tiime\CrossIndustryInvoice\DataType\M
             }
         }
 
-        parent::__construct($applicableHeaderTradeAgreement, $applicableHeaderTradeDelivery, $applicableHeaderTradeSettlement);
-
         $this->includedSupplyChainTradeLineItems = $includedSupplyChainTradeLineItems;
     }
 
     public function getApplicableHeaderTradeAgreement(): ApplicableHeaderTradeAgreement
     {
-        $applicableHeaderTradeAgreement = parent::getApplicableHeaderTradeAgreement();
-
-        if (!$applicableHeaderTradeAgreement instanceof ApplicableHeaderTradeAgreement) {
-            throw new \LogicException('Must be of type FLux1\\ApplicableHeaderTradeAgreement');
-        }
-
-        return $applicableHeaderTradeAgreement;
+        return $this->applicableHeaderTradeAgreement;
     }
 
     public function getApplicableHeaderTradeDelivery(): ApplicableHeaderTradeDelivery
     {
-        $applicableHeaderTradeDelivery = parent::getApplicableHeaderTradeDelivery();
-
-        if (!$applicableHeaderTradeDelivery instanceof ApplicableHeaderTradeDelivery) {
-            throw new \LogicException('Must be of type EN16931\\ApplicableHeaderTradeDelivery');
-        }
-
-        return $applicableHeaderTradeDelivery;
+        return $this->applicableHeaderTradeDelivery;
     }
 
     public function getApplicableHeaderTradeSettlement(): ApplicableHeaderTradeSettlement
     {
-        $applicableHeaderTradeSettlement = parent::getApplicableHeaderTradeSettlement();
-
-        if (!$applicableHeaderTradeSettlement instanceof ApplicableHeaderTradeSettlement) {
-            throw new \LogicException('Must be of type EN16931\\ApplicableHeaderTradeSettlement');
-        }
-
-        return $applicableHeaderTradeSettlement;
+        return $this->applicableHeaderTradeSettlement;
     }
 
     /**

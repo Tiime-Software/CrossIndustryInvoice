@@ -4,47 +4,34 @@ declare(strict_types=1);
 
 namespace Tiime\CrossIndustryInvoice\DataType\Flux1;
 
-use Tiime\CrossIndustryInvoice\DataType\BasicWL\BuyerTradeParty;
-use Tiime\CrossIndustryInvoice\DataType\BasicWL\SellerTradeParty;
 use Tiime\CrossIndustryInvoice\Utils\XPath;
 
 /**
  * BT-10-00.
  */
-class ApplicableHeaderTradeAgreement extends \Tiime\CrossIndustryInvoice\DataType\Minimum\ApplicableHeaderTradeAgreement
+class ApplicableHeaderTradeAgreement
 {
+    protected const string XML_NODE = 'ram:ApplicableHeaderTradeAgreement';
     /**
      * BG-11.
      */
     protected ?SellerTaxRepresentativeTradeParty $sellerTaxRepresentativeTradeParty;
 
-    public function __construct(SellerTradeParty $sellerTradeParty, BuyerTradeParty $buyerTradeParty)
-    {
-        parent::__construct($sellerTradeParty, $buyerTradeParty);
-
+    public function __construct(
+        protected SellerTradeParty $sellerTradeParty, // BG-4
+        protected BuyerTradeParty $buyerTradeParty, // BG-7
+    ) {
         $this->sellerTaxRepresentativeTradeParty = null;
     }
 
     public function getSellerTradeParty(): SellerTradeParty
     {
-        $sellerTradeParty = parent::getSellerTradeParty();
-
-        if (!$sellerTradeParty instanceof SellerTradeParty) {
-            throw new \LogicException('Must be of type BasicWL\\SellerTradeParty');
-        }
-
-        return $sellerTradeParty;
+        return $this->sellerTradeParty;
     }
 
     public function getBuyerTradeParty(): BuyerTradeParty
     {
-        $buyerTradeParty = parent::getBuyerTradeParty();
-
-        if (!$buyerTradeParty instanceof BuyerTradeParty) {
-            throw new \LogicException('Mst be of type BasicWL\\BuyerTradeParty');
-        }
-
-        return $buyerTradeParty;
+        return $this->buyerTradeParty;
     }
 
     public function getSellerTaxRepresentativeTradeParty(): ?SellerTaxRepresentativeTradeParty
