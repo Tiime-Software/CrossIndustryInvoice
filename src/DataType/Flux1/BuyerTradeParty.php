@@ -72,8 +72,6 @@ class BuyerTradeParty
     {
         $currentNode = $document->createElement(self::XML_NODE);
 
-        $currentNode->appendChild($this->postalTradeAddress->toXML($document));
-
         if ($this->specifiedLegalOrganization instanceof BuyerSpecifiedLegalOrganization) {
             $specifiedLegalOrganizationXml = $this->specifiedLegalOrganization->toXML($document);
 
@@ -81,6 +79,8 @@ class BuyerTradeParty
                 $currentNode->appendChild($specifiedLegalOrganizationXml);
             }
         }
+
+        $currentNode->appendChild($this->postalTradeAddress->toXML($document));
 
         if ($this->specifiedTaxRegistrationVA instanceof SpecifiedTaxRegistrationVA) {
             $currentNode->appendChild($this->specifiedTaxRegistrationVA->toXML($document));
