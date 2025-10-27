@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tiime\CrossIndustryInvoice\DataType;
+namespace Tiime\CrossIndustryInvoice\DataType\Flux1;
 
+use Tiime\CrossIndustryInvoice\DataType\LineIncludedNote;
 use Tiime\CrossIndustryInvoice\Utils\XPath;
-use Tiime\EN16931\DataType\Identifier\InvoiceLineIdentifier;
 
 /**
  * BT-126-00.
@@ -21,18 +21,9 @@ class AssociatedDocumentLineDocument
      */
     private array $includedNotes;
 
-    /**
-     * @param InvoiceLineIdentifier $lineIdentifier - BT-126
-     */
     public function __construct(
-        private readonly InvoiceLineIdentifier $lineIdentifier,
     ) {
         $this->includedNotes = [];
-    }
-
-    public function getLineIdentifier(): InvoiceLineIdentifier
-    {
-        return $this->lineIdentifier;
     }
 
     /**
@@ -63,8 +54,6 @@ class AssociatedDocumentLineDocument
     {
         $element = $document->createElement(self::XML_NODE);
 
-        $element->appendChild($document->createElement('ram:LineID', $this->lineIdentifier->value));
-
         foreach ($this->includedNotes as $includedNote) {
             $element->appendChild($includedNote->toXML($document));
         }
@@ -83,21 +72,9 @@ class AssociatedDocumentLineDocument
         /** @var \DOMElement $associatedDocumentLineDocumentElement */
         $associatedDocumentLineDocumentElement = $associatedDocumentLineDocumentElements->item(0);
 
-        $lineIdentifierElements = $xpath->query('./ram:LineID', $associatedDocumentLineDocumentElement);
-
-        if (1 !== $lineIdentifierElements->count()) {
-            throw new \Exception('Malformed');
-        }
-
-        $lineIdentifier = $lineIdentifierElements->item(0)?->nodeValue;
-
-        if (null === $lineIdentifier) {
-            throw new \Exception('Malformed');
-        }
-
         $includedNotes = LineIncludedNote::fromXML($xpath, $associatedDocumentLineDocumentElement);
 
-        $associatedDocumentLineDocument = new self(new InvoiceLineIdentifier($lineIdentifier));
+        $associatedDocumentLineDocument = new self();
 
         if (!empty($includedNotes)) {
             $associatedDocumentLineDocument->setIncludedNotes($includedNotes);

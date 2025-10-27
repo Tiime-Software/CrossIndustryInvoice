@@ -35,27 +35,29 @@ class LineIncludedNote
         return $element;
     }
 
-    public static function fromXML(XPath $xpath, \DOMElement $currentElement): ?self
+    /**
+     * @return array<int, LineIncludedNote>
+     */
+    public static function fromXML(XPath $xpath, \DOMElement $currentElement): array
     {
         $lineIncludedNoteElements = $xpath->query(\sprintf('./%s', self::XML_NODE), $currentElement);
 
         if (0 === $lineIncludedNoteElements->count()) {
-            return null;
+            return [];
         }
 
-        if ($lineIncludedNoteElements->count() > 1) {
-            throw new \Exception('Malformed');
+        $lineIncludedNotes = [];
+
+        foreach ($lineIncludedNoteElements as $lineIncludedNoteElement) {
+            $contentElements = $xpath->query('./ram:Content', $lineIncludedNoteElement);
+
+            if (1 !== $contentElements->count()) {
+                throw new \Exception('Malformed');
+            }
+
+            $lineIncludedNotes[] = new self($contentElements->item(0)->nodeValue);
         }
 
-        /** @var \DOMElement $lineIncludedNoteElement */
-        $lineIncludedNoteElement = $lineIncludedNoteElements->item(0);
-
-        $contentElements = $xpath->query('./ram:Content', $lineIncludedNoteElement);
-
-        if (1 !== $contentElements->count()) {
-            throw new \Exception('Malformed');
-        }
-
-        return new self($contentElements->item(0)->nodeValue);
+        return $lineIncludedNotes;
     }
 }
